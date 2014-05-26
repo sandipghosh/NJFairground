@@ -38,6 +38,18 @@ namespace NJFairground.Web
             //            "~/Content/themes/base/jquery.ui.datepicker.css",
             //            "~/Content/themes/base/jquery.ui.progressbar.css",
             //            "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/CommonScript")
+                //.Include("~/Scripts/jquery-{version}.js"));
+                .Include("~/Scripts/jquery-2.1.1.min.js",
+                "~/Scripts/jquery-migrate-1.2.1.min.js",
+                "~/Scripts/jquery.mobile-1.4.2.min.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/Styles/CommonStyle")
+                .Include("~/Styles/jquery.mobile-1.4.2.min.css",
+                "~/Styles/style.css"));
+
         }
     }
 }

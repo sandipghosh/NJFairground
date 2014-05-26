@@ -1,15 +1,119 @@
-﻿<!DOCTYPE html>
+﻿@*<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Styles/Common")
-    @Scripts.Render("~/Scripts/Common")
 </head>
 <body>
     <div>
         @RenderBody()
     </div>
+</body>
+</html>*@
+<!DOCTYPE html>
+<html>
+<head>
+    @*<title>Home | Sussex County Fairgrounds</title>*@
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
+    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
+
+    @*@Styles.Render("~/Styles/CommonStyle")*@
+    @*@Scripts.Render("~/Scripts/CommonScript")*@
+
+    <!--- JQuery Mobile 1.4.2 --->
+
+    <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
+    @*
+<!--- Custom CSS --->
+<link rel="stylesheet" href="css/style.css" />*@
+
+
+</head>
+<body>
+    <div data-role="page" id="info" data-title="@ViewBag.Title">@*"Info | Sussex County Fairgrounds">*@
+        <div data-role="header">
+            <a href="javascript:void(0)" class="ui-btn-left ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-magnifier ui-corner-all">Magnifier</a>
+            <h1><span>F</span>air<span>G</span>rounds</h1>
+            <a href="javascript:void(0)" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-star ui-corner-all">Star</a>
+        </div>
+        <!-- /header -->
+
+        <div role="main" class="ui-content">
+            @*<div class="navbar">
+      <ul>
+        <li class="first"><a href="javascript:void(0)">The Fair</a></li>        
+        <li><a href="javascript:void(0)">Fun</a></li>       
+        <li class="active"><a href="javascript:void(0)">Info</a></li>       
+        <li><a href="javascript:void(0)">Social</a></li>       
+        <li class="last"><a href="javascript:void(0)">Map</a></li>
+      </ul>
+    </div>*@
+            @RenderSection("navbar", required: true)
+            <div class="ui-grid-solo inner-page">
+                @* <img class="inner-banner" src="~/Styles/images/banner-info.jpg" alt=""> 
+       <h2 class="inner-title">
+           General Information
+       </h2>*@
+                @RenderSection("innerTitle", required: false)
+
+                <div class="ui-block-a">
+                    @RenderBody()
+                    @*<div class="info-block">
+          <img class="info-pic" src="~/Styles/images/info-pic1.png" alt=""> 
+          <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>Lorem Ipsum Text</h4> 
+            <p>Lorem ipsum dumy text Lorem</p> 
+        </div>
+        <div class="info-block">
+          <img class="info-pic" src="~/Styles/images/info-pic2.png" alt=""> 
+          <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>Lorem Ipsum Text</h4> 
+            <p>Lorem ipsum dumy text Lorem</p> 
+        </div>
+        <div class="info-block">
+          <img class="info-pic" src="~/Styles/images/info-pic3.png" alt=""> 
+          <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>Lorem Ipsum Text</h4> 
+            <p>Lorem ipsum dumy text Lorem</p> 
+        </div>
+        <div class="info-block">
+          <img class="info-pic" src="~/Styles/images/info-pic4.png" alt=""> 
+          <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>Lorem Ipsum Text</h4> 
+            <p>Lorem ipsum dumy text Lorem</p> 
+        </div>*@
+                </div>
+            </div>
+            <span class="presented-by">
+                <img src="~/Styles/images/presentedby.png" alt=""></span>
+        </div>
+        <!-- /content -->
+
+        <div data-role="footer">
+            <ul>
+                <li><a href="javascript:void(0)"><span>
+                    <img src='@Url.Content("~/Styles/images/icon-home.png")' alt=""></span> Home</a></li>
+                <li><a href="javascript:void(0)"><span>
+                    <img src='@Url.Content("~/Styles/images/icon-fair.png")' alt=""></span> The Fair</a></li>
+                <li><a href="javascript:void(0)"><span>
+                    <img src='@Url.Content("~/Styles/images/icon-events.png")' alt=""></span> Events</a></li>
+                <li><a href="javascript:void(0)"><span>
+                    <img src='@Url.Content("~/Styles/images/icon-carnival.png")' alt=""></span> The Carnival</a></li>
+                <li><a href="javascript:void(0)"><span>
+                    <img src='@Url.Content("~/Styles/images/icon-circus.png")' alt=""></span> Circus
+                    <br />
+                    Hollywood</a></li>
+            </ul>
+        </div>
+        <!-- /footer -->
+    </div>
+    <!-- /page -->
+
 </body>
 </html>
