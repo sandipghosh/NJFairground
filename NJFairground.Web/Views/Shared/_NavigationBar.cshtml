@@ -1,0 +1,18 @@
+﻿@model List<string>
+
+<div class="navbar">
+      <ul>
+@*        <li class="first"><a href="javascript:void(0)">The Fair</a></li>        
+        <li><a href="javascript:void(0)">Fun</a></li>       
+        <li class="active"><a href="javascript:void(0)">Info</a></li>       
+        <li><a href="javascript:void(0)">Social</a></li>       
+        <li class="last"><a href="javascript:void(0)">Map</a></li>*@
+          @foreach (var @Item in Model)
+          { 
+            <li>
+                <a href="javascript:void(0)">@Item</a>
+            </li>
+          }
+
+      </ul>
+    </div>

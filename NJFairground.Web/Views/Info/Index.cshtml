@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
+}
+
+@section navbar{
+    @Html.Partial("_NavigationBar", (List<string>)ViewBag.NavBarItems)
+}
+
+@section innerTitle{
+    <img class="inner-banner" src="~/Styles/images/banner-info.jpg" alt="">
+    <h2 class="inner-title">@Html.Raw("General Information")</h2>
+}
+
+@for (var i = 0; i < 4; i++)
+{ 
+    <div class="info-block">
+        <img class="info-pic" src="~/Styles/images/info-pic1.png" alt="">
+        <a title="Details" class="details" href="javascript:void(0)">Details</a>
+        <h4>Lorem Ipsum Text</h4>
+        <p>Lorem ipsum dumy text Lorem</p>
+    </div>
+}
