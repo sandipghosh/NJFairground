@@ -1,0 +1,121 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home | Sussex County Fairgrounds</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+ <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
+    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
+
+    <!--- JQuery Mobile 1.4.2 --->
+
+    <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
+
+
+</head>
+<body>
+<div data-role="page" id="innerpage" data-title="Inner Page | Sussex County Fairgrounds">
+  
+  <!-- /header -->
+  @Html.Partial("_Header")
+  <div role="main" class="ui-content">
+    <div class="intro">
+      <span class="year">74th</span>
+      <h3 class="name">New Jersey State Fair</h3>
+      <h4 class="subname">Sussex Horse &amp; Farm Show</h4>
+      <span class="catchline">There's Magic In The Fair!</span>
+      <span class="venue">August 1-10, 2014 - Augusta, NJ</span>
+    </div>
+    <div class="ui-grid-b">
+      <div class="ui-block-a">
+        <a href="javascript:void(0)">
+          <div class="thumb">          
+            <img src='@Url.Content("~/Styles/images/thumb-ip-whatsnew.png")' alt="">           
+            <span>What's New!</span>        
+          </div>
+        </a>
+      </div>
+      <div class="ui-block-b">
+       <a href="info">
+        <div class="thumb">
+          <img src='@Url.Content("~/Styles/images/thumb-ip-info.png")' alt=""> 
+          <span>Info</span>
+        </div>
+       </a> 
+      </div>
+      <div class="ui-block-c">
+       <a href="javascript:void(0)">
+        <div class="thumb">
+          <img src='@Url.Content("~/Styles/images/thumb-ip-map.png")' alt=""> 
+          <span>Map</span>
+        </div>
+       </a>
+      </div>
+      
+      <div class="ui-block-a">
+       <a href="javascript:void(0)">
+        <div class="thumb">
+          <img src='@Url.Content("~/Styles/images/thumb-ip-daily-highlights.png")' alt=""> 
+          <span>Daily Highlights</span>
+        </div>
+       </a>
+      </div>
+      <div class="ui-block-b">
+       <a href="javascript:void(0)">
+        <div class="thumb">
+          <img src='@Url.Content("~/Styles/images/thumb-ip-fun.png")' alt=""> 
+          <span>Fun</span>
+        </div>
+       </a>
+      </div>
+      <div class="ui-block-c">
+       <a href="javascript:void(0)">
+        <div class="thumb">
+          <img src='@Url.Content("~/Styles/images/thumb-ip-food.png")' alt=""> 
+          <span>Food</span>
+        </div>
+       </a>
+      </div>
+      
+      <div class="ui-block-a">
+       <a href="javascript:void(0)">
+        <div class="thumb">
+          <img src='@Url.Content("~/Styles/images/thumb-ip-shopping.png")' alt=""> 
+          <span>Shopping</span>
+        </div>
+       </a>
+      </div>
+      <div class="ui-block-b">
+       <a href="javascript:void(0)">
+        <div class="thumb">
+          <img src='@Url.Content("~/Styles/images/thumb-ip-social.png")' alt=""> 
+          <span>Social</span>
+        </div>
+       </a>
+      </div>
+      <div class="ui-block-c">
+       <a href="javascript:void(0)">
+        <div class="thumb">
+          <img src='@Url.Content("~/Styles/images/thumb-ip-directions.png")' alt=""> 
+          <span>Directions</span>
+        </div>
+       </a>
+      </div>
+    </div>
+    <span class="presented-by"><img src='@Url.Content("~/Styles/images/presentedby.png")' alt=""></span>
+  </div>
+  <!-- /content -->
+  
+  @Html.Partial("_Footer")
+  <!-- /footer --> 
+</div>
+<!-- /page -->
+
+</body>
+</html>

@@ -1,45 +1,90 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    Layout = null;
 }
-@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
-            <p>
-                To learn more about ASP.NET MVC visit
-                <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET MVC.
-                If you have any questions about ASP.NET MVC visit
-                <a href="http://forums.asp.net/1146.aspx/1?MVC" title="ASP.NET MVC Forum">our forums</a>.
-            </p>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home | Sussex County Fairgrounds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
+    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
+
+    <!--- JQuery Mobile 1.4.2 --->
+
+    <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
+
+</head>
+<body>
+    <div data-role="page" id="homepage" data-title="Home | Sussex County Fairgrounds">
+       @Html.Partial("_Header")
+        <!-- /header -->
+
+        <div role="main" class="ui-content">
+            <div class="ui-grid-a fair-grounds">
+                <div class="ui-block-a">
+                    <a href="InnerPage">
+                        <img src='@Url.Content("~/Styles/images/thumb-thefair.png")' alt="">
+                        <span>The Fair</span>
+                    </a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="javascript:void(0)">
+                        <img src='@Url.Content("~/Styles/images/thumb-calendar.png")' alt="">
+                        <span>2014 Calender of Events</span>
+                    </a>
+                </div>
+
+                <div class="ui-block-a">
+                    <a href="javascript:void(0)">
+                        <img src='@Url.Content("~/Styles/images/thumb-horseshow.png")' alt="">
+                        <span>Horse Show</span>
+                    </a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="javascript:void(0)">
+                        <img src='@Url.Content("~/Styles/images/thumb-agriculture.png")' alt="">
+                        <span>Agriculture/AG Learning Center</span>
+                    </a>
+                </div>
+
+                <div class="ui-block-a">
+                    <a href="javascript:void(0)">
+                        <img src='@Url.Content("~/Styles/images/thumb-courtyard.png")' alt="">
+                        <span>Conservatory &amp; Courtyard</span>
+                    </a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="javascript:void(0)">
+                        <img src='@Url.Content("~/Styles/images/thumb-fairgrounds.png")' alt="">
+                        <span>Fairgrounds Complex All Season/Events/Rentals</span>
+                    </a>
+                </div>
+
+                <div class="ui-block-a">
+                    <a href="javascript:void(0)">
+                        <img src='@Url.Content("~/Styles/images/thumb-promote.png")' alt="">
+                        <span>Promote Your Events Here!</span>
+                    </a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="javascript:void(0)">
+                        <img src='@Url.Content("~/Styles/images/thumb-directions.png")' alt="">
+                        <span>Directions to Fairgrounds</span>
+                    </a>
+                </div>
+            </div>
         </div>
-    </section>
-}
-<h3>We suggest the following:</h3>
-<ol class="round">
-    <li class="one">
-        <h5>Getting Started</h5>
-        ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-        enables a clean separation of concerns and that gives you full control over markup
-        for enjoyable, agile development. ASP.NET MVC includes many features that enable
-        fast, TDD-friendly development for creating sophisticated applications that use
-        the latest web standards.
-        <a href="http://go.microsoft.com/fwlink/?LinkId=245151">Learn more…</a>
-    </li>
+        <!-- /content -->
 
-    <li class="two">
-        <h5>Add NuGet packages and jump-start your coding</h5>
-        NuGet makes it easy to install and update free libraries and tools.
-        <a href="http://go.microsoft.com/fwlink/?LinkId=245153">Learn more…</a>
-    </li>
+        @Html.Partial("_Footer")
+        <!-- /footer -->
+    </div>
+    <!-- /page -->
 
-    <li class="three">
-        <h5>Find Web Hosting</h5>
-        You can easily find a web hosting company that offers the right mix of features
-        and price for your applications.
-        <a href="http://go.microsoft.com/fwlink/?LinkId=245157">Learn more…</a>
-    </li>
-</ol>
+</body>
+</html>
+
