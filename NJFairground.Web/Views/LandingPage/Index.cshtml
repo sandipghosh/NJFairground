@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+        //Response.AddHeader("REFRESH", "10;URL=Home");
 }
 
 @*<!DOCTYPE html>
@@ -18,26 +19,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sussex County Fairgrounds</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sussex County Fairgrounds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<!--- JQuery Mobile 1.4.2 --->
-   <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
+    <!--- JQuery Mobile 1.4.2 --->
+    <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
     <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
     <script src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
 
-<!--- Custom CSS --->
-   <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
+    <!--- Custom CSS --->
+    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
 
+    <script type="text/javascript">
+        var i = 0;
+        function ShowCurrentTime() {
+            var dt = new Date();
+            $('#timerdata').text(5 - i + " Seconds");
+            i++;
+            if (i == 5) {
+                setTimeout("location.href='Home'", 0);
+            }
+            window.setTimeout("ShowCurrentTime()", 1000); // Here 1000(milliseconds) means 1 sec
+        }
+    </script>
+
 </head>
-<body>
-<div data-role="page" id="main-page" data-title="Sussex County Fairgrounds">
-   <a class="logo" href="home" title="Sussex County Fairgrounds"><img src='@Url.Content("~/Styles/images/logo.png")' alt="Sussex County Fairgrounds"></a> 
-</div>
-<div id="bg"><img class="bg-main" src='@Url.Content("~/Styles/images/mainpage-bg.jpg")' alt=""> </div>
-<!-- /page -->
+<body onload="ShowCurrentTime()" onunload="">
+    <div data-role="page" id="main-page" data-title="Sussex County Fairgrounds">
+        <a class="logo" href="home" title="Sussex County Fairgrounds">
+            <img src='@Url.Content("~/Styles/images/logo.png")' alt="Sussex County Fairgrounds"></a>
+        <div class="timer">@Html.Raw("Please Wait For ") <span class="timer-span" id="timerdata" >Welcome</span></div>
+
+    </div>
+
+    <div id="bg">
+        <img class="bg-main" src='@Url.Content("~/Styles/images/mainpage-bg.jpg")' alt="">
+    </div>
+    <!-- /page -->
 
 </body>
 </html>

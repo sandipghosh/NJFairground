@@ -215,11 +215,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Controllers\DailyHighlightsController.cs" />
+    <Compile Include="Controllers\FoodFinderController.cs" />
+    <Compile Include="Controllers\FunController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoController.cs" />
-    <Compile Include="Controllers\InnerPageController.cs" />
+    <Compile Include="Controllers\FairController.cs" />
     <Compile Include="Controllers\LandingPageController.cs" />
     <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\SocialController.cs" />
+    <Compile Include="Controllers\WhatsNewController.cs" />
     <Compile Include="Data\Context\BaseData.cs" />
     <Compile Include="Data\Context\Event.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
@@ -513,8 +518,13 @@
     <Content Include="Views\LandingPage\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
-    <Content Include="Views\InnerPage\Index.cshtml" />
+    <Content Include="Views\Fair\Index.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Fun\Index.cshtml" />
+    <Content Include="Views\FoodFinder\Index.cshtml" />
+    <Content Include="Views\DailyHighlights\Index.cshtml" />
+    <Content Include="Views\WhatsNew\Index.cshtml" />
+    <Content Include="Views\Social\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

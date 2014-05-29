@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Social | Sussex County Fairgrounds";
+    Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
+    ViewBag.PageId = "social";
+}
+
+@section navbar{
+    @Html.Partial("_NavigationBar", (List<string>)ViewBag.NavBarItems)
+}
+
+@section innerTitle{
+    <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-social.jpg")' alt="">
+    <h2 class="inner-title">@Html.Raw("Get Social")</h2>
+}
+
+
+<div class="ui-grid-solo inner-page">
+    <div class="ui-block-a">
+        <div class="social-block odd">
+            <img class="social-pic" src='@Url.Content("~/Styles/images/facebook.png")' alt="">
+            <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>Facebook</h4>
+            <p>Lorem ipsum dumy text</p>
+        </div>
+        <div class="social-block even">
+            <img class="social-pic" src='@Url.Content("~/Styles/images/twitter.png")' alt="">
+            <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>Twiiter</h4>
+            <p>Lorem ipsum dumy text</p>
+        </div>
+        <div class="social-block odd">
+            <img class="social-pic" src='@Url.Content("~/Styles/images/youtube.png")' alt="">
+            <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>TouTube</h4>
+            <p>Lorem ipsum dumy text</p>
+        </div>
+    </div>
+    <h2 class="inner-title sub">Login to Social Media</h2>
+    <div class="ui-block-a">
+        <div class="social-block odd">
+            <img class="social-pic" src='@Url.Content("~/Styles/images/facebook.png")' alt="">
+            <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>Facebook</h4>
+            <p>Lorem ipsum dumy text</p>
+        </div>
+        <div class="social-block even">
+            <img class="social-pic" src='@Url.Content("~/Styles/images/twitter.png")' alt="">
+            <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>Twiiter</h4>
+            <p>Lorem ipsum dumy text</p>
+        </div>
+    </div>
+</div>
+

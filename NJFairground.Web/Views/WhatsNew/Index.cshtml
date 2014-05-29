@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "What's New! | Sussex County Fairgrounds";
+    Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
+    ViewBag.PageId = "whats-new";
+}
+
+<h2 class="title">What's New!</h2>
+<div class="ui-grid-solo fun-blocks">
+    @for (var i = 0; i < 8; i++)
+    { 
+        <div class="ui-block-a fun-block">
+            <div class="text">
+                <h4>Lorem Ipsum</h4>
+                <p>Lorem ipsum Dummy text</p>
+            </div>
+            <div class="action">
+                <a title="Details" class="details" href="javascript:void(0)">Details</a>
+                <img class="fun-pic" src='@Url.Content("~/Styles/images/fun-pic.png")' alt="">
+            </div>
+        </div>
+           
+    }
+</div>

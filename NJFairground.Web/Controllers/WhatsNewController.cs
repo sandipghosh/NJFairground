@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace NJFairground.Web.Controllers
 {
-    public class InnerPageController : Controller
+    public class WhatsNewController : Controller
     {
         //
-        // GET: /InnerPage/
+        // GET: /WhatsNew/
 
         public ActionResult Index()
         {

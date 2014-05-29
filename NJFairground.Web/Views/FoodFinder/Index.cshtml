@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Food Finder | Sussex County Fairgrounds";
+    ViewBag.PageId = "food-finder";
+    Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
+}
+
+<h2 class="title">Food Finder</h2>
+<div class="ui-grid-solo highlights">
+     <div class="ui-block-a highlight">
+            <div class="text">
+                <h4>2014 Vendor Application</h4>
+                <p>Applications for the 2014 Fair are now</p>
+            </div>
+            <div class="action">
+                <a title="Details" class="details" href="javascript:void(0)">Details</a>
+                <img class="star" src='@Url.Content("~/Styles/images/star.png")' alt="">
+            </div>
+        </div>
+    @for (var i = 0; i < 6; i++)
+    { 
+         <div class="ui-block-a highlight">
+        <div class="text">
+          <h4>Lorem Ipsum text</h4>
+          <p>Lorem ipsum dummy text lorem ipsum</p>
+        </div>
+        <div class="action">
+          <a title="Details" class="details" href="javascript:void(0)">Details</a>
+          <img class="star" src='@Url.Content("~/Styles/images/star.png")' alt=""> 
+        </div>
+      </div>
+    }
+</div>

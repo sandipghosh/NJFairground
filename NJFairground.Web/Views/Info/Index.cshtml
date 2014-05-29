@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Info | Sussex County Fairgrounds";
+    ViewBag.PageId="info";
     Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
 }
 
@@ -13,12 +14,15 @@
 }
 
 
-@for (var i = 0; i < 4; i++)
-{ 
-    <div class="info-block">
-        <img class="info-pic" src='@Url.Content("~/Styles/images/info-pic1.png")' alt="">
-        <a title="Details" class="details" href="javascript:void(0)">Details</a>
-        <h4>Lorem Ipsum Text</h4>
-        <p>Lorem ipsum dumy text Lorem</p>
-    </div>
-}
+<div class="ui-grid-solo inner-page">
+    @for (var i = 0; i < 4; i++)
+    { 
+        <div class="info-block">
+            <img class="info-pic" src='@Url.Content("~/Styles/images/info-pic1.png")' alt="">
+            <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <h4>Lorem Ipsum Text</h4>
+            <p>Lorem ipsum dumy text Lorem</p>
+        </div>
+    }
+</div>
+

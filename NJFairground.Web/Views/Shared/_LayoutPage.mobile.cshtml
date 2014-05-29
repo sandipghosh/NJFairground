@@ -19,24 +19,24 @@
 
 </head>
 <body>
-    <div data-role="page" id="info" data-title="@ViewBag.Title">@*"Info | Sussex County Fairgrounds">*@
-       @Html.Partial("_Header")
+    <div data-role="page" id="@ViewBag.PageId" data-title="@ViewBag.Title">@*"Info | Sussex County Fairgrounds">*@
+        @Html.Partial("_Header")
         <!-- /header -->
 
         <div role="main" class="ui-content">
-            @RenderSection("navbar", required: true)
+            @RenderSection("navbar", required: false)
             <div class="ui-grid-solo inner-page">
                 @RenderSection("innerTitle", required: false)
-                <div class="ui-block-a">
-                    @RenderBody()
-                </div>
             </div>
+            @RenderBody()
+
+
             <span class="presented-by">
                 <img src="~/Styles/images/presentedby.png" alt=""></span>
         </div>
         <!-- /content -->
 
-       @Html.Partial("_Footer")
+        @Html.Partial("_Footer")
     </div>
     <!-- /page -->
 

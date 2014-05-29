@@ -150,5 +150,12 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 #whats-new{ background:url(images/inner-content-bg.png) no-repeat 0 0; background-size:100%; }
 #whats-new .fun-blocks .fun-block{ margin:0 0 11px; }
 
+.timer {
+    font-family:'cafe_nero_m54regular'; font-weight:normal; font-size:17px; line-height:27px; color:#fff; letter-spacing:4px; text-shadow:1px 2px 1px #3e2809; text-align:center;
+}
+.timer-span {
+    font-size:35px;
+}
+
 
 

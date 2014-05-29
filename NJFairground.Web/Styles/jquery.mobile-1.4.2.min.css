@@ -766,7 +766,7 @@ legend, .ui-input-text input, .ui-input-search input {
 	font-weight: 700
 }
 .ui-page-theme-a a:visited, html .ui-bar-a a:visited, html .ui-body-a a:visited, html body .ui-group-theme-a a:visited {
-	color: #38c
+	/*color: #38c*/
 }
 .ui-page-theme-a a:hover, html .ui-bar-a a:hover, html .ui-body-a a:hover, html body .ui-group-theme-a a:hover {
 	color: #059
