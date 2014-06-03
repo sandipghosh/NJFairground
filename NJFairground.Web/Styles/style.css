@@ -34,10 +34,10 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 .ui-header .ui-btn:hover{ border-color:#d0821d; background-position:0 100%; }
 .ui-header .ui-btn:focus{ box-shadow:0 0 6px #bd6e0d; }
 
-.ui-header .ui-title{ font-family:'cafe_nero_m54regular'; font-weight:normal; font-size:17px; line-height:27px; color:#fff; letter-spacing:4px; text-shadow:1px 2px 1px #3e2809; }
+.ui-header .ui-title{ font-family:'cafe_nero_m54regular'; font-weight:normal; font-size:17px; line-height:27px; color:#fff; letter-spacing:4px; text-shadow:1px 2px 1px #3e2809;position:fixed;width:100% }
 .ui-header .ui-title span{ font-size:25px; }
 
-.ui-footer.ui-bar-inherit{ min-height:68px; background:url(images/footer-bg.png) repeat-x 0 0 #040404; border:none; text-shadow:none; text-align:center; font-weight:normal; }
+.ui-footer.ui-bar-inherit{ min-height:68px; background:url(images/footer-bg.png) repeat-x 0 0 #040404; border:none; text-shadow:none; text-align:center; font-weight:normal; position:fixed;bottom:0px;width:100%;}
 .ui-footer ul li{ display:inline-block; vertical-align:top; }
 .ui-footer ul li a{ display:block; font-size:11px; line-height:13px; color:#fff; font-weight:normal; padding:8px 10px 0; min-height:68px; }
 .ui-footer ul li a span{  display:block; clear:both; }

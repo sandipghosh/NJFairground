@@ -18,7 +18,7 @@ namespace NJFairground.Web.Controllers
            
             ViewBag.NavBarItems = NavItems;
 
-            return View();
+            return View("Index.mobile");
         }
 
     }

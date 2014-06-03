@@ -36,7 +36,7 @@ namespace NJFairground.Web.Controllers
 
                 
 
-                return View(pages);
+                return View("Index.mobile",pages);
             }
             catch (Exception ex)
             {

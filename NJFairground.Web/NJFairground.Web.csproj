@@ -503,7 +503,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Page\Index.cshtml" />
+    <Content Include="Views\Page\Index.mobile.cshtml" />
     <Content Include="Views\Shared\_LayoutPage.mobile.cshtml" />
     <Content Include="Scripts\jquery.mobile-1.4.2.min.map" />
     <Content Include="Styles\fonts\cafe_nero_m54-webfont.eot" />
@@ -512,19 +512,19 @@
     <Content Include="Styles\fonts\dk_keswick-webfont.eot" />
     <Content Include="Styles\fonts\dk_keswick-webfont.ttf" />
     <Content Include="Styles\fonts\dk_keswick-webfont.woff" />
-    <Content Include="Views\Info\Index.cshtml" />
-    <Content Include="Views\Shared\_InnerTitle.cshtml" />
-    <Content Include="Views\Shared\_NavigationBar.cshtml" />
-    <Content Include="Views\LandingPage\Index.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_Footer.cshtml" />
-    <Content Include="Views\Fair\Index.cshtml" />
-    <Content Include="Views\Shared\_Header.cshtml" />
-    <Content Include="Views\Fun\Index.cshtml" />
-    <Content Include="Views\FoodFinder\Index.cshtml" />
-    <Content Include="Views\DailyHighlights\Index.cshtml" />
-    <Content Include="Views\WhatsNew\Index.cshtml" />
-    <Content Include="Views\Social\Index.cshtml" />
+    <Content Include="Views\Info\Index.mobile.cshtml" />
+    <Content Include="Views\Shared\_InnerTitle.mobile.cshtml" />
+    <Content Include="Views\Shared\_NavigationBar.mobile.cshtml" />
+    <Content Include="Views\LandingPage\Index.mobile.cshtml" />
+    <Content Include="Views\Home\Index.mobile.cshtml" />
+    <Content Include="Views\Shared\_Footer.mobile.cshtml" />
+    <Content Include="Views\Fair\Index.mobile.cshtml" />
+    <Content Include="Views\Shared\_Header.mobile.cshtml" />
+    <Content Include="Views\Fun\Index.mobile.cshtml" />
+    <Content Include="Views\FoodFinder\Index.mobile.cshtml" />
+    <Content Include="Views\DailyHighlights\Index.mobile.cshtml" />
+    <Content Include="Views\WhatsNew\Index.mobile.cshtml" />
+    <Content Include="Views\Social\Index.mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
