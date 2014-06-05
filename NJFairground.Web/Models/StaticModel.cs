@@ -1,6 +1,30 @@
 ﻿
 namespace NJFairground.Web.Models
 {
+    public enum Page
+    { 
+        Main=1,
+        Home=2,
+        Fair=3,
+        Event=4,
+        HorseShow=5,
+        AGLearningCenter=6,
+        ConservatoryAndCourtyard=7,
+        EventRental=8,
+        Promote=9,
+        Directions=10,
+        WhatsNew=11,
+        Info=12,
+        Map=13,
+        DailyHighlights=14,
+        Fun=15,
+        Food=16,
+        Shopping=17,
+        Social=18
+         
+    }
+
+
     public enum StatusEnum
     {
         Active = 1,

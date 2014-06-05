@@ -31,8 +31,10 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
-                Mapper.CreateMap<Page, PageModel>()
+                Mapper.CreateMap<NJFairground.Web.Data.Context.Page, PageModel>()
                     .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                Mapper.CreateMap<NJFairground.Web.Data.Context.PageItem, PageItemModel>()
+                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
             }
             catch (Exception ex)
             {

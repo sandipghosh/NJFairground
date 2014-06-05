@@ -38,6 +38,7 @@ namespace NJFairground.Web.MapperConfig
             try
             {
                 container.Register<IPageDataRepository, PageDataRepository>();
+                container.Register<IPageItemDataRepository, PageItemDataRepository>();
                 
             }
             catch (Exception ex)

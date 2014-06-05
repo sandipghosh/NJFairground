@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Index.mobile";
+    Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
+}
+<h2 class="title">Promote Your Events Here!</h2>
+<div class="ui-grid-solo highlights promote inner-page">
+    <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-promote.jpg")' alt="">
+
+    @for (var i = 0; i < 5; i++)
+    { 
+        <div class="ui-block-a highlight">
+            <div class="text">
+                <h4>Lorem Ipsam</h4>
+                <p>Lorem ipsum dummy text include</p>
+            </div>
+            <div class="action">
+                <a title="Details" class="details" href="javascript:void(0)">Details</a>
+                <img class="star" src='@Url.Content("~/Styles/images/star.png")' alt="">
+            </div>
+        </div>
+            
+    }
+
+
+</div>

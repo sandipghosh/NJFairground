@@ -30,6 +30,10 @@ namespace NJFairground.Web.Data.Context
         public System.DateTime ActivatedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public byte[] Version { get; set; }
+        public string PageHeaderText { get; set; }
+        public string PageSubHeaderText { get; set; }
+        public string PageItemDetailText { get; set; }
+        public string PageItemSubDetail { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual Page Page { get; set; }

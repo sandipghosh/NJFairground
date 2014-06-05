@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Schedule | Sussex County Fairgrounds";
+    ViewBag.PageId = "schedule";
+    Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
+}
+
+
+<h2 class="title">2014 Year Round Event Schedule </h2>
+
+<div class="ui-grid-solo schedule">
+    <div class="ui-block-a">
+        @for (var i = 1; i < 8; i++)
+        { 
+            <div class="block">
+                <a class="schedule-pic" href="javascript:void(0)">@i</a>
+                <a title="Details" class="details" href="javascript:void(0)">Details</a>
+                <h4>Lorem Ipsum Text</h4>
+                <p>Lorem ipsum dumy text Lorem</p>
+            </div>
+        }
+    </div>
+</div>

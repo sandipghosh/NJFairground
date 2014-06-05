@@ -7,7 +7,7 @@ namespace NJFairground.Web.Data.Implementation
     using NJFairground.Web.Models;
 
     public class PageDataRepository
-        : DataRepository<Page, PageModel>, IPageDataRepository
+        : DataRepository<NJFairground.Web.Data.Context.Page, PageModel>, IPageDataRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PageDataRepository"/> class.

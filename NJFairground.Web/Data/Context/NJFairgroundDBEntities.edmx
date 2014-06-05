@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NJFairgroundDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="NJFairgroundDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="NJFairgroundDBModelStoreContainer">
           <EntitySet Name="Event" EntityType="NJFairgroundDBModel.Store.Event" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Page" EntityType="NJFairgroundDBModel.Store.Page" store:Type="Tables" Schema="dbo" />
@@ -84,7 +84,11 @@
           <Property Name="PageItemId" Type="int" Nullable="false" />
           <Property Name="PageId" Type="int" Nullable="false" />
           <Property Name="PageItemType" Type="int" Nullable="false" />
+          <Property Name="PageHeaderText" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="PageSubHeaderText" Type="varchar" MaxLength="100" />
           <Property Name="PageItemImage" Type="varchar" MaxLength="200" />
+          <Property Name="PageItemDetailText" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="PageItemSubDetail" Type="varchar" MaxLength="1000" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ActivatedOn" Type="datetime" Nullable="false" />
@@ -188,8 +192,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NJFairgroundDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -290,6 +293,10 @@
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="PageItem" ToRole="Page" />
           <NavigationProperty Name="PageHeaders" Relationship="NJFairgroundDBModel.FK_PageHeader_PageItem" FromRole="PageItem" ToRole="PageHeader" />
           <NavigationProperty Name="PageItemDetails" Relationship="NJFairgroundDBModel.FK_PageItemDetail_PageItem" FromRole="PageItem" ToRole="PageItemDetail" />
+          <Property Type="String" Name="PageHeaderText" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PageSubHeaderText" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PageItemDetailText" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PageItemSubDetail" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PageItemDetail">
           <Key>
@@ -439,6 +446,10 @@
           <EntitySetMapping Name="PageItems">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.PageItem">
               <MappingFragment StoreEntitySet="PageItem">
+                <ScalarProperty Name="PageItemSubDetail" ColumnName="PageItemSubDetail" />
+                <ScalarProperty Name="PageItemDetailText" ColumnName="PageItemDetailText" />
+                <ScalarProperty Name="PageSubHeaderText" ColumnName="PageSubHeaderText" />
+                <ScalarProperty Name="PageHeaderText" ColumnName="PageHeaderText" />
                 <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
                 <ScalarProperty Name="PageItemType" ColumnName="PageItemType" />

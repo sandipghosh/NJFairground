@@ -29,15 +29,15 @@
 
 body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 
-.ui-header.ui-bar-inherit{ min-height:50px; background:url(images/header-bg.png) repeat-x 0 bottom; background-color:transparent; border:none; text-shadow:none; padding:10px 6px; margin:0 0 10px; }
+.ui-header.ui-bar-inherit{ min-height:50px; background:url(images/header-bg.png) repeat-x 0 bottom; background-color: #F7CA6C; border:none; text-shadow:none; padding:10px 6px; margin:0 0 10px;top: 0;position: fixed;width: 100%; }
 .ui-header .ui-btn{ -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; border:solid 1px #d0821d; min-height:30px; min-width:37px; background:url(images/header-btns-bg.png) repeat-x 0 0; padding:0 9px; top:10px; }
 .ui-header .ui-btn:hover{ border-color:#d0821d; background-position:0 100%; }
 .ui-header .ui-btn:focus{ box-shadow:0 0 6px #bd6e0d; }
 
-.ui-header .ui-title{ font-family:'cafe_nero_m54regular'; font-weight:normal; font-size:17px; line-height:27px; color:#fff; letter-spacing:4px; text-shadow:1px 2px 1px #3e2809;position:fixed;width:100% }
+.ui-header .ui-title{ font-family:'cafe_nero_m54regular'; font-weight:normal; font-size:17px; line-height:27px; color:#fff; letter-spacing:4px; text-shadow:1px 2px 1px #3e2809;}
 .ui-header .ui-title span{ font-size:25px; }
 
-.ui-footer.ui-bar-inherit{ min-height:68px; background:url(images/footer-bg.png) repeat-x 0 0 #040404; border:none; text-shadow:none; text-align:center; font-weight:normal; position:fixed;bottom:0px;width:100%;}
+.ui-footer.ui-bar-inherit{ min-height:68px; background:url(images/footer-bg.png) repeat-x 0 0 #040404; border:none; text-shadow:none; text-align:center; font-weight:normal;position: fixed;bottom: 0px;width: 100%; }
 .ui-footer ul li{ display:inline-block; vertical-align:top; }
 .ui-footer ul li a{ display:block; font-size:11px; line-height:13px; color:#fff; font-weight:normal; padding:8px 10px 0; min-height:68px; }
 .ui-footer ul li a span{  display:block; clear:both; }
@@ -149,6 +149,70 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 /*--- What's New Page ---*/
 #whats-new{ background:url(images/inner-content-bg.png) no-repeat 0 0; background-size:100%; }
 #whats-new .fun-blocks .fun-block{ margin:0 0 11px; }
+
+/*--- Details Page ---*/
+#details{ background:url(/images/inner-content-bg-details.png) no-repeat 0 bottom #ffdad5; background-size:100%; }
+#details .ui-header .ui-title{ text-align:left; margin:0 0 0 17px; font-size:13px; letter-spacing:3px; }
+#details .ui-header .ui-title span{ font-size:16px; }
+#scroller{ overflow:auto; height:295px; }
+.scroller{ background:#ffdad5; padding:14px 10px; }
+.scroller h2{ font-size:17px; line-height:23px; color:#9f2023; font-weight:normal; margin:0 0 8px; }
+.scroller p{ font-size:11px; line-height:15px; color:#000000; margin:0 0 14px; }
+
+#details .block{ background:#ffdad5; padding:6px 10px; min-height:52px; overflow:hidden; margin:0 0 4px; }
+#details .block .text{ width:82%; float:left; margin:0 5% 0 0; }
+#details .block .action{ width:13%; float:right; }
+#details .block h4{ color:#9f2023; font-size:17px; line-height:23px; font-weight:normal; }
+#details .block p{ color:#000; font-size:11px; line-height:15px; } 
+#details .block .enter{ float:right; margin:8px 0 0; font-size:0px; background:url(/images/icon-enter.png) no-repeat 0 0; height:26px; width:24px; }
+#details .block .enter:hover{ background-position:0 100%; }
+
+#details .details-inner p{ font-size:15px; line-height:19px; color:#9f2023; margin:0 0 14px; }
+#details .details-inner a{ height:40px; line-height:40px; background:url(/images/details-inner-btn.jpg) repeat-x 0 0; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; width:100%; font-size:25px; text-align:center; color:#ffdad5; border:none; font-weight:normal; display:block; margin:0 0 20px; }
+#details .details-inner a:hover{ color:#fff; }
+
+/*--- Schedule Page ---*/
+#schedule{ background:url(/images/inner-content-bg.png) no-repeat 0 0; background-size:100%; }
+#schedule .title{  font-size:19px; }
+.schedule{ padding:9px 0 0; }
+.schedule .block{ margin:0 0 9px; background:#ffbc08; padding:9px; overflow:hidden; }
+.schedule .block .schedule-pic{ float:left; margin:0 8px 0 0; height:38px; width:38px; background:url(/images/schedule.png) no-repeat 0 0; font-size:15px; line-height:21px; color:#d22c15; font-weight:normal; padding:11px 0 0; text-align:center; }
+.schedule .block h4{ color:#fff; font-size:17px; line-height:19px; font-weight:normal; }
+.schedule .block p{ color:#000; font-size:11px; line-height:13px; } 
+.schedule .block .details{ float:right; margin:5px 0 0; font-size:0px; background:url(/images/highlight-arrow.png) no-repeat 0 0; height:23px; width:12px; }
+.schedule .block .details:hover{ background-position:0 100%; }
+
+/*--- Agriculture Page ---*/
+#agriculture{ background:url(/images/inner-content-bg.png) no-repeat 0 0; background-size:100%; }
+#agriculture .title{  font-size:19px; }
+#agriculture .info-block{ padding-left:10px; }
+#agriculture .info-block .info-pic{  float:right; }
+
+/*--- Courtyard Page ---*/
+#conservatory-courtyard{ background:url(/images/inner-content-bg.png) no-repeat 0 0; background-size:100%; }
+.courtyard{ padding:0 7px; }
+
+/*--- Directions Page ---*/
+#directions{ background:url(/images/inner-content-bg.png) no-repeat 0 0; background-size:100%;  }
+#directions .fun-blocks .fun-block p{ color:#d22c15; }
+
+/*--- Complex Page ---*/
+#complex{ background:url(/images/inner-content-bg.png) no-repeat 0 0; background-size:100%;  }
+#complex .title{ font-size:14px; }
+.complex{ padding:0 7px; }
+
+/*--- Promote Page ---*/
+#promote{ background:url(/images/inner-content-bg.png) no-repeat 0 0; background-size:100%;  }
+.promote{ padding:0 7px; }
+
+/*--- Promote Page ---*/
+#shopping{ background:url(/images/inner-content-bg.png) no-repeat 0 0; background-size:100%;  }
+#shopping .fun-blocks .fun-block p{ font-size:9px; }
+#shopping .fun-blocks .fun-block p span{ color:#d22c15; font-size:11px; display:block; clear:both; }
+
+
+
+
 
 .timer {
     font-family:'cafe_nero_m54regular'; font-weight:normal; font-size:17px; line-height:27px; color:#fff; letter-spacing:4px; text-shadow:1px 2px 1px #3e2809; text-align:center;

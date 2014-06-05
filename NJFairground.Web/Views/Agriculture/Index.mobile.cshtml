@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Agriculture Learning Center | Sussex County Fairgrounds";
+    ViewBag.PageId = "agriculture";
+    Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
+}
+
+<h2 class="title">Agriculture/AG Learning Center</h2>
+ <div class="ui-grid-solo inner-page">
+       <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-agriculture.jpg")' alt=""> 
+      <div class="ui-block-a">
+    @for (var i = 0; i < 5; i++)
+    { 
+     
+        <div class="info-block">
+           <a title="Details" class="details" href="javascript:void(0)">Details</a>
+           <img class="info-pic" src='@Url.Content("~/Styles/images/schedule-pic1.jpg")' alt=""> 
+            <h4>Lorem Ipsum Text</h4> 
+            <p>Lorem ipsum dumy text Lorem</p> 
+        </div>
+    }
+          </div>
+</div>
