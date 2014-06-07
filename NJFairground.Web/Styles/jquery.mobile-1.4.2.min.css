@@ -1064,8 +1064,8 @@ body.ui-mobile-viewport, div.ui-mobile-viewport {
 	overflow: visible;
 	overflow-x: hidden;
 	padding: 8px;
-    margin-top: 4%;
-    margin-bottom: 2%;
+    margin-top: 3.7%;
+    /*margin-bottom: 2%;*/
 
 }
 .ui-corner-all>.ui-header:first-child, .ui-corner-all>.ui-content:first-child, .ui-corner-all>.ui-footer:first-child {

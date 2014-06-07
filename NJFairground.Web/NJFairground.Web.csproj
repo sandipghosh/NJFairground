@@ -502,6 +502,7 @@
     <Content Include="Images\title-shadow.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Images\youtube.png" />
+    <Content Include="Scripts\common-script.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
