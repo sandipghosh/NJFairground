@@ -16,7 +16,23 @@
 
 <div class="ui-grid-solo inner-page">
     <div class="ui-block-a">
-        <div class="social-block odd">
+        @{int i = 1;}
+
+        @foreach (var pageItemdata in Model)
+        {
+            string className = "social-block odd";
+            if (i % 2 == 0) { className = "social-block even"; } else { className = "social-block odd"; }
+            
+            <div class="@className">
+                <img class="social-pic" src='@Url.Content("~/Styles/images/" + pageItemdata.PageItemImage)' alt="">
+                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.Social), PageItemId = pageItemdata.PageItemId }) ">Details</a>
+                <h4>@pageItemdata.PageHeaderText</h4>
+                <p>@pageItemdata.PageSubHeaderText</p>
+            </div>
+            i += 1;
+        }
+
+        @*<div class="social-block odd">
             <img class="social-pic" src='@Url.Content("~/Styles/images/facebook.png")' alt="">
             <a title="Details" class="details" href="javascript:void(0)">Details</a>
             <h4>Facebook</h4>
@@ -31,9 +47,9 @@
         <div class="social-block odd">
             <img class="social-pic" src='@Url.Content("~/Styles/images/youtube.png")' alt="">
             <a title="Details" class="details" href="javascript:void(0)">Details</a>
-            <h4>TouTube</h4>
+            <h4>YouTube</h4>
             <p>Lorem ipsum dumy text</p>
-        </div>
+        </div>*@
     </div>
     <h2 class="inner-title sub">Login to Social Media</h2>
     <div class="ui-block-a">

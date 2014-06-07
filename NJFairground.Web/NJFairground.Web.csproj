@@ -219,6 +219,7 @@
     <Compile Include="Controllers\ComplexController.cs" />
     <Compile Include="Controllers\ConservatoryCourtyardController.cs" />
     <Compile Include="Controllers\DailyHighlightsController.cs" />
+    <Compile Include="Controllers\DetailsController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FoodFinderController.cs" />
     <Compile Include="Controllers\FunController.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Controllers\LandingPageController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PromoteController.cs" />
+    <Compile Include="Controllers\ShoppingController.cs" />
     <Compile Include="Controllers\SocialController.cs" />
     <Compile Include="Controllers\WhatsNewController.cs" />
     <Compile Include="Data\Context\BaseData.cs" />
@@ -499,9 +501,12 @@
     <Content Include="Images\title-shadow.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Images\youtube.png" />
+    <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.mobile-1.4.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Styles\fonts\cafe_nero_m54-webfont.svg" />
@@ -632,6 +637,8 @@
     <Content Include="Views\ConservatoryCourtyard\Index.mobile.cshtml" />
     <Content Include="Views\HorseShow\Index.mobile.cshtml" />
     <Content Include="Views\Promote\Index.mobile.cshtml" />
+    <Content Include="Views\Details\Index.mobile.cshtml" />
+    <Content Include="Views\Shopping\Index.mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

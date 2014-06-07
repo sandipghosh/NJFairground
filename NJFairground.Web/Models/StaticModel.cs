@@ -20,7 +20,8 @@ namespace NJFairground.Web.Models
         Fun=15,
         Food=16,
         Shopping=17,
-        Social=18
+        Social=18,
+        Complex=19
          
     }
 

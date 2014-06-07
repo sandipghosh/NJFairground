@@ -1,6 +1,8 @@
-﻿@{
+﻿@model List<NJFairground.Web.Models.PageItemModel>
+
+@{
     ViewBag.Title = "Info | Sussex County Fairgrounds";
-    ViewBag.PageId="info";
+    ViewBag.PageId = "info";
     Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
 }
 
@@ -15,13 +17,24 @@
 
 
 <div class="ui-grid-solo inner-page">
-    @for (var i = 0; i < 4; i++)
+    @*@for (var i = 0; i < 4; i++)
     { 
         <div class="info-block">
             <img class="info-pic" src='@Url.Content("~/Styles/images/info-pic1.png")' alt="">
-            <a title="Details" class="details" href="javascript:void(0)">Details</a>
+            <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = 12, PageItemId = 1201 }) ">Details</a>
             <h4>Lorem Ipsum Text</h4>
             <p>Lorem ipsum dumy text Lorem</p>
+        </div>
+    }*@
+
+    @foreach (var pageItemdata in Model)
+    {
+        
+        <div class="info-block">
+            <img class="info-pic" src='@Url.Content("~/Styles/images/" + pageItemdata.PageItemImage)' alt="">@*info-pic1.png*@
+            <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.Info), PageItemId = pageItemdata.PageItemId }) ">Details</a>
+            <h4>@pageItemdata.PageHeaderText</h4>
+            <p>@pageItemdata.PageSubHeaderText</p>
         </div>
     }
 </div>

@@ -24,7 +24,7 @@
   
   <!-- /header -->
   @Html.Partial("_Header.mobile")
-  <div role="main" class="ui-content">
+  <div role="main" class="ui-content" style="max-height:550px;overflow-y:auto;overflow-x:hidden;">
     <div class="intro">
       <span class="year">74th</span>
       <h3 class="name">New Jersey State Fair</h3>
@@ -84,7 +84,7 @@
       </div>
       
       <div class="ui-block-a">
-       <a href="javascript:void(0)">
+       <a href="Shopping">
         <div class="thumb">
           <img src='@Url.Content("~/Styles/images/thumb-ip-shopping.png")' alt=""> 
           <span>Shopping</span>

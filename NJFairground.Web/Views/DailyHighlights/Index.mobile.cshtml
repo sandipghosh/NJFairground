@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<NJFairground.Web.Models.PageItemModel>
+
+@{
     ViewBag.Title = "Daily Highlights | Sussex County Fairgrounds";
     ViewBag.PageId = "daily-highlights";
     Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
@@ -6,17 +8,31 @@
 
 <h2 class="title">Daily Highlights</h2>
 <div class="ui-grid-solo highlights">
-      @for (var i = 1; i < 11; i++)
+    @*@for (var i = 1; i < 11; i++)
     { 
-    <div class="ui-block-a highlight">
-        <div class="text">
-            <h4>August @i</h4>
-            <p>Lorem ipsum dummy text include</p>
+        <div class="ui-block-a highlight">
+            <div class="text">
+                <h4>August @i</h4>
+                <p>Lorem ipsum dummy text include</p>
+            </div>
+            <div class="action">
+                <a title="Details" class="details" href="javascript:void(0)">Details</a>
+                <img class="star" src='@Url.Content("~/Styles/images/star.png")' alt="">
+            </div>
         </div>
-        <div class="action">
-            <a title="Details" class="details" href="javascript:void(0)">Details</a>
-             <img class="star" src='@Url.Content("~/Styles/images/star.png")' alt=""> 
+    }*@
+
+    @foreach (var pageItemdata in Model)
+    {
+        <div class="ui-block-a highlight">
+            <div class="text">
+                 <h4>@pageItemdata.PageHeaderText</h4>
+                <p>@pageItemdata.PageSubHeaderText</p>
+            </div>
+            <div class="action">
+                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.DailyHighlights), PageItemId = pageItemdata.PageItemId }) ">Details</a>
+                <img class="star" src='@Url.Content("~/Styles/images/" + pageItemdata.PageItemImage)' alt="">
+            </div>
         </div>
-    </div>
-      }
+    }
 </div>

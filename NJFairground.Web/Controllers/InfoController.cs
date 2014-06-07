@@ -35,7 +35,7 @@ namespace NJFairground.Web.Controllers
             ViewBag.NavBarItems = NavItems;
 
 
-            var pageItems = this._pageItemDataRepository.GetList(x => x.PageId ==Convert.ToInt32(Page.Info)).ToList();
+            List<PageItemModel> pageItems = this._pageItemDataRepository.GetList(x => x.PageId ==Convert.ToInt32(Page.Info) && x.StatusId==1).ToList();
             return View("Index.mobile", pageItems);
         }
 

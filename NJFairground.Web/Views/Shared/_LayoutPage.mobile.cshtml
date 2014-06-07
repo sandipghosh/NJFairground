@@ -18,12 +18,12 @@
     <script src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
 
 </head>
-<body>
-    <div data-role="page" id="@ViewBag.PageId" data-title="@ViewBag.Title">@*"Info | Sussex County Fairgrounds">*@
+<body style="overflow-y:hidden;overflow-x:hidden;">
+    <div data-role="page" id="@ViewBag.PageId" data-title="@ViewBag.Title" >@*"Info | Sussex County Fairgrounds">*@
         @Html.Partial("_Header.mobile")
         <!-- /header -->
 
-        <div role="main" class="ui-content">
+        <div role="main" class="ui-content" style="max-height:550px;overflow-y:auto;overflow-x:hidden;">
             @RenderSection("navbar", required: false)
             <div class="ui-grid-solo inner-page">
                 @RenderSection("innerTitle", required: false)
