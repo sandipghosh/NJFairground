@@ -408,6 +408,7 @@
     <Content Include="bin\zh-Hant\Microsoft.Data.Edm.resources.dll" />
     <Content Include="bin\zh-Hant\Microsoft.Data.OData.resources.dll" />
     <Content Include="bin\zh-Hant\System.Spatial.resources.dll" />
+    <Content Include="DBScript\NJFairgroundDB_Scriptwithdata_06_07_2014_1138pm.sql" />
     <Content Include="ErrorLogs\TextFile.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
