@@ -19,12 +19,12 @@
     <script src='@Url.Content("~/Scripts/common-script.js")'></script>
 
 </head>
-<body>
+<body style="overflow-y:hidden;overflow-x:hidden;">
 <div data-role="page" id="innerpage" data-title="Inner Page | Sussex County Fairgrounds">
   
   <!-- /header -->
   @Html.Partial("_Header.mobile")
-  <div role="main" class="ui-content" style="max-height:550px;overflow-y:auto;overflow-x:hidden;">
+  <div id="body-main" role="main" class="ui-content" style="overflow-y:auto;overflow-x:hidden;">
     <div class="intro">
       <span class="year">74th</span>
       <h3 class="name">New Jersey State Fair</h3>
@@ -50,7 +50,7 @@
        </a> 
       </div>
       <div class="ui-block-c">
-       <a href="javascript:void(0)">
+       <a href="Map">
         <div class="thumb">
           <img src='@Url.Content("~/Styles/images/thumb-ip-map.png")' alt=""> 
           <span>Map</span>
@@ -100,7 +100,7 @@
        </a>
       </div>
       <div class="ui-block-c">
-       <a href="javascript:void(0)">
+       <a href="Directions">
         <div class="thumb">
           <img src='@Url.Content("~/Styles/images/thumb-ip-directions.png")' alt=""> 
           <span>Directions</span>

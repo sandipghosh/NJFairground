@@ -183,6 +183,25 @@ GetLetterCaseFromPascalCase = function (str) {
             $(window).bind('orientationchange', function () {
                 PageRepostioning();
             });
+
+            //swipe through history
+            jQuery('#body-main').live('swipeleft', function (event) {
+                window.history.back();
+                event.preventDefault();
+            });
+            jQuery('#body-main').live('swiperight', function (event) {
+                window.history.forward();
+                event.preventDefault();
+            });
+
+
+        } catch (ex) {
+            console.log(ex);
+        }
+    });
+    $(window).load(function () {
+        try {
+            PageRepostioning();
         } catch (ex) {
             console.log(ex);
         }

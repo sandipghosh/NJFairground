@@ -1064,7 +1064,7 @@ body.ui-mobile-viewport, div.ui-mobile-viewport {
 	overflow: visible;
 	overflow-x: hidden;
 	padding: 8px;
-    margin-top: 3.7%;
+    margin-top: 3.7%/*16%*/;
     /*margin-bottom: 2%;*/
 
 }
