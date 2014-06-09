@@ -1,55 +1,67 @@
-﻿using System.Web;
-using System.Web.Optimization;
-
+﻿
 namespace NJFairground.Web
 {
+    using System;
+    using System.Web;
+    using System.Web.Optimization;
+    using NJFairground.Web.Utilities;
+
     public class BundleConfig
     {
-        // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
+        /// <summary>
+        /// Registers the bundles.
+        /// </summary>
+        /// <param name="bundles">The bundles.</param>
         public static void RegisterBundles(BundleCollection bundles)
         {
-            //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-            //            "~/Scripts/jquery-{version}.js"));
+            try
+            {
+                RegisterStyleBundles(bundles);
+                RegisterScriptBundles(bundles);
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(bundles);
+            }
+        }
 
-            //bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-            //            "~/Scripts/jquery-ui-{version}.js"));
+        /// <summary>
+        /// Registers the script bundles.
+        /// </summary>
+        /// <param name="bundles">The bundles.</param>
+        private static void RegisterScriptBundles(BundleCollection bundles)
+        {
+            try
+            {
+                bundles.Add(new ScriptBundle("~/Scripts/CommonScript")
+                    .Include("~/Scripts/jquery-2.1.1.min.js",
+                    "~/Scripts/jquery-migrate-1.2.1.min.js",
+                    "~/Scripts/jquery.mobile-1.4.2.min.js",
+                    "~/Scripts/common-script.js"
+                    ));
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(bundles);
+            }
+        }
 
-            //bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-            //            "~/Scripts/jquery.unobtrusive*",
-            //            "~/Scripts/jquery.validate*"));
-
-            //// Use the development version of Modernizr to develop with and learn from. Then, when you're
-            //// ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-            //            "~/Scripts/modernizr-*"));
-
-            //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
-
-            //bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
-            //            "~/Content/themes/base/jquery.ui.core.css",
-            //            "~/Content/themes/base/jquery.ui.resizable.css",
-            //            "~/Content/themes/base/jquery.ui.selectable.css",
-            //            "~/Content/themes/base/jquery.ui.accordion.css",
-            //            "~/Content/themes/base/jquery.ui.autocomplete.css",
-            //            "~/Content/themes/base/jquery.ui.button.css",
-            //            "~/Content/themes/base/jquery.ui.dialog.css",
-            //            "~/Content/themes/base/jquery.ui.slider.css",
-            //            "~/Content/themes/base/jquery.ui.tabs.css",
-            //            "~/Content/themes/base/jquery.ui.datepicker.css",
-            //            "~/Content/themes/base/jquery.ui.progressbar.css",
-            //            "~/Content/themes/base/jquery.ui.theme.css"));
-
-            bundles.Add(new ScriptBundle("~/Scripts/CommonScript")
-                //.Include("~/Scripts/jquery-{version}.js"));
-                .Include("~/Scripts/jquery-2.1.1.min.js",
-                "~/Scripts/jquery-migrate-1.2.1.min.js",
-                "~/Scripts/jquery.mobile-1.4.2.min.js"
-                ));
-
-            bundles.Add(new StyleBundle("~/Styles/CommonStyle")
-                .Include("~/Styles/jquery.mobile-1.4.2.min.css",
-                "~/Styles/style.css"));
-
+        /// <summary>
+        /// Registers the style bundles.
+        /// </summary>
+        /// <param name="bundles">The bundles.</param>
+        private static void RegisterStyleBundles(BundleCollection bundles)
+        {
+            try
+            {
+                bundles.Add(new StyleBundle("~/Styles/CommonStyle")
+                    .Include("~/Styles/jquery.mobile-1.4.2.min.css",
+                    "~/Styles/style.css"));
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(bundles);
+            }
         }
     }
 }

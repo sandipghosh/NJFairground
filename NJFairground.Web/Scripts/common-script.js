@@ -188,6 +188,37 @@ GetLetterCaseFromPascalCase = function (str) {
         }
     });
 
+    $(document).on({
+        pagecreate: function (eventArgs) {
+            try {
+                //PageRepostioning();
+            } catch (ex) {
+                Console.log(ex);
+            }
+        },
+        pageshow: function (eventArgs) {
+            try {
+                PageRepostioning();
+            } catch (ex) {
+                Console.log(ex);
+            }
+        },
+        pagebeforeshow: function (eventArgs) {
+            try {
+                //PageRepostioning();
+            } catch (ex) {
+                Console.log(ex);
+            }
+        }
+        //pageaftereshow: function (eventArgs) {
+        //    try {
+        //        PageRepostioning();
+        //    } catch (ex) {
+        //        Console.log(ex);
+        //    }
+        //}
+    }, 'div[data-role="page"]');
+
     $(window).resize(function () {
         try {
             PageRepostioning();

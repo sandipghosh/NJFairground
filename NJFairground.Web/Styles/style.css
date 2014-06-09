@@ -29,7 +29,7 @@
 
 body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 
-.ui-header.ui-bar-inherit{ min-height:50px; background:url(images/header-bg.png) repeat-x 0 bottom;background-color:transparent; border:none; text-shadow:none; padding:10px 6px; margin:0 0 10px; top: 0;position: fixed;width: 100%;/* background-color: #F7CA6C;*/}
+.ui-header.ui-bar-inherit{ min-height:50px; background:url(images/header-bg.png) repeat-x 0 bottom; border:none; text-shadow:none; padding:10px 6px; top: 0;position: fixed;width: 100%;}
 #header-main{background-color:#F7CA6C;}
 #details .ui-header.ui-bar-inherit{ background-image:url(images/header-bg-details.png); }
 .ui-header .ui-btn{ -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; border:solid 1px #d0821d; min-height:30px; min-width:37px; background:url(images/header-btns-bg.png) repeat-x 0 0; padding:0 9px; top:10px; }

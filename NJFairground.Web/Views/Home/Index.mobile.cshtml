@@ -1,6 +1,6 @@
-﻿@{
+﻿@using System.Web.Optimization
+@{
     Layout = null;
-    
 }
 
 <!DOCTYPE html>
@@ -9,10 +9,11 @@
     <title>Home | Sussex County Fairgrounds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    @*@Styles.Render("~/Styles/CommonStyle")
+    @Scripts.Render("~/Scripts/CommonScript")*@
+
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
-
-    <!--- JQuery Mobile 1.4.2 --->
 
     <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
     <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
@@ -20,11 +21,11 @@
     <script src='@Url.Content("~/Scripts/common-script.js")'></script>
 </head>
 <body>
-    <div data-role="page" id="homepage" data-title="Home | Sussex County Fairgrounds">
-       @Html.Partial("_Header.mobile")
+    <div data-role="page" id="homepage" data-title="@ViewBag.Title">
+        @Html.Partial("_Header.mobile")
         <!-- /header -->
 
-        <div role="main" class="ui-content" style="max-height:550px;overflow-y:auto;overflow-x:hidden;">
+        <div id="body-main" role="main" class="ui-content" style="overflow-y:auto; overflow-x:hidden;">
             <div class="ui-grid-a fair-grounds">
                 <div class="ui-block-a">
                     <a href="Fair">
@@ -38,7 +39,6 @@
                         <span>2014 Calender of Events</span>
                     </a>
                 </div>
-
                 <div class="ui-block-a">
                     <a href="HorseShow">
                         <img src='@Url.Content("~/Styles/images/thumb-horseshow.png")' alt="">
@@ -51,7 +51,6 @@
                         <span>Agriculture/AG Learning Center</span>
                     </a>
                 </div>
-
                 <div class="ui-block-a">
                     <a href="ConservatoryCourtyard">
                         <img src='@Url.Content("~/Styles/images/thumb-courtyard.png")' alt="">
@@ -64,7 +63,6 @@
                         <span>Fairgrounds Complex All Season/Events/Rentals</span>
                     </a>
                 </div>
-
                 <div class="ui-block-a">
                     <a href="Promote">
                         <img src='@Url.Content("~/Styles/images/thumb-promote.png")' alt="">
@@ -80,7 +78,6 @@
             </div>
         </div>
         <!-- /content -->
-
         @Html.Partial("_Footer.mobile")
         <!-- /footer -->
     </div>

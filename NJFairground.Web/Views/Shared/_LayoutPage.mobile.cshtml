@@ -1,82 +1,36 @@
-﻿<!DOCTYPE html>
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
 <html>
 <head>
-
     <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
 
-    @*@Styles.Render("~/Styles/CommonStyle")*@
-    @*@Scripts.Render("~/Scripts/CommonScript")*@
-
-    <!--- JQuery Mobile 1.4.2 --->
-
     <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
     <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
     <script src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
     <script src='@Url.Content("~/Scripts/common-script.js")'></script>
-
-    @*<script type="text/javascript">
-        (function ($, win) {
-
-
-            $(document).ready(function () {
-                try {
-                    PageRepostioning();
-                    $(window).bind('orientationchange', function () {
-                        PageRepostioning();
-                    });
-                } catch (ex) {
-                    console.log(ex);
-                }
-            });
-
-            $(window).resize(function () {
-                try {
-                    PageRepostioning();
-                } catch (ex) {
-                    console.log(ex);
-                }
-            });
-
-            this.PageRepostioning = function () {
-                try {
-                    var docHeight = $(win).height();
-
-                    var headerHeight = $('#header-main').height();
-                    var footerHeight = $('#footer-main').height();
-
-                    var bodyHeight = (docHeight - (headerHeight + footerHeight + 20));
-                    $('#body-main').css({ 'height': bodyHeight + 'px' });
-
-                } catch (ex) {
-                    console.log(ex);
-                }
-            }
-
-        }(jQuery, window));
-    </script>*@
 </head>
-<body style="overflow-y:hidden;overflow-x:hidden;">
-    <div data-role="page" id="@ViewBag.PageId" data-title="@ViewBag.Title" >@*"Info | Sussex County Fairgrounds">*@
+<body>
+    <div data-role="page" id="@ViewBag.PageId" data-title="@ViewBag.Title">
         @Html.Partial("_Header.mobile")
         <!-- /header -->
 
-        <div id="body-main" role="main" class="ui-content" style="overflow-y:auto;overflow-x:hidden;">
+        <div id="body-main" role="main" class="ui-content" style="overflow-y:auto; overflow-x:hidden;">
             @RenderSection("navbar", required: false)
             <div class="ui-grid-solo inner-page">
                 @RenderSection("innerTitle", required: false)
             </div>
+
             @RenderBody()
 
-
             <span class="presented-by">
-                <img src="~/Styles/images/presentedby.png" alt=""></span>
+                <img src="~/Styles/images/presentedby.png" alt="">
+            </span>
         </div>
         <!-- /content -->
-
         @Html.Partial("_Footer.mobile")
     </div>
     <!-- /page -->
