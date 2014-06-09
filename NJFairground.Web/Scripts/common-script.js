@@ -173,88 +173,86 @@ GetLetterCaseFromPascalCase = function (str) {
     return str.replace(/([a-z])([A-Z])/g, '$1 $2');
 };
 
-
-
 (function ($, win) {
+    $(function () {
+        $(document).ready(function () {
+            var $self = $(this).find("div[data-role*='page']");
+            PageRepostioning($self);
+        });
 
-    $(document).ready(function () {
-        try {
-            PageRepostioning();
-            $(window).bind('orientationchange', function () {
-                PageRepostioning();
-            });
+        //Device portrait/landscape orientation event
+        $(win).on("orientationchange", function (event) {
+            try {
+                var $self = $(this).find("div[data-role*='page']");
+                PageRepostioning($self);
+            } catch (ex) {
+                console.log(ex);
+            }
+        });
 
-            //swipe through history
-            jQuery('#body-main').live('swipeleft', function (event) {
-                window.history.back();
+        //Triggered on the "toPage" after the transition animation has completed.
+        $("div[data-role*='page']").live('pageshow', function (event, ui) {
+            try {
+                var $self = $(this);
+                PageRepostioning($self);
+            } catch (ex) {
+                console.log(ex);
+            }
+        });
+
+
+        //Triggered when the page has been created in the DOM (via ajax or other) and 
+        //after all widgets have had an opportunity to enhance the contained markup.
+        $("div[data-role*='page']").live('pagecreate', function (event, ui) {
+            try {
+
+            } catch (ex) {
+                console.log(ex);
+            }
+        });
+
+        //Triggered on the "toPage" we are transitioning to, 
+        //before the actual transition animation is kicked off.
+        $("div[data-role*='page']").live('pagebeforeshow', function (event, ui) {
+            try {
+                //var $self = $(this);
+                //PageRepostioning($self);
+            } catch (ex) {
+                console.log(ex);
+            }
+        });
+
+        //Triggered when a swipe event occurs moving in the left direction.
+        $('#body-main').live('swipeleft', function (event) {
+            try {
+                win.history.back();
                 event.preventDefault();
-            });
-            jQuery('#body-main').live('swiperight', function (event) {
-                window.history.forward();
+            } catch (ex) {
+                console.log(ex);
+            }
+        });
+
+        //Triggered when a swipe event occurs moving in the right direction.
+        $('#body-main').live('swiperight', function (event) {
+            try {
+                win.history.forward();
                 event.preventDefault();
-            });
-
-
-        } catch (ex) {
-            console.log(ex);
-        }
-    });
-    $(window).load(function () {
-        try {
-            PageRepostioning();
-        } catch (ex) {
-            console.log(ex);
-        }
+            } catch (ex) {
+                console.log(ex);
+            }
+        });
     });
 
-    $(document).on({
-        pagecreate: function (eventArgs) {
-            try {
-                //PageRepostioning();
-            } catch (ex) {
-                Console.log(ex);
-            }
-        },
-        pageshow: function (eventArgs) {
-            try {
-                PageRepostioning();
-            } catch (ex) {
-                Console.log(ex);
-            }
-        },
-        pagebeforeshow: function (eventArgs) {
-            try {
-                //PageRepostioning();
-            } catch (ex) {
-                Console.log(ex);
-            }
-        }
-        //pageaftereshow: function (eventArgs) {
-        //    try {
-        //        PageRepostioning();
-        //    } catch (ex) {
-        //        Console.log(ex);
-        //    }
-        //}
-    }, 'div[data-role="page"]');
-
-    $(window).resize(function () {
-        try {
-            PageRepostioning();
-        } catch (ex) {
-            console.log(ex);
-        }
-    });
-
-    this.PageRepostioning = function () {
+    //General function implementation to resize the main body.
+    this.PageRepostioning = function ($self) {
         try {
             var docHeight = $(win).height();
 
-            var headerHeight = $('#header-main').height();
-            var footerHeight = $('#footer-main').height();
+            var headerHeight = parseInt($self.find('#header-main').css('height').replace('px', ''));
+            var footerHeight = parseInt($self.find('#footer-main').css('height').replace('px', ''));
 
-            var bodyHeight = (docHeight - (headerHeight + footerHeight + 20));
-            $('#body-main').css({ 'height': bodyHeight + 'px' });
+            var bodyHeight = (docHeight - (headerHeight + footerHeight));
+            $self.find('#body-main').css({ 'height': bodyHeight + 'px', 'margin-top': headerHeight + 'px' });
 
         } catch (ex) {
             console.log(ex);

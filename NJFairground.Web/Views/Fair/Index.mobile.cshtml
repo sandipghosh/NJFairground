@@ -6,10 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Home | Sussex County Fairgrounds</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home | Sussex County Fairgrounds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
- <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
+    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
 
     <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
@@ -18,103 +18,103 @@
     <script src='@Url.Content("~/Scripts/common-script.js")'></script>
 </head>
 <body style="overflow-y:hidden;overflow-x:hidden;">
-<div data-role="page" id="innerpage" data-title="Inner Page | Sussex County Fairgrounds">
-  
-  <!-- /header -->
-  @Html.Partial("_Header.mobile")
+    <div data-role="page" id="innerpage" data-title="Inner Page | Sussex County Fairgrounds">
+
+        <!-- /header -->
+        @Html.Partial("_Header.mobile")
 
         <div role="main" class="ui-content" id="body-main" style="overflow-y:auto; overflow-x:hidden;">
-    <div class="intro">
+            <div class="intro">
                 <span class="year">@(CommonUtility.GetAppSetting<string>("FairYear"))</span>
                 <h3 class="name">@(CommonUtility.GetAppSetting<string>("FairName"))</h3>
                 <h4 class="subname">@(CommonUtility.GetAppSetting<string>("FairSubname"))</h4>
                 <span class="catchline">@(CommonUtility.GetAppSetting<string>("FairCatchline"))</span>
                 <span class="venue">@(CommonUtility.GetAppSetting<string>("FairVenue"))</span>
-    </div>
-    <div class="ui-grid-b">
-      <div class="ui-block-a">
-        <a href="WhatsNew">
-          <div class="thumb">          
-            <img src='@Url.Content("~/Styles/images/thumb-ip-whatsnew.png")' alt="">           
-            <span>What's New!</span>        
-          </div>
-        </a>
-      </div>
-      <div class="ui-block-b">
-       <a href="info">
-        <div class="thumb">
-          <img src='@Url.Content("~/Styles/images/thumb-ip-info.png")' alt=""> 
-          <span>Info</span>
-        </div>
-       </a> 
-      </div>
-      <div class="ui-block-c">
-       <a href="Map">
-        <div class="thumb">
-          <img src='@Url.Content("~/Styles/images/thumb-ip-map.png")' alt=""> 
-          <span>Map</span>
-        </div>
-       </a>
-      </div>
-      
-      <div class="ui-block-a">
-       <a href="DailyHighlights">
-        <div class="thumb">
-          <img src='@Url.Content("~/Styles/images/thumb-ip-daily-highlights.png")' alt=""> 
-          <span>Daily Highlights</span>
-        </div>
-       </a>
-      </div>
-      <div class="ui-block-b">
-       <a href="Fun">
-        <div class="thumb">
-          <img src='@Url.Content("~/Styles/images/thumb-ip-fun.png")' alt=""> 
-          <span>Fun</span>
-        </div>
-       </a>
-      </div>
-      <div class="ui-block-c">
-       <a href="FoodFinder">
-        <div class="thumb">
-          <img src='@Url.Content("~/Styles/images/thumb-ip-food.png")' alt=""> 
-          <span>Food</span>
-        </div>
-       </a>
-      </div>
-      <div class="ui-block-a">
-       <a href="Shopping">
-        <div class="thumb">
-          <img src='@Url.Content("~/Styles/images/thumb-ip-shopping.png")' alt=""> 
-          <span>Shopping</span>
-        </div>
-       </a>
-      </div>
-      <div class="ui-block-b">
-       <a href="social">
-        <div class="thumb">
-          <img src='@Url.Content("~/Styles/images/thumb-ip-social.png")' alt=""> 
-          <span>Social</span>
-        </div>
-       </a>
-      </div>
-      <div class="ui-block-c">
-       <a href="Directions">
-        <div class="thumb">
-          <img src='@Url.Content("~/Styles/images/thumb-ip-directions.png")' alt=""> 
-          <span>Directions</span>
-        </div>
-       </a>
-      </div>
-    </div>
+            </div>
+            <div class="ui-grid-b">
+                <div class="ui-block-a">
+                    <a href="WhatsNew">
+                        <div class="thumb">
+                            <img src='@Url.Content("~/Styles/images/thumb-ip-whatsnew.png")' alt="">
+                            <span>What's New!</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="info">
+                        <div class="thumb">
+                            <img src='@Url.Content("~/Styles/images/thumb-ip-info.png")' alt="">
+                            <span>Info</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="ui-block-c">
+                    <a href="Map">
+                        <div class="thumb">
+                            <img src='@Url.Content("~/Styles/images/thumb-ip-map.png")' alt="">
+                            <span>Map</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="ui-block-a">
+                    <a href="DailyHighlights">
+                        <div class="thumb">
+                            <img src='@Url.Content("~/Styles/images/thumb-ip-daily-highlights.png")' alt="">
+                            <span>Daily Highlights</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="Fun">
+                        <div class="thumb">
+                            <img src='@Url.Content("~/Styles/images/thumb-ip-fun.png")' alt="">
+                            <span>Fun</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="ui-block-c">
+                    <a href="FoodFinder">
+                        <div class="thumb">
+                            <img src='@Url.Content("~/Styles/images/thumb-ip-food.png")' alt="">
+                            <span>Food</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="ui-block-a">
+                    <a href="Shopping">
+                        <div class="thumb">
+                            <img src='@Url.Content("~/Styles/images/thumb-ip-shopping.png")' alt="">
+                            <span>Shopping</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="social">
+                        <div class="thumb">
+                            <img src='@Url.Content("~/Styles/images/thumb-ip-social.png")' alt="">
+                            <span>Social</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="ui-block-c">
+                    <a href="Directions">
+                        <div class="thumb">
+                            <img src='@Url.Content("~/Styles/images/thumb-ip-directions.png")' alt="">
+                            <span>Directions</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
             <span class="presented-by">
                 <img src='@Url.Content("~/Styles/images/presentedby.png")' alt="">
             </span>
-  </div>
-  <!-- /content -->
-  @Html.Partial("_Footer.mobile")
-  <!-- /footer --> 
-</div>
-<!-- /page -->
+        </div>
+        <!-- /content -->
+        @Html.Partial("_Footer.mobile")
+        <!-- /footer -->
+    </div>
+    <!-- /page -->
 
 </body>
 </html>
