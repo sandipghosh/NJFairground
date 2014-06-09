@@ -223,6 +223,8 @@
     <Compile Include="Controllers\ConservatoryCourtyardController.cs" />
     <Compile Include="Controllers\DailyHighlightsController.cs" />
     <Compile Include="Controllers\DetailsController.cs" />
+    <Compile Include="Controllers\DirectionsController.cs" />
+    <Compile Include="Controllers\DirectionToFairgroundController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FoodFinderController.cs" />
@@ -232,6 +234,7 @@
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Controllers\FairController.cs" />
     <Compile Include="Controllers\LandingPageController.cs" />
+    <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PromoteController.cs" />
     <Compile Include="Controllers\SocialController.cs" />
@@ -645,6 +648,9 @@
     <Content Include="Views\Promote\Index.mobile.cshtml" />
     <Content Include="Views\Details\Index.mobile.cshtml" />
     <Content Include="Views\Shopping\Index.mobile.cshtml" />
+    <Content Include="Views\Directions\Index.mobile.cshtml" />
+    <Content Include="Views\DirectionToFairground\Index.mobile.cshtml" />
+    <Content Include="Views\Map\Index.mobile.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

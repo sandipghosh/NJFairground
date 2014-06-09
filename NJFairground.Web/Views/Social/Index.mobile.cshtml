@@ -5,7 +5,16 @@
 }
 
 @section navbar{
-    @Html.Partial("_NavigationBar.mobile", (List<string>)ViewBag.NavBarItems)
+    @*@Html.Partial("_NavigationBar.mobile", (List<string>)ViewBag.NavBarItems)*@
+    <div class="navbar">
+    <ul>
+        <li class="first"><a href="Fair">The Fair</a></li>
+        <li><a href="Fun">Fun</a></li>
+        <li><a href="Info">Info</a></li>
+        <li class="last active"><a href="Social">Social</a></li>
+        <li ><a href="Map">Map</a></li>
+    </ul>
+</div>
 }
 
 @section innerTitle{
