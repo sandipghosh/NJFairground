@@ -218,6 +218,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Models\Base\BaseModel.cs" />
+    <Compile Include="Areas\Admin\Models\Base\GridModelSchema.cs" />
     <Compile Include="Controllers\AgricultureController.cs" />
     <Compile Include="Controllers\ComplexController.cs" />
     <Compile Include="Controllers\ConservatoryCourtyardController.cs" />
@@ -313,6 +315,37 @@
     <Compile Include="Utilities\SessionVariable.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Scripts\fullcalendar.min.js" />
+    <Content Include="Areas\Admin\Scripts\gmap3.min.js" />
+    <Content Include="Areas\Admin\Scripts\Gmap3Menu.js" />
+    <Content Include="Areas\Admin\Scripts\grid-intregration.js" />
+    <Content Include="Areas\Admin\Scripts\grid.locale-en.js" />
+    <Content Include="Areas\Admin\Scripts\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery-ui-1.10.4.min.js" />
+    <None Include="Areas\Admin\Scripts\jquery-ui-vsdoc.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.form.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.jqGrid.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.linq-2.2.0.2.min.js" />
+    <None Include="Areas\Admin\Scripts\jquery.linq-vsdoc.js" />
+    <Content Include="Areas\Admin\Scripts\tinymce.min.js" />
+    <Content Include="Areas\Admin\Styles\fullcalendar.css" />
+    <Content Include="Areas\Admin\Styles\fullcalendar.print.css" />
+    <Content Include="Areas\Admin\Styles\Images\animated-overlay.gif" />
+    <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_0_615d5d_40x100.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_55_fbf9ee_40x100.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_65_ffffff_40x100.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_75_cccccc_40x100.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_75_dadada_40x100.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_75_e6e6e6_40x100.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_95_fef1ec_40x100.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-icons_222222_256x240.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-icons_454545_256x240.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-icons_888888_256x240.png" />
+    <Content Include="Areas\Admin\Styles\Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Admin\Styles\jquery-ui-1.10.4.custom.min.css" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\AutoMapper.dll" />
     <Content Include="bin\AutoMapper.Net4.dll" />
@@ -436,6 +469,7 @@
       <DependentUpon>NJFairgroundDBEntities.edmx</DependentUpon>
       <LastGenOutput>NJFairgroundDBEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Areas\Admin\Views\Shared\_AdminLayoutPage.cshtml" />
     <None Include="bin\NJFairground.Web.dll.config" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
@@ -656,8 +690,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
