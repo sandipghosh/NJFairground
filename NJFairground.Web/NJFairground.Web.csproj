@@ -218,6 +218,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContentManagerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EventSchedulerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MapCreaterController.cs" />
     <Compile Include="Areas\Admin\Models\Base\BaseModel.cs" />
     <Compile Include="Areas\Admin\Models\Base\GridModelSchema.cs" />
     <Compile Include="Controllers\AgricultureController.cs" />
@@ -470,6 +473,9 @@
       <LastGenOutput>NJFairgroundDBEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\Admin\Views\Shared\_AdminLayoutPage.cshtml" />
+    <Content Include="Areas\Admin\Views\MapCreater\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ContentManager\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\EventScheduler\Index.cshtml" />
     <None Include="bin\NJFairground.Web.dll.config" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
@@ -689,7 +695,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
