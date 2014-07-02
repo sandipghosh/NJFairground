@@ -1,6 +1,14 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Content Manager";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
-<h2>Index</h2>
+@section AdimnPageScripts{
+    <script type="text/javascript" src='@Url.Content("~/Areas/Admin/Scripts/jquery.jqGrid.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Areas/Admin/Scripts/grid.locale-en.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Areas/Admin/Scripts/jquery.linq-2.2.0.2.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Areas/Admin/Scripts/grid-intregration.js")'></script>
+}
+
+@Html.Hidden("SchemaData", (object)ViewBag.SchemaData)
+@Html.Partial("_GridGlobalMaster")

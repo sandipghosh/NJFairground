@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+﻿
 namespace NJFairground.Web.Controllers
 {
-    public class LandingPageController : Controller
-    {
-        //
-        // GET: /LandingPage/
+    using NJFairground.Web.Controllers.Base;
+    using System.Web.Mvc;
 
+    public class LandingPageController : BaseController
+    {
         public ActionResult Index()
         {
             return View("Index.mobile");

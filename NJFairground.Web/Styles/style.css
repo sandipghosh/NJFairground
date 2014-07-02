@@ -42,6 +42,8 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 
 .ui-header .ui-title{ font-family:'cafe_nero_m54regular'; font-weight:normal; font-size:17px; line-height:27px; color:#fff; letter-spacing:4px; text-shadow:1px 2px 1px #3e2809; }
 .ui-header .ui-title span{ font-size:25px; }
+.ui-header .header-back .ui-title{ font-family:'cafe_nero_m54regular'; font-weight:normal; font-size:17px; line-height:27px; color:#fff; letter-spacing:4px; text-shadow:1px 2px 1px #3e2809; }
+.ui-header .header-back .ui-title span{ font-size:25px; }
 
 .ui-footer.ui-bar-inherit{ height:68px; background:url(images/footer-bg.png) repeat-x 0 0 #040404; border:none; text-shadow:none; text-align:center; font-weight:normal;position: fixed;bottom: 0px;width: 100%; }
 .ui-footer ul li{ display:inline-block; vertical-align:top; }
@@ -100,7 +102,7 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 .highlights .highlight p{ color:#000; font-size:11px; line-height:15px; } 
 .highlights .details{ float:right; margin:8px 0 0; font-size:0px; background:url(images/highlight-arrow.png) no-repeat 0 0; height:23px; width:12px; }
 .highlights .details:hover{ background-position:0 100%; }
-.highlights .star{ float:right; margin:7px 5px 0 0; }
+.highlights .star{ float:right; margin:7px 5px 0 0;width:59px;height:49px; }
 
 /*--- Food Finder Page ---*/
 #food-finder{ background:url(images/inner-content-bg.png) no-repeat 0 0; background-size:100%; }
@@ -109,18 +111,18 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 #fun{ background:url(images/inner-content-bg.png) no-repeat 0 0; background-size:100%; }
 .fun-blocks{ padding:9px 0 0; }
 .fun-blocks .fun-block{ background:#ffbc08; padding:6px 10px; min-height:52px; overflow:hidden; margin:0 0 4px; }
-.fun-blocks .fun-block .text{ width:65%; float:left; margin:0 5% 0 0; }
+.fun-blocks .fun-block .text{ width:65%; float:left; margin:0 5% 0 0;}
 .fun-blocks .fun-block .action{ width:30%; float:right; }
 .fun-blocks .fun-block h4{ color:#fff; font-size:17px; line-height:23px; font-weight:normal; }
 .fun-blocks .fun-block p{ color:#000; font-size:11px; line-height:15px; } 
 .fun-blocks .details{ float:right; margin:13px 0 0; font-size:0px; background:url(images/highlight-arrow.png) no-repeat 0 0; height:23px; width:12px; }
 .fun-blocks .details:hover{ background-position:0 100%; }
-.fun-blocks .fun-pic{ float:right; margin:0 11px 0 0; border:solid 1px #ffe508; }
+.fun-blocks .fun-pic{ float:right; margin:0 11px 0 0; border:solid 1px #ffe508;width:59px;height:49px;  }
 
 /*--- Info Page ---*/
 #info{ background:url(images/inner-content-bg.png) no-repeat 0 0; background-size:100%; }
 .info-block{ margin:0 0 4px; background:#ffbc08; padding:4px 10px 4px 4px; overflow:hidden; }
-.info-block .info-pic{ float:left; margin:0 8px 0 0; border:solid 1px #ffe508; }
+.info-block .info-pic{ float:left; margin:0 8px 0 0; border:solid 1px #ffe508;width:59px;height:49px; }
 .info-block h4{ color:#fff; font-size:17px; line-height:23px; font-weight:normal; }
 .info-block p{ color:#000; font-size:11px; line-height:15px; } 
 .info-block .details{ float:right; margin:14px 0 0; font-size:0px; background:url(images/highlight-arrow.png) no-repeat 0 0; height:23px; width:12px; }
@@ -167,12 +169,14 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 #details{ background:url(images/inner-content-bg-details.png) no-repeat 0 bottom #ffdad5; background-size:100%; }
 #details .ui-header .ui-title{ text-align:left; margin:0 0 0 17px; font-size:13px; letter-spacing:3px; }
 #details .ui-header .ui-title span{ font-size:16px; }
+#details .ui-header .header-back .ui-title{ text-align:left; margin:0 0 0 17px; font-size:13px; letter-spacing:3px; }
+#details .ui-header .header-back .ui-title span{ font-size:16px; }
 #scroller{ overflow:auto; height:295px; }
 .scroller{ background:#ffdad5; padding:14px 10px; }
 .scroller h2{ font-size:17px; line-height:23px; color:#9f2023; font-weight:normal; margin:0 0 8px; }
 .scroller p{ font-size:11px; line-height:15px; color:#000000; margin:0 0 14px; }
 
-#details .block{ background:#ffdad5; padding:6px 10px; min-height:52px; overflow:hidden; margin:0 0 4px; }
+#details .block{ background:#ffdad5; padding:6px 10px; min-height:52px; overflow:hidden; margin:0 0 4px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden; }
 #details .block .text{ width:82%; float:left; margin:0 5% 0 0; }
 #details .block .action{ width:13%; float:right; }
 #details .block h4{ color:#9f2023; font-size:17px; line-height:23px; font-weight:normal; }
@@ -231,3 +235,10 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 .timer-span {
     font-size:35px;
 }
+
+.WordElipsis
+{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	}

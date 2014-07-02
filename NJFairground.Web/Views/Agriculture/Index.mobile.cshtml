@@ -1,4 +1,5 @@
 ﻿@model List<NJFairground.Web.Models.PageItemModel>
+@using NJFairground.Web.Utilities
 @{
     ViewBag.Title = "Agriculture Learning Center | Sussex County Fairgrounds";
     ViewBag.PageId = "agriculture";
@@ -25,7 +26,7 @@
      
             <div class="info-block">
                 <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.AGLearningCenter), PageItemId = pageItemdata.PageItemId }) ">Details</a>
-                <img class="info-pic" src='@Url.Content("~/Styles/images/" + pageItemdata.PageItemImage)' alt="">
+                <img class="info-pic" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),pageItemdata.PageItemImage))' alt="">
                 <h4>@pageItemdata.PageHeaderText</h4>
                 <p>@pageItemdata.PageSubHeaderText</p>
             </div>

@@ -1,5 +1,5 @@
 ﻿@model List<NJFairground.Web.Models.PageItemModel>
-
+@using NJFairground.Web.Utilities
 @{
     ViewBag.Title = "Info | Sussex County Fairgrounds";
     ViewBag.PageId = "info";
@@ -11,7 +11,7 @@
 }
 
 @section innerTitle{
-    <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-info.jpg")' alt="">
+    <img class="inner-banner" src='@Url.Content("~/Styles/images/Info Main Picture.jpg")' alt="">
     <h2 class="inner-title">@Html.Raw("General Information")</h2>
 }
 
@@ -31,7 +31,7 @@
     {
         
         <div class="info-block">
-            <img class="info-pic" src='@Url.Content("~/Styles/images/" + pageItemdata.PageItemImage)' alt="">@*info-pic1.png*@
+            <img class="info-pic" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),pageItemdata.PageItemImage))' alt="">@*info-pic1.png*@
             <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.Info), PageItemId = pageItemdata.PageItemId }) ">Details</a>
             <h4>@pageItemdata.PageHeaderText</h4>
             <p>@pageItemdata.PageSubHeaderText</p>

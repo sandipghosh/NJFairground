@@ -225,7 +225,7 @@ GetLetterCaseFromPascalCase = function (str) {
         //Triggered when a swipe event occurs moving in the left direction.
         $('#body-main').live('swipeleft', function (event) {
             try {
-                win.history.back();
+                win.history.forward();
                 event.preventDefault();
             } catch (ex) {
                 console.log(ex);
@@ -235,7 +235,26 @@ GetLetterCaseFromPascalCase = function (str) {
         //Triggered when a swipe event occurs moving in the right direction.
         $('#body-main').live('swiperight', function (event) {
             try {
-                win.history.forward();
+                win.history.back();
+                event.preventDefault();
+            } catch (ex) {
+                console.log(ex);
+            }
+        });
+
+
+        $('.fun-block,.social-block,.highlight,.info-block,.block').live("tap", function () {
+            try {
+                var url = $(this).find('a').attr('href');
+                window.location.href = url;
+            } catch (ex) {
+                console.log(ex);
+            }
+        });
+
+        $('.header-back').live('tap', function (event) {
+            try {
+                win.history.back();
                 event.preventDefault();
             } catch (ex) {
                 console.log(ex);
@@ -257,6 +276,9 @@ GetLetterCaseFromPascalCase = function (str) {
         } catch (ex) {
             console.log(ex);
         }
-    }
+    };
+
 
 }(jQuery, window));
+
+

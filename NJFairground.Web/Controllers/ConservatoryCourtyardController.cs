@@ -1,32 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+﻿
 namespace NJFairground.Web.Controllers
 {
+    using NJFairground.Web.Controllers.Base;
+    using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
-    using NJFairground.Web.Data.Interface;
-    using NJFairground.Web.Utilities;
-    using NJFairground.Web.Models;
-    
-    public class ConservatoryCourtyardController : Controller
-    {
-         private readonly IPageItemDataRepository _pageItemDataRepository;
 
-         public ConservatoryCourtyardController(IPageItemDataRepository pageItemDataRepository)
+    public class ConservatoryCourtyardController : BaseController
+    {
+        private readonly IPageItemDataRepository _pageItemDataRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConservatoryCourtyardController"/> class.
+        /// </summary>
+        /// <param name="pageItemDataRepository">The page item data repository.</param>
+        public ConservatoryCourtyardController(IPageItemDataRepository pageItemDataRepository)
         {
             this._pageItemDataRepository = pageItemDataRepository;
         }
 
-        //
-        // GET: /ConservatoryCourtyard/
-
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs(HttpVerbs.Get),
+        OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
             List<PageItemModel> pageItems = this._pageItemDataRepository.GetList(x => x.PageId == Convert.ToInt32(Page.ConservatoryAndCourtyard) && x.StatusId == 1).ToList();

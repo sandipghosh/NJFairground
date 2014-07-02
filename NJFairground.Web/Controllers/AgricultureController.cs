@@ -10,19 +10,27 @@ namespace NJFairground.Web.Controllers
     using NJFairground.Web.Utilities;
 
     using NJFairground.Web.Models;
-    public class AgricultureController : Controller
+    using NJFairground.Web.Controllers.Base;
+    public class AgricultureController : BaseController
     {
-         private readonly IPageItemDataRepository _pageItemDataRepository;
+        private readonly IPageItemDataRepository _pageItemDataRepository;
 
-         public AgricultureController(IPageItemDataRepository pageItemDataRepository)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AgricultureController"/> class.
+        /// </summary>
+        /// <param name="pageItemDataRepository">The page item data repository.</param>
+        public AgricultureController(IPageItemDataRepository pageItemDataRepository)
         {
             this._pageItemDataRepository = pageItemDataRepository;
         }
 
 
-        //
-        // GET: /Agriculture/
-
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs(HttpVerbs.Get),
+        OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
 

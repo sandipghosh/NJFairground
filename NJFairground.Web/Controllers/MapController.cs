@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+﻿
 namespace NJFairground.Web.Controllers
 {
-    public class MapController : Controller
-    {
-        //
-        // GET: /Map/
+    using NJFairground.Web.Controllers.Base;
+    using System.Web.Mvc;
 
+    public class MapController : BaseController
+    {
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs(HttpVerbs.Get),
+        OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
             return View("Index.mobile");

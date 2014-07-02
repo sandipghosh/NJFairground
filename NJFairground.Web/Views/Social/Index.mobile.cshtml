@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<NJFairground.Web.Models.PageItemModel>
+@using NJFairground.Web.Utilities
+@{
     ViewBag.Title = "Social | Sussex County Fairgrounds";
     Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
     ViewBag.PageId = "social";
@@ -18,7 +20,7 @@
 }
 
 @section innerTitle{
-    <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-social.jpg")' alt="">
+    <img class="inner-banner" src='@Url.Content("~/Styles/images/Social Main Picture.jpg")' alt="">
     <h2 class="inner-title">@Html.Raw("Get Social")</h2>
 }
 
@@ -33,7 +35,7 @@
             if (i % 2 == 0) { className = "social-block even"; } else { className = "social-block odd"; }
             
             <div class="@className">
-                <img class="social-pic" src='@Url.Content("~/Styles/images/" + pageItemdata.PageItemImage)' alt="">
+                <img class="social-pic" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),pageItemdata.PageItemImage))' alt="">
                 <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.Social), PageItemId = pageItemdata.PageItemId }) ">Details</a>
                 <h4>@pageItemdata.PageHeaderText</h4>
                 <p>@pageItemdata.PageSubHeaderText</p>
@@ -63,16 +65,16 @@
     <h2 class="inner-title sub">Login to Social Media</h2>
     <div class="ui-block-a">
         <div class="social-block odd">
-            <img class="social-pic" src='@Url.Content("~/Styles/images/facebook.png")' alt="">
+            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),"facebook.png"))' alt="">
             <a title="Details" class="details" href="javascript:void(0)">Details</a>
             <h4>Facebook</h4>
-            <p>Lorem ipsum dumy text</p>
+           @* <p>Lorem ipsum dumy text</p>*@
         </div>
         <div class="social-block even">
-            <img class="social-pic" src='@Url.Content("~/Styles/images/twitter.png")' alt="">
+            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),"twitter.png"))' alt="">
             <a title="Details" class="details" href="javascript:void(0)">Details</a>
             <h4>Twiiter</h4>
-            <p>Lorem ipsum dumy text</p>
+            @*<p>Lorem ipsum dumy text</p>*@
         </div>
     </div>
 </div>

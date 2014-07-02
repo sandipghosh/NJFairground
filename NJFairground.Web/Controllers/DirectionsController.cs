@@ -1,19 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+﻿
 namespace NJFairground.Web.Controllers
 {
-    public class DirectionsController : Controller
-    {
-        //
-        // GET: /Directions/
+    using NJFairground.Web.Controllers.Base;
+    using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
 
+    public class DirectionsController : BaseController
+    {
+        private readonly IPageItemDataRepository _pageItemDataRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DirectionsController"/> class.
+        /// </summary>
+        /// <param name="pageItemDataRepository">The page item data repository.</param>
+        public DirectionsController(IPageItemDataRepository pageItemDataRepository)
+        {
+            this._pageItemDataRepository = pageItemDataRepository;
+        }
+
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs(HttpVerbs.Get),
+        OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
-            return View("Index.mobile");
+            List<PageItemModel> pageItems = this._pageItemDataRepository.GetList(x => x.PageId == Convert.ToInt32(Page.Directions) && x.StatusId == 1).ToList();
+            return View("Index.mobile", pageItems);
         }
 
     }

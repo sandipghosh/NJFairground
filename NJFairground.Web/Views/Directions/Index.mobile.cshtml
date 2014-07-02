@@ -1,21 +1,29 @@
-﻿@{
+﻿@model List<NJFairground.Web.Models.PageItemModel>
+@{
     ViewBag.Title = "Directions | Sussex County Fairgrounds";
     Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
     ViewBag.PageId = "directions";
 }
 
+
+
 <h2 class="title">Directions</h2>
+
+@section innerTitle{
+    <img class="inner-banner" src='@Url.Content("~/Styles/images/Directions Main Picture.jpg")' alt="">
+}
+
 <div class="ui-grid-solo fun-blocks">
-    @for (var i = 0; i < 6; i++)
-    { 
+    @foreach (var pageItemdata in Model)
+    {
         <div class="ui-block-a fun-block">
             <div class="text">
-                <h4>Lorem Ipsum</h4>
-                <p>Lorem ipsum Dummy text</p>
+                <h4>@pageItemdata.PageHeaderText</h4>
+                <p>@pageItemdata.PageSubHeaderText</p>
             </div>
             <div class="action">
-                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.Directions), PageItemId = 1001 }) ">Details</a>
-                <img class="fun-pic" src='@Url.Content("~/Styles/images/fun-pic.png")' alt="">
+                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.Directions), PageItemId = pageItemdata.PageItemId }) ">Details</a>
+                @*<img class="fun-pic" src='@Url.Content("~/Styles/images/fun-pic.png")' alt="">*@
             </div>
         </div>
            

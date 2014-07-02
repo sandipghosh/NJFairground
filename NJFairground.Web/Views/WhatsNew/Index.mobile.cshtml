@@ -1,4 +1,5 @@
 ﻿@model List<NJFairground.Web.Models.PageItemModel>
+@using NJFairground.Web.Utilities
 @{
     Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
     ViewBag.PageId = "whats-new";
@@ -15,8 +16,8 @@
             </div>
             <div class="action">
                 @Html.ActionLink("Details", "Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.WhatsNew), PageItemId = pageItemdata.PageItemId },
-                    new {title="Details", @class="details" })
-                <img class="fun-pic" src='@Url.Content("~/Styles/images/" + pageItemdata.PageItemImage)' alt="">
+                    new { title = "Details", @class = "details" })
+                <img class="fun-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), pageItemdata.PageItemImage))' alt="">
             </div>
         </div>
     }

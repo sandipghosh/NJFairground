@@ -2,40 +2,37 @@
 
 namespace NJFairground.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
+    using NJFairground.Web.Controllers.Base;
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Utilities;
-    using NJFairground.Web.Models;
+    using System;
+    using System.Linq;
+    using System.Web.Mvc;
 
-    public class PageController : Controller
+    public class PageController : BaseController
     {
         private readonly IPageDataRepository _pageDataRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageController"/> class.
+        /// </summary>
+        /// <param name="pageDataRepository">The page data repository.</param>
         public PageController(IPageDataRepository pageDataRepository)
         {
             this._pageDataRepository = pageDataRepository;
         }
 
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs(HttpVerbs.Get),
+        OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
             try
             {
-                //var pages = this._pageDataRepository.GetList().ToList();
-
-                //var pages = this._pageDataRepository.GetList(x => x.PageName.EndsWith("2") && x.StatusId == 1).ToList();
-
-                //PageModel page = new PageModel { PageId = 5, PageName = "Page5", PageDesc = "Page6", StatusId = 1 };
-                //this._pageDataRepository.Insert(page);
-
                 var pages = this._pageDataRepository.GetList(x => x.StatusId == 1, x => x.PageId, false).ToList();
-
-
-                
-
                 return View("Index.mobile",pages);
             }
             catch (Exception ex)
