@@ -1,21 +1,37 @@
-﻿<!DOCTYPE html>
-
+﻿@using NJFairground.Web.Utilities
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
 
-    <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
-    <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
-    <script src='@Url.Content("~/Areas/Admin/Scripts/jquery-ui-1.10.4.custom.min")'></script>
-    <script src='@Url.Content("~/Scripts/common-script.js")'></script>
+    <script type="text/javascript">
+        var loadingCounter = 0;
+        var virtualDirectory = '@(CommonUtility.GetAppSetting<string>("VirtualDirectory"))';
+    </script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Areas/Admin/Scripts/jquery-ui-1.10.4.custom.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Areas/Admin/Scripts/json3.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Areas/Admin/Scripts/jquery.formatDateTime.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Areas/Admin/Scripts/jquery.blockUI.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/common-script.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Areas/Admin/Scripts/common-admin-ui-script.js")'></script>
 
     @RenderSection("AdimnPageScripts", false)
 
     <link href='@Url.Content("~/Areas/Admin/Styles/jquery-ui-1.10.4.custom.min.css")' type="text/css" rel="stylesheet" />
+    <link href='@Url.Content("~/Areas/Admin/Styles/admin-styles.css")' type="text/css" rel="stylesheet" />
     @RenderSection("AdimnPageStyles", false)
 </head>
 <body>
+    <div id="dialog-message" title="Message" style="display: none;">
+        <p></p>
+    </div>
+    <div id="dataloading" class="data_loading">
+        <div class="loading-image"></div>
+        <div class="loading-text"></div>
+    </div>
     <div>
         @RenderBody()
     </div>

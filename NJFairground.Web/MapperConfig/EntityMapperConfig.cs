@@ -1,11 +1,12 @@
 ﻿
 namespace NJFairground.Web.MapperConfig
 {
-    using System;
     using AutoMapper;
-    using NJFairground.Web.Models;
     using NJFairground.Web.Data.Context;
+    using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
+    using System;
+    using NJFairground.Web.Areas.Admin.Models;
 
     public class EntityMapperConfig : Profile
     {
@@ -31,10 +32,30 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
-                Mapper.CreateMap<NJFairground.Web.Data.Context.Page, PageModel>()
+                Mapper.CreateMap<NJFairground.Web.Models.Page, PageModel>()
                     .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
-                Mapper.CreateMap<NJFairground.Web.Data.Context.PageItem, PageItemModel>()
+
+                Mapper.CreateMap<PageItem, PageItemModel>()
                    .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+
+                Mapper.CreateMap<Event, EventModel>()
+                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+
+                Mapper.CreateMap<SchedularSchema, EventModel>()
+                    .ForMember(dest => dest.EventId, opt => opt.MapFrom(src => src.id))
+                    .ForMember(dest => dest.EventTitle, opt => opt.MapFrom(src => src.title))
+                    .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.start))
+                    .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.end))
+                    .ForMember(dest => dest.EventDesc, opt => opt.MapFrom(src => src.description))
+                    .IgnoreAllNonExisting();
+
+                Mapper.CreateMap<EventModel, SchedularSchema>()
+                    .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.EventId))
+                    .ForMember(dest => dest.title, opt => opt.MapFrom(src => src.EventTitle))
+                    .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.StartDate))
+                    .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.EndDate))
+                    .ForMember(dest => dest.description, opt => opt.MapFrom(src => src.EventDesc))
+                    .IgnoreAllNonExisting();
             }
             catch (Exception ex)
             {

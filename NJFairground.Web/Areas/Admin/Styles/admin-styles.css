@@ -1,0 +1,101 @@
+﻿html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    background: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif;
+    font-size: 12px;
+}
+
+.data_loading {
+    position: fixed;
+    display: none;
+    padding: 5px;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    z-index: 100000;
+    background-color: #e7e7e7;
+    border-radius: 5px;
+}
+
+    .data_loading .loading-image {
+        width: 80px;
+        height: 60px;
+        background: url('images/loading-image.GIF') center no-repeat;
+        float: left;
+        display: block;
+    }
+
+    .data_loading .loading-text {
+        width: 80px;
+        height: 20px;
+        background: url('images/loading-text.GIF') center no-repeat;
+        float: left;
+        display: block;
+    }
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 40%; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+.ui-timepicker-rtl dl dt{ float: right; clear: right; }
+.ui-timepicker-rtl dl dd { margin: 0 40% 10px 10px; }
+
+.model-overlay
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    z-index: 2;
+}
+
+.modal-container
+{
+    /*position: absolute;*/
+    position:absolute;
+    background: url(tint20.png) 0 0 repeat;
+    background: rgba(0,0,0,0.2);
+    border-radius: 14px;
+    padding: 4px;
+    z-index: 3;
+}
+
+.model-content
+{
+    border-radius: 8px;
+    background: #fff;
+    padding: 20px;
+    float: left;
+    width: 94.5%;
+}
+
+.modal-close
+{
+    position: absolute;
+    background: url(Images/close.png) 0 0 no-repeat;
+    width: 24px;
+    height: 26px;
+    display: block;
+    text-indent: -9999px;
+    top: -6px;
+    right: -6px;
+}

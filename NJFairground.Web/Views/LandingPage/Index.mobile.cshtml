@@ -1,6 +1,5 @@
 ﻿@{
     Layout = null;
-        //Response.AddHeader("REFRESH", "10;URL=Home");
 }
 
 <!DOCTYPE html>
@@ -8,7 +7,6 @@
 <head>
     <title>Sussex County Fairgrounds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
 
     <!--- JQuery Mobile 1.4.2 --->
     <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
@@ -37,14 +35,12 @@
     <div data-role="page" id="main-page" data-title="Sussex County Fairgrounds">
         <a class="logo" href="home" title="Sussex County Fairgrounds">
             <img src='@Url.Content("~/Styles/images/logo.png")' alt="Sussex County Fairgrounds"></a>
-        <div class="timer">@Html.Raw("Please Wait For ") <span class="timer-span" id="timerdata" >Welcome</span></div>
-
+        <div class="timer">@Html.Raw("Please Wait For ") <span class="timer-span" id="timerdata">Welcome</span></div>
     </div>
 
     <div id="bg">
         <img class="bg-main" src='@Url.Content("~/Styles/images/mainpage-bg.jpg")' alt="">
     </div>
     <!-- /page -->
-
 </body>
 </html>

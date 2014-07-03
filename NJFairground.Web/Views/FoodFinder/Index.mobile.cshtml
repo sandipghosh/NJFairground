@@ -1,5 +1,4 @@
 ﻿@model List<NJFairground.Web.Models.PageItemModel>
-
 @{
     ViewBag.Title = "Food Finder | Sussex County Fairgrounds";
     ViewBag.PageId = "food-finder";
@@ -8,25 +7,9 @@
 
 <h2 class="title">Food Finder</h2>
 <div class="ui-grid-solo highlights">
-
-    @*@foreach (var pageItemdata in Model)
-    {
-        <div class="ui-block-a highlight">
-            <div class="text">
-                <h4>@pageItemdata.PageHeaderText</h4>
-                <p>@pageItemdata.PageSubHeaderText</p>
-            </div>
-            <div class="action">
-                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.Food), PageItemId = pageItemdata.PageItemId }) ">Details</a>
-                <img class="star" src='@Url.Content("~/Styles/images/" + pageItemdata.PageItemImage)' alt="">
-            </div>
-        </div>
-    }*@
-
     <div class="ui-block-a highlight">
-        <div style="font-family:'cafe_nero_m54regular'; font-weight:normal; font-size:17px; line-height:27px; color:#fff; letter-spacing:4px; text-shadow:1px 2px 1px #3e2809;text-align:center;">
-        <h2>@Html.Raw("Not available yet…coming soon")</h2>
-            </div>
-
+        <div style="font-family: 'cafe_nero_m54regular'; font-weight: normal; font-size: 17px; line-height: 27px; color: #fff; letter-spacing: 4px; text-shadow: 1px 2px 1px #3e2809; text-align: center;">
+            <h2>@Html.Raw("Not available yet…coming soon")</h2>
+        </div>
     </div>
 </div>

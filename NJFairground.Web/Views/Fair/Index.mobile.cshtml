@@ -12,18 +12,19 @@
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
 
-    <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
-    <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
-    <script src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
-    <script src='@Url.Content("~/Scripts/common-script.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/common-script.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/common-events.js")'></script>
 </head>
-<body style="overflow-y:hidden;overflow-x:hidden;">
+<body style="overflow-y: hidden; overflow-x: hidden;">
     <div data-role="page" id="innerpage" data-title="Inner Page | Sussex County Fairgrounds">
 
         <!-- /header -->
         @Html.Partial("_Header.mobile")
 
-        <div role="main" class="ui-content" id="body-main" style="overflow-y:auto; overflow-x:hidden;">
+        <div role="main" class="ui-content" id="body-main" style="overflow-y: auto; overflow-x: hidden;">
             <div class="intro">
                 <span class="year">@(CommonUtility.GetAppSetting<string>("FairYear"))</span>
                 <h3 class="name">@(CommonUtility.GetAppSetting<string>("FairName"))</h3>

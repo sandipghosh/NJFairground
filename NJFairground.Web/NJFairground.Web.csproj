@@ -219,10 +219,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ContentManagerController.cs" />
-    <Compile Include="Areas\Admin\Controllers\EventSchedulerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EventSchedulerController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Areas\Admin\Controllers\MapCreaterController.cs" />
-    <Compile Include="Areas\Admin\Models\Base\BaseModel.cs" />
     <Compile Include="Areas\Admin\Models\Base\GridModelSchema.cs" />
+    <Compile Include="Areas\Admin\Models\SchedularSchema.cs" />
     <Compile Include="Controllers\AgricultureController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\ComplexController.cs" />
@@ -232,7 +234,12 @@
     <Compile Include="Controllers\DirectionsController.cs" />
     <Compile Include="Controllers\DirectionToFairgroundController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\EventController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\EventDetailsController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\FoodFinderController.cs" />
     <Compile Include="Controllers\FunController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -243,7 +250,9 @@
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PromoteController.cs" />
-    <Compile Include="Controllers\ShoppingController.cs" />
+    <Compile Include="Controllers\ShoppingController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\SocialController.cs" />
     <Compile Include="Controllers\WhatsNewController.cs" />
     <Compile Include="Data\Context\BaseData.cs" />
@@ -280,6 +289,7 @@
     <Compile Include="Data\Implementation\Base\DataRepository.cs" />
     <Compile Include="Data\Implementation\Base\QueryDataRepository.cs" />
     <Compile Include="Data\Implementation\Base\UnitOfWork.cs" />
+    <Compile Include="Data\Implementation\EventDataRepository.cs" />
     <Compile Include="Data\Implementation\PageItemDataRepository.cs" />
     <Compile Include="Data\Implementation\PageDataRepository.cs" />
     <Compile Include="Data\Interface\Base\IQueryableUnitOfWork.cs" />
@@ -287,6 +297,7 @@
     <Compile Include="Data\Interface\Base\IRepository.cs" />
     <Compile Include="Data\Interface\Base\ISql.cs" />
     <Compile Include="Data\Interface\Base\IUnitOfWork.cs" />
+    <Compile Include="Data\Interface\IEventDataRepository.cs" />
     <Compile Include="Data\Interface\IPageItemDataRepository.cs" />
     <Compile Include="Data\Interface\IPageDataRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -296,6 +307,7 @@
     <Compile Include="MapperConfig\EntityMapperConfig.cs" />
     <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\Base\SafeDisposableBaseClass.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\PageItemModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\StaticModel.cs" />
@@ -320,7 +332,9 @@
     <Compile Include="Utilities\SessionVariable.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Scripts\common-admin-ui-script.js" />
     <Content Include="Areas\Admin\Scripts\content-manager.js" />
+    <Content Include="Areas\Admin\Scripts\event-scheduler.js" />
     <Content Include="Areas\Admin\Scripts\fullcalendar.min.js" />
     <Content Include="Areas\Admin\Scripts\gmap3.min.js" />
     <Content Include="Areas\Admin\Scripts\Gmap3Menu.js" />
@@ -329,14 +343,96 @@
     <Content Include="Areas\Admin\Scripts\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="Areas\Admin\Scripts\jquery-ui-1.10.4.min.js" />
     <None Include="Areas\Admin\Scripts\jquery-ui-vsdoc.js" />
+    <Content Include="Areas\Admin\Scripts\jquery-ui-timepicker-addon.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.blockUI.js" />
     <Content Include="Areas\Admin\Scripts\jquery.form.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.formatDateTime.js" />
     <Content Include="Areas\Admin\Scripts\jquery.jqGrid.min.js" />
     <Content Include="Areas\Admin\Scripts\jquery.linq-2.2.0.2.min.js" />
     <None Include="Areas\Admin\Scripts\jquery.linq-vsdoc.js" />
+    <Content Include="Areas\Admin\Scripts\json3.js" />
+    <Content Include="Areas\Admin\Scripts\moment.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\advlist\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\anchor\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\autolink\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\autoresize\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\autosave\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\bbcode\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\charmap\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\code\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\directionality\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Areas\Admin\Scripts\plugins\emoticons\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\example\dialog.html" />
+    <Content Include="Areas\Admin\Scripts\plugins\example\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\example_dependency\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\fullpage\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\hr\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\image\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\importcss\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\layer\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\link\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\lists\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\media\moxieplayer.swf" />
+    <Content Include="Areas\Admin\Scripts\plugins\media\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\noneditable\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\paste\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\preview\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\print\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\save\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\table\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\template\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\textcolor\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\textpattern\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Areas\Admin\Scripts\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\visualchars\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\plugins\wordcount\plugin.min.js" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\content.inline.min.css" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\content.min.css" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce-small.dev.svg" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce.dev.svg" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\img\anchor.gif" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\img\loader.gif" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\img\object.gif" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\img\trans.gif" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\skin.min.css" />
+    <Content Include="Areas\Admin\Scripts\themes\modern\theme.min.js" />
     <Content Include="Areas\Admin\Scripts\tinymce.min.js" />
+    <Content Include="Areas\Admin\Styles\admin-styles.css" />
     <Content Include="Areas\Admin\Styles\fullcalendar.css" />
     <Content Include="Areas\Admin\Styles\fullcalendar.print.css" />
     <Content Include="Areas\Admin\Styles\Images\animated-overlay.gif" />
+    <Content Include="Areas\Admin\Styles\Images\close.png" />
+    <Content Include="Areas\Admin\Styles\Images\loading-image.GIF" />
     <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_0_615d5d_40x100.png" />
     <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Areas\Admin\Styles\Images\ui-bg_flat_55_fbf9ee_40x100.png" />
@@ -480,9 +576,19 @@
     <Content Include="Areas\Admin\Views\ContentManager\Index.cshtml" />
     <Content Include="Areas\Admin\Views\EventScheduler\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_GridGlobalMaster.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AddEvent.cshtml" />
+    <Content Include="Areas\Admin\Scripts\langs\readme.md" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\readme.md" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Areas\Admin\Scripts\skins\lightgray\fonts\tinymce.woff" />
     <None Include="bin\NJFairground.Web.dll.config" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
+    <Content Include="Scripts\common-events.js" />
     <Content Include="Scripts\common-script.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -652,6 +758,7 @@
     <Content Include="Views\DirectionToFairground\Index.mobile.cshtml" />
     <Content Include="Views\Map\Index.mobile.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\EventDetails\Index.mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

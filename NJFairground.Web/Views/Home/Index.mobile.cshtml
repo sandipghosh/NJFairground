@@ -8,17 +8,14 @@
 <head>
     <title>Home | Sussex County Fairgrounds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    @*@Styles.Render("~/Styles/CommonStyle")
-    @Scripts.Render("~/Scripts/CommonScript")*@
-
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
     <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
 
-    <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
-    <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
-    <script src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
-    <script src='@Url.Content("~/Scripts/common-script.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/common-script.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/common-events.js")'></script>
 </head>
 <body>
     <div data-role="page" id="homepage" data-title="@ViewBag.Title">

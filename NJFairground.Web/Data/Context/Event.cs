@@ -16,7 +16,6 @@ namespace NJFairground.Web.Data.Context
     {
         public int EventId { get; set; }
         public int PageId { get; set; }
-        public int PageItemId { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public string EventTitle { get; set; }
@@ -26,6 +25,5 @@ namespace NJFairground.Web.Data.Context
         public byte[] Version { get; set; }
     
         public virtual Page Page { get; set; }
-        public virtual PageItem PageItem { get; set; }
     }
 }

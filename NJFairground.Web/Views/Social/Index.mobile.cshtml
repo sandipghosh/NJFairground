@@ -7,23 +7,21 @@
 }
 
 @section navbar{
-    @*@Html.Partial("_NavigationBar.mobile", (List<string>)ViewBag.NavBarItems)*@
     <div class="navbar">
-    <ul>
-        <li class="first"><a href="Fair">The Fair</a></li>
-        <li><a href="Fun">Fun</a></li>
-        <li><a href="Info">Info</a></li>
-        <li class="last active"><a href="Social">Social</a></li>
-        <li ><a href="Map">Map</a></li>
-    </ul>
-</div>
+        <ul>
+            <li class="first"><a href="Fair">The Fair</a></li>
+            <li><a href="Fun">Fun</a></li>
+            <li><a href="Info">Info</a></li>
+            <li class="last active"><a href="Social">Social</a></li>
+            <li><a href="Map">Map</a></li>
+        </ul>
+    </div>
 }
 
 @section innerTitle{
     <img class="inner-banner" src='@Url.Content("~/Styles/images/Social Main Picture.jpg")' alt="">
     <h2 class="inner-title">@Html.Raw("Get Social")</h2>
 }
-
 
 <div class="ui-grid-solo inner-page">
     <div class="ui-block-a">
@@ -35,46 +33,25 @@
             if (i % 2 == 0) { className = "social-block even"; } else { className = "social-block odd"; }
             
             <div class="@className">
-                <img class="social-pic" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),pageItemdata.PageItemImage))' alt="">
+                <img class="social-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), pageItemdata.PageItemImage))' alt="">
                 <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.Social), PageItemId = pageItemdata.PageItemId }) ">Details</a>
                 <h4>@pageItemdata.PageHeaderText</h4>
                 <p>@pageItemdata.PageSubHeaderText</p>
             </div>
             i += 1;
         }
-
-        @*<div class="social-block odd">
-            <img class="social-pic" src='@Url.Content("~/Styles/images/facebook.png")' alt="">
-            <a title="Details" class="details" href="javascript:void(0)">Details</a>
-            <h4>Facebook</h4>
-            <p>Lorem ipsum dumy text</p>
-        </div>
-        <div class="social-block even">
-            <img class="social-pic" src='@Url.Content("~/Styles/images/twitter.png")' alt="">
-            <a title="Details" class="details" href="javascript:void(0)">Details</a>
-            <h4>Twiiter</h4>
-            <p>Lorem ipsum dumy text</p>
-        </div>
-        <div class="social-block odd">
-            <img class="social-pic" src='@Url.Content("~/Styles/images/youtube.png")' alt="">
-            <a title="Details" class="details" href="javascript:void(0)">Details</a>
-            <h4>YouTube</h4>
-            <p>Lorem ipsum dumy text</p>
-        </div>*@
     </div>
     <h2 class="inner-title sub">Login to Social Media</h2>
     <div class="ui-block-a">
         <div class="social-block odd">
-            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),"facebook.png"))' alt="">
+            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "facebook.png"))' alt="">
             <a title="Details" class="details" href="javascript:void(0)">Details</a>
             <h4>Facebook</h4>
-           @* <p>Lorem ipsum dumy text</p>*@
         </div>
         <div class="social-block even">
-            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),"twitter.png"))' alt="">
+            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "twitter.png"))' alt="">
             <a title="Details" class="details" href="javascript:void(0)">Details</a>
             <h4>Twiiter</h4>
-            @*<p>Lorem ipsum dumy text</p>*@
         </div>
     </div>
 </div>

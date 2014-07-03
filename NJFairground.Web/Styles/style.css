@@ -193,7 +193,7 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 #schedule .title{  font-size:19px; }
 .schedule{ padding:9px 0 0; }
 .schedule .block{ margin:0 0 9px; background:#ffbc08; padding:9px; overflow:hidden; }
-.schedule .block .schedule-pic{ float:left; margin:0 8px 0 0; height:38px; width:38px; background:url(images/schedule.png) no-repeat 0 0; font-size:15px; line-height:21px; color:#d22c15; font-weight:normal; padding:11px 0 0; text-align:center; }
+.schedule .block .schedule-pic{ float:left; margin:0 8px 0 0; height:38px; width:38px; background:url(images/schedule.png) no-repeat 0 0; font-size:15px; line-height:1; color:#d22c15; font-weight:normal; /*line-height:21px; padding:11px 0 0;*/ text-align:center; }
 .schedule .block h4{ color:#fff; font-size:17px; line-height:19px; font-weight:normal; }
 .schedule .block p{ color:#000; font-size:11px; line-height:13px; } 
 .schedule .block .details{ float:right; margin:5px 0 0; font-size:0px; background:url(images/highlight-arrow.png) no-repeat 0 0; height:23px; width:12px; }

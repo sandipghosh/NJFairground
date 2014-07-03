@@ -9,29 +9,14 @@
 <div class="ui-grid-solo inner-page">
     <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-horseshow.jpg")' alt="">
     <div class="ui-block-a">
-        @*     @for (var i = 0; i < 5; i++)
-        { 
-     
-            <div class="info-block">
-                <a title="Details" class="details" href="javascript:void(0)">Details</a>
-                <img class="info-pic" src='@Url.Content("~/Styles/images/horseshow-pic.jpg")' alt="">
-                <h4>Lorem Ipsum Text</h4>
-                <p>Lorem ipsum dumy text Lorem</p>
-            </div>
-            
-            
-        }*@
-
         @foreach (var pageItemdata in Model)
         {
             <div class="info-block">
                 <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.HorseShow), PageItemId = pageItemdata.PageItemId }) ">Details</a>
-                <img class="info-pic" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),pageItemdata.PageItemImage))' alt="">
+                <img class="info-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), pageItemdata.PageItemImage))' alt="">
                 <h4>@pageItemdata.PageHeaderText</h4>
                 <p>@pageItemdata.PageSubHeaderText</p>
             </div>
-            
         }
-
     </div>
 </div>

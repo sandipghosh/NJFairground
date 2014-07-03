@@ -4,66 +4,30 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NJFairgroundDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="NJFairgroundDBModelStoreContainer">
-          <EntitySet Name="Event" EntityType="NJFairgroundDBModel.Store.Event" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Page" EntityType="NJFairgroundDBModel.Store.Page" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PageHeader" EntityType="NJFairgroundDBModel.Store.PageHeader" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PageItem" EntityType="NJFairgroundDBModel.Store.PageItem" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PageItemDetail" EntityType="NJFairgroundDBModel.Store.PageItemDetail" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Event_Page" Association="NJFairgroundDBModel.Store.FK_Event_Page">
-            <End Role="Page" EntitySet="Page" />
-            <End Role="Event" EntitySet="Event" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Event_PageItem" Association="NJFairgroundDBModel.Store.FK_Event_PageItem">
-            <End Role="PageItem" EntitySet="PageItem" />
-            <End Role="Event" EntitySet="Event" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PageHeader_Page" Association="NJFairgroundDBModel.Store.FK_PageHeader_Page">
-            <End Role="Page" EntitySet="Page" />
-            <End Role="PageHeader" EntitySet="PageHeader" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PageHeader_PageItem" Association="NJFairgroundDBModel.Store.FK_PageHeader_PageItem">
-            <End Role="PageItem" EntitySet="PageItem" />
-            <End Role="PageHeader" EntitySet="PageHeader" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PageItem_Page" Association="NJFairgroundDBModel.Store.FK_PageItem_Page">
-            <End Role="Page" EntitySet="Page" />
-            <End Role="PageItem" EntitySet="PageItem" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PageItemDetail_Page" Association="NJFairgroundDBModel.Store.FK_PageItemDetail_Page">
-            <End Role="Page" EntitySet="Page" />
-            <End Role="PageItemDetail" EntitySet="PageItemDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PageItemDetail_PageItem" Association="NJFairgroundDBModel.Store.FK_PageItemDetail_PageItem">
-            <End Role="PageItem" EntitySet="PageItem" />
-            <End Role="PageItemDetail" EntitySet="PageItemDetail" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="NJFairgroundDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="EventId" />
           </Key>
-          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PageId" Type="int" Nullable="false" />
-          <Property Name="PageItemId" Type="int" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
           <Property Name="EndDate" Type="datetime" Nullable="false" />
-          <Property Name="EventTitle" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="EventDesc" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="EventTitle" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="EventDesc" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
             <PropertyRef Name="PageId" />
           </Key>
           <Property Name="PageId" Type="int" Nullable="false" />
-          <Property Name="PageName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="PageName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PageDesc" Type="nvarchar" MaxLength="50" />
           <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="PageHeader">
           <Key>
@@ -75,7 +39,7 @@
           <Property Name="PageHeaderText" Type="varchar" MaxLength="50" />
           <Property Name="PageSubHeaderText" Type="varchar" MaxLength="50" />
           <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="PageItem">
           <Key>
@@ -84,10 +48,10 @@
           <Property Name="PageItemId" Type="int" Nullable="false" />
           <Property Name="PageId" Type="int" Nullable="false" />
           <Property Name="PageItemType" Type="int" Nullable="false" />
-          <Property Name="PageHeaderText" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="PageSubHeaderText" Type="varchar" MaxLength="100" />
+          <Property Name="PageHeaderText" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="PageSubHeaderText" Type="varchar" MaxLength="1000" />
           <Property Name="PageItemImage" Type="varchar" MaxLength="200" />
-          <Property Name="PageItemDetailText" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="PageItemDetailText" Type="varchar" MaxLength="2000" Nullable="false" />
           <Property Name="PageItemSubDetail" Type="varchar" MaxLength="1000" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -102,15 +66,15 @@
           <Property Name="PageItemDetailId" Type="int" Nullable="false" />
           <Property Name="PageId" Type="int" Nullable="false" />
           <Property Name="PageItemId" Type="int" Nullable="false" />
-          <Property Name="PageItemDetailText" Type="nvarchar" Nullable="false" MaxLength="2000" />
+          <Property Name="PageItemDetailText" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="PageItemSubDetail" Type="nvarchar" MaxLength="1000" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="Version" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <Association Name="FK_Event_Page">
-          <End Role="Page" Type="NJFairgroundDBModel.Store.Page" Multiplicity="1" />
-          <End Role="Event" Type="NJFairgroundDBModel.Store.Event" Multiplicity="*" />
+          <End Role="Page" Type="Self.Page" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="PageId" />
@@ -120,21 +84,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Event_PageItem">
-          <End Role="PageItem" Type="NJFairgroundDBModel.Store.PageItem" Multiplicity="1" />
-          <End Role="Event" Type="NJFairgroundDBModel.Store.Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PageItem">
-              <PropertyRef Name="PageItemId" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="PageItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PageHeader_Page">
-          <End Role="Page" Type="NJFairgroundDBModel.Store.Page" Multiplicity="1" />
-          <End Role="PageHeader" Type="NJFairgroundDBModel.Store.PageHeader" Multiplicity="*" />
+          <End Role="Page" Type="Self.Page" Multiplicity="1" />
+          <End Role="PageHeader" Type="Self.PageHeader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="PageId" />
@@ -145,8 +97,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PageHeader_PageItem">
-          <End Role="PageItem" Type="NJFairgroundDBModel.Store.PageItem" Multiplicity="1" />
-          <End Role="PageHeader" Type="NJFairgroundDBModel.Store.PageHeader" Multiplicity="*" />
+          <End Role="PageItem" Type="Self.PageItem" Multiplicity="1" />
+          <End Role="PageHeader" Type="Self.PageHeader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PageItem">
               <PropertyRef Name="PageItemId" />
@@ -157,8 +109,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PageItem_Page">
-          <End Role="Page" Type="NJFairgroundDBModel.Store.Page" Multiplicity="1" />
-          <End Role="PageItem" Type="NJFairgroundDBModel.Store.PageItem" Multiplicity="*" />
+          <End Role="Page" Type="Self.Page" Multiplicity="1" />
+          <End Role="PageItem" Type="Self.PageItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="PageId" />
@@ -169,8 +121,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PageItemDetail_Page">
-          <End Role="Page" Type="NJFairgroundDBModel.Store.Page" Multiplicity="1" />
-          <End Role="PageItemDetail" Type="NJFairgroundDBModel.Store.PageItemDetail" Multiplicity="*" />
+          <End Role="Page" Type="Self.Page" Multiplicity="1" />
+          <End Role="PageItemDetail" Type="Self.PageItemDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="PageId" />
@@ -181,8 +133,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PageItemDetail_PageItem">
-          <End Role="PageItem" Type="NJFairgroundDBModel.Store.PageItem" Multiplicity="1" />
-          <End Role="PageItemDetail" Type="NJFairgroundDBModel.Store.PageItemDetail" Multiplicity="*" />
+          <End Role="PageItem" Type="Self.PageItem" Multiplicity="1" />
+          <End Role="PageItemDetail" Type="Self.PageItemDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PageItem">
               <PropertyRef Name="PageItemId" />
@@ -192,6 +144,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="NJFairgroundDBModelStoreContainer">
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PageHeader" EntityType="Self.PageHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PageItem" EntityType="Self.PageItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PageItemDetail" EntityType="Self.PageItemDetail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Event_Page" Association="Self.FK_Event_Page">
+            <End Role="Page" EntitySet="Page" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageHeader_Page" Association="Self.FK_PageHeader_Page">
+            <End Role="Page" EntitySet="Page" />
+            <End Role="PageHeader" EntitySet="PageHeader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageHeader_PageItem" Association="Self.FK_PageHeader_PageItem">
+            <End Role="PageItem" EntitySet="PageItem" />
+            <End Role="PageHeader" EntitySet="PageHeader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageItem_Page" Association="Self.FK_PageItem_Page">
+            <End Role="Page" EntitySet="Page" />
+            <End Role="PageItem" EntitySet="PageItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageItemDetail_Page" Association="Self.FK_PageItemDetail_Page">
+            <End Role="Page" EntitySet="Page" />
+            <End Role="PageItemDetail" EntitySet="PageItemDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageItemDetail_PageItem" Association="Self.FK_PageItemDetail_PageItem">
+            <End Role="PageItem" EntitySet="PageItem" />
+            <End Role="PageItemDetail" EntitySet="PageItemDetail" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -204,10 +187,6 @@
           <EntitySet Name="PageItemDetails" EntityType="NJFairgroundDBModel.PageItemDetail" />
           <AssociationSet Name="FK_Event_Page" Association="NJFairgroundDBModel.FK_Event_Page">
             <End Role="Page" EntitySet="Pages" />
-            <End Role="Event" EntitySet="Events" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Event_PageItem" Association="NJFairgroundDBModel.FK_Event_PageItem">
-            <End Role="PageItem" EntitySet="PageItems" />
             <End Role="Event" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_PageHeader_Page" Association="NJFairgroundDBModel.FK_PageHeader_Page">
@@ -235,26 +214,24 @@
           <Key>
             <PropertyRef Name="EventId" />
           </Key>
-          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PageId" Type="Int32" Nullable="false" />
-          <Property Name="PageItemId" Type="Int32" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EventTitle" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="EventDesc" Type="String" Nullable="false" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="EventTitle" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EventDesc" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_Event_Page" FromRole="Event" ToRole="Page" />
-          <NavigationProperty Name="PageItem" Relationship="NJFairgroundDBModel.FK_Event_PageItem" FromRole="Event" ToRole="PageItem" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
             <PropertyRef Name="PageId" />
           </Key>
           <Property Name="PageId" Type="Int32" Nullable="false" />
-          <Property Name="PageName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="PageDesc" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PageDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Events" Relationship="NJFairgroundDBModel.FK_Event_Page" FromRole="Page" ToRole="Event" />
@@ -269,8 +246,8 @@
           <Property Name="PageHeaderId" Type="Int32" Nullable="false" />
           <Property Name="PageId" Type="Int32" Nullable="false" />
           <Property Name="PageItemId" Type="Int32" Nullable="false" />
-          <Property Name="PageHeaderText" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="PageSubHeaderText" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PageHeaderText" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PageSubHeaderText" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_PageHeader_Page" FromRole="PageHeader" ToRole="Page" />
@@ -283,20 +260,19 @@
           <Property Name="PageItemId" Type="Int32" Nullable="false" />
           <Property Name="PageId" Type="Int32" Nullable="false" />
           <Property Name="PageItemType" Type="Int32" Nullable="false" />
-          <Property Name="PageItemImage" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="PageHeaderText" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PageSubHeaderText" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PageItemImage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PageItemDetailText" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="PageItemSubDetail" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ActivatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="Events" Relationship="NJFairgroundDBModel.FK_Event_PageItem" FromRole="PageItem" ToRole="Event" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="PageItem" ToRole="Page" />
           <NavigationProperty Name="PageHeaders" Relationship="NJFairgroundDBModel.FK_PageHeader_PageItem" FromRole="PageItem" ToRole="PageHeader" />
           <NavigationProperty Name="PageItemDetails" Relationship="NJFairgroundDBModel.FK_PageItemDetail_PageItem" FromRole="PageItem" ToRole="PageItemDetail" />
-          <Property Type="String" Name="PageHeaderText" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PageSubHeaderText" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PageItemDetailText" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PageItemSubDetail" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PageItemDetail">
           <Key>
@@ -305,8 +281,8 @@
           <Property Name="PageItemDetailId" Type="Int32" Nullable="false" />
           <Property Name="PageId" Type="Int32" Nullable="false" />
           <Property Name="PageItemId" Type="Int32" Nullable="false" />
-          <Property Name="PageItemDetailText" Type="String" Nullable="false" MaxLength="2000" Unicode="true" FixedLength="false" />
-          <Property Name="PageItemSubDetail" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="PageItemDetailText" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PageItemSubDetail" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
@@ -314,8 +290,8 @@
           <NavigationProperty Name="PageItem" Relationship="NJFairgroundDBModel.FK_PageItemDetail_PageItem" FromRole="PageItemDetail" ToRole="PageItem" />
         </EntityType>
         <Association Name="FK_Event_Page">
-          <End Role="Page" Type="NJFairgroundDBModel.Page" Multiplicity="1" />
-          <End Role="Event" Type="NJFairgroundDBModel.Event" Multiplicity="*" />
+          <End Type="NJFairgroundDBModel.Page" Role="Page" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.Event" Role="Event" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="PageId" />
@@ -325,21 +301,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Event_PageItem">
-          <End Role="PageItem" Type="NJFairgroundDBModel.PageItem" Multiplicity="1" />
-          <End Role="Event" Type="NJFairgroundDBModel.Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PageItem">
-              <PropertyRef Name="PageItemId" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="PageItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PageHeader_Page">
-          <End Role="Page" Type="NJFairgroundDBModel.Page" Multiplicity="1" />
-          <End Role="PageHeader" Type="NJFairgroundDBModel.PageHeader" Multiplicity="*" />
+          <End Type="NJFairgroundDBModel.Page" Role="Page" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.PageHeader" Role="PageHeader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="PageId" />
@@ -350,8 +314,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PageItem_Page">
-          <End Role="Page" Type="NJFairgroundDBModel.Page" Multiplicity="1" />
-          <End Role="PageItem" Type="NJFairgroundDBModel.PageItem" Multiplicity="*" />
+          <End Type="NJFairgroundDBModel.Page" Role="Page" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.PageItem" Role="PageItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="PageId" />
@@ -362,8 +326,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PageItemDetail_Page">
-          <End Role="Page" Type="NJFairgroundDBModel.Page" Multiplicity="1" />
-          <End Role="PageItemDetail" Type="NJFairgroundDBModel.PageItemDetail" Multiplicity="*" />
+          <End Type="NJFairgroundDBModel.Page" Role="Page" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.PageItemDetail" Role="PageItemDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="PageId" />
@@ -374,8 +338,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PageHeader_PageItem">
-          <End Role="PageItem" Type="NJFairgroundDBModel.PageItem" Multiplicity="1" />
-          <End Role="PageHeader" Type="NJFairgroundDBModel.PageHeader" Multiplicity="*" />
+          <End Type="NJFairgroundDBModel.PageItem" Role="PageItem" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.PageHeader" Role="PageHeader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PageItem">
               <PropertyRef Name="PageItemId" />
@@ -386,8 +350,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PageItemDetail_PageItem">
-          <End Role="PageItem" Type="NJFairgroundDBModel.PageItem" Multiplicity="1" />
-          <End Role="PageItemDetail" Type="NJFairgroundDBModel.PageItemDetail" Multiplicity="*" />
+          <End Type="NJFairgroundDBModel.PageItem" Role="PageItem" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.PageItemDetail" Role="PageItemDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PageItem">
               <PropertyRef Name="PageItemId" />
@@ -397,7 +361,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -406,73 +370,72 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.Event">
               <MappingFragment StoreEntitySet="Event">
-                <ScalarProperty Name="EventId" ColumnName="EventId" />
-                <ScalarProperty Name="PageId" ColumnName="PageId" />
-                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
-                <ScalarProperty Name="EventDesc" ColumnName="EventDesc" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="EventDesc" ColumnName="EventDesc" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pages">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.Page">
               <MappingFragment StoreEntitySet="Page">
-                <ScalarProperty Name="PageId" ColumnName="PageId" />
-                <ScalarProperty Name="PageName" ColumnName="PageName" />
-                <ScalarProperty Name="PageDesc" ColumnName="PageDesc" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="PageDesc" ColumnName="PageDesc" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PageHeaders">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.PageHeader">
               <MappingFragment StoreEntitySet="PageHeader">
-                <ScalarProperty Name="PageHeaderId" ColumnName="PageHeaderId" />
-                <ScalarProperty Name="PageId" ColumnName="PageId" />
-                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
-                <ScalarProperty Name="PageHeaderText" ColumnName="PageHeaderText" />
-                <ScalarProperty Name="PageSubHeaderText" ColumnName="PageSubHeaderText" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="PageSubHeaderText" ColumnName="PageSubHeaderText" />
+                <ScalarProperty Name="PageHeaderText" ColumnName="PageHeaderText" />
+                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="PageHeaderId" ColumnName="PageHeaderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PageItems">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.PageItem">
               <MappingFragment StoreEntitySet="PageItem">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="ActivatedOn" ColumnName="ActivatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="PageItemSubDetail" ColumnName="PageItemSubDetail" />
                 <ScalarProperty Name="PageItemDetailText" ColumnName="PageItemDetailText" />
+                <ScalarProperty Name="PageItemImage" ColumnName="PageItemImage" />
                 <ScalarProperty Name="PageSubHeaderText" ColumnName="PageSubHeaderText" />
                 <ScalarProperty Name="PageHeaderText" ColumnName="PageHeaderText" />
-                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
-                <ScalarProperty Name="PageId" ColumnName="PageId" />
                 <ScalarProperty Name="PageItemType" ColumnName="PageItemType" />
-                <ScalarProperty Name="PageItemImage" ColumnName="PageItemImage" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ActivatedOn" ColumnName="ActivatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PageItemDetails">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.PageItemDetail">
               <MappingFragment StoreEntitySet="PageItemDetail">
-                <ScalarProperty Name="PageItemDetailId" ColumnName="PageItemDetailId" />
-                <ScalarProperty Name="PageId" ColumnName="PageId" />
-                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
-                <ScalarProperty Name="PageItemDetailText" ColumnName="PageItemDetailText" />
-                <ScalarProperty Name="PageItemSubDetail" ColumnName="PageItemSubDetail" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="PageItemSubDetail" ColumnName="PageItemSubDetail" />
+                <ScalarProperty Name="PageItemDetailText" ColumnName="PageItemDetailText" />
+                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="PageItemDetailId" ColumnName="PageItemDetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -493,6 +456,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

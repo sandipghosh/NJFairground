@@ -9,8 +9,6 @@
 <h2 class="title">Conservatory &amp; Courtyard</h2>
 <div class="ui-grid-solo highlights courtyard inner-page">
     <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-court.jpg")' alt="">
-
-   
     @foreach (var pageItemdata in Model)
     {
         <div class="ui-block-a highlight">
@@ -20,11 +18,9 @@
             </div>
             <div class="action">
                 <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.ConservatoryAndCourtyard), PageItemId = pageItemdata.PageItemId }) ">Details</a>
-                <img class="star" src='@Url.Content(string.Format("{0}{1}",CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"),pageItemdata.PageItemImage))' alt="">
+                <img class="star" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), pageItemdata.PageItemImage))' alt="">
             </div>
         </div>
-         
-        
     }
 </div>
 

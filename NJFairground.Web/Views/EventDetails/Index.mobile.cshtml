@@ -1,0 +1,56 @@
+﻿@model NJFairground.Web.Models.EventModel
+@using NJFairground.Web.Utilities
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home | Sussex County Fairgrounds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/jquery.mobile-1.4.2.min.css")' />
+    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/style.css")' />
+
+    <script src='@Url.Content("~/Scripts/jquery-2.1.1.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery.mobile-1.4.2.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/common-script.js")'></script>
+    </head>
+<body>
+    <div data-role="page" id="details" data-title="Details | Sussex County Fairgrounds">
+        <div data-role="header" id="header-main">
+            @*<div class="header-back">*@
+                <a class="back" id="btnBack">Back</a>
+                <h1><span>F</span>air<span>G</span>rounds</h1>
+            @*</div>*@
+            <a href="javascript:void(0)" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-magnifier ui-corner-all">Magnifier</a>
+            <a href="javascript:void(0)" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-star ui-corner-all">Star</a>
+            <a href="javascript:void(0)" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-connect ui-corner-all">Connect</a>
+        </div>
+        <!-- /header -->
+
+        <div id="body-main" role="main" class="ui-content" style="overflow-y: auto; overflow-x: hidden;">
+            <h2 class="title">@Model.StartDate.ToString("MM/dd/yyyy HH:mm") To @Model.EndDate.ToString("MM/dd/yyyy HH:mm")</h2>
+            <div class="ui-grid-solo inner-page">
+                
+                <div class="ui-block-a scroller">
+                    <h2>@Model.EventTitle</h2>
+                    <div id="scroller">
+                        <p>@Model.EventDesc</p>
+                    </div>
+                </div>
+            </div>
+            
+            <span class="presented-by">
+                <img src='@Url.Content("~/Styles/images/presentedby-details.png")' alt="">
+            </span>
+        </div>
+        <!-- /content -->
+        @Html.Partial("_Footer.mobile")
+        <!-- /footer -->
+    </div>
+    <!-- /page -->
+</body>
+</html>
