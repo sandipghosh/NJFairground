@@ -85,6 +85,11 @@
                 console.log(ex);
             }
         });
+
+        $('.info-block').dotdotdot();
+
+
+
     });
 
     //General function implementation to resize the main body.

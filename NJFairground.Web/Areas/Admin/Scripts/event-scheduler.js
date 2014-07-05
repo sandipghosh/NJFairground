@@ -67,7 +67,8 @@
                         console.log(ex);
                     }
                 },
-                events: eventData
+                //events: eventData
+                events: '{0}/Admin/EventScheduler/GetEventData'.format(virtualDirectory)
             });
         } catch (ex) {
             console.log(ex);
@@ -156,10 +157,7 @@
                                 $self.find('#start').datetimepicker();
                                 $self.find('#end').datetimepicker();
 
-                                tinymce.init({
-                                    selector: "textarea#description",
-                                });
-                                //$self.find('')
+                                initHtmlEditor();
                             }
                         });
                     }
@@ -175,7 +173,29 @@
 
     var initHtmlEditor = function () {
         try {
+            tinyMCE.init({
+                // General options
+                mode: "exact",
+                elements: "description",
+                theme: "advanced",
+                width: "742",
+                height: "274",
+                spellchecker_languages: "+English=en,Swedish=sv",
 
+                plugins: "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,searchreplace,print,contextmenu,paste,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+                // Theme options
+                theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,fontselect,fontsizeselect",
+                theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,|,insertdate,inserttime,preview,|,forecolor,backcolor,|,sub,sup,|,charmap,emotions,spellchecker",
+                theme_advanced_toolbar_location: "top",
+                theme_advanced_toolbar_align: "left",
+                //theme_advanced_statusbar_location: "bottom",
+                theme_advanced_path: false,
+                theme_advanced_resize_horizontal: false,
+                //encoding : "xml",
+                // Skin options
+                skin: "o2k7"
+            });
         } catch (ex) {
             console.log(ex);
         }
