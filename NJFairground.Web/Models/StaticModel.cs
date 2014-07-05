@@ -26,6 +26,15 @@ namespace NJFairground.Web.Models
 
     }
 
+    public enum FeedFor
+    {
+        Facebook = 1,
+        Twitter = 2,
+        Pinterest = 3,
+        Instagram = 4
+    }
+
+
     public enum StatusEnum
     {
         Active = 1,

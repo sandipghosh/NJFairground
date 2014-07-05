@@ -83,6 +83,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -254,6 +255,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\SocialController.cs" />
+    <Compile Include="Controllers\SocialDetailsController.cs" />
     <Compile Include="Controllers\WhatsNewController.cs" />
     <Compile Include="Data\Context\BaseData.cs" />
     <Compile Include="Data\Context\Event.cs">
@@ -329,6 +331,7 @@
     <Compile Include="Utilities\JSONActionResult.cs" />
     <Compile Include="Utilities\MapperExtension.cs" />
     <Compile Include="Utilities\ReadWriteCsv.cs" />
+    <Compile Include="Utilities\RssFeedReader.cs" />
     <Compile Include="Utilities\SessionVariable.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -991,6 +994,9 @@
     <Content Include="Views\Map\Index.mobile.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\EventDetails\Index.mobile.cshtml" />
+    <Content Include="Views\SocialDetails\Index.mobile.cshtml" />
+    <Content Include="Views\Shared\_CommonScriptSection.cshtml" />
+    <Content Include="Views\Shared\_CommonStyleSection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,5 +1,6 @@
 ﻿@model List<NJFairground.Web.Models.PageItemModel>
 @using NJFairground.Web.Utilities
+@using NJFairground.Web.Models
 @{
     ViewBag.Title = "Social | Sussex County Fairgrounds";
     Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
@@ -25,21 +26,27 @@
 
 <div class="ui-grid-solo inner-page">
     <div class="ui-block-a">
-        @{int i = 1;}
 
-        @foreach (var pageItemdata in Model)
-        {
-            string className = "social-block odd";
-            if (i % 2 == 0) { className = "social-block even"; } else { className = "social-block odd"; }
-            
-            <div class="@className">
-                <img class="social-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), pageItemdata.PageItemImage))' alt="">
-                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.Social), PageItemId = pageItemdata.PageItemId }) ">Details</a>
-                <h4>@pageItemdata.PageHeaderText</h4>
-                <p>@pageItemdata.PageSubHeaderText</p>
-            </div>
-            i += 1;
-        }
+        <div class="social-block odd">
+            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "facebook.png"))' alt="">
+            <a title="Details" class="details" href="@Url.Action("Index", "SocialDetails", new { feedLink = "Facebook:RssFeed", feedFor = FeedFor.Facebook }) ">Details</a>
+            <h4>Facebook</h4>
+        </div>
+        <div class="social-block even">
+            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "twitter.png"))' alt="">
+            <a title="Details" class="details" href="@Url.Action("Index", "SocialDetails", new { feedLink = "Twitter:RssFeed", feedFor = FeedFor.Twitter }) ">Details</a>
+            <h4>Twitter</h4>
+        </div>
+        <div class="social-block odd">
+            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "star.png"))' alt="">
+            <a title="Details" class="details" href="@Url.Action("Index", "SocialDetails", new { feedLink = "Pinterest:RssFeed", feedFor = FeedFor.Pinterest }) ">Details</a>
+            <h4>Pinterest</h4>
+        </div>
+        <div class="social-block even">
+            <img class="social-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "star.png"))' alt="">
+            <a title="Details" class="details" href="@Url.Action("Index", "SocialDetails", new { feedLink = "Instagram:RssFeed", feedFor = FeedFor.Instagram }) ">Details</a>
+            <h4>Instagram</h4>
+        </div>
     </div>
     <h2 class="inner-title sub">Login to Social Media</h2>
     <div class="ui-block-a">
@@ -51,8 +58,7 @@
         <div class="social-block even">
             <img class="social-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "twitter.png"))' alt="">
             <a title="Details" class="details" href="javascript:void(0)">Details</a>
-            <h4>Twiiter</h4>
+            <h4>Twitter</h4>
         </div>
     </div>
 </div>
-

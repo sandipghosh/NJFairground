@@ -86,7 +86,7 @@
             }
         });
 
-        $('.info-block').dotdotdot();
+        
 
 
 
