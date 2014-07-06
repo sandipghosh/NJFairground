@@ -18,7 +18,7 @@
         });
 
         $('#btnSearch').live("tap", function () {
-            $("#test").gmap3({
+            $("#directions").gmap3({
                 getroute: {
                     options: {
                         origin: $('#origin').val(),//"New Jersey State Fair 37 Plains Road Augusta, NJ 07822", //"48 Pirrama Road, Pyrmont NSW",
@@ -35,7 +35,7 @@
                                 }
                             },
                             directionsrenderer: {
-                                container: $(document.createElement("div")).addClass("googlemap").insertAfter($("#test")),
+                                container: $(document.createElement("div")).addClass("googlemap").insertAfter($("#directions")),
                                 options: {
                                     directions: results
                                 }
@@ -59,6 +59,6 @@
         <img id="btnSearch" style="width:35px"  src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "search.png"))' alt="">
     </div>
     @*<img class="inner-banner map" src='@Url.Content("~/Styles/images/direction-map.jpg")' alt="">*@
-    <div id="test"></div>
+    <div id="directions"></div>
 </div>
 @Html.Hidden("destination", CommonUtility.GetAppSetting<string>("FairGroundAddress"))
