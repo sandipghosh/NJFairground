@@ -824,6 +824,8 @@
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />
     <Content Include="Scripts\common-script.js" />
+    <Content Include="Scripts\gmap3.min.js" />
+    <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
@@ -852,6 +854,7 @@
     <Content Include="Styles\Images\Info Main Picture.jpg" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
+    <Content Include="Upload\search.png" />
     <Content Include="Upload\facebook.png" />
     <Content Include="Styles\Images\footer-anchover.png" />
     <Content Include="Styles\Images\footer-bg.png" />

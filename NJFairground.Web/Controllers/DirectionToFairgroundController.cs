@@ -16,6 +16,9 @@ namespace NJFairground.Web.Controllers
         public ActionResult Index()
         {
             return View("Index.mobile");
+        
         }
+
+
     }
 }
