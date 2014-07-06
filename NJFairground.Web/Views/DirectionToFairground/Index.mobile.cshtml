@@ -39,6 +39,16 @@
                     }
                 });
             });
+
+            $('#origin').focus(function () {
+                if (this.value == 'Enter your location') {
+                    this.value = '';
+                }
+            });
+            $('#origin').blur(function () {
+                if(this.value == '')
+                    this.value = 'Enter your location';
+            });
         });
     </script>
 }
@@ -46,10 +56,11 @@
 <h2 class="title">Directions to Fairgrounds</h2>
 <div class="ui-grid-solo inner-page">
     <div style="float: left; width: 70%;">
-        @Html.TextBox("origin", "New Jersey State Fair P.O. Box 2456 Branchville, NJ 07826", new { style = "width:90%;" })
+        @*@Html.TextBox("origin", "", new { style = "width:90%;" })*@@*"New Jersey State Fair P.O. Box 2456 Branchville, NJ 07826"*@
+        @Html.TextArea("origin", "Enter your location", new { style = "width:90%;" })
     </div>
     <div>
-        <img id="btnSearch" style="width:35px"  src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "search.png"))' alt="">
+        <img id="btnSearch" style="width:35px;cursor:pointer;"  src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "search.png"))' alt="">
     </div>
     <div id="map-area"></div>
     <div id="direction-area"></div>
