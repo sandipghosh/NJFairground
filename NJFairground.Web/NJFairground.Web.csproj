@@ -829,6 +829,7 @@
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
+    <Content Include="Scripts\jquery.autocomplete.min.js" />
     <Content Include="Scripts\jquery.dotdotdot.min.js" />
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery.mCustomScrollbar.concat.min.js" />
@@ -838,6 +839,7 @@
     <Content Include="Styles\fonts\cafe_nero_m54-webfont.svg" />
     <Content Include="Styles\fonts\dk_keswick-webfont.svg" />
     <Content Include="Styles\Images\ajax-loader.gif" />
+    <Content Include="Styles\Images\back_iphone.png" />
     <Content Include="Styles\Images\banner-agriculture.jpg" />
     <Content Include="Styles\Images\banner-complex.jpg" />
     <Content Include="Styles\Images\banner-court.jpg" />
@@ -854,6 +856,10 @@
     <Content Include="Styles\Images\Info Main Picture.jpg" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
+    <Content Include="Upload\Google.png" />
+    <Content Include="Upload\Instagram.png" />
+    <Content Include="Upload\Linkedin.png" />
+    <Content Include="Upload\Pinterest.png" />
     <Content Include="Upload\search.png" />
     <Content Include="Upload\facebook.png" />
     <Content Include="Styles\Images\footer-anchover.png" />
