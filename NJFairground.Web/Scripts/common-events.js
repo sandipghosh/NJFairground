@@ -57,6 +57,15 @@
             }
         });
 
+        $('.ui-icon-back').live('tap', function (event) {
+            try {
+                win.history.back();
+                event.preventDefault();
+            } catch (ex) {
+                console.log(ex);
+            }
+        });
+
         //Triggered when a swipe event occurs moving in the right direction.
         $('#body-main').live('swiperight', function (event) {
             try {
