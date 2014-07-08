@@ -6,18 +6,18 @@
 }
 @section PageStyle{
     <style type="text/css">
-        .autocomplete{
-            background-color:#ffffff;
-            border:1px solid #808080;
+        .autocomplete {
+            background-color: #ffffff;
+            border: 1px solid #808080;
         }
 
             .autocomplete li {
-                padding:1%;
+                padding: 1%;
             }
 
-            .autocomplete li.hover{
-                background-color:#faebd7;
-            }
+                .autocomplete li.hover {
+                    background-color: #faebd7;
+                }
     </style>
 }
 @section PageScript{
@@ -99,7 +99,7 @@
 <h2 class="title">Directions to Fairgrounds</h2>
 <div class="ui-grid-solo inner-page">
     <div class="search-container">
-        @Html.TextBox("origin", "", new { @class = "search-input", data_role = "none" })
+        @Html.TextBox("origin", "", new { @class = "search-input", data_role = "none", placeholder="Enter your location" })
         <!--New Jersey State Fair P.O. Box 2456 Branchville, NJ 07826-->
         <input class="btnSearch" type="button" value="Go" data-role="none" onclick="search_onclick()">
     </div>
