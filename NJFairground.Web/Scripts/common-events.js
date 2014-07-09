@@ -86,7 +86,7 @@
             }
         });
 
-        $('.header-back').live('tap', function (event) {
+        $('.header-back,.back').live('tap', function (event) {
             try {
                 win.history.back();
                 event.preventDefault();

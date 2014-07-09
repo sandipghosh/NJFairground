@@ -329,7 +329,7 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
     display:block;
 }
 .feedItemWrapper .feedItemContent img{
-    width:100%;
+    /*width:100%;*/
 }
 
 .fun-blocks .text h4, 
