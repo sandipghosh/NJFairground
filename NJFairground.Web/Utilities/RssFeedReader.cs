@@ -97,23 +97,31 @@ namespace NJFairground.Web.Utilities
                 TagBuilder feedItem = new TagBuilder("div");
                 feedItem.Attributes.Add("class", "feed-entry");
 
-                TagBuilder titleHeader = new TagBuilder("h3");
+                TagBuilder top = new TagBuilder("div");
+                top.Attributes.Add("class", "top");
 
+                TagBuilder eventContainer = new TagBuilder("div");
+                eventContainer.Attributes.Add("class", "event");
                 TagBuilder titleLink = new TagBuilder("a");
                 titleLink.Attributes.Add("href", x.TitleUrl);
                 titleLink.InnerHtml = x.Title;
-                titleHeader.InnerHtml += titleLink.ToString();
+                eventContainer.InnerHtml += titleLink.ToString();
+                top.InnerHtml += eventContainer.ToString();
 
-                TagBuilder lastUpdated = new TagBuilder("div");
+                TagBuilder venue = new TagBuilder("div");
+                venue.Attributes.Add("class", "venue");
+
+                TagBuilder lastUpdated = new TagBuilder("span");
                 lastUpdated.Attributes.Add("class", "lastUpdated");
                 lastUpdated.InnerHtml = x.LastUpdate;
-                titleHeader.InnerHtml += lastUpdated.ToString();
+                venue.InnerHtml += lastUpdated.ToString();
 
-                TagBuilder feedAuthor = new TagBuilder("div");
+                TagBuilder feedAuthor = new TagBuilder("span");
                 feedAuthor.Attributes.Add("class", "feedAuthor");
                 feedAuthor.InnerHtml = x.Author;
-                titleHeader.InnerHtml += feedAuthor.ToString();
-                feedItem.InnerHtml += titleHeader.ToString();
+                venue.InnerHtml += feedAuthor.ToString();
+                top.InnerHtml += venue.ToString();
+                feedItem.InnerHtml += top.ToString();
 
                 TagBuilder feedItemContent = new TagBuilder("div");
                 feedItemContent.Attributes.Add("class", "feedItemContent");

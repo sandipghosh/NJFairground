@@ -52,6 +52,7 @@
             try {
                 win.history.forward();
                 event.preventDefault();
+                refreshPage();
             } catch (ex) {
                 console.log(ex);
             }
@@ -61,6 +62,7 @@
             try {
                 win.history.back();
                 event.preventDefault();
+                refreshPage();
             } catch (ex) {
                 console.log(ex);
             }
@@ -71,6 +73,7 @@
             try {
                 win.history.back();
                 event.preventDefault();
+                refreshPage();
             } catch (ex) {
                 console.log(ex);
             }
@@ -95,7 +98,7 @@
             }
         });
 
-        
+
 
 
 
@@ -116,4 +119,14 @@
             console.log(ex);
         }
     };
+
+    this.refreshPage = function () {
+        $.mobile.changePage(window.location.href,
+          {
+              allowSamePageTransition: true,
+              transition: 'none',
+              showLoadMsg: false,
+              reloadPage: true
+          });
+    }
 }(jQuery, window));

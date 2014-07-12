@@ -14,55 +14,55 @@
 </head>
 <body>
     <div data-role="page" id="homepage" data-title="@ViewBag.Title">
-       @Html.Partial("_Header.mobile")
+        @Html.Partial("_Header.mobile")
         <!-- /header -->
 
         <div id="body-main" role="main" class="ui-content" style="overflow-y:auto; overflow-x:hidden;">
             <div class="ui-grid-a fair-grounds">
                 <div class="ui-block-a">
-                    <a href="Fair">
+                    <a href='@Url.Action("Index", "Fair")' data-ajax="false">
                         <img src='@Url.Content("~/Styles/images/thumb-thefair.png")' alt="">
                         <span>The Fair</span>
                     </a>
                 </div>
                 <div class="ui-block-b">
-                    <a href="Event">
+                    <a href='@Url.Action("Index", "Event")' data-ajax="false">
                         <img src='@Url.Content("~/Styles/images/thumb-calendar.png")' alt="">
                         <span>2014 Calender of Events</span>
                     </a>
                 </div>
                 <div class="ui-block-a">
-                    <a href="HorseShow">
+                    <a href='@Url.Action("Index", "HorseShow")' data-ajax="false">
                         <img src='@Url.Content("~/Styles/images/thumb-horseshow.png")' alt="">
                         <span>Horse Show</span>
                     </a>
                 </div>
                 <div class="ui-block-b">
-                    <a href="Agriculture">
+                    <a href='@Url.Action("Index", "Agriculture")' data-ajax="false">
                         <img src='@Url.Content("~/Styles/images/thumb-agriculture.png")' alt="">
                         <span>Agriculture/AG Learning Center</span>
                     </a>
                 </div>
                 <div class="ui-block-a">
-                    <a href="ConservatoryCourtyard">
+                    <a href='@Url.Action("Index", "ConservatoryCourtyard")' data-ajax="false">
                         <img src='@Url.Content("~/Styles/images/thumb-courtyard.png")' alt="">
                         <span>Conservatory &amp; Courtyard</span>
                     </a>
                 </div>
                 <div class="ui-block-b">
-                    <a href="Complex">
+                    <a href='@Url.Action("Index", "Complex")' data-ajax="false">
                         <img src='@Url.Content("~/Styles/images/thumb-fairgrounds.png")' alt="">
                         <span>Fairgrounds Complex All Season/Events/Rentals</span>
                     </a>
                 </div>
                 <div class="ui-block-a">
-                    <a href="Promote">
+                    <a href='@Url.Action("Index", "Promote")' data-ajax="false">
                         <img src='@Url.Content("~/Styles/images/thumb-promote.png")' alt="">
                         <span>Promote Your Events Here!</span>
                     </a>
                 </div>
                 <div class="ui-block-b">
-                    <a href="DirectionToFairground">
+                    <a href='@Url.Action("Index","DirectionToFairground")' data-ajax="false">
                         <img src='@Url.Content("~/Styles/images/thumb-directions.png")' alt="">
                         <span>Directions to Fairgrounds</span>
                     </a>

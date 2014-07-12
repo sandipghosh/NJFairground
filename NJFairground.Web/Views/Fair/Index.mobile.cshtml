@@ -14,7 +14,6 @@
 </head>
 <body style="overflow-y: hidden; overflow-x: hidden;">
     <div data-role="page" id="innerpage" data-title="Inner Page | Sussex County Fairgrounds">
-
         <!-- /header -->
         @Html.Partial("_Header.mobile")
 
@@ -28,7 +27,7 @@
             </div>
             <div class="ui-grid-b">
                 <div class="ui-block-a">
-                    <a href="WhatsNew">
+                    <a href='@Url.Action("Index", "WhatsNew")' data-ajax="false">
                         <div class="thumb">
                             <img src='@Url.Content("~/Styles/images/thumb-ip-whatsnew.png")' alt="">
                             <span>What's New!</span>
@@ -36,7 +35,7 @@
                     </a>
                 </div>
                 <div class="ui-block-b">
-                    <a href="info">
+                    <a href='@Url.Action("Index", "info")' data-ajax="false">
                         <div class="thumb">
                             <img src='@Url.Content("~/Styles/images/thumb-ip-info.png")' alt="">
                             <span>Info</span>
@@ -44,16 +43,15 @@
                     </a>
                 </div>
                 <div class="ui-block-c">
-                    <a href="Map">
+                    <a href='@Url.Action("Index", "Map")' data-ajax="false">
                         <div class="thumb">
                             <img src='@Url.Content("~/Styles/images/thumb-ip-map.png")' alt="">
                             <span>Map</span>
                         </div>
                     </a>
                 </div>
-
                 <div class="ui-block-a">
-                    <a href="DailyHighlights">
+                    <a href='@Url.Action("Index", "DailyHighlights")' data-ajax="false">
                         <div class="thumb">
                             <img src='@Url.Content("~/Styles/images/thumb-ip-daily-highlights.png")' alt="">
                             <span>Daily Highlights</span>
@@ -61,7 +59,7 @@
                     </a>
                 </div>
                 <div class="ui-block-b">
-                    <a href="Fun">
+                    <a href='@Url.Action("Index", "Fun")' data-ajax="false">
                         <div class="thumb">
                             <img src='@Url.Content("~/Styles/images/thumb-ip-fun.png")' alt="">
                             <span>Fun</span>
@@ -69,7 +67,7 @@
                     </a>
                 </div>
                 <div class="ui-block-c">
-                    <a href="FoodFinder">
+                    <a href='@Url.Action("Index", "Event")' data-ajax="false">
                         <div class="thumb">
                             <img src='@Url.Content("~/Styles/images/thumb-ip-food.png")' alt="">
                             <span>Food</span>
@@ -77,7 +75,7 @@
                     </a>
                 </div>
                 <div class="ui-block-a">
-                    <a href="Shopping">
+                    <a href='@Url.Action("Index", "Shopping")' data-ajax="false">
                         <div class="thumb">
                             <img src='@Url.Content("~/Styles/images/thumb-ip-shopping.png")' alt="">
                             <span>Shopping</span>
@@ -85,7 +83,7 @@
                     </a>
                 </div>
                 <div class="ui-block-b">
-                    <a href="social">
+                    <a href='@Url.Action("Index", "social")' data-ajax="false">
                         <div class="thumb">
                             <img src='@Url.Content("~/Styles/images/thumb-ip-social.png")' alt="">
                             <span>Social</span>
@@ -93,7 +91,7 @@
                     </a>
                 </div>
                 <div class="ui-block-c">
-                    <a href="Directions">
+                    <a href='@Url.Action("Index", "Directions")' data-ajax="false">
                         <div class="thumb">
                             <img src='@Url.Content("~/Styles/images/thumb-ip-directions.png")' alt="">
                             <span>Directions</span>

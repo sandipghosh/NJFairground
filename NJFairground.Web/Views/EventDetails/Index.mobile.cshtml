@@ -15,15 +15,7 @@
 </head>
 <body>
     <div data-role="page" id="details" data-title="Details | Sussex County Fairgrounds">
-        <div data-role="header" id="header-main">
-            @*<div class="header-back">*@
-            <a class="back" id="btnBack">Back</a>
-            <h1><span>F</span>air<span>G</span>rounds</h1>
-            @*</div>*@
-            <a href="javascript:void(0)" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-magnifier ui-corner-all">Magnifier</a>
-            <a href="javascript:void(0)" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-star ui-corner-all">Star</a>
-            <a href="javascript:void(0)" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-connect ui-corner-all">Connect</a>
-        </div>
+        @{Html.RenderPartial("_DetailHeader.mobile");}
         <!-- /header -->
 
         <div id="body-main" role="main" class="ui-content" style="overflow-y: auto; overflow-x: hidden;">

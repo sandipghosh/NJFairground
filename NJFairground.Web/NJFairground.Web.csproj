@@ -792,6 +792,7 @@
     <Content Include="Styles\Images\details-inner-btn.jpg" />
     <Content Include="Styles\Images\direction-map.jpg" />
     <Content Include="Styles\Images\Directions Main Picture.jpg" />
+    <Content Include="Styles\Images\facebook-venue.jpg" />
     <Content Include="Styles\Images\Info Main Picture.jpg" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
@@ -945,6 +946,7 @@
     <Content Include="Views\SocialDetails\Index.mobile.cshtml" />
     <Content Include="Views\Shared\_CommonScriptSection.cshtml" />
     <Content Include="Views\Shared\_CommonStyleSection.cshtml" />
+    <Content Include="Views\Shared\_DetailHeader.mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
