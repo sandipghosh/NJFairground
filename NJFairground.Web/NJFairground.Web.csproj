@@ -228,6 +228,8 @@
     <Compile Include="Areas\Admin\Models\SchedularSchema.cs" />
     <Compile Include="Controllers\AgricultureController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
+    <Compile Include="Controllers\CarnivalController.cs" />
+    <Compile Include="Controllers\CircusHollywoodController.cs" />
     <Compile Include="Controllers\ComplexController.cs" />
     <Compile Include="Controllers\ConservatoryCourtyardController.cs" />
     <Compile Include="Controllers\DailyHighlightsController.cs" />
@@ -730,6 +732,7 @@
     <Content Include="bin\zh-Hant\Microsoft.Data.Edm.resources.dll" />
     <Content Include="bin\zh-Hant\Microsoft.Data.OData.resources.dll" />
     <Content Include="bin\zh-Hant\System.Spatial.resources.dll" />
+    <Content Include="DBScript\NJFairground13_07_2014_0138.sql" />
     <Content Include="DBScript\NJFairgroundDB_Scriptwithdata_06_07_2014_1138pm.sql" />
     <Content Include="ErrorLogs\TextFile.txt" />
     <Content Include="favicon.ico" />
@@ -786,6 +789,7 @@
     <Content Include="Styles\Images\banner-details2.jpg" />
     <Content Include="Styles\Images\banner-details3.jpg" />
     <Content Include="Styles\Images\banner-horseshow.jpg" />
+    <Content Include="Upload\banner-horseshow.jpg" />
     <Content Include="Styles\Images\banner-info.jpg" />
     <Content Include="Styles\Images\banner-promote.jpg" />
     <Content Include="Styles\Images\banner-social.jpg" />
@@ -796,6 +800,10 @@
     <Content Include="Styles\Images\Info Main Picture.jpg" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
+    <Content Include="Upload\banner-promote.jpg" />
+    <Content Include="Upload\Carnival 1.jpg" />
+    <Content Include="Upload\Circus 1.jpg" />
+    <Content Include="Styles\Images\Fairgrounds 1.jpg" />
     <Content Include="Upload\Google.png" />
     <Content Include="Upload\Instagram.png" />
     <Content Include="Upload\Linkedin.png" />

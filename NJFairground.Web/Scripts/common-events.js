@@ -80,7 +80,7 @@
         });
 
 
-        $('.fun-block,.social-block,.highlight,.info-block,.block').live("tap", function () {
+        $('.fun-block,.social-block,.info-block,.block').live("tap", function () {
             try {
                 var url = $(this).find('a').attr('href');
                 window.location.href = url;

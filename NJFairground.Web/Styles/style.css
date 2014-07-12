@@ -105,6 +105,7 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 .highlights .details{ float:right; margin: 20px 0 0; font-size:0; background:url(images/highlight-arrow.png) no-repeat 0 0; height:23px; width:12px; }
 .highlights .details:hover{ background-position:0 100%; }
 .highlights .star{ float:right; margin:7px 5px 0 0;width:59px;height:49px; }
+.highlights .highlight .complextext{ width:100%; float:left; margin:0 5% 0 0; }
 
 /*--- Food Finder Page ---*/
 #food-finder{ background:url(images/inner-content-bg.png) no-repeat 0 0; background-size:100%; }
@@ -173,7 +174,7 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 #details .ui-header .ui-title span{ font-size:16px; }
 #details .ui-header .header-back .ui-title{ text-align:left; margin:0 0 0 17px; font-size:13px; letter-spacing:3px; }
 #details .ui-header .header-back .ui-title span{ font-size:16px; }
-#scroller{ overflow:auto; height:295px; }
+#scroller{ /*overflow:auto; height:295px;*/ }
 .scroller{ background:#ffdad5; padding:14px 10px; }
 .scroller h2{ font-size:17px; line-height:23px; color:#9f2023; font-weight:normal; margin:0 0 8px; }
 .scroller p{ font-size:11px; line-height:15px; color:#000000; margin:0 0 14px; }

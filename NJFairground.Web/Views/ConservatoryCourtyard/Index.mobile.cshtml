@@ -9,17 +9,26 @@
 <h2 class="title">Conservatory &amp; Courtyard</h2>
 <div class="ui-grid-solo highlights courtyard inner-page">
     <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-court.jpg")' alt="">
+    <div class="ui-block-a highlight">
+        <div class="complextext">
+            <p>
+            The historic richness of the Sussex County Fairgrounds combines with architectural elegance and classic décor to turn The Conservatory into an elegant and luxurious venue. Behind The Conservatory, you will find The Courtyard, the lush garden area including greenery, flowers, and water features.
+
+            <br />
+            <br />
+            The Conservatory is the perfect location to create lasting memories. Share your Social, Wedding, or Corporate Events in our beautiful country setting with your family and friends. From birthdays to bat mitzvahs, fundraisers to family reunions, we work with our clients to accommodate all types of events.
+            </p>
+        </div>
+    </div>
+
     @foreach (var pageItemdata in Model)
     {
         <div class="ui-block-a highlight">
-            <div class="text">
+            <div class="complextext">
                 <h4>@pageItemdata.PageHeaderText</h4>
                 <p>@pageItemdata.PageSubHeaderText</p>
             </div>
-            <div class="action">
-                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.ConservatoryAndCourtyard), PageItemId = pageItemdata.PageItemId }) ">Details</a>
-                <img class="star" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), pageItemdata.PageItemImage))' alt="">
-            </div>
+
         </div>
     }
 </div>

@@ -1,5 +1,4 @@
-﻿
-@using NJFairground.Web.Utilities
+﻿@using NJFairground.Web.Utilities
 @using NJFairground.Web.Models
 @model List<PageItemModel>
 
@@ -9,17 +8,28 @@
     Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
 }
 <h2 class="title">Agriculture/AG Learning Center</h2>
-<div class="ui-grid-solo inner-page">
+<div class="ui-grid-solo highlights inner-page">
     <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-agriculture.jpg")' alt="">
-    <div class="ui-block-a">
-        @foreach (var pageItemdata in Model)
-        {
-            <div class="info-block">
-                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.AGLearningCenter), PageItemId = pageItemdata.PageItemId }) ">Details</a>
-                <img class="info-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), pageItemdata.PageItemImage))' alt="">
+
+
+    <div class="ui-block-a highlight">
+        <div class="complextext">
+            <p>
+                In Sussex County, Agriculture has four seasons! Enjoy Spring gardening, Summer berries, veggies, and fruits, Fall apples and pumpkins, and winter Christmas trees that provide a country outing for your family! Our Farmers’ markets open in spring, and some continue to run all winter.
+
+            <br />
+                <br />
+                The Agricultural Learning Center’s mission is to provide information and resources about agriculture to parents and teachers. The Center has classroom programs, class trip programs and free teacher resources. During The Fair and year-round, the AG Learning Center provides exciting events for all ages!
+            </p>
+        </div>
+    </div>
+    @foreach (var pageItemdata in Model)
+    { <div class="ui-block-a highlight">
+            <div class="complextext">
                 <h4>@pageItemdata.PageHeaderText</h4>
                 <p>@pageItemdata.PageSubHeaderText</p>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
+

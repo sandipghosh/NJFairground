@@ -22,7 +22,9 @@ namespace NJFairground.Web.Models
         Shopping = 17,
         Social = 18,
         Complex = 19,
-        DirectionToFairground = 20
+        DirectionToFairground = 20,
+        Carnival=21,
+        CircusHollywood=22
 
     }
 
