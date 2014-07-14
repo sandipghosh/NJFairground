@@ -154,3 +154,6 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/DatabaseScripts/NJFairground13_07_2014_0138.sql
+/NJFairground.Web/Areas/Admin/Models/SchedularSchema.cs
+/NJFairground.Web/Upload/banner-horseshow.jpg
