@@ -800,12 +800,14 @@
     <Content Include="Styles\Images\Info Main Picture.jpg" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
+    <Content Include="Upload\banner-horseshow.jpg" />
     <Content Include="Styles\litetooltip.min.css" />
     <Content Include="Upload\banner-horseshow.jpg" />
     <Content Include="Upload\banner-promote.jpg" />
     <Content Include="Upload\Carnival 1.jpg" />
     <Content Include="Upload\Circus 1.jpg" />
     <Content Include="Styles\Images\Fairgrounds 1.jpg" />
+    <Content Include="Upload\Fairgrounds 1.jpg" />
     <Content Include="Upload\Google.png" />
     <Content Include="Upload\Instagram.png" />
     <Content Include="Upload\Linkedin.png" />
