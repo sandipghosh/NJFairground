@@ -778,6 +778,7 @@
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.mobile-1.4.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\LiteTooltip.js" />
     <Content Include="Styles\fonts\cafe_nero_m54-webfont.svg" />
     <Content Include="Styles\fonts\dk_keswick-webfont.svg" />
     <Content Include="Styles\Images\ajax-loader.gif" />
@@ -789,7 +790,6 @@
     <Content Include="Styles\Images\banner-details2.jpg" />
     <Content Include="Styles\Images\banner-details3.jpg" />
     <Content Include="Styles\Images\banner-horseshow.jpg" />
-    <Content Include="Upload\banner-horseshow.jpg" />
     <Content Include="Styles\Images\banner-info.jpg" />
     <Content Include="Styles\Images\banner-promote.jpg" />
     <Content Include="Styles\Images\banner-social.jpg" />
@@ -800,6 +800,8 @@
     <Content Include="Styles\Images\Info Main Picture.jpg" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
+    <Content Include="Styles\litetooltip.min.css" />
+    <Content Include="Upload\banner-horseshow.jpg" />
     <Content Include="Upload\banner-promote.jpg" />
     <Content Include="Upload\Carnival 1.jpg" />
     <Content Include="Upload\Circus 1.jpg" />
@@ -807,6 +809,7 @@
     <Content Include="Upload\Google.png" />
     <Content Include="Upload\Instagram.png" />
     <Content Include="Upload\Linkedin.png" />
+    <Content Include="Upload\NJ_Fairground_guide_map.jpg" />
     <Content Include="Upload\Pinterest.png" />
     <Content Include="Upload\search.png" />
     <Content Include="Upload\facebook.png" />

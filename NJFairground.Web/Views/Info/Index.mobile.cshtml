@@ -3,15 +3,6 @@
 @{
     ViewBag.Title = "Info | Sussex County Fairgrounds";
     ViewBag.PageId = "info";
-    Layout = "~/Views/Shared/_LayoutPage.mobile.cshtml";
-}
-
-@section PageScript{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.info-block div').dotdotdot();
-        });
-    </script>
 }
 
 @section navbar{
@@ -23,11 +14,6 @@
     <h2 class="inner-title">@Html.Raw("General Information")</h2>
 }
 
-@section PageStyle{
-    <style type="text/css">
-        
-    </style>
-}
 <div class="ui-grid-solo inner-page">
     @foreach (var pageItemdata in Model)
     {
