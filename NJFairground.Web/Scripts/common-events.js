@@ -97,11 +97,6 @@
                 console.log(ex);
             }
         });
-
-
-
-
-
     });
 
     //General function implementation to resize the main body.

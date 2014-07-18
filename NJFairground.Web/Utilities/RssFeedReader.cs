@@ -41,7 +41,9 @@ namespace NJFairground.Web.Utilities
                     Title = x.Title.Text,
                     TitleUrl = (x.Links.FirstOrDefault() == null) ? string.Empty : x.Links.FirstOrDefault().Uri.AbsoluteUri,
                     Content = ((TextSyndicationContent)(x.Content ?? x.Summary)).Text,
-                    LastUpdate = x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US")),
+                    LastUpdate = (x.LastUpdatedTime.Year == 1 ?
+                        x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
+                        x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),
                     Author = (x.Authors.LastOrDefault() == null) ? string.Empty : x.Authors.LastOrDefault().Name.ToString()
                 }).ToList();
                 return new MvcHtmlString(GetHtmlFromRss(feeds));
