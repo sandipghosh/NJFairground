@@ -766,6 +766,7 @@
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />
     <Content Include="Scripts\common-script.js" />
+    <Content Include="Scripts\e-smart-zoom-jquery.js" />
     <Content Include="Scripts\gmap3.min.js" />
     <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
@@ -798,8 +799,11 @@
     <Content Include="Styles\Images\Directions Main Picture.jpg" />
     <Content Include="Styles\Images\facebook-venue.jpg" />
     <Content Include="Styles\Images\Info Main Picture.jpg" />
+    <Content Include="Styles\Images\position.png" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
+    <Content Include="Styles\Images\zoomIn.png" />
+    <Content Include="Styles\Images\ZoomOut.png" />
     <Content Include="Upload\banner-horseshow.jpg" />
     <Content Include="Styles\litetooltip.min.css" />
     <Content Include="Upload\banner-horseshow.jpg" />
@@ -867,6 +871,7 @@
     <Content Include="Styles\Images\thumb-thefair.png" />
     <Content Include="Styles\Images\title-bg.png" />
     <Content Include="Styles\Images\title-shadow.png" />
+    <Content Include="Upload\Talk_to_the_Animls.JPG" />
     <Content Include="Upload\twitter.png" />
     <Content Include="Upload\youtube.png" />
     <Content Include="Styles\jquery.mCustomScrollbar.css" />
