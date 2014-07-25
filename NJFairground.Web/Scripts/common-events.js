@@ -50,9 +50,11 @@
         //Triggered when a swipe event occurs moving in the left direction.
         $('#body-main').live('swipeleft', function (event) {
             try {
-                win.history.forward();
-                event.preventDefault();
-                refreshPage();
+                if (!location.pathname.endesWith('Map')) {
+                    win.history.forward();
+                    event.preventDefault();
+                    refreshPage();
+                }
             } catch (ex) {
                 console.log(ex);
             }
@@ -71,9 +73,11 @@
         //Triggered when a swipe event occurs moving in the right direction.
         $('#body-main').live('swiperight', function (event) {
             try {
-                win.history.back();
-                event.preventDefault();
-                refreshPage();
+                if (!location.pathname.endesWith('Map')) {
+                    win.history.back();
+                    event.preventDefault();
+                    refreshPage();
+                }
             } catch (ex) {
                 console.log(ex);
             }

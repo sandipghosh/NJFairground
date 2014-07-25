@@ -8,6 +8,9 @@
 }
 @section PageStyle{
     <link href='@Url.Content("~/Styles/litetooltip.min.css")' type="text/css" rel="stylesheet" />
+    <style type="text/css">
+        
+    </style>
 }
 @section PageScript{
     <script type="text/javascript" src='@Url.Content("~/Scripts/LiteTooltip.js")'></script>
@@ -15,6 +18,38 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#imageFullScreen').smartZoom({ 'containerClass': 'imgContainer' });
+
+            $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", function (e) {
+                var pixelsToMoveOnX = 0;
+                var pixelsToMoveOnY = 0;
+
+                switch (e.target.id) {
+                    case "leftPositionMap":
+                        pixelsToMoveOnX = 50;
+                        break;
+                    case "rightPositionMap":
+                        pixelsToMoveOnX = -50;
+                        break;
+                    case "topPositionMap":
+                        pixelsToMoveOnY = 50;
+                        break;
+                    case "bottomPositionMap":
+                        pixelsToMoveOnY = -50;
+                        break;
+                }
+                $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
+            });
+            $('#zoomInButton,#zoomOutButton').live("click", zoomButtonClickHandler);
+
+            function zoomButtonClickHandler(e) {
+                var scaleToAdd = 0.8;
+                if (e.target.id == 'zoomOutButton')
+                    scaleToAdd = -scaleToAdd;
+                $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
+            }
+
             $('area').LiteTooltip({
                 location: 'top',
                 trigger: 'click',
@@ -25,69 +60,33 @@
                 opacity: 1,
                 backcolor: '#df3030'
             });
-
-
-            //$('#imageFullScreen').smartZoom({ 'containerClass': 'zoomableContainer' });
-
-            //$('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
-            //$('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
-
-            //function zoomButtonClickHandler(e) {
-            //    var scaleToAdd = 0.8;
-            //    if (e.target.id == 'zoomOutButton')
-            //        scaleToAdd = -scaleToAdd;
-            //    $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
-            //}
-
-            //function moveButtonClickHandler(e) {
-            //    var pixelsToMoveOnX = 0;
-            //    var pixelsToMoveOnY = 0;
-
-            //    switch (e.target.id) {
-            //        case "leftPositionMap":
-            //            pixelsToMoveOnX = 50;
-            //            break;
-            //        case "rightPositionMap":
-            //            pixelsToMoveOnX = -50;
-            //            break;
-            //        case "topPositionMap":
-            //            pixelsToMoveOnY = 50;
-            //            break;
-            //        case "bottomPositionMap":
-            //            pixelsToMoveOnY = -50;
-            //            break;
-            //    }
-            //    $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
-            //}
         });
     </script>
 }
 
 <div class="ui-grid-solo highlights">
     <div class="ui-block-a highlight">
-        @*<div id="positionButtonDiv">
+        <div id="positionButtonDiv">
             <p>
                 Zoom : 
-                <span>
-                    <img id="zoomInButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomIn.png")' title="zoom in" alt="zoom in" />
-                    <img id="zoomOutButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomOut.png")' title="zoom out" alt="zoom out" />
-                </span>
+					<span>
+                        <img id="zoomInButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomIn.png")' title="zoom in" alt="zoom in" />
+                        <img id="zoomOutButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomOut.png")' title="zoom out" alt="zoom out" />
+                    </span>
             </p>
             <p>
                 <span class="positionButtonSpan">
-                    <map name="positionMap" class="positionMapClass">
-                        <area id="topPositionMap" shape="rect" coords="20,0,40,20" title="move up" alt="move up" />
-                        <area id="leftPositionMap" shape="rect" coords="0,20,20,40" title="move left" alt="move left" />
-                        <area id="rightPositionMap" shape="rect" coords="40,20,60,40" title="move right" alt="move right" />
-                        <area id="bottomPositionMap" shape="rect" coords="20,40,40,60" title="move bottom" alt="move bottom" />
-                    </map>
-                    <img src='@Url.Content("~/Styles/Images/position.png")' usemap="#positionMap" />
+                    <img src='@Url.Content("~/Styles/Images/position.png")' />
+                    <span class="commonbutton" id="topPositionMap"></span>
+                    <span class="commonbutton" id="leftPositionMap"></span>
+                    <span class="commonbutton" id="rightPositionMap"></span>
+                    <span class="commonbutton" id="bottomPositionMap"></span>
                 </span>
             </p>
-        </div>*@
-        @*<div id="imgContainer">*@
-            <img id="imageFullScreen" src='@Url.Content("~/Upload/NJ_Fairground_guide_map.jpg")' style="max-width: 100%; height: auto;" usemap="#image-maps-2014-07-16-043538" alt="" />
-            <map name="image-maps-2014-07-16-043538" id="ImageMapsCom-image-maps-2014-07-16-043538">
+        </div>
+        <div id="imgContainer">
+            <img id="imageFullScreen" src='@Url.Content("~/Upload/NJ_Fairground_guide_map.jpg")'  usemap="#image-maps" />
+            <map name="image-maps" id="ImageMapsCom-image-maps">
                 <area alt="" data-title="Blood Mobile" href="javascript:void(0)" shape="rect" coords="271,531,297,554" style="outline: none;" target="_self" />
                 <area alt="" data-title="Performing Arts tent" href="javascript:void(0)" shape="rect" coords="498,532,524,555" style="outline: none;" target="_self" />
                 <area alt="" data-title="FIRST AID (in Admin. Bldg.)" href="javascript:void(0)" shape="rect" coords="446,588,472,611" style="outline: none;" target="_self" />
@@ -159,6 +158,10 @@
                 <area alt="" data-title="Carnival Wheel" href="javascript:void(0)" shape="rect" coords="182,276,229,340" style="outline: none;" target="_self" />
                 <area shape="rect" coords="862,882,864,884" alt="Image Map" style="outline: none;" data-title="Image Map" href="http://www.image-maps.com/index.php?aff=mapped_users_0" />
             </map>
-        @*</div>*@
+        </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+</script>
