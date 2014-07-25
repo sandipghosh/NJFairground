@@ -90,8 +90,8 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 #homepage{ background:url(images/glow.png) no-repeat 0 0; background-size:100%; }
 #homepage .fair-grounds > div{ text-align:center; padding:0 7px 14px 0; }
 #homepage .fair-grounds > div:nth-child(2n+2){ padding:0 0 14px 7px; }
-#homepage .fair-grounds > div img{ margin:0 0 8px; display:inline-block; -webkit-border-radius:10px; -moz-border-radius:10px; border-radius:10px; -webkit-box-shadow:0 2px 0 #C07315; -moz-box-shadow:0 2px 0 #C07315; box-shadow:0 2px 0 #C07315; }
-#homepage .fair-grounds > div span{ font-size:16px; line-height:18px; color:#fff; font-weight:normal; clear:both; display:block; }
+#homepage .fair-grounds > div img{width: 90px; margin:0 0 8px; display:inline-block; -webkit-border-radius:10px; -moz-border-radius:10px; border-radius:10px; -webkit-box-shadow:0 2px 0 #C07315; -moz-box-shadow:0 2px 0 #C07315; box-shadow:0 2px 0 #C07315; }
+#homepage .fair-grounds > div span{ font-size:14px; line-height:18px; color:#fff; font-weight:normal; clear:both; display:block; }
 #homepage .fair-grounds > div a:hover span{ text-shadow: 0 0 3px #72430A; }
 
 /*--- Daily Highlight Page ---*/
@@ -101,7 +101,7 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 .highlights .highlight .text{ width:70%; float:left; margin:0 5% 0 0; }
 .highlights .highlight .action{ width:25%; float:right; }
 .highlights .highlight h4{ color:#fff; font-size:17px; line-height:23px; font-weight:normal; }
-.highlights .highlight p{ color:#000; font-size:11px; line-height:15px; } 
+.highlights .highlight p{ color:#000; font-size:13px; line-height:15px; } 
 .highlights .details{ float:right; margin: 20px 0 0; font-size:0; background:url(images/highlight-arrow.png) no-repeat 0 0; height:23px; width:12px; }
 .highlights .details:hover{ background-position:0 100%; }
 .highlights .star{ float:right; margin:7px 5px 0 0;width:59px;height:49px; }
@@ -143,7 +143,7 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 .intro .subname{ color:#642020; font-size:15px; line-height:21px; font-weight:normal; }
 .intro .catchline{ color:#960e06; font-family:'dk_keswickregular'; font-size:19px; line-height:25px; font-weight:normal; padding:8px 0 0; }
 .intro .venue{ color:#960e06; font-size:19px; line-height:25px; font-weight:normal; }
-#innerpage .ui-grid-b > div{ text-align:center; margin:9px 0 0; }
+#innerpage .ui-grid-b > div{ text-align:center; margin: 8px 0 0 4px;width: 30%;}
 #innerpage .ui-grid-b > div .thumb{ width:95px; display:inline-block; position:relative; }
 #innerpage .ui-grid-b > div .thumb img{ display:block; }
 #innerpage .ui-grid-b > div .thumb span{ font-size:12px; line-height:18px; color:#fff; position:absolute; left:0; bottom:0; padding:0 0 8px; width:100%; text-align:center; font-weight:normal; }
