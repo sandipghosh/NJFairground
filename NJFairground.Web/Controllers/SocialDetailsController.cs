@@ -1,23 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+﻿
 namespace NJFairground.Web.Controllers
 {
     using NJFairground.Web.Controllers.Base;
-    using NJFairground.Web.Data.Interface;
-    using NJFairground.Web.Models;
-    using System.Linq;
     using System.Web.Mvc;
 
     public class SocialDetailsController : BaseController
     {
-         
-        //
-        // GET: /SocialDetails/
-
         /// <summary>
         /// Indexes the specified page identifier.
         /// </summary>

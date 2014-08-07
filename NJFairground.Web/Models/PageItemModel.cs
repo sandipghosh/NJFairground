@@ -13,6 +13,7 @@ namespace NJFairground.Web.Models
         public string PageItemDetailText { get; set; }
         public string PageItemSubDetail { get; set; }
         public int StatusId { get; set; }
+        public int ItemOrder { get; set; }
     }
 }
 

@@ -30,7 +30,10 @@ namespace NJFairground.Web.Controllers
         OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
-            List<EventModel> eventItems = this._eventDataRepository.GetList(x => x.PageId == Convert.ToInt32(NJFairground.Web.Models.Page.Event) && x.StatusId == 1).ToList();
+            List<EventModel> eventItems = this._eventDataRepository
+                .GetList(x => x.PageId == Convert.ToInt32(NJFairground.Web.Models.Page.Event)
+                    && x.StatusId == (int)StatusEnum.Active).ToList();
+
             return View("Index.mobile", eventItems);
         }
 

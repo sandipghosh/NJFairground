@@ -32,7 +32,7 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
-                Mapper.CreateMap<NJFairground.Web.Models.Page, PageModel>()
+                Mapper.CreateMap<NJFairground.Web.Data.Context.Page, PageModel>()
                     .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<PageItem, PageItemModel>()

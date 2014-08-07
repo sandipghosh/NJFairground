@@ -16,6 +16,7 @@
         <AssociationConnector Association="NJFairgroundDBModel.FK_PageItemDetail_Page" />
         <AssociationConnector Association="NJFairgroundDBModel.FK_PageHeader_PageItem" />
         <AssociationConnector Association="NJFairgroundDBModel.FK_PageItemDetail_PageItem" />
+        <AssociationConnector Association="NJFairgroundDBModel.FK_Event_PageItem" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

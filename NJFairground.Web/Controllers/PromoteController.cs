@@ -31,9 +31,8 @@ namespace NJFairground.Web.Controllers
         OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Details", new { PageId = Convert.ToInt32(Page.Promote), PageItemId = 901 });
-            //List<PageItemModel> pageItems = this._pageItemDataRepository.GetList(x => x.PageId == Convert.ToInt32(Page.Promote) && x.StatusId == 1).ToList();
-            //return View("Index.mobile", pageItems);
+            return RedirectToAction("Index", "Details", 
+                new { PageId = Convert.ToInt32(Page.Promote), PageItemId = 901 });
         }
     }
 }

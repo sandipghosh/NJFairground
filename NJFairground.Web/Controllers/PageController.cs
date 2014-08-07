@@ -4,6 +4,7 @@ namespace NJFairground.Web.Controllers
 {
     using NJFairground.Web.Controllers.Base;
     using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
     using System;
     using System.Linq;
@@ -32,7 +33,8 @@ namespace NJFairground.Web.Controllers
         {
             try
             {
-                var pages = this._pageDataRepository.GetList(x => x.StatusId == 1, x => x.PageId, false).ToList();
+                var pages = this._pageDataRepository
+                    .GetList(x => x.StatusId == (int)StatusEnum.Active, x => x.PageId, false).ToList();
                 return View("Index.mobile",pages);
             }
             catch (Exception ex)

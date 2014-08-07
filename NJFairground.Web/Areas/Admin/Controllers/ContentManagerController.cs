@@ -43,55 +43,6 @@ namespace NJFairground.Web.Areas.Admin.Controllers
         {
             try
             {
-                //GridSearchDataModel requestSearchData = new GridSearchDataModel();
-                //requestSearchData.SetPropertiesFromContext<GridSearchDataModel>(System.Web.HttpContext.Current);
-
-                //if (requestSearchData != null)
-                //{
-                //    List<PageItemModel> pageItems = new List<PageItemModel>();
-                //    int totalRecords = 0;
-
-                //    if (requestSearchData._search)
-                //    {
-                //        string criteria = requestSearchData.filters.ToString();
-                //        var searchCriteria = CommonUtility.GetLamdaExpressionFromFilter<PageItemModel>(criteria);
-                //        totalRecords = this._pageItemDataRepository.GetCount(searchCriteria);
-
-                //        users = this._pageItemDataRepository
-                //            .GetList(requestSearchData.page, requestSearchData.rows, searchCriteria,
-                //            x => x.CreatedOn, false).ToList();
-                //    }
-                //    else
-                //    {
-                //        totalRecords = this._pageItemDataRepository.GetCount(x => x.StatusId.Equals((int)StatusEnum.Active));
-                //        pageItems = this._pageItemDataRepository
-                //            .GetList(requestSearchData.page, requestSearchData.rows, x => x.StatusId.Equals((int)StatusEnum.Active),
-                //            x => x.CreatedOn, false).ToList();
-                //    }
-
-                //    return new JSONActionResult(new GridDataModel()
-                //    {
-                //        currpage = requestSearchData.page,
-                //        totalpages = (int)Math.Ceiling((float)totalRecords / (float)requestSearchData.rows),
-                //        totalrecords = totalRecords,
-                //        invdata = pageItems.Select(x => new
-                //        {
-                //            x.PageItemId,
-                //            x.PageId,
-                //            x.PageHeaderText,
-                //            x.PageSubHeaderText,
-                //            x.EmailId,
-                //            x.PrimaryContact,
-                //            x.Address1,
-                //            x.Address2,
-                //            x.State,
-                //            x.City,
-                //            x.Pin,
-                //            x.Country,
-                //            Status = ((StatusEnum)x.StatusId).ToString()
-                //        })
-                //    });
-                //}
             }
             catch (Exception ex)
             {

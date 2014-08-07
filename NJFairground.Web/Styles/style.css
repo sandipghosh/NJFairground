@@ -178,6 +178,7 @@ body{ background:#f4bf14; font-family: 'Francois One', sans-serif; }
 .scroller{ background:#ffdad5; padding:14px 10px; }
 .scroller h2{ font-size:17px; line-height:23px; color:#9f2023; font-weight:normal; margin:0 0 8px; }
 .scroller p{ font-size:14px; line-height:15px; color:#000000; margin:0 0 14px; }
+#scroller ul li { list-style-type:circle; margin-left: 3%; }
 
 #details .block{ background:#ffdad5; padding:6px 10px; min-height:52px; overflow:hidden; margin:0 0 4px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden; }
 #details .block .text{ width:82%; float:left; margin:0 5% 0 0; }

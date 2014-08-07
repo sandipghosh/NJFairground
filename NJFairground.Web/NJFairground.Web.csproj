@@ -258,6 +258,7 @@
     </Compile>
     <Compile Include="Controllers\SocialController.cs" />
     <Compile Include="Controllers\SocialDetailsController.cs" />
+    <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Controllers\WhatsNewController.cs" />
     <Compile Include="Data\Context\BaseData.cs" />
     <Compile Include="Data\Context\Event.cs">
@@ -808,10 +809,14 @@
     <Content Include="Styles\litetooltip.min.css" />
     <Content Include="Upload\banner-horseshow.jpg" />
     <Content Include="Upload\banner-promote.jpg" />
+    <Content Include="Upload\beer_tent.jpg" />
     <Content Include="Upload\Carnival 1.jpg" />
+    <Content Include="Upload\chicks.jpg" />
     <Content Include="Upload\Circus 1.jpg" />
     <Content Include="Styles\Images\Fairgrounds 1.jpg" />
+    <Content Include="Upload\conservatory.jpg" />
     <Content Include="Upload\Fairgrounds 1.jpg" />
+    <Content Include="Upload\fair_food.jpg" />
     <Content Include="Upload\Google.png" />
     <Content Include="Upload\Instagram.png" />
     <Content Include="Upload\Linkedin.png" />
@@ -874,6 +879,7 @@
     <Content Include="Styles\Images\title-shadow.png" />
     <Content Include="Upload\Talk_to_the_Animls.JPG" />
     <Content Include="Upload\twitter.png" />
+    <Content Include="Upload\winner_list.jpg" />
     <Content Include="Upload\youtube.png" />
     <Content Include="Styles\jquery.mCustomScrollbar.css" />
     <Content Include="Styles\jquery.mobile-1.4.2.min.css" />
@@ -966,6 +972,8 @@
     <Content Include="Views\Shared\_CommonScriptSection.cshtml" />
     <Content Include="Views\Shared\_CommonStyleSection.cshtml" />
     <Content Include="Views\Shared\_DetailHeader.mobile.cshtml" />
+    <Content Include="Views\Vendors\Index.mobile.cshtml" />
+    <Content Include="Views\Vendors\VendorDetail.mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

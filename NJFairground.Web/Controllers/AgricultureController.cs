@@ -1,16 +1,14 @@
 ﻿
 namespace NJFairground.Web.Controllers
 {
+    using NJFairground.Web.Controllers.Base;
+    using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
-    using NJFairground.Web.Data.Interface;
-    using NJFairground.Web.Utilities;
 
-    using NJFairground.Web.Models;
-    using NJFairground.Web.Controllers.Base;
     public class AgricultureController : BaseController
     {
         private readonly IPageItemDataRepository _pageItemDataRepository;
@@ -33,8 +31,9 @@ namespace NJFairground.Web.Controllers
         OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
-
-            List<PageItemModel> pageItems = this._pageItemDataRepository.GetList(x => x.PageId == Convert.ToInt32(Page.AGLearningCenter) && x.StatusId == 1).ToList();
+            List<PageItemModel> pageItems = this._pageItemDataRepository
+                .GetList(x => x.PageId == Convert.ToInt32(Page.AGLearningCenter)
+                    && x.StatusId == (int)StatusEnum.Active, y => y.ItemOrder, true).ToList();
             return View("Index.mobile", pageItems);
         }
 

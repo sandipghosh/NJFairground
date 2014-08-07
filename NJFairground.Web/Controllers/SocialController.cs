@@ -31,14 +31,12 @@ namespace NJFairground.Web.Controllers
         public ActionResult Index()
         {
             List<string> NavItems = new List<string>();
-            //NavItems.Add("The Fair");
-            //NavItems.Add("Fun");
-            //NavItems.Add("Info");
-            //NavItems.Add("Social");
-            //NavItems.Add("Map");
 
             ViewBag.NavBarItems = NavItems;
-            List<PageItemModel> pageItems = this._pageItemDataRepository.GetList(x => x.PageId == Convert.ToInt32(Page.Social) && x.StatusId == 1).ToList();
+            List<PageItemModel> pageItems = this._pageItemDataRepository
+                .GetList(x => x.PageId == Convert.ToInt32(Page.Social)
+                    && x.StatusId == (int)StatusEnum.Active, y => y.ItemOrder, true).ToList();
+
             return View("Index.mobile", pageItems);
         }
     }

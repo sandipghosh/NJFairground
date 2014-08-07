@@ -30,7 +30,10 @@ namespace NJFairground.Web.Controllers
         OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
-            List<PageItemModel> pageItems = this._pageItemDataRepository.GetList(x => x.PageId == Convert.ToInt32(Page.ConservatoryAndCourtyard) && x.StatusId == 1).ToList();
+            List<PageItemModel> pageItems = this._pageItemDataRepository
+                .GetList(x => x.PageId == Convert.ToInt32(Page.ConservatoryAndCourtyard)
+                    && x.StatusId == (int)StatusEnum.Active, y => y.ItemOrder, true).ToList();
+
             return View("Index.mobile", pageItems);
         }
 

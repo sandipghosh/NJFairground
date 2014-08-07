@@ -1,0 +1,20 @@
+﻿@model List<NJFairground.Web.Models.PageModel>
+@{
+    ViewBag.Title = "2014 Vendors | Sussex County Fairgrounds";
+}
+
+<h2 class="title">2014 Vendors</h2>
+<div class="ui-grid-solo fun-blocks">
+    @foreach (var pageData in Model)
+    {
+        <div class="ui-block-a fun-block">
+            <div class="text">
+                <h4>@pageData.PageDesc</h4>
+            </div>
+            <div class="action">
+                <a title="Details" class="details" href="@Url.Action("VendorDetail", "Vendors",
+                    new { pageId = pageData.PageId, pageHeader = pageData.PageName }) ">Details</a>
+            </div>
+        </div>
+    }
+</div>
