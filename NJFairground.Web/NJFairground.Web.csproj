@@ -820,11 +820,18 @@
     <Content Include="Upload\Fairgrounds 1.jpg" />
     <Content Include="Upload\fair_food.jpg" />
     <Content Include="Upload\Google.png" />
+    <Content Include="Upload\horses.jpg" />
     <Content Include="Upload\Instagram.png" />
     <Content Include="Upload\Linkedin.png" />
+    <Content Include="Upload\milking_parlor.jpg" />
+    <Content Include="Upload\mobile_app.jpg" />
     <Content Include="Upload\NJ_Fairground_guide_map.jpg" />
+    <Content Include="Upload\nyc balance line.jpg" />
     <Content Include="Upload\Performing_Arts_Tent_Schedule_Photo.jpg" />
     <Content Include="Upload\Pinterest.png" />
+    <Content Include="Upload\pole_barns.jpg" />
+    <Content Include="Upload\robot.jpg" />
+    <Content Include="Upload\scooters.jpg" />
     <Content Include="Upload\search.png" />
     <Content Include="Upload\facebook.png" />
     <Content Include="Styles\Images\footer-anchover.png" />
@@ -859,6 +866,8 @@
     <Content Include="Styles\Images\schedule-pic1.jpg" />
     <Content Include="Styles\Images\schedule.png" />
     <Content Include="Upload\schedule-pic1.jpg" />
+    <Content Include="Upload\snook.jpg" />
+    <Content Include="Upload\special_days.jpg" />
     <Content Include="Upload\star.png" />
     <Content Include="Styles\Images\thumb-agriculture.png" />
     <Content Include="Styles\Images\thumb-calendar.png" />
