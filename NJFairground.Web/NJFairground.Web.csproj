@@ -801,6 +801,8 @@
     <Content Include="Styles\Images\facebook-venue.jpg" />
     <Content Include="Styles\Images\Info Main Picture.jpg" />
     <Content Include="Styles\Images\position.png" />
+    <Content Include="Styles\Images\presentedby-details.png" />
+    <Content Include="Styles\Images\presentedby.png" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
     <Content Include="Styles\Images\zoomIn.png" />
@@ -852,8 +854,8 @@
     <Content Include="Styles\Images\mainpage-bg.jpg" />
     <Content Include="Styles\Images\map.png" />
     <Content Include="Styles\Images\navbar-divider.png" />
-    <Content Include="Styles\Images\presentedby-details.png" />
-    <Content Include="Styles\Images\presentedby.png" />
+    <Content Include="Styles\Images\presentedby-details-old.png" />
+    <Content Include="Styles\Images\presentedby-old.png" />
     <Content Include="Styles\Images\schedule-pic1.jpg" />
     <Content Include="Styles\Images\schedule.png" />
     <Content Include="Upload\schedule-pic1.jpg" />

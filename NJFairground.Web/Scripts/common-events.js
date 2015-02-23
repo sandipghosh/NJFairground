@@ -1,5 +1,12 @@
 ﻿(function ($, win) {
     $(function () {
+        $(document).on("mobileinit", function () {
+            $.mobile.loader.prototype.options.text = "loading";
+            $.mobile.loader.prototype.options.textVisible = true;
+            $.mobile.loader.prototype.options.theme = "b";
+            $.mobile.loader.prototype.options.html = "";
+        });
+
         $(document).ready(function () {
             var $self = $(this).find("div[data-role*='page']");
             PageRepostioning($self);
