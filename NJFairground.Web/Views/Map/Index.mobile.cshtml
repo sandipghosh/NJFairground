@@ -1,4 +1,5 @@
-﻿@{
+﻿@using NJFairground.Web.Utilities;
+@{
     ViewBag.Title = "Map | Sussex County Fairgrounds";
     ViewBag.PageId = "map";
 }
@@ -7,18 +8,20 @@
     @Html.Partial("_NavigationBar.mobile", (List<string>)ViewBag.NavBarItems)
 }
 @section PageStyle{
-    <link href='@Url.Content("~/Styles/litetooltip.min.css")' type="text/css" rel="stylesheet" />
-    <style type="text/css">
-        
-    </style>
+    @Html.RenderStyles("~/Styles/MapStyle")
+    @*<link href='@Url.Content("~/Styles/litetooltip.min.css")' type="text/css" rel="stylesheet" />
+        <style type="text/css">
+
+        </style>*@
 }
 @section PageScript{
-    <script type="text/javascript" src='@Url.Content("~/Scripts/LiteTooltip.js")'></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/e-smart-zoom-jquery.js")'></script>
+    @Html.RenderScripts("~/Scripts/MapScript")
+    @*<script type="text/javascript" src='@Url.Content("~/Scripts/LiteTooltip.js")'></script>
+        <script type="text/javascript" src='@Url.Content("~/Scripts/e-smart-zoom-jquery.js")'></script>*@
 
     <script type="text/javascript">
+        @(Html.JsMinify(@<text>
         $(document).ready(function () {
-
             $('#imageFullScreen').smartZoom({ 'containerClass': 'imgContainer' });
 
             $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", function (e) {
@@ -61,6 +64,7 @@
                 backcolor: '#df3030'
             });
         });
+        </text>))
     </script>
 }
 
@@ -68,11 +72,11 @@
     <div class="ui-block-a highlight">
         <div id="positionButtonDiv">
             <p>
-                Zoom : 
-					<span>
-                        <img id="zoomInButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomIn.png")' title="zoom in" alt="zoom in" />
-                        <img id="zoomOutButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomOut.png")' title="zoom out" alt="zoom out" />
-                    </span>
+                Zoom :
+                <span>
+                    <img id="zoomInButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomIn.png")' title="zoom in" alt="zoom in" />
+                    <img id="zoomOutButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomOut.png")' title="zoom out" alt="zoom out" />
+                </span>
             </p>
             <p>
                 <span class="positionButtonSpan">
@@ -85,7 +89,7 @@
             </p>
         </div>
         <div id="imgContainer">
-            <img id="imageFullScreen" src='@Url.Content("~/Upload/NJ_Fairground_guide_map.jpg")'  usemap="#image-maps" />
+            <img id="imageFullScreen" src='@Url.Content("~/Upload/NJ_Fairground_guide_map.jpg")' usemap="#image-maps" />
             <map name="image-maps" id="ImageMapsCom-image-maps">
                 <area alt="" data-title="Blood Mobile" href="javascript:void(0)" shape="rect" coords="271,531,297,554" style="outline: none;" target="_self" />
                 <area alt="" data-title="Performing Arts tent" href="javascript:void(0)" shape="rect" coords="498,532,524,555" style="outline: none;" target="_self" />
@@ -156,12 +160,8 @@
                 <area alt="" data-title="INFORMATION BOOTHS" href="javascript:void(0)" shape="rect" coords="126,227,141,241" style="outline: none;" target="_self" />
                 <area alt="" data-title="Parking" href="javascript:void(0)" shape="rect" coords="62,259,85,379" style="outline: none;" target="_self" />
                 <area alt="" data-title="Carnival Wheel" href="javascript:void(0)" shape="rect" coords="182,276,229,340" style="outline: none;" target="_self" />
-                <area shape="rect" coords="862,882,864,884" alt="Image Map" style="outline: none;" data-title="Image Map" href="http://www.image-maps.com/index.php?aff=mapped_users_0" />
             </map>
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-
-</script>

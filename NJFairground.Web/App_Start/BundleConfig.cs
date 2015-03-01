@@ -33,12 +33,39 @@ namespace NJFairground.Web
         {
             try
             {
-                bundles.Add(new ScriptBundle("~/Scripts/CommonScript")
-                    .Include("~/Scripts/jquery-2.1.1.min.js",
+                Bundle scriptBundle = new Bundle("~/Scripts/CommonScript", new JsMinify());
+                scriptBundle.Include("~/Scripts/jquery-2.1.1.min.js",
                     "~/Scripts/jquery-migrate-1.2.1.min.js",
                     "~/Scripts/jquery.mobile-1.4.2.min.js",
-                    "~/Scripts/common-script.js"
-                    ));
+                    "~/Scripts/common-script.js",
+                    "~/Scripts/common-events.js"
+                );
+                BundleTable.Bundles.Add(scriptBundle);
+
+                scriptBundle = new Bundle("~/Scripts/CommonAdminScript", new JsMinify());
+                scriptBundle.Include("~/Scripts/jquery-2.1.1.min.js",
+                    "~/Scripts/jquery-migrate-1.2.1.min.js",
+                    "~/Areas/Admin/Scripts/jquery-ui-1.10.4.custom.min.js",
+                    "~/Areas/Admin/Scripts/json3.js",
+                    "~/Areas/Admin/Scripts/jquery.formatDateTime.js",
+                    "~/Areas/Admin/Scripts/jquery.blockUI.js",
+                    "~/Scripts/common-script.js",
+                    "~/Areas/Admin/Scripts/common-admin-ui-script.js"
+                );
+                BundleTable.Bundles.Add(scriptBundle);
+
+                scriptBundle = new Bundle("~/Scripts/MapScript", new JsMinify());
+                scriptBundle.Include("~/Scripts/LiteTooltip.js",
+                    "~/Scripts/e-smart-zoom-jquery.js"
+                    //TOOD: Add responsive image map
+                );
+                BundleTable.Bundles.Add(scriptBundle);
+
+                scriptBundle = new Bundle("~/Scripts/GoogleMapAPIScript", new JsMinify());
+                scriptBundle.Include("~/Scripts/gmap3.min.js",
+                    "~/Scripts/jquery.autocomplete.min.js"
+                );
+                BundleTable.Bundles.Add(scriptBundle);
             }
             catch (Exception ex)
             {
@@ -54,9 +81,22 @@ namespace NJFairground.Web
         {
             try
             {
-                bundles.Add(new StyleBundle("~/Styles/CommonStyle")
-                    .Include("~/Styles/jquery.mobile-1.4.2.min.css",
-                    "~/Styles/style.css"));
+                //var cssTransformer = new CustomCssMinify();
+                Bundle styleBundle = new Bundle("~/Styles/CommonStyle", new CustomCssMinify(), new CssMinify());
+                styleBundle.Include("~/Styles/jquery.mobile-1.4.2.min.css",
+                    "~/Styles/style.css");
+                BundleTable.Bundles.Add(styleBundle);
+
+                styleBundle = new Bundle("~/Styles/CommonAdminStyle", new CustomCssMinify(), new CssMinify());
+                styleBundle.Include("~/Areas/Admin/Styles/jquery-ui-1.10.4.custom.min.css",
+                    "~/Areas/Admin/Styles/admin-styles.css");
+                BundleTable.Bundles.Add(styleBundle);
+
+                styleBundle = new Bundle("~/Styles/MapStyle", new CustomCssMinify(), new CssMinify());
+                styleBundle.Include("~/Styles/litetooltip.min.css");
+                BundleTable.Bundles.Add(styleBundle);
+
+
             }
             catch (Exception ex)
             {

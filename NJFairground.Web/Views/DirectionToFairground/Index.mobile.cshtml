@@ -5,6 +5,7 @@
 }
 @section PageStyle{
     <style type="text/css">
+        @(Html.CssMinify(@<text>
         .autocomplete {
             background-color: #ffffff;
             border: 1px solid #808080;
@@ -17,14 +18,17 @@
                 .autocomplete li.hover {
                     background-color: #faebd7;
                 }
+        </text>))
     </style>
 }
 @section PageScript{
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/gmap3.min.js")'></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.autocomplete.min.js")'></script>
+    @Html.RenderScripts("~/Scripts/MapScript")
+    @*<script type="text/javascript" src='@Url.Content("~/Scripts/gmap3.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery.autocomplete.min.js")'></script>*@
 
     <script type="text/javascript">
+        @(Html.JsMinify(@<text>
         refreshPage();
         $(document).ready(function () {
             $('#origin').autocomplete({
@@ -93,6 +97,7 @@
                 }
             });
         };
+        </text>))
     </script>
 }
 

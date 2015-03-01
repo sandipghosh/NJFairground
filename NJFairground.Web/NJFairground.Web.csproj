@@ -333,6 +333,7 @@
     <Compile Include="Utilities\JsFunctionConverter.cs" />
     <Compile Include="Utilities\JSONActionResult.cs" />
     <Compile Include="Utilities\MapperExtension.cs" />
+    <Compile Include="Utilities\OptimizationExtensions.cs" />
     <Compile Include="Utilities\ReadWriteCsv.cs" />
     <Compile Include="Utilities\RssFeedReader.cs" />
     <Compile Include="Utilities\SessionVariable.cs" />

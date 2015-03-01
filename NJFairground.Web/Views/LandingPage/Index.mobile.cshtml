@@ -1,4 +1,5 @@
-﻿@{
+﻿@using NJFairground.Web.Utilities;
+@{
     Layout = null;
 }
 
@@ -7,11 +8,11 @@
 <head>
     <title>Sussex County Fairgrounds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     @{Html.RenderPartial("_CommonStyleSection");}
     @{Html.RenderPartial("_CommonScriptSection");}
 
     <script type="text/javascript">
+        @(Html.JsMinify(@<text>
         var i = 0;
         function ShowCurrentTime() {
             var dt = new Date();
@@ -22,13 +23,15 @@
             }
             window.setTimeout("ShowCurrentTime()", 1000); // Here 1000(milliseconds) means 1 sec
         }
+        </text>))
     </script>
 
 </head>
 <body onload="ShowCurrentTime()" onunload="">
     <div data-role="page" id="main-page" data-title="Sussex County Fairgrounds">
         <a class="logo" href="home" title="Sussex County Fairgrounds">
-            <img src='@Url.Content("~/Styles/images/logo.png")' alt="Sussex County Fairgrounds"></a>
+            <img src='@Url.Content("~/Styles/images/logo.png")' alt="Sussex County Fairgrounds">
+        </a>
         <div class="timer">@Html.Raw("Please Wait For ") <span class="timer-span" id="timerdata">Welcome</span></div>
     </div>
 
