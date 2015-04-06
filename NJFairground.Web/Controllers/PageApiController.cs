@@ -117,11 +117,11 @@ namespace NJFairground.Web.Controllers
                     }
                 }
 
-                response.ResponseStatus = RespStatus.Success.ToString()
+                response.ResponseStatus = RespStatus.Success.ToString();
             }
             catch (Exception ex)
             {
-                response.ResponseStatus = RespStatus.Failure.ToString()
+                response.ResponseStatus = RespStatus.Failure.ToString();
                 ex.ExceptionValueTracker(request);
             }
             response.CorrelationToken = request.RequestToken;
