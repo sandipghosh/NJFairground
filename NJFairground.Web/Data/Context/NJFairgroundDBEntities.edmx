@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NJFairgroundDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="NJFairgroundDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="EventId" />
@@ -159,11 +159,11 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="NJFairgroundDBModelStoreContainer">
-          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PageHeader" EntityType="Self.PageHeader" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PageItem" EntityType="Self.PageItem" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PageItemDetail" EntityType="Self.PageItemDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PageHeader" EntityType="Self.PageHeader" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PageItem" EntityType="Self.PageItem" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PageItemDetail" EntityType="Self.PageItemDetail" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="FK_Event_Page" Association="Self.FK_Event_Page">
             <End Role="Page" EntitySet="Page" />
             <End Role="Event" EntitySet="Event" />
@@ -196,8 +196,8 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="NJFairgroundDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="NJFairgroundDBEntities" annotation:LazyLoadingEnabled="true">
+      <Schema Namespace="NJFairgroundDBModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NJFairgroundDBEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="Events" EntityType="NJFairgroundDBModel.Event" />
           <EntitySet Name="Pages" EntityType="NJFairgroundDBModel.Page" />
           <EntitySet Name="PageHeaders" EntityType="NJFairgroundDBModel.PageHeader" />
@@ -236,7 +236,7 @@
           <Key>
             <PropertyRef Name="EventId" />
           </Key>
-          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="PageId" Type="Int32" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -244,7 +244,7 @@
           <Property Name="EventDesc" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
-          <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_Event_Page" FromRole="Event" ToRole="Page" />
           <Property Name="PageItemId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PageItem" Relationship="NJFairgroundDBModel.FK_Event_PageItem" FromRole="Event" ToRole="PageItem" />
@@ -257,7 +257,7 @@
           <Property Name="PageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PageDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
-          <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="Events" Relationship="NJFairgroundDBModel.FK_Event_Page" FromRole="Page" ToRole="Event" />
           <NavigationProperty Name="PageHeaders" Relationship="NJFairgroundDBModel.FK_PageHeader_Page" FromRole="Page" ToRole="PageHeader" />
           <NavigationProperty Name="PageItems" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="Page" ToRole="PageItem" />
@@ -273,7 +273,7 @@
           <Property Name="PageHeaderText" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PageSubHeaderText" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
-          <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_PageHeader_Page" FromRole="PageHeader" ToRole="Page" />
           <NavigationProperty Name="PageItem" Relationship="NJFairgroundDBModel.FK_PageHeader_PageItem" FromRole="PageHeader" ToRole="PageItem" />
         </EntityType>
@@ -293,7 +293,7 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ActivatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="PageItem" ToRole="Page" />
           <NavigationProperty Name="PageHeaders" Relationship="NJFairgroundDBModel.FK_PageHeader_PageItem" FromRole="PageItem" ToRole="PageHeader" />
           <NavigationProperty Name="PageItemDetails" Relationship="NJFairgroundDBModel.FK_PageItemDetail_PageItem" FromRole="PageItem" ToRole="PageItemDetail" />
@@ -311,7 +311,7 @@
           <Property Name="PageItemSubDetail" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_PageItemDetail_Page" FromRole="PageItemDetail" ToRole="Page" />
           <NavigationProperty Name="PageItem" Relationship="NJFairgroundDBModel.FK_PageItemDetail_PageItem" FromRole="PageItemDetail" ToRole="PageItem" />
         </EntityType>
@@ -403,7 +403,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="NJFairgroundDBModelStoreContainer" CdmEntityContainer="NJFairgroundDBEntities">
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.Event">
@@ -484,7 +484,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
@@ -500,6 +500,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams />
   </Designer>
 </edmx:Edmx>

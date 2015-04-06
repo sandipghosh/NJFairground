@@ -34,18 +34,18 @@ namespace NJFairground.Web
             try
             {
                 Bundle scriptBundle = new Bundle("~/Scripts/CommonScript", new JsMinify());
-                scriptBundle.Include("~/Scripts/jquery-2.1.1.min.js",
+                scriptBundle.Include("~/Scripts/jquery-2.1.3.min.js",
                     "~/Scripts/jquery-migrate-1.2.1.min.js",
-                    "~/Scripts/jquery.mobile-1.4.2.min.js",
+                    "~/Scripts/jquery.mobile-1.4.5.min.js",
                     "~/Scripts/common-script.js",
                     "~/Scripts/common-events.js"
                 );
                 BundleTable.Bundles.Add(scriptBundle);
 
                 scriptBundle = new Bundle("~/Scripts/CommonAdminScript", new JsMinify());
-                scriptBundle.Include("~/Scripts/jquery-2.1.1.min.js",
+                scriptBundle.Include("~/Scripts/jquery-2.1.3.min.js",
                     "~/Scripts/jquery-migrate-1.2.1.min.js",
-                    "~/Areas/Admin/Scripts/jquery-ui-1.10.4.custom.min.js",
+                    "~/Areas/Admin/Scripts/jquery-ui-1.11.4.custom.min.js",
                     "~/Areas/Admin/Scripts/json3.js",
                     "~/Areas/Admin/Scripts/jquery.formatDateTime.js",
                     "~/Areas/Admin/Scripts/jquery.blockUI.js",

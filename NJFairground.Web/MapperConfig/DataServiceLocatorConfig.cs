@@ -37,6 +37,10 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
+                //container.RegisterWebApiRequest<IPageDataRepository, PageDataRepository>();
+                //container.RegisterWebApiRequest<IPageItemDataRepository, PageItemDataRepository>();
+                //container.RegisterWebApiRequest<IEventDataRepository, EventDataRepository>();
+
                 container.Register<IPageDataRepository, PageDataRepository>();
                 container.Register<IPageItemDataRepository, PageItemDataRepository>();
                 container.Register<IEventDataRepository, EventDataRepository>();
@@ -56,7 +60,7 @@ namespace NJFairground.Web.MapperConfig
             try
             {
                 container.AppendToCollection(typeof(Profile),
-                    Lifestyle.Singleton.CreateRegistration(typeof(Profile), 
+                    Lifestyle.Singleton.CreateRegistration(typeof(Profile),
                     typeof(EntityMapperConfig), container));
             }
             catch (Exception ex)
