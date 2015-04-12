@@ -13,6 +13,7 @@ namespace NJFairground.Web.Utilities
     using System.IO;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Net;
     using System.Reflection;
     using System.Text;
     using System.Web;
@@ -710,7 +711,25 @@ namespace NJFairground.Web.Utilities
             newUrl = (forceHttps ? "https" : originalUri.Scheme) +
                 "://" + originalUri.Authority + newUrl;
             return newUrl;
-        } 
+        }
+
+        public static string GetRSSFeedasString(string feedLink)
+        {
+            if (!string.IsNullOrEmpty(feedLink))
+            {
+                var webClient = new WebClient();
+                string feedUrl = CommonUtility
+                    .GetAppSetting<string>(feedLink).Replace("&amp;", "&");
+
+                webClient.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+                // fetch feed as string
+                var content = webClient.OpenRead(feedUrl);
+                var contentReader = new StreamReader(content);
+                var rssFeedAsString = contentReader.ReadToEnd();
+                return rssFeedAsString; 
+            }
+            return string.Empty;
+        }
 
         #region Private Members
         /// <summary>

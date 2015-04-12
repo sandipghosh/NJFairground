@@ -36,9 +36,9 @@ namespace NJFairground.Web.Data.Context
         public byte[] Version { get; set; }
         public int ItemOrder { get; set; }
     
-        public virtual Page Page { get; set; }
         public virtual ICollection<PageHeader> PageHeaders { get; set; }
         public virtual ICollection<PageItemDetail> PageItemDetails { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+        public virtual Page Page { get; set; }
     }
 }

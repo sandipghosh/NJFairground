@@ -23,7 +23,7 @@ namespace NJFairground.Web.Data.Context
         public System.DateTime CreatedOn { get; set; }
         public byte[] Version { get; set; }
     
-        public virtual Page Page { get; set; }
         public virtual PageItem PageItem { get; set; }
+        public virtual Page Page { get; set; }
     }
 }

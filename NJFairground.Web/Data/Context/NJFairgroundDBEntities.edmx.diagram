@@ -6,17 +6,17 @@
     <edmx:Diagrams>
       <Diagram DiagramId="42faaeff04034597b463448707eb48cb" Name="Diagram1">
         <EntityTypeShape EntityType="NJFairgroundDBModel.Event" Width="1.5" PointX="3" PointY="11.5" />
-        <EntityTypeShape EntityType="NJFairgroundDBModel.Page" Width="1.5" PointX="0.75" PointY="5.625" />
         <EntityTypeShape EntityType="NJFairgroundDBModel.PageHeader" Width="1.5" PointX="8.25" PointY="4.375" />
         <EntityTypeShape EntityType="NJFairgroundDBModel.PageItem" Width="1.5" PointX="3" PointY="3.125" />
         <EntityTypeShape EntityType="NJFairgroundDBModel.PageItemDetail" Width="1.5" PointX="5.25" PointY="4.25" />
+        <AssociationConnector Association="NJFairgroundDBModel.FK_PageHeader_PageItem" />
+        <AssociationConnector Association="NJFairgroundDBModel.FK_PageItemDetail_PageItem" />
+        <AssociationConnector Association="NJFairgroundDBModel.FK_Event_PageItem" />
+        <EntityTypeShape EntityType="NJFairgroundDBModel.Page" Width="1.5" PointX="0.75" PointY="7.375" />
         <AssociationConnector Association="NJFairgroundDBModel.FK_Event_Page" />
         <AssociationConnector Association="NJFairgroundDBModel.FK_PageHeader_Page" />
         <AssociationConnector Association="NJFairgroundDBModel.FK_PageItem_Page" />
         <AssociationConnector Association="NJFairgroundDBModel.FK_PageItemDetail_Page" />
-        <AssociationConnector Association="NJFairgroundDBModel.FK_PageHeader_PageItem" />
-        <AssociationConnector Association="NJFairgroundDBModel.FK_PageItemDetail_PageItem" />
-        <AssociationConnector Association="NJFairgroundDBModel.FK_Event_PageItem" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

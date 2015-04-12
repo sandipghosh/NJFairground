@@ -31,7 +31,7 @@ namespace NJFairground.Web.Utilities
         {
             try
             {
-                var rssFeedAsString = GetRSSFeedasString(feedLink);
+                var rssFeedAsString = CommonUtility.GetRSSFeedasString(feedLink);
 
                 // convert feed to XML using LINQ to XML and finally create new XmlReader object
                 var feed = SyndicationFeed.Load(XDocument.Parse(rssFeedAsString).CreateReader());
@@ -56,7 +56,7 @@ namespace NJFairground.Web.Utilities
 
         public static MvcHtmlString ReadInstagramRss(this HtmlHelper htmlHelper, string feedLink)
         {
-            var rssFeedAsString = GetRSSFeedasString(feedLink);
+            var rssFeedAsString = CommonUtility.GetRSSFeedasString(feedLink);
 
             XDocument doc = XDocument.Parse(rssFeedAsString);
             List<RssFeedEntity> feedItems = doc.Descendants("item").Select(x => new RssFeedEntity
@@ -75,19 +75,7 @@ namespace NJFairground.Web.Utilities
             return new MvcHtmlString(GetHtmlFromRss(feedItems));
         }
 
-        private static string GetRSSFeedasString(string feedLink)
-        {
-            var webClient = new WebClient();
-            string feedUrl = CommonUtility
-                .GetAppSetting<string>(feedLink).Replace("&amp;", "&");
-
-            webClient.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-            // fetch feed as string
-            var content = webClient.OpenRead(feedUrl);
-            var contentReader = new StreamReader(content);
-            var rssFeedAsString = contentReader.ReadToEnd();
-            return rssFeedAsString;
-        }
+        
 
         private static string GetHtmlFromRss(List<RssFeedEntity> feeds)
         {

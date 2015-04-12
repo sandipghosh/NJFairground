@@ -334,10 +334,14 @@
     <Compile Include="DTO\Base\CrudAction.cs" />
     <Compile Include="DTO\Base\RequestBase.cs" />
     <Compile Include="DTO\Base\ResponseBase.cs" />
+    <Compile Include="DTO\RequestDto\MapRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageItemRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageRequestDto.cs" />
+    <Compile Include="DTO\RequestDto\RssFeedRequestDto.cs" />
+    <Compile Include="DTO\ResponseDto\MapResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageItemResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageResponseDto.cs" />
+    <Compile Include="DTO\ResponseDto\RssFeedResponseDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -346,8 +350,10 @@
     <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\Base\SafeDisposableBaseClass.cs" />
     <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\MapCoordinateModel.cs" />
     <Compile Include="Models\PageItemModel.cs" />
     <Compile Include="Models\PageModel.cs" />
+    <Compile Include="Models\RssFeedModel.cs" />
     <Compile Include="Models\StaticModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\CommonUtility.cs" />
@@ -756,6 +762,9 @@
     <Content Include="Styles\Images\What%27s New 7.JPG" />
     <Content Include="Styles\Images\zoomIn.png" />
     <Content Include="Styles\Images\ZoomOut.png" />
+    <Content Include="Upload\banner-agriculture.jpg" />
+    <Content Include="Upload\banner-complex.jpg" />
+    <Content Include="Upload\banner-court.jpg" />
     <Content Include="Upload\banner-horseshow.jpg" />
     <Content Include="Styles\litetooltip.min.css" />
     <Content Include="Upload\banner-horseshow.jpg" />

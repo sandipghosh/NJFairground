@@ -27,6 +27,8 @@ namespace NJFairground.Web.Data.Context
         public string PageDesc { get; set; }
         public int StatusId { get; set; }
         public byte[] Version { get; set; }
+        public string PageContent { get; set; }
+        public string PageImage { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<PageHeader> PageHeaders { get; set; }

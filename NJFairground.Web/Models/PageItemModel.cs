@@ -17,7 +17,7 @@ namespace NJFairground.Web.Models
         {
             get
             {
-                return CommonUtility.ResolveServerUrl(string.Format("{0}{1}",
+                return string.IsNullOrEmpty(this.PageItemImage) ? "" : CommonUtility.ResolveServerUrl(string.Format("{0}{1}",
                     CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), this.PageItemImage), false);
             }
         }

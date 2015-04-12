@@ -26,9 +26,9 @@ namespace NJFairground.Web.Data.Context
         }
     
         public DbSet<Event> Events { get; set; }
-        public DbSet<Page> Pages { get; set; }
         public DbSet<PageHeader> PageHeaders { get; set; }
         public DbSet<PageItem> PageItems { get; set; }
         public DbSet<PageItemDetail> PageItemDetails { get; set; }
+        public DbSet<Page> Pages { get; set; }
     }
 }
