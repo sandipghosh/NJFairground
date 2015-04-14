@@ -2,31 +2,42 @@
 
 namespace NJFairground.Web.Controllers
 {
-    using System.Web.Http;
-    using System;
-    using System.Linq;
-    using NJFairground.Web.Models;
-    using NJFairground.Web.Utilities;
     using NJFairground.Web.Data.Interface;
-    using NJFairground.Web.Data.Implementation;
     using NJFairground.Web.DTO.Base;
     using NJFairground.Web.DTO.RequestDto;
     using NJFairground.Web.DTO.ResponseDto;
+    using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities;
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.ServiceModel.Syndication;
+    using System.Web.Http;
     using System.Xml.Linq;
 
     public class PageApiController : ApiController
     {
         private readonly IPageDataRepository _pageDataRepository;
         private readonly IPageItemDataRepository _pageItemDataRepository;
+        private readonly IUserInfoDataRepository _userInfoDataRepository;
+        private readonly IFavoritePageDataRepository _favoritePageDataRepository;
+        private readonly IFavoriteImageDataRepository _favoriteImageDataRepository;
+        private readonly IUserImageDataRepository _userImageDataRepository;
 
         public PageApiController(IPageDataRepository pageDataRepository,
-            IPageItemDataRepository pageItemDataRepository)
+            IPageItemDataRepository pageItemDataRepository,
+            IUserInfoDataRepository userInfoDataRepository,
+            IFavoritePageDataRepository favoritePageDataRepository,
+            IFavoriteImageDataRepository favoriteImageDataRepository,
+            IUserImageDataRepository userImageDataRepository)
         {
             this._pageDataRepository = pageDataRepository;
             this._pageItemDataRepository = pageItemDataRepository;
+            this._userInfoDataRepository = userInfoDataRepository;
+            this._favoritePageDataRepository = favoritePageDataRepository;
+            this._favoriteImageDataRepository = favoriteImageDataRepository;
+            this._userImageDataRepository = userImageDataRepository;
         }
 
         /// <summary>
@@ -37,7 +48,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public PageResponseDto GetPage(PageRequestDto request)
         {
-            PageResponseDto response = new PageResponseDto();
+            PageResponseDto response = new PageResponseDto(request.RequestToken);
             try
             {
                 if (request.PageId > 0)
@@ -65,11 +76,12 @@ namespace NJFairground.Web.Controllers
                                 .GetList(request.ItemIndex, request.ItemCount, x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
                     }
                 }
+                response.ResponseStatus = RespStatus.Success.ToString();
             }
             catch (Exception ex)
             {
+                response.ResponseStatus = RespStatus.Failure.ToString();
                 ex.ExceptionValueTracker(request);
-                throw;
             }
             return response;
         }
@@ -82,7 +94,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public PageItemResponseDto GetPageItem(PageItemRequestDto request)
         {
-            PageItemResponseDto response = new PageItemResponseDto();
+            PageItemResponseDto response = new PageItemResponseDto(request.RequestToken);
             try
             {
                 if (request.PageItemId > 0)
@@ -128,7 +140,6 @@ namespace NJFairground.Web.Controllers
                 response.ResponseStatus = RespStatus.Failure.ToString();
                 ex.ExceptionValueTracker(request);
             }
-            response.CorrelationToken = request.RequestToken;
             return response;
         }
 
@@ -140,7 +151,9 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public MapResponseDto GetMap(MapRequestDto request)
         {
-            return new MapResponseDto();
+            MapResponseDto response = new MapResponseDto(request.RequestToken);
+            response.ResponseStatus = RespStatus.Success.ToString();
+            return response;
         }
 
         /// <summary>
@@ -151,7 +164,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public RssFeedResponseDto GetMediaFeed(RssFeedRequestDto request)
         {
-            RssFeedResponseDto response = new RssFeedResponseDto();
+            RssFeedResponseDto response = new RssFeedResponseDto(request.RequestToken);
             try
             {
                 string feedLink = "";
@@ -211,10 +224,149 @@ namespace NJFairground.Web.Controllers
                             break;
                         }
                 }
+
+                response.ResponseStatus = RespStatus.Success.ToString();
             }
             catch (Exception ex)
             {
+                response.ResponseStatus = RespStatus.Failure.ToString();
                 ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Authenticates the user.
+        /// </summary>
+        /// <param name="request">The user info.</param>
+        /// <returns></returns>
+        [HttpPost()]
+        public UserAuthenticationResponseDto AuthenticateUser(UserAuthenticationRequestDto request)
+        {
+            UserAuthenticationResponseDto response = new UserAuthenticationResponseDto(request.RequestToken);
+            try
+            {
+                UserInfoModel user = this._userInfoDataRepository
+                    .GetList(x => x.UserEmail.Equals(request.UserInfo.UserEmail)).FirstOrDefault();
+
+                if (user != null)
+                {
+                    this._userInfoDataRepository.Insert(request.UserInfo);
+                    if (request.UserInfo.UserKey > 0)
+                    {
+                        response.UserInfo = user;
+                    }
+                }
+
+                response.ResponseStatus = RespStatus.Success.ToString();
+            }
+            catch (Exception ex)
+            {
+                response.ResponseStatus = RespStatus.Failure.ToString();
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Adds the page to fevorite.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpPost()]
+        public ResponseBase AddPageToFevorite(FavoritePageRequestDto page)
+        {
+            ResponseBase response = new ResponseBase(page.RequestToken);
+            try
+            {
+                FavoritePageModel favoritePage = this._favoritePageDataRepository.GetList(x => x.UserKey.Equals(page.UserKey)
+                    && x.PageItemId.Equals(page.PageItemId) && x.StatusId.Equals((int)StatusEnum.Active)).FirstOrDefault();
+
+                if (favoritePage == null)
+                {
+                    PageItemModel pageItem = this._pageItemDataRepository.Get(page.PageItemId);
+                    if (pageItem != null)
+                    {
+                        favoritePage = new FavoritePageModel
+                        {
+                            PageId = pageItem.PageId,
+                            PageItemId = favoritePage.PageItemId,
+                            UserKey = favoritePage.UserKey,
+                            StatusId = (int)StatusEnum.Active,
+                            CreatedBy = favoritePage.UserKey,
+                            CreatedOn = DateTime.Now
+                        };
+                        this._favoritePageDataRepository.Insert(favoritePage);
+                        if (favoritePage.FavoritePageId > 0)
+                        {
+                            response.ResponseStatus = RespStatus.Success.ToString();
+                            return response;
+                        }
+                    }
+                }
+                response.ResponseStatus = RespStatus.Success.ToString();
+            }
+            catch (Exception ex)
+            {
+                response.ResponseStatus = RespStatus.Failure.ToString();
+                ex.ExceptionValueTracker(page);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Removes the page from fevorite.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpPost()]
+        public ResponseBase RemovePageFromFevorite(FavoritePageRequestDto page)
+        {
+            ResponseBase response = new ResponseBase(page.RequestToken);
+            try
+            {
+                FavoritePageModel favoritePage = this._favoritePageDataRepository.GetList(x => x.UserKey.Equals(page.UserKey)
+                    && x.PageItemId.Equals(page.PageItemId) && x.StatusId.Equals((int)StatusEnum.Active)).FirstOrDefault();
+
+                if (favoritePage != null)
+                {
+                    favoritePage.StatusId = (int)StatusEnum.Inactive;
+                    this._favoritePageDataRepository.Update(favoritePage);
+
+                    response.ResponseStatus = RespStatus.Success.ToString();
+                    return response;
+                }
+                response.ResponseStatus = RespStatus.Success.ToString();
+            }
+            catch (Exception ex)
+            {
+                response.ResponseStatus = RespStatus.Failure.ToString();
+                ex.ExceptionValueTracker(page);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Gets the fevorite pages by user.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpPost()]
+        public FavoritePageResponseDto GetFevoritePagesByUser(FavoritePageRequestDto page)
+        {
+            FavoritePageResponseDto response = new FavoritePageResponseDto(page.RequestToken);
+            try
+            {
+                List<FavoritePageModel> favoritePages = this._favoritePageDataRepository.GetList(x => x.UserKey.Equals(page.UserKey)
+                    && x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+
+                response.FavoritePages = favoritePages.Select(x=>x.PageItem).ToList();
+                response.ResponseStatus = RespStatus.Success.ToString();
+            }
+            catch (Exception ex)
+            {
+                response.ResponseStatus = RespStatus.Failure.ToString();
+                ex.ExceptionValueTracker(page);
             }
             return response;
         }

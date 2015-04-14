@@ -30,5 +30,9 @@ namespace NJFairground.Web.Data.Context
         public DbSet<PageItem> PageItems { get; set; }
         public DbSet<PageItemDetail> PageItemDetails { get; set; }
         public DbSet<Page> Pages { get; set; }
+        public DbSet<FavoriteImage> FavoriteImages { get; set; }
+        public DbSet<FavoritePage> FavoritePages { get; set; }
+        public DbSet<UserImage> UserImages { get; set; }
+        public DbSet<UserInfo> UserInfoes { get; set; }
     }
 }

@@ -9,6 +9,9 @@ namespace NJFairground.Web.Utilities
     using System.ComponentModel.DataAnnotations;
     using System.Configuration;
     using System.Diagnostics;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Imaging;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -321,7 +324,91 @@ namespace NJFairground.Web.Utilities
             return clientIP;
         }
 
+        /// <summary>
+        /// Saves the image with watermark from file.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <param name="templateId">The template id.</param>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="userId">The user id.</param>
+        /// <param name="waterMarkText">The water mark text.</param>
+        /// <param name="targetFolder">The target folder.</param>
+        /// <param name="opacity">The opacity.</param>
+        /// <returns></returns>
+        public static string SaveImageWithWatermarkFromFile(string filePath, int templateId, int pageId,
+            int? userId, string waterMarkText, string targetFolder, int opacity)
+        {
+            string imageName = string.Format("{0}_{1}_{2}.jpg", HttpContext.Current.Session.SessionID, templateId, pageId);
+            string imagePath = Path.Combine(targetFolder, imageName);
 
+            try
+            {
+                Image imgPhoto = Image.FromFile(filePath); //byteArrayToImage(byteArray);
+                filePath = SetWatermark(imgPhoto, waterMarkText, targetFolder, opacity, imageName, imagePath);
+                imgPhoto.Dispose();
+                return filePath;
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(filePath, waterMarkText, targetFolder, opacity);
+            }
+            return File.Exists(imagePath) ? imageName : string.Empty;
+        }
+
+        /// <summary>
+        /// Saves the image without watermark from byte array.
+        /// </summary>
+        /// <param name="byteArray">The byte array.</param>
+        /// <param name="templateId">The template id.</param>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="userId">The user id.</param>
+        /// <param name="targetFolder">The target folder.</param>
+        /// <returns></returns>
+        public static string SaveImageWithoutWatermarkFromByteArray(byte[] byteArray,
+            int templateId, int pageId, int? userId, string targetFolder)
+        {
+            string imageName = string.Format("{0}_{1}_{2}.jpg", HttpContext.Current.Session.SessionID, templateId, pageId);
+            string imagePath = Path.Combine(targetFolder, imageName);
+
+            try
+            {
+                Image imgPhoto = ByteArrayToImage(byteArray);
+                Bitmap bmp = new Bitmap(imgPhoto);
+                bmp.SetResolution(ACTUAL_IMAGE_DPI, ACTUAL_IMAGE_DPI);
+                bmp.Save(imagePath, ImageFormat.Jpeg);
+                bmp.Dispose();
+                imgPhoto.Dispose();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(byteArray, targetFolder);
+            }
+            return File.Exists(imagePath) ? imageName : string.Empty;
+        }
+
+        /// <summary>
+        /// Images to byte array.
+        /// </summary>
+        /// <param name="imageIn">The image in.</param>
+        /// <returns></returns>
+        public static byte[] ImageToByteArray(Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, ImageFormat.Gif);
+            return ms.ToArray();
+        }
+
+        /// <summary>
+        /// Bytes the array to image.
+        /// </summary>
+        /// <param name="byteArrayIn">The byte array in.</param>
+        /// <returns></returns>
+        public static Image ByteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
+        }
 
         /// <summary>
         /// Gets the secure module.
@@ -701,6 +788,12 @@ namespace NJFairground.Web.Utilities
             return date.AddDays(extraDays);
         }
 
+        /// <summary>
+        /// Resolves the server URL.
+        /// </summary>
+        /// <param name="serverUrl">The server URL.</param>
+        /// <param name="forceHttps">if set to <c>true</c> [force HTTPS].</param>
+        /// <returns></returns>
         public static string ResolveServerUrl(string serverUrl, bool forceHttps)
         {
             if (serverUrl.IndexOf("://") > -1)
@@ -713,6 +806,11 @@ namespace NJFairground.Web.Utilities
             return newUrl;
         }
 
+        /// <summary>
+        /// Gets the RSS feedas string.
+        /// </summary>
+        /// <param name="feedLink">The feed link.</param>
+        /// <returns></returns>
         public static string GetRSSFeedasString(string feedLink)
         {
             if (!string.IsNullOrEmpty(feedLink))
@@ -750,6 +848,94 @@ namespace NJFairground.Web.Utilities
             log.LogRaw(string.Format(logFormat, logContent));
         }
 
+        /// <summary>
+        /// Sets the watermark.
+        /// </summary>
+        /// <param name="imgPhoto">The img photo.</param>
+        /// <param name="waterMarkText">The water mark text.</param>
+        /// <param name="targetFolder">The target folder.</param>
+        /// <param name="opacity">The opacity.</param>
+        /// <param name="imageName">Name of the image.</param>
+        /// <param name="imagePath">The image path.</param>
+        /// <returns></returns>
+        private static string SetWatermark(Image imgPhoto, string waterMarkText,
+            string targetFolder, int opacity, string imageName, string imagePath)
+        {
+            try
+            {
+                //Image imgPhoto = byteArrayToImage(byteArray);
+                int phWidth = imgPhoto.Width;
+                int phHeight = imgPhoto.Height;
+
+                Bitmap bmPhoto = new Bitmap(phWidth, phHeight, PixelFormat.Format24bppRgb);
+                bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
+
+                Graphics grPhoto = Graphics.FromImage(bmPhoto);
+                grPhoto.SmoothingMode = SmoothingMode.AntiAlias;
+                grPhoto.DrawImage(
+                    imgPhoto,                               // Photo Image object
+                    new Rectangle(0, 0, phWidth, phHeight), // Rectangle structure
+                    0,                                      // x-coordinate of the portion of the source image to draw. 
+                    0,                                      // y-coordinate of the portion of the source image to draw. 
+                    phWidth,                                // Width of the portion of the source image to draw. 
+                    phHeight,                               // Height of the portion of the source image to draw. 
+                    GraphicsUnit.Pixel);                    // Units of measure 
+
+                double tangent = (double)bmPhoto.Height / (double)bmPhoto.Width;
+                double angle = Math.Atan(tangent) * (180 / Math.PI);
+                double halfHypotenuse = (Math.Sqrt((bmPhoto.Height
+                    * bmPhoto.Height) + (bmPhoto.Width * bmPhoto.Width))) / 2;
+
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
+
+                int[] sizes = new int[] { 200, 150, 96, 72, 60, 48, 36, 30, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4 };
+
+                Font crFont = null;
+                SizeF crSize = new SizeF();
+                for (int i = 0; i <= sizes.Length - 1; i++)
+                {
+                    crFont = new Font("arial", sizes[i], FontStyle.Bold);
+                    crSize = grPhoto.MeasureString(waterMarkText, crFont);
+
+                    if ((ushort)crSize.Width < (ushort)phWidth)
+                        break;
+                }
+
+                Matrix matrix = new Matrix();
+                matrix.Translate(bmPhoto.Width / 2, bmPhoto.Height / 2);
+                matrix.Rotate(-45.0f);
+
+                grPhoto.Transform = matrix;
+
+                SolidBrush semiTransBrush2 = new SolidBrush(Color.FromArgb(opacity, 0, 0, 0));
+                grPhoto.DrawString(waterMarkText, crFont, semiTransBrush2,
+                    2, 2, stringFormat);
+
+                SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(opacity, 255, 255, 255));
+                grPhoto.DrawString(waterMarkText, crFont, semiTransBrush,
+                    0, 0, stringFormat);
+
+                imgPhoto = bmPhoto;
+                grPhoto.Dispose();
+
+
+                //Bitmap bmp = ChangeImageResolution(imgPhoto, DISPLAY_IMAGE_DPI);
+                //bmp.Save(imagePath, ImageFormat.Jpeg);
+
+                //imgPhoto.Dispose();
+                //bmp.Dispose();
+
+                imgPhoto.Save(imagePath, ImageFormat.Jpeg);
+                imgPhoto.Dispose();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(imgPhoto, waterMarkText, targetFolder, opacity);
+            }
+            return File.Exists(imagePath) ? imageName : string.Empty;
+        }
         #endregion
     }
 }

@@ -20,6 +20,28 @@
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="FavoriteImage">
+          <Key>
+            <PropertyRef Name="FavoriteImageId" />
+          </Key>
+          <Property Name="FavoriteImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserImageId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FavoritePage">
+          <Key>
+            <PropertyRef Name="FavoritePageId" />
+          </Key>
+          <Property Name="FavoritePageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserKey" Type="int" Nullable="false" />
+          <Property Name="PageId" Type="int" Nullable="false" />
+          <Property Name="PageItemId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Page">
           <Key>
             <PropertyRef Name="PageId" />
@@ -76,6 +98,89 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="UserImage">
+          <Key>
+            <PropertyRef Name="UserImageId" />
+          </Key>
+          <Property Name="UserImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserKey" Type="int" Nullable="false" />
+          <Property Name="UserImageUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserKey" />
+          </Key>
+          <Property Name="UserKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__FavoriteI__UserI__4C6B5938">
+          <End Role="UserImage" Type="Self.UserImage" Multiplicity="1" />
+          <End Role="FavoriteImage" Type="Self.FavoriteImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserImage">
+              <PropertyRef Name="UserImageId" />
+            </Principal>
+            <Dependent Role="FavoriteImage">
+              <PropertyRef Name="UserImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FavoriteP__PageI__46B27FE2">
+          <End Role="Page" Type="Self.Page" Multiplicity="1" />
+          <End Role="FavoritePage" Type="Self.FavoritePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Page">
+              <PropertyRef Name="PageId" />
+            </Principal>
+            <Dependent Role="FavoritePage">
+              <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FavoriteP__PageI__47A6A41B">
+          <End Role="PageItem" Type="Self.PageItem" Multiplicity="1" />
+          <End Role="FavoritePage" Type="Self.FavoritePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PageItem">
+              <PropertyRef Name="PageItemId" />
+            </Principal>
+            <Dependent Role="FavoritePage">
+              <PropertyRef Name="PageItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FavoriteP__UserK__45BE5BA9">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="FavoritePage" Type="Self.FavoritePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="FavoritePage">
+              <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserImage__UserK__40F9A68C">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="UserImage">
+              <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Event_Page">
           <End Role="Page" Type="Self.Page" Multiplicity="1" />
           <End Role="Event" Type="Self.Event" Multiplicity="*" />
@@ -162,10 +267,34 @@
         </Association>
         <EntityContainer Name="NJFairgroundDBModelStoreContainer">
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FavoriteImage" EntityType="Self.FavoriteImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FavoritePage" EntityType="Self.FavoritePage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageHeader" EntityType="Self.PageHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageItem" EntityType="Self.PageItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageItemDetail" EntityType="Self.PageItemDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserImage" EntityType="Self.UserImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__FavoriteI__UserI__4C6B5938" Association="Self.FK__FavoriteI__UserI__4C6B5938">
+            <End Role="UserImage" EntitySet="UserImage" />
+            <End Role="FavoriteImage" EntitySet="FavoriteImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FavoriteP__PageI__46B27FE2" Association="Self.FK__FavoriteP__PageI__46B27FE2">
+            <End Role="Page" EntitySet="Page" />
+            <End Role="FavoritePage" EntitySet="FavoritePage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FavoriteP__PageI__47A6A41B" Association="Self.FK__FavoriteP__PageI__47A6A41B">
+            <End Role="PageItem" EntitySet="PageItem" />
+            <End Role="FavoritePage" EntitySet="FavoritePage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FavoriteP__UserK__45BE5BA9" Association="Self.FK__FavoriteP__UserK__45BE5BA9">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="FavoritePage" EntitySet="FavoritePage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserImage__UserK__40F9A68C" Association="Self.FK__UserImage__UserK__40F9A68C">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserImage" EntitySet="UserImage" />
+          </AssociationSet>
           <AssociationSet Name="FK_Event_Page" Association="Self.FK_Event_Page">
             <End Role="Page" EntitySet="Page" />
             <End Role="Event" EntitySet="Event" />
@@ -233,6 +362,30 @@
             <End Role="Page" EntitySet="Pages" />
             <End Role="PageItemDetail" EntitySet="PageItemDetails" />
           </AssociationSet>
+          <EntitySet Name="FavoriteImages" EntityType="NJFairgroundDBModel.FavoriteImage" />
+          <EntitySet Name="FavoritePages" EntityType="NJFairgroundDBModel.FavoritePage" />
+          <EntitySet Name="UserImages" EntityType="NJFairgroundDBModel.UserImage" />
+          <EntitySet Name="UserInfoes" EntityType="NJFairgroundDBModel.UserInfo" />
+          <AssociationSet Name="FK__FavoriteI__UserI__4C6B5938" Association="NJFairgroundDBModel.FK__FavoriteI__UserI__4C6B5938">
+            <End Role="UserImage" EntitySet="UserImages" />
+            <End Role="FavoriteImage" EntitySet="FavoriteImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FavoriteP__PageI__46B27FE2" Association="NJFairgroundDBModel.FK__FavoriteP__PageI__46B27FE2">
+            <End Role="Page" EntitySet="Pages" />
+            <End Role="FavoritePage" EntitySet="FavoritePages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FavoriteP__PageI__47A6A41B" Association="NJFairgroundDBModel.FK__FavoriteP__PageI__47A6A41B">
+            <End Role="PageItem" EntitySet="PageItems" />
+            <End Role="FavoritePage" EntitySet="FavoritePages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FavoriteP__UserK__45BE5BA9" Association="NJFairgroundDBModel.FK__FavoriteP__UserK__45BE5BA9">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="FavoritePage" EntitySet="FavoritePages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserImage__UserK__40F9A68C" Association="NJFairgroundDBModel.FK__UserImage__UserK__40F9A68C">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="UserImage" EntitySet="UserImages" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -287,6 +440,7 @@
           <Property Name="ItemOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="NJFairgroundDBModel.FK_Event_PageItem" FromRole="PageItem" ToRole="Event" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="PageItem" ToRole="Page" />
+          <NavigationProperty Name="FavoritePages" Relationship="NJFairgroundDBModel.FK__FavoriteP__PageI__47A6A41B" FromRole="PageItem" ToRole="FavoritePage" />
         </EntityType>
         <EntityType Name="PageItemDetail">
           <Key>
@@ -354,6 +508,7 @@
           <NavigationProperty Name="PageHeaders" Relationship="NJFairgroundDBModel.FK_PageHeader_Page" FromRole="Page" ToRole="PageHeader" />
           <NavigationProperty Name="PageItems" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="Page" ToRole="PageItem" />
           <NavigationProperty Name="PageItemDetails" Relationship="NJFairgroundDBModel.FK_PageItemDetail_Page" FromRole="Page" ToRole="PageItemDetail" />
+          <NavigationProperty Name="FavoritePages" Relationship="NJFairgroundDBModel.FK__FavoriteP__PageI__46B27FE2" FromRole="Page" ToRole="FavoritePage" />
         </EntityType>
         <Association Name="FK_Event_Page">
           <End Type="NJFairgroundDBModel.Page" Role="Page" Multiplicity="1" />
@@ -400,6 +555,119 @@
             </Principal>
             <Dependent Role="PageItemDetail">
               <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FavoriteImage">
+          <Key>
+            <PropertyRef Name="FavoriteImageId" />
+          </Key>
+          <Property Name="FavoriteImageId" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="UserImageId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UserImage" Relationship="NJFairgroundDBModel.FK__FavoriteI__UserI__4C6B5938" FromRole="FavoriteImage" ToRole="UserImage" />
+        </EntityType>
+        <EntityType Name="FavoritePage">
+          <Key>
+            <PropertyRef Name="FavoritePageId" />
+          </Key>
+          <Property Name="FavoritePageId" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="UserKey" Type="Int32" Nullable="false" />
+          <Property Name="PageId" Type="Int32" Nullable="false" />
+          <Property Name="PageItemId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK__FavoriteP__PageI__46B27FE2" FromRole="FavoritePage" ToRole="Page" />
+          <NavigationProperty Name="PageItem" Relationship="NJFairgroundDBModel.FK__FavoriteP__PageI__47A6A41B" FromRole="FavoritePage" ToRole="PageItem" />
+          <NavigationProperty Name="UserInfo" Relationship="NJFairgroundDBModel.FK__FavoriteP__UserK__45BE5BA9" FromRole="FavoritePage" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="UserImage">
+          <Key>
+            <PropertyRef Name="UserImageId" />
+          </Key>
+          <Property Name="UserImageId" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="UserKey" Type="Int32" Nullable="false" />
+          <Property Name="UserImageUrl" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FavoriteImages" Relationship="NJFairgroundDBModel.FK__FavoriteI__UserI__4C6B5938" FromRole="UserImage" ToRole="FavoriteImage" />
+          <NavigationProperty Name="UserInfo" Relationship="NJFairgroundDBModel.FK__UserImage__UserK__40F9A68C" FromRole="UserImage" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserKey" />
+          </Key>
+          <Property Name="UserKey" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FavoritePages" Relationship="NJFairgroundDBModel.FK__FavoriteP__UserK__45BE5BA9" FromRole="UserInfo" ToRole="FavoritePage" />
+          <NavigationProperty Name="UserImages" Relationship="NJFairgroundDBModel.FK__UserImage__UserK__40F9A68C" FromRole="UserInfo" ToRole="UserImage" />
+        </EntityType>
+        <Association Name="FK__FavoriteI__UserI__4C6B5938">
+          <End Type="NJFairgroundDBModel.UserImage" Role="UserImage" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.FavoriteImage" Role="FavoriteImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserImage">
+              <PropertyRef Name="UserImageId" />
+            </Principal>
+            <Dependent Role="FavoriteImage">
+              <PropertyRef Name="UserImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FavoriteP__PageI__46B27FE2">
+          <End Type="NJFairgroundDBModel.Page" Role="Page" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.FavoritePage" Role="FavoritePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Page">
+              <PropertyRef Name="PageId" />
+            </Principal>
+            <Dependent Role="FavoritePage">
+              <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FavoriteP__PageI__47A6A41B">
+          <End Type="NJFairgroundDBModel.PageItem" Role="PageItem" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.FavoritePage" Role="FavoritePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PageItem">
+              <PropertyRef Name="PageItemId" />
+            </Principal>
+            <Dependent Role="FavoritePage">
+              <PropertyRef Name="PageItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FavoriteP__UserK__45BE5BA9">
+          <End Type="NJFairgroundDBModel.UserInfo" Role="UserInfo" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.FavoritePage" Role="FavoritePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="FavoritePage">
+              <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserImage__UserK__40F9A68C">
+          <End Type="NJFairgroundDBModel.UserInfo" Role="UserInfo" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.UserImage" Role="UserImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="UserImage">
+              <PropertyRef Name="UserKey" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -482,6 +750,55 @@
                 <ScalarProperty Name="PageDesc" ColumnName="PageDesc" />
                 <ScalarProperty Name="PageName" ColumnName="PageName" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FavoriteImages">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.FavoriteImage">
+              <MappingFragment StoreEntitySet="FavoriteImage">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="UserImageId" ColumnName="UserImageId" />
+                <ScalarProperty Name="FavoriteImageId" ColumnName="FavoriteImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FavoritePages">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.FavoritePage">
+              <MappingFragment StoreEntitySet="FavoritePage">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="FavoritePageId" ColumnName="FavoritePageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserImages">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.UserImage">
+              <MappingFragment StoreEntitySet="UserImage">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="UserImageUrl" ColumnName="UserImageUrl" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UserImageId" ColumnName="UserImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInfoes">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

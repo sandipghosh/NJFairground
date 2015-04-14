@@ -8,7 +8,12 @@ namespace NJFairground.Web.DTO.ResponseDto
 
     public class MapResponseDto : ResponseBase
     {
-        public MapResponseDto()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapResponseDto"/> class.
+        /// </summary>
+        /// <param name="requestToken">The request token.</param>
+        public MapResponseDto(string requestToken)
+            : base(requestToken)
         {
             MapUrl = CommonUtility.ResolveServerUrl(string.Format("{0}{1}",
                 CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), "NJ_Fairground_guide_map.jpg"), false);
@@ -86,7 +91,20 @@ namespace NJFairground.Web.DTO.ResponseDto
             };
         }
 
+        /// <summary>
+        /// Gets or sets the map URL.
+        /// </summary>
+        /// <value>
+        /// The map URL.
+        /// </value>
         public string MapUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the map coordinates.
+        /// </summary>
+        /// <value>
+        /// The map coordinates.
+        /// </value>
         public List<MapCoordinateModel> MapCoordinates { get; set; }
     }
 }

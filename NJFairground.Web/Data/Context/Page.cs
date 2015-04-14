@@ -20,6 +20,7 @@ namespace NJFairground.Web.Data.Context
             this.PageHeaders = new HashSet<PageHeader>();
             this.PageItems = new HashSet<PageItem>();
             this.PageItemDetails = new HashSet<PageItemDetail>();
+            this.FavoritePages = new HashSet<FavoritePage>();
         }
     
         public int PageId { get; set; }
@@ -34,5 +35,6 @@ namespace NJFairground.Web.Data.Context
         public virtual ICollection<PageHeader> PageHeaders { get; set; }
         public virtual ICollection<PageItem> PageItems { get; set; }
         public virtual ICollection<PageItemDetail> PageItemDetails { get; set; }
+        public virtual ICollection<FavoritePage> FavoritePages { get; set; }
     }
 }

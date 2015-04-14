@@ -1,6 +1,7 @@
 ﻿
 namespace NJFairground.Web.MapperConfig
 {
+    using System;
     using AutoMapper;
     using NJFairground.Web.Data.Implementation;
     using NJFairground.Web.Data.Interface;
@@ -8,7 +9,6 @@ namespace NJFairground.Web.MapperConfig
     using SimpleInjector;
     using SimpleInjector.Advanced;
     using SimpleInjector.Packaging;
-    using System;
 
     public class DataServiceLocatorConfig : IPackage
     {
@@ -37,13 +37,13 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
-                //container.RegisterWebApiRequest<IPageDataRepository, PageDataRepository>();
-                //container.RegisterWebApiRequest<IPageItemDataRepository, PageItemDataRepository>();
-                //container.RegisterWebApiRequest<IEventDataRepository, EventDataRepository>();
-
                 container.Register<IPageDataRepository, PageDataRepository>();
                 container.Register<IPageItemDataRepository, PageItemDataRepository>();
                 container.Register<IEventDataRepository, EventDataRepository>();
+                container.Register<IUserInfoDataRepository, UserInfoDataRepository>();
+                container.Register<IFavoriteImageDataRepository, FavoriteImageDataRepository>();
+                container.Register<IFavoritePageDataRepository, FavoritePageDataRepository>();
+                container.Register<IUserImageDataRepository, UserImageDataRepository>();
             }
             catch (Exception ex)
             {

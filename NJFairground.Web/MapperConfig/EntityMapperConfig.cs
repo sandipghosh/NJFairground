@@ -1,12 +1,12 @@
 ﻿
 namespace NJFairground.Web.MapperConfig
 {
+    using System;
     using AutoMapper;
+    using NJFairground.Web.Areas.Admin.Models;
     using NJFairground.Web.Data.Context;
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
-    using System;
-    using NJFairground.Web.Areas.Admin.Models;
 
     public class EntityMapperConfig : Profile
     {
@@ -36,6 +36,20 @@ namespace NJFairground.Web.MapperConfig
                     .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<PageItem, PageItemModel>()
+                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+
+                Mapper.CreateMap<UserInfo, UserInfoModel>()
+                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+
+                Mapper.CreateMap<UserImage, UserImageModel>()
+                    .ForMember(dest => dest.IsFavorite, opt => opt.MapFrom(src => (src.FavoriteImages.Count > 0)))
+                    .IgnoreAllNonExisting();
+                Mapper.CreateMap<UserImageModel, UserImage>().IgnoreAllNonExisting();
+
+                Mapper.CreateMap<FavoriteImage, FavoriteImageModel>()
+                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+
+                Mapper.CreateMap<FavoritePage, FavoritePageModel>()
                    .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<Event, EventModel>()
