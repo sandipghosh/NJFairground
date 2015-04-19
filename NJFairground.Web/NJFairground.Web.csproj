@@ -360,12 +360,14 @@
     <Compile Include="DTO\RequestDto\PageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\RssFeedRequestDto.cs" />
     <Compile Include="DTO\RequestDto\UserAuthenticationRequestDto.cs" />
+    <Compile Include="DTO\RequestDto\UserImageRequestDto.cs" />
     <Compile Include="DTO\ResponseDto\FavoritePageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\MapResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageItemResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\RssFeedResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\UserAuthenticationResponseDto.cs" />
+    <Compile Include="DTO\ResponseDto\UserImageResponseDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

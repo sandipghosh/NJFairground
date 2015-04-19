@@ -1,9 +1,9 @@
 ﻿
 namespace NJFairground.Web.DTO.ResponseDto
 {
-    using System.Collections.Generic;
     using NJFairground.Web.DTO.Base;
     using NJFairground.Web.Models;
+    using System.Collections.Generic;
 
     public class FavoritePageResponseDto : ResponseBase
     {
@@ -24,6 +24,8 @@ namespace NJFairground.Web.DTO.ResponseDto
         {
             this.FavoritePages = new List<PageItemModel>();
         }
+
+        public UserInfoModel UserInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the favorite pages.

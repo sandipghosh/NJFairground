@@ -356,6 +356,88 @@ namespace NJFairground.Web.Utilities
         }
 
         /// <summary>
+        /// Sets the watermark.
+        /// </summary>
+        /// <param name="imgPhoto">The img photo.</param>
+        /// <param name="waterMarkText">The water mark text.</param>
+        /// <param name="targetFolder">The target folder.</param>
+        /// <param name="opacity">The opacity.</param>
+        /// <param name="imageName">Name of the image.</param>
+        /// <param name="imagePath">The image path.</param>
+        /// <returns></returns>
+        public static string SetWatermark(Image imgPhoto, string waterMarkText,
+            string targetFolder, int opacity, string imageName, string imagePath)
+        {
+            try
+            {
+                //Image imgPhoto = byteArrayToImage(byteArray);
+                int phWidth = imgPhoto.Width;
+                int phHeight = imgPhoto.Height;
+
+                Bitmap bmPhoto = new Bitmap(phWidth, phHeight, PixelFormat.Format24bppRgb);
+                bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
+
+                Graphics grPhoto = Graphics.FromImage(bmPhoto);
+                grPhoto.SmoothingMode = SmoothingMode.AntiAlias;
+                grPhoto.DrawImage(
+                    imgPhoto,                               // Photo Image object
+                    new Rectangle(0, 0, phWidth, phHeight), // Rectangle structure
+                    0,                                      // x-coordinate of the portion of the source image to draw. 
+                    0,                                      // y-coordinate of the portion of the source image to draw. 
+                    phWidth,                                // Width of the portion of the source image to draw. 
+                    phHeight,                               // Height of the portion of the source image to draw. 
+                    GraphicsUnit.Pixel);                    // Units of measure 
+
+                double tangent = (double)bmPhoto.Height / (double)bmPhoto.Width;
+                double angle = Math.Atan(tangent) * (180 / Math.PI);
+                double halfHypotenuse = (Math.Sqrt((bmPhoto.Height
+                    * bmPhoto.Height) + (bmPhoto.Width * bmPhoto.Width))) / 2;
+
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
+
+                int[] sizes = new int[] { 200, 150, 96, 72, 60, 48, 36, 30, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4 };
+
+                Font crFont = null;
+                SizeF crSize = new SizeF();
+                for (int i = 0; i <= sizes.Length - 1; i++)
+                {
+                    crFont = new Font("arial", sizes[i], FontStyle.Bold);
+                    crSize = grPhoto.MeasureString(waterMarkText, crFont);
+
+                    if ((ushort)crSize.Width < (ushort)phWidth)
+                        break;
+                }
+
+                Matrix matrix = new Matrix();
+                matrix.Translate(bmPhoto.Width / 2, bmPhoto.Height / 2);
+                matrix.Rotate(-45.0f);
+
+                grPhoto.Transform = matrix;
+
+                SolidBrush semiTransBrush2 = new SolidBrush(Color.FromArgb(opacity, 0, 0, 0));
+                grPhoto.DrawString(waterMarkText, crFont, semiTransBrush2,
+                    2, 2, stringFormat);
+
+                SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(opacity, 255, 255, 255));
+                grPhoto.DrawString(waterMarkText, crFont, semiTransBrush,
+                    0, 0, stringFormat);
+
+                imgPhoto = bmPhoto;
+                grPhoto.Dispose();
+
+                imgPhoto.Save(imagePath, ImageFormat.Jpeg);
+                imgPhoto.Dispose();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(imgPhoto, waterMarkText, targetFolder, opacity);
+            }
+            return File.Exists(imagePath) ? imageName : string.Empty;
+        }
+
+        /// <summary>
         /// Saves the image without watermark from byte array.
         /// </summary>
         /// <param name="byteArray">The byte array.</param>
@@ -858,84 +940,7 @@ namespace NJFairground.Web.Utilities
         /// <param name="imageName">Name of the image.</param>
         /// <param name="imagePath">The image path.</param>
         /// <returns></returns>
-        private static string SetWatermark(Image imgPhoto, string waterMarkText,
-            string targetFolder, int opacity, string imageName, string imagePath)
-        {
-            try
-            {
-                //Image imgPhoto = byteArrayToImage(byteArray);
-                int phWidth = imgPhoto.Width;
-                int phHeight = imgPhoto.Height;
-
-                Bitmap bmPhoto = new Bitmap(phWidth, phHeight, PixelFormat.Format24bppRgb);
-                bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
-
-                Graphics grPhoto = Graphics.FromImage(bmPhoto);
-                grPhoto.SmoothingMode = SmoothingMode.AntiAlias;
-                grPhoto.DrawImage(
-                    imgPhoto,                               // Photo Image object
-                    new Rectangle(0, 0, phWidth, phHeight), // Rectangle structure
-                    0,                                      // x-coordinate of the portion of the source image to draw. 
-                    0,                                      // y-coordinate of the portion of the source image to draw. 
-                    phWidth,                                // Width of the portion of the source image to draw. 
-                    phHeight,                               // Height of the portion of the source image to draw. 
-                    GraphicsUnit.Pixel);                    // Units of measure 
-
-                double tangent = (double)bmPhoto.Height / (double)bmPhoto.Width;
-                double angle = Math.Atan(tangent) * (180 / Math.PI);
-                double halfHypotenuse = (Math.Sqrt((bmPhoto.Height
-                    * bmPhoto.Height) + (bmPhoto.Width * bmPhoto.Width))) / 2;
-
-                StringFormat stringFormat = new StringFormat();
-                stringFormat.Alignment = StringAlignment.Center;
-                stringFormat.LineAlignment = StringAlignment.Center;
-
-                int[] sizes = new int[] { 200, 150, 96, 72, 60, 48, 36, 30, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4 };
-
-                Font crFont = null;
-                SizeF crSize = new SizeF();
-                for (int i = 0; i <= sizes.Length - 1; i++)
-                {
-                    crFont = new Font("arial", sizes[i], FontStyle.Bold);
-                    crSize = grPhoto.MeasureString(waterMarkText, crFont);
-
-                    if ((ushort)crSize.Width < (ushort)phWidth)
-                        break;
-                }
-
-                Matrix matrix = new Matrix();
-                matrix.Translate(bmPhoto.Width / 2, bmPhoto.Height / 2);
-                matrix.Rotate(-45.0f);
-
-                grPhoto.Transform = matrix;
-
-                SolidBrush semiTransBrush2 = new SolidBrush(Color.FromArgb(opacity, 0, 0, 0));
-                grPhoto.DrawString(waterMarkText, crFont, semiTransBrush2,
-                    2, 2, stringFormat);
-
-                SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(opacity, 255, 255, 255));
-                grPhoto.DrawString(waterMarkText, crFont, semiTransBrush,
-                    0, 0, stringFormat);
-
-                imgPhoto = bmPhoto;
-                grPhoto.Dispose();
-
-
-                //Bitmap bmp = ChangeImageResolution(imgPhoto, DISPLAY_IMAGE_DPI);
-                //bmp.Save(imagePath, ImageFormat.Jpeg);
-
-                //imgPhoto.Dispose();
-                //bmp.Dispose();
-
-                imgPhoto.Save(imagePath, ImageFormat.Jpeg);
-                imgPhoto.Dispose();
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker(imgPhoto, waterMarkText, targetFolder, opacity);
-            }
-            return File.Exists(imagePath) ? imageName : string.Empty;
-        }
+        
         #endregion
     }
 }
