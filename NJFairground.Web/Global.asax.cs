@@ -11,6 +11,7 @@ namespace NJFairground.Web
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using MultipartDataMediaFormatter;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -26,6 +27,8 @@ namespace NJFairground.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            GlobalConfiguration.Configuration.Formatters.Add(new FormMultipartEncodedMediaTypeFormatter()); 
         }
 
         /// <summary>

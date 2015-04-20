@@ -102,6 +102,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.3.2.3\lib\net45\Microsoft.Web.WebPages.OAuth.dll</HintPath>
     </Reference>
+    <Reference Include="MultipartDataMediaFormatter">
+      <HintPath>..\packages\MultipartDataMediaFormatter_bin\MultipartDataMediaFormatter.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -703,6 +706,8 @@
     <Content Include="Areas\Admin\Styles\Images\ui-icons_888888_256x240.png" />
     <Content Include="Areas\Admin\Styles\Images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Areas\Admin\Styles\jquery-ui-1.10.4.custom.min.css" />
+    <Content Include="DBScript\ImageUpload.html" />
+    <Content Include="DBScript\NewApiPayload.txt" />
     <Content Include="DBScript\NJFairground13_07_2014_0138.sql" />
     <Content Include="DBScript\NJFairgroundDB_Scriptwithdata_06_07_2014_1138pm.sql" />
     <Content Include="ErrorLogs\TextFile.txt" />

@@ -1,0 +1,61 @@
+﻿Url: http://localhost:5764/api/PageApi/AddPageToFevorite
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"UserInfo":{
+		"UserKey":0,
+		"UserId":"sandipghosh.dev",
+		"UserEmail":"sandipghosh.dev@gmail.com",
+		"FirstName":"Sandip",
+		"LastName":"Ghosh"
+	},
+	"PageItemId":501,
+	"Action":1
+}
+
+Url: http://localhost:5764/api/PageApi/RemovePageFromFevorite
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"UserInfo":{
+		"UserKey":0,
+		"UserId":"sandipghosh.dev",
+		"UserEmail":"sandipghosh.dev@gmail.com",
+		"FirstName":"Sandip",
+		"LastName":"Ghosh"
+	},
+	"PageItemId":501,
+	"Action":5
+}
+
+Url: http://localhost:5764/api/PageApi/GetFevoritePagesByUser
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"UserInfo":{
+		"UserKey":0,
+		"UserId":"sandipghosh.dev",
+		"UserEmail":"sandipghosh.dev@gmail.com",
+		"FirstName":"Sandip",
+		"LastName":"Ghosh"
+	},
+	"Action":8
+}
+
+Url: http://localhost:5764/api/PageApi/AddUserImage
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"UserInfo":{
+		"UserKey":0,
+		"UserId":"sandipghosh.dev",
+		"UserEmail":"sandipghosh.dev@gmail.com",
+		"FirstName":"Sandip",
+		"LastName":"Ghosh"
+	},
+	"Action":1
+}

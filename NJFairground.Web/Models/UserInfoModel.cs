@@ -22,7 +22,7 @@ namespace NJFairground.Web.Models
         public int StatusId { get; set; }
         public DateTime CreatedOn { get; set; }
 
-        public IList<UserImageModel> UserImages { get; set; }
-        public IList<FavoritePageModel> FavoritePages { get; set; }
+        public List<UserImageModel> UserImages { get; set; }
+        public List<FavoritePageModel> FavoritePages { get; set; }
     }
 }

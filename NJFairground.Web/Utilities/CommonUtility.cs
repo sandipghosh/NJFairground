@@ -906,9 +906,31 @@ namespace NJFairground.Web.Utilities
                 var content = webClient.OpenRead(feedUrl);
                 var contentReader = new StreamReader(content);
                 var rssFeedAsString = contentReader.ReadToEnd();
-                return rssFeedAsString; 
+                return rssFeedAsString;
             }
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Toes the posted file base.
+        /// </summary>
+        /// <param name="files">The files.</param>
+        /// <returns></returns>
+        public static List<HttpPostedFileBase> ToPostedFileBase(this HttpFileCollection files)
+        {
+            if (files != null && files.Count > 0)
+            {
+                var newFiles = new List<HttpPostedFileBase>();
+                foreach (string name in files)
+                {
+                    var file = files[name];
+                    if (file.ContentLength > 0)
+                        newFiles.Add(new HttpPostedFileWrapper(file));
+                }
+                return newFiles;
+            }
+            else
+                return new List<HttpPostedFileBase>();
         }
 
         #region Private Members
@@ -940,7 +962,7 @@ namespace NJFairground.Web.Utilities
         /// <param name="imageName">Name of the image.</param>
         /// <param name="imagePath">The image path.</param>
         /// <returns></returns>
-        
+
         #endregion
     }
 }

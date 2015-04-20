@@ -3,9 +3,11 @@ namespace NJFairground.Web.MapperConfig
 {
     using System;
     using AutoMapper;
+    using System.Linq;
     using NJFairground.Web.Areas.Admin.Models;
     using NJFairground.Web.Data.Context;
     using NJFairground.Web.Models;
+    using NJFairground.Web.Models.Base;
     using NJFairground.Web.Utilities;
 
     public class EntityMapperConfig : Profile
@@ -39,10 +41,18 @@ namespace NJFairground.Web.MapperConfig
                    .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<UserInfo, UserInfoModel>()
-                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                    .ForMember(dest => dest.FavoritePages, opt => opt.MapFrom(src =>
+                        src.FavoritePages.Where(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList()))
+                    .ForMember(dest => dest.UserImages, opt => opt.MapFrom(src =>
+                        src.UserImages.Where(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList()))
+                    .IgnoreAllNonExisting();
+
+                Mapper.CreateMap<UserInfoModel, UserInfo>()
+                   .IgnoreAllNonExisting();
 
                 Mapper.CreateMap<UserImage, UserImageModel>()
                     .ForMember(dest => dest.IsFavorite, opt => opt.MapFrom(src => (src.FavoriteImages.Count > 0)))
+                    .ForMember(dest => dest.UserImageUrl, opt => opt.MapFrom(src => CommonUtility.ResolveServerUrl(src.UserImageUrl, false)))
                     .IgnoreAllNonExisting();
                 Mapper.CreateMap<UserImageModel, UserImage>().IgnoreAllNonExisting();
 

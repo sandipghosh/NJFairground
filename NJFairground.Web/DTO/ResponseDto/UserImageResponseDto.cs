@@ -3,13 +3,14 @@ namespace NJFairground.Web.DTO.ResponseDto
 {
     using NJFairground.Web.DTO.Base;
     using NJFairground.Web.Models;
-    using System.Collections.Generic;
 
     public class UserImageResponseDto : ResponseBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserImageResponseDto" /> class.
+        /// </summary>
         public UserImageResponseDto()
         {
-            this.UserImages = new List<UserImageModel>();
         }
 
         /// <summary>
@@ -19,10 +20,8 @@ namespace NJFairground.Web.DTO.ResponseDto
         public UserImageResponseDto(string requestToken)
             : base(requestToken)
         {
-            this.UserImages = new List<UserImageModel>();
         }
 
         public UserInfoModel UserInfo { get; set; }
-        public List<UserImageModel> UserImages { get; set; }
     }
 }

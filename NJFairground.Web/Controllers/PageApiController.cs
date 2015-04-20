@@ -19,6 +19,7 @@ namespace NJFairground.Web.Controllers
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Xml.Linq;
+    using System.Web;
 
     public class PageApiController : ApiController
     {
@@ -270,16 +271,22 @@ namespace NJFairground.Web.Controllers
                 if (request.Action == CrudAction.Insert)
                 {
                     UserInfoModel user = this._userInfoDataRepository
-                                .GetList(x => x.UserEmail.Equals(request.UserInfo.UserEmail)).FirstOrDefault();
+                        .GetList(x => x.UserEmail.Equals(request.UserInfo.UserEmail)
+                            || x.UserKey.Equals(request.UserInfo.UserKey)).FirstOrDefault();
 
-                    if (user != null)
+                    if (user == null)
                     {
+                        request.UserInfo.StatusId = (int)StatusEnum.Active;
+                        request.UserInfo.CreatedOn = DateTime.Now;
+
                         this._userInfoDataRepository.Insert(request.UserInfo);
                         if (request.UserInfo.UserKey > 0)
                         {
-                            response.UserInfo = user;
+                            response.UserInfo = request.UserInfo;
                         }
                     }
+                    else
+                        response.UserInfo = user;
 
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
@@ -294,55 +301,52 @@ namespace NJFairground.Web.Controllers
         /// <summary>
         /// Adds the page to fevorite.
         /// </summary>
-        /// <param name="page">The page.</param>
+        /// <param name="request">The page.</param>
         /// <returns></returns>
         [HttpPost()]
-        public FavoritePageResponseDto AddPageToFevorite(FavoritePageRequestDto page)
+        public FavoritePageResponseDto AddPageToFevorite(FavoritePageRequestDto request)
         {
-            FavoritePageResponseDto response = new FavoritePageResponseDto(page.RequestToken)
+            FavoritePageResponseDto response = new FavoritePageResponseDto(request.RequestToken)
             {
                 ResponseStatus = RespStatus.Failure.ToString()
             };
             try
             {
-                var userResponse = this.AuthUserForPage(page);
-                if (userResponse.ResponseStatus == RespStatus.Success.ToString()
-                    && page.Action == CrudAction.Insert)
+                var userResponse = this.AuthUserForPage(request);
+                if (userResponse.ResponseStatus == RespStatus.Success.ToString() && userResponse.UserInfo != null
+                    && request.Action == CrudAction.Insert)
                 {
-                    FavoritePageModel favoritePage = this._favoritePageDataRepository
-                        .GetList(x => x.UserKey.Equals(userResponse.UserInfo.UserKey)
-                        && x.PageItemId.Equals(page.PageItemId) && x.StatusId.Equals((int)StatusEnum.Active)).FirstOrDefault();
-
-                    if (favoritePage == null)
+                    if (!userResponse.UserInfo.FavoritePages.IsEmptyCollection() &&
+                        !userResponse.UserInfo.FavoritePages.Any(x => x.UserKey.Equals(userResponse.UserInfo.UserKey)
+                            && x.PageItemId.Equals(request.PageItemId) && x.StatusId.Equals((int)StatusEnum.Active)))
                     {
-                        PageItemModel pageItem = this._pageItemDataRepository.Get(page.PageItemId);
+                        PageItemModel pageItem = this._pageItemDataRepository.Get(request.PageItemId);
                         if (pageItem != null)
                         {
-                            favoritePage = new FavoritePageModel
+                            FavoritePageModel favoritePage = new FavoritePageModel
                             {
                                 PageId = pageItem.PageId,
-                                PageItemId = favoritePage.PageItemId,
-                                UserKey = favoritePage.UserKey,
+                                PageItemId = pageItem.PageItemId,
+                                UserKey = userResponse.UserInfo.UserKey,
                                 StatusId = (int)StatusEnum.Active,
-                                CreatedBy = favoritePage.UserKey,
+                                CreatedBy = userResponse.UserInfo.UserKey,
                                 CreatedOn = DateTime.Now
                             };
                             this._favoritePageDataRepository.Insert(favoritePage);
                             if (favoritePage.FavoritePageId > 0)
                             {
-                                response.UserInfo = userResponse.UserInfo;
-                                response.FavoritePages = GetFavoritePagesByUser(userResponse.UserInfo.UserKey);
-                                response.ResponseStatus = RespStatus.Success.ToString();
-                                return response;
+                                userResponse.UserInfo.FavoritePages.Add(favoritePage);
                             }
                         }
                     }
+                    response.UserInfo = userResponse.UserInfo;
                     response.ResponseStatus = RespStatus.Success.ToString();
+                    return response;
                 }
             }
             catch (Exception ex)
             {
-                ex.ExceptionValueTracker(page);
+                ex.ExceptionValueTracker(request);
             }
             return response;
         }
@@ -350,41 +354,40 @@ namespace NJFairground.Web.Controllers
         /// <summary>
         /// Removes the page from fevorite.
         /// </summary>
-        /// <param name="page">The page.</param>
+        /// <param name="request">The page.</param>
         /// <returns></returns>
         [HttpPost()]
-        public FavoritePageResponseDto RemovePageFromFevorite(FavoritePageRequestDto page)
+        public FavoritePageResponseDto RemovePageFromFevorite(FavoritePageRequestDto request)
         {
-            FavoritePageResponseDto response = new FavoritePageResponseDto(page.RequestToken)
+            FavoritePageResponseDto response = new FavoritePageResponseDto(request.RequestToken)
             {
                 ResponseStatus = RespStatus.Failure.ToString()
             };
             try
             {
-                var userResponse = this.AuthUserForPage(page);
-                if (userResponse.ResponseStatus == RespStatus.Success.ToString()
-                    && page.Action == CrudAction.Delete)
+                var userResponse = this.AuthUserForPage(request);
+                if (userResponse.ResponseStatus == RespStatus.Success.ToString() && userResponse.UserInfo != null
+                    && request.Action == CrudAction.Delete)
                 {
-                    FavoritePageModel favoritePage = this._favoritePageDataRepository
-                        .GetList(x => x.UserKey.Equals(userResponse.UserInfo.UserKey)
-                        && x.PageItemId.Equals(page.PageItemId) && x.StatusId.Equals((int)StatusEnum.Active)).FirstOrDefault();
+                    Func<FavoritePageModel, bool> predicate = (x) => x.UserKey.Equals(userResponse.UserInfo.UserKey)
+                        && x.PageItemId.Equals(request.PageItemId) && x.StatusId.Equals((int)StatusEnum.Active);
 
-                    if (favoritePage != null)
+                    if (!userResponse.UserInfo.FavoritePages.IsEmptyCollection() &&
+                        !userResponse.UserInfo.FavoritePages.Any(predicate))
                     {
+                        FavoritePageModel favoritePage = userResponse.UserInfo.FavoritePages.FirstOrDefault(predicate);
                         favoritePage.StatusId = (int)StatusEnum.Inactive;
                         this._favoritePageDataRepository.Update(favoritePage);
-
-                        response.UserInfo = userResponse.UserInfo;
-                        response.FavoritePages = GetFavoritePagesByUser(userResponse.UserInfo.UserKey);
-                        response.ResponseStatus = RespStatus.Success.ToString();
-                        return response;
+                        userResponse.UserInfo.FavoritePages.RemoveAll(new Predicate<FavoritePageModel>(predicate));
                     }
+                    response.UserInfo = userResponse.UserInfo;
                     response.ResponseStatus = RespStatus.Success.ToString();
+                    return response;
                 }
             }
             catch (Exception ex)
             {
-                ex.ExceptionValueTracker(page);
+                ex.ExceptionValueTracker(request);
             }
             return response;
         }
@@ -392,29 +395,28 @@ namespace NJFairground.Web.Controllers
         /// <summary>
         /// Gets the fevorite pages by user.
         /// </summary>
-        /// <param name="page">The page.</param>
+        /// <param name="request">The page.</param>
         /// <returns></returns>
         [HttpPost()]
-        public FavoritePageResponseDto GetFevoritePagesByUser(FavoritePageRequestDto page)
+        public FavoritePageResponseDto GetFevoritePagesByUser(FavoritePageRequestDto request)
         {
-            FavoritePageResponseDto response = new FavoritePageResponseDto(page.RequestToken)
+            FavoritePageResponseDto response = new FavoritePageResponseDto(request.RequestToken)
             {
                 ResponseStatus = RespStatus.Failure.ToString()
             };
             try
             {
-                var userResponse = this.AuthUserForPage(page);
+                var userResponse = this.AuthUserForPage(request);
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
-                    && page.Action == CrudAction.BulkSelect)
+                    && request.Action == CrudAction.BulkSelect)
                 {
                     response.UserInfo = userResponse.UserInfo;
-                    response.FavoritePages = GetFavoritePagesByUser(userResponse.UserInfo.UserKey);
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
             }
             catch (Exception ex)
             {
-                ex.ExceptionValueTracker(page);
+                ex.ExceptionValueTracker(request);
             }
             return response;
         }
@@ -437,24 +439,29 @@ namespace NJFairground.Web.Controllers
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.Insert)
                 {
-                    if (Request.Content.IsMimeMultipartContent())
+                    if (System.Web.HttpContext.Current.Request.Files != null
+                        && System.Web.HttpContext.Current.Request.Files.Count > 0)
                     {
-                        string imagePath = UploadImage(userResponse.UserInfo.UserKey);
-                        UserImageModel userImage = new UserImageModel
+                        string imagePath = UploadImage(userResponse.UserInfo.UserKey, System.Web.HttpContext.Current.Request.Files.ToPostedFileBase());
+                        if (!string.IsNullOrEmpty(imagePath))
                         {
-                            UserImageUrl = imagePath,
-                            UserKey = userResponse.UserInfo.UserKey,
-                            StatusId = (int)StatusEnum.Active,
-                            CreatedBy = userResponse.UserInfo.UserKey,
-                            CreatedOn = DateTime.Now
-                        };
-                        this._userImageDataRepository.Insert(userImage);
-                        if (userImage.UserImageId > 0)
-                        {
-                            response.UserInfo = userResponse.UserInfo;
-                            response.UserImages = GetImagesByUser(userResponse.UserInfo.UserKey);
-                            response.ResponseStatus = RespStatus.Success.ToString();
-                            return response;
+                            UserImageModel userImage = new UserImageModel
+                            {
+                                UserImageUrl = imagePath,
+                                UserKey = userResponse.UserInfo.UserKey,
+                                StatusId = (int)StatusEnum.Active,
+                                CreatedBy = userResponse.UserInfo.UserKey,
+                                CreatedOn = DateTime.Now
+                            };
+                            this._userImageDataRepository.Insert(userImage);
+                            if (userImage.UserImageId > 0)
+                            {
+                                userImage.UserImageUrl = CommonUtility.ResolveServerUrl(userImage.UserImageUrl, false);
+                                userResponse.UserInfo.UserImages.Add(userImage);
+                                response.UserInfo = userResponse.UserInfo;
+                                response.ResponseStatus = RespStatus.Success.ToString();
+                                return response;
+                            }
                         }
                     }
                 }
@@ -575,40 +582,29 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="userKey">The user key.</param>
         /// <returns></returns>
-        private string UploadImage(int userKey)
+        private string UploadImage(int userKey, List<HttpPostedFileBase> files)
         {
             string finalImagePath = string.Empty;
             try
             {
-                Request.Content.ReadAsMultipartAsync<MultipartMemoryStreamProvider>(new MultipartMemoryStreamProvider())
-                    .ContinueWith((task) =>
+                HttpPostedFileBase uploadedFile = files.FirstOrDefault();
+                uploadedFile.InputStream.Seek(0, SeekOrigin.Begin);
+                using (Image image = Image.FromStream(uploadedFile.InputStream))
                 {
-                    MultipartMemoryStreamProvider provider = task.Result;
-                    foreach (HttpContent content in provider.Contents)
+                    string virtualPath = string.Format("~/Upload/Capture/{0}", userKey);
+                    string filePath = HostingEnvironment.MapPath(virtualPath);
+                    if (!Directory.Exists(filePath))
+                        Directory.CreateDirectory(filePath);
+
+                    string fileName = string.Format("{0:N}_{1}.jpg", Guid.NewGuid(), DateTime.Now.Ticks);
+                    string fullPath = Path.Combine(filePath, fileName);
+
+                    string imagePath = CommonUtility.SetWatermark(image, "@Fairground", filePath, 30, fileName, fullPath);
+                    if (!string.IsNullOrEmpty(imagePath))
                     {
-                        Stream stream = content.ReadAsStreamAsync().Result;
-                        Image image = Image.FromStream(stream);
-                        //var testName = content.Headers.ContentDisposition.Name;
-                        string virtualPath = string.Format("~/Upload/Capture/{0}", userKey);
-                        string filePath = HostingEnvironment.MapPath(virtualPath);
-                        if (!Directory.Exists(filePath))
-                            Directory.CreateDirectory(filePath);
-
-                        string fileName = string.Format("{0:N}_{1}.jpg", Guid.NewGuid(), DateTime.Now.Ticks);
-                        string fullPath = Path.Combine(filePath, fileName);
-
-                        string imagePath = CommonUtility.SetWatermark(image, "@Fairground", filePath, 30, fileName, fullPath);
-                        if (!string.IsNullOrEmpty(imagePath))
-                        {
-                            finalImagePath = Path.Combine(virtualPath, imagePath);
-                        }
-                        //String[] headerValues = (String[])Request.Headers.GetValues("UniqueId");
-                        //String fileName = headerValues[0] + ".jpg";
-                        //String fullPath = Path.Combine(filePath, fileName);
-                        //image.Save(fullPath);
-                       // return string.Empty;
+                        finalImagePath = string.Format("{0}/{1}", virtualPath, imagePath);
                     }
-                });
+                }
 
                 return finalImagePath;
             }

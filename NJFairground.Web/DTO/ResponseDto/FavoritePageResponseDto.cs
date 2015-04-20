@@ -3,7 +3,6 @@ namespace NJFairground.Web.DTO.ResponseDto
 {
     using NJFairground.Web.DTO.Base;
     using NJFairground.Web.Models;
-    using System.Collections.Generic;
 
     public class FavoritePageResponseDto : ResponseBase
     {
@@ -12,7 +11,6 @@ namespace NJFairground.Web.DTO.ResponseDto
         /// </summary>
         public FavoritePageResponseDto()
         {
-            this.FavoritePages = new List<PageItemModel>();
         }
 
         /// <summary>
@@ -22,17 +20,8 @@ namespace NJFairground.Web.DTO.ResponseDto
         public FavoritePageResponseDto(string requestToken)
             : base(requestToken)
         {
-            this.FavoritePages = new List<PageItemModel>();
         }
 
         public UserInfoModel UserInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the favorite pages.
-        /// </summary>
-        /// <value>
-        /// The favorite pages.
-        /// </value>
-        public List<PageItemModel> FavoritePages { get; set; }
     }
 }
