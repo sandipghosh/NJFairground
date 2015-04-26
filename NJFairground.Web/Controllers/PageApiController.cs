@@ -440,7 +440,8 @@ namespace NJFairground.Web.Controllers
                     && request.Action == CrudAction.Insert)
                 {
                     if (System.Web.HttpContext.Current.Request.Files != null
-                        && System.Web.HttpContext.Current.Request.Files.Count > 0)
+                        && System.Web.HttpContext.Current.Request.Files.Count > 0
+                        && userResponse.UserInfo != null)
                     {
                         string imagePath = UploadImage(userResponse.UserInfo.UserKey, System.Web.HttpContext.Current.Request.Files.ToPostedFileBase());
                         if (!string.IsNullOrEmpty(imagePath))
@@ -456,13 +457,144 @@ namespace NJFairground.Web.Controllers
                             this._userImageDataRepository.Insert(userImage);
                             if (userImage.UserImageId > 0)
                             {
-                                userImage.UserImageUrl = CommonUtility.ResolveServerUrl(userImage.UserImageUrl, false);
                                 userResponse.UserInfo.UserImages.Add(userImage);
                                 response.UserInfo = userResponse.UserInfo;
                                 response.ResponseStatus = RespStatus.Success.ToString();
                                 return response;
                             }
                         }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        [HttpPost()]
+        public UserImageResponseDto DeleteUserImage(UserImageRequestDto request)
+        {
+            UserImageResponseDto response = new UserImageResponseDto(request.RequestToken)
+            {
+                ResponseStatus = RespStatus.Failure.ToString()
+            };
+            try
+            {
+                var userResponse = this.AuthUserForImage(request);
+                if (userResponse.ResponseStatus == RespStatus.Success.ToString()
+                    && request.Action == CrudAction.Delete)
+                {
+                    if (request.UserImageId > 0 && userResponse.UserInfo != null)
+                    {
+                        UserImageModel userImage = this._userImageDataRepository.Get(request.UserImageId);
+                        if (userImage != null)
+                        {
+                            userImage.StatusId = (int)StatusEnum.Inactive;
+                            this._userImageDataRepository.Update(userImage);
+                            if (File.Exists(userImage.ImageUrl))
+                            {
+                                File.Delete(userImage.ImageUrl);
+                            }
+                            userResponse.UserInfo.UserImages.RemoveAll(x => x.UserImageId.Equals(request.UserImageId));
+                            response.ResponseStatus = RespStatus.Success.ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        [HttpPost()]
+        public UserImageResponseDto AddImageToFevorite(UserImageRequestDto request)
+        {
+            UserImageResponseDto response = new UserImageResponseDto(request.RequestToken)
+            {
+                ResponseStatus = RespStatus.Failure.ToString()
+            };
+            try
+            {
+                var userResponse = this.AuthUserForImage(request);
+                if (userResponse.ResponseStatus == RespStatus.Success.ToString()
+                    && request.Action == CrudAction.Insert)
+                {
+                    if (request.UserImageId > 0 && userResponse.UserInfo != null)
+                    {
+                        var data = this._favoriteImageDataRepository.GetList
+                            (x => x.UserImageId == request.UserImageId).FirstOrDefault();
+
+                        if (data == null)
+                        {
+                            FavoriteImageModel favoriteImage = new FavoriteImageModel()
+                            {
+                                UserImageId = request.UserImageId,
+                                StatusId = (int)StatusEnum.Active,
+                                CreatedBy = userResponse.UserInfo.UserKey,
+                                CreatedOn = DateTime.Now
+                            };
+
+                            this._favoriteImageDataRepository.Insert(favoriteImage);
+                            if (favoriteImage.FavoriteImageId > 0)
+                            {
+                                userResponse.UserInfo.UserImages.ForEach(x =>
+                                {
+                                    if (x.UserImageId == request.UserImageId && x.UserKey == userResponse.UserInfo.UserKey)
+                                    {
+                                        x.IsFavorite = true;
+                                        return;
+                                    }
+                                });
+                            }
+                        }
+                        response.ResponseStatus = RespStatus.Success.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        [HttpPost()]
+        public UserImageResponseDto RemoveImageFromFevorite(UserImageRequestDto request)
+        {
+            UserImageResponseDto response = new UserImageResponseDto(request.RequestToken)
+            {
+                ResponseStatus = RespStatus.Failure.ToString()
+            };
+            try
+            {
+                var userResponse = this.AuthUserForImage(request);
+                if (userResponse.ResponseStatus == RespStatus.Success.ToString()
+                    && request.Action == CrudAction.Delete)
+                {
+                    if (request.UserImageId > 0 && userResponse.UserInfo != null)
+                    {
+                        var data = this._favoriteImageDataRepository.GetList
+                            (x => x.UserImageId == request.UserImageId).FirstOrDefault();
+
+                        if (data != null)
+                        {
+                            data.StatusId = (int)StatusEnum.Inactive;
+                            this._favoriteImageDataRepository.Update(data);
+
+                            userResponse.UserInfo.UserImages.ForEach(x =>
+                            {
+                                if (x.UserImageId == request.UserImageId && x.UserKey == userResponse.UserInfo.UserKey)
+                                {
+                                    x.IsFavorite = false;
+                                    return;
+                                }
+                            });
+                        }
+                        response.ResponseStatus = RespStatus.Success.ToString();
                     }
                 }
             }
@@ -566,8 +698,6 @@ namespace NJFairground.Web.Controllers
                 List<UserImageModel> userImages = this._userImageDataRepository
                     .GetList(x => x.UserKey.Equals(userKey)
                     && x.StatusId.Equals((int)StatusEnum.Active)).ToList();
-
-                userImages.ForEach(x => x.UserImageUrl = CommonUtility.ResolveServerUrl(x.UserImageUrl, false));
                 return userImages;
             }
             catch (Exception ex)
@@ -599,7 +729,13 @@ namespace NJFairground.Web.Controllers
                     string fileName = string.Format("{0:N}_{1}.jpg", Guid.NewGuid(), DateTime.Now.Ticks);
                     string fullPath = Path.Combine(filePath, fileName);
 
-                    string imagePath = CommonUtility.SetWatermark(image, "@Fairground", filePath, 30, fileName, fullPath);
+                    string watermarkText = CommonUtility.GetAppSetting<string>("WatermarkText");
+                    string watermarkImage = CommonUtility.GetAppSetting<string>("WatermarkImage");
+
+                    string imagePath = CommonUtility.SetWatermarkTextWithImage
+                        (image, watermarkText, HostingEnvironment.MapPath(string.Format("~/Styles/Images/{0}", watermarkImage)),
+                        filePath, 30, fileName, fullPath);
+
                     if (!string.IsNullOrEmpty(imagePath))
                     {
                         finalImagePath = string.Format("{0}/{1}", virtualPath, imagePath);
