@@ -344,7 +344,7 @@ namespace NJFairground.Web.Utilities
             try
             {
                 Image imgPhoto = Image.FromFile(filePath); //byteArrayToImage(byteArray);
-                filePath = SetWatermark(imgPhoto, waterMarkText, targetFolder, opacity, imageName, imagePath);
+                filePath = SetWatermarkText(imgPhoto, waterMarkText, targetFolder, opacity, imageName, imagePath);
                 imgPhoto.Dispose();
                 return filePath;
             }
@@ -365,7 +365,7 @@ namespace NJFairground.Web.Utilities
         /// <param name="imageName">Name of the image.</param>
         /// <param name="imagePath">The image path.</param>
         /// <returns></returns>
-        public static string SetWatermark(Image imgPhoto, string waterMarkText,
+        public static string SetWatermarkText(Image imgPhoto, string waterMarkText,
             string targetFolder, int opacity, string imageName, string imagePath)
         {
             try
@@ -432,7 +432,105 @@ namespace NJFairground.Web.Utilities
             }
             catch (Exception ex)
             {
-                ex.ExceptionValueTracker(imgPhoto, waterMarkText, targetFolder, opacity);
+                ex.ExceptionValueTracker(imgPhoto, waterMarkText,
+                    targetFolder, opacity, imageName, imagePath);
+            }
+            return File.Exists(imagePath) ? imageName : string.Empty;
+        }
+
+        public static string SetWatermarkTextWithImage(Image imgPhoto, string waterMarkText,
+            string waterMarkImagePath, string targetFolder, int opacity, string imageName, string imagePath)
+        {
+            try
+            {
+                int phWidth = imgPhoto.Width;
+                int phHeight = imgPhoto.Height;
+
+                Bitmap bmPhoto = new Bitmap(phWidth, phHeight, PixelFormat.Format24bppRgb);
+                bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
+                Graphics grPhoto = Graphics.FromImage(bmPhoto);
+
+                Image imgWatermark = new Bitmap(waterMarkImagePath);
+                //int wmWidth = (int)Math.Round((imgWatermark.Width * 0.2m), 0);
+                //int wmHeight = (int)Math.Round((imgWatermark.Height * 0.2m), 0);
+                int wmWidth = imgWatermark.Width;
+                int wmHeight = imgWatermark.Height;
+
+                //------------------------------------------------------------
+                //Step #1 - Insert Copyright message
+                //------------------------------------------------------------
+                grPhoto.SmoothingMode = SmoothingMode.AntiAlias;
+                grPhoto.DrawImage(imgPhoto, new Rectangle(0, 0, phWidth, phHeight), 0, 0, phWidth, phHeight, GraphicsUnit.Pixel);
+
+                int[] sizes = new int[] { 16, 14, 12, 10, 8, 6, 4 };
+
+                Font crFont = null;
+                SizeF crSize = new SizeF();
+                for (int i = 0; i <= sizes.Length - 1; i++)
+                {
+                    crFont = new Font("arial", sizes[i], FontStyle.Bold);
+                    crSize = grPhoto.MeasureString(waterMarkText, crFont);
+                    if ((ushort)crSize.Width < (ushort)phWidth) break;
+                }
+
+                int yPixlesFromBottom = (int)(phHeight * .05);
+                float yPosFromBottom = ((phHeight - yPixlesFromBottom) - (crSize.Height / 2));
+                float xCenterOfImg = (phWidth / 2);
+
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+
+                SolidBrush semiTransBrush2 = new SolidBrush(Color.FromArgb(opacity, 0, 0, 0));
+                grPhoto.DrawString(waterMarkText, crFont, semiTransBrush2, new PointF(xCenterOfImg + 1, yPosFromBottom + 1), stringFormat);
+
+                SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(opacity, 255, 255, 255));
+                grPhoto.DrawString(waterMarkText, crFont, semiTransBrush, new PointF(xCenterOfImg, yPosFromBottom), stringFormat);
+
+
+                //------------------------------------------------------------
+                //Step #2 - Insert Watermark image
+                //------------------------------------------------------------
+                Bitmap bmWatermark = new Bitmap(bmPhoto);
+                bmWatermark.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
+                Graphics grWatermark = Graphics.FromImage(bmWatermark);
+
+                ImageAttributes imageAttributes = new ImageAttributes();
+                //ColorMap colorMap = new ColorMap();
+                //colorMap.OldColor = Color.FromArgb(255, 0, 255, 0);
+                //colorMap.NewColor = Color.FromArgb(0, 0, 0, 0);
+                //ColorMap[] remapTable = { colorMap };
+                //imageAttributes.SetRemapTable(remapTable, ColorAdjustType.Bitmap);
+
+                float[][] colorMatrixElements = { 
+					new float[] {1.0f,  0.0f,  0.0f,  0.0f, 0.0f},       
+					new float[] {0.0f,  1.0f,  0.0f,  0.0f, 0.0f},        
+					new float[] {0.0f,  0.0f,  1.0f,  0.0f, 0.0f},        
+					new float[] {0.0f,  0.0f,  0.0f,  0.6f, 0.0f},        
+					new float[] {0.0f,  0.0f,  0.0f,  0.0f, 1.0f}
+                };
+                ColorMatrix wmColorMatrix = new ColorMatrix(colorMatrixElements);
+                imageAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+                int xPosOfWm = ((phWidth - wmWidth) - 20);
+                int yPosOfWm = 20;
+
+                grWatermark.DrawImage(imgWatermark,
+                    new Rectangle(xPosOfWm, yPosOfWm, wmWidth, wmHeight), 0, 0,
+                    wmWidth, wmHeight, GraphicsUnit.Pixel, imageAttributes);
+
+                imgPhoto = bmWatermark;
+                grPhoto.Dispose();
+                grWatermark.Dispose();
+
+                //save new image to file system.
+                imgPhoto.Save(imagePath, ImageFormat.Jpeg);
+                imgPhoto.Dispose();
+                imgWatermark.Dispose();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(imgPhoto, waterMarkText,
+                    waterMarkImagePath, targetFolder, opacity, imageName, imagePath);
             }
             return File.Exists(imagePath) ? imageName : string.Empty;
         }

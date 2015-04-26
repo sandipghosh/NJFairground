@@ -7,5 +7,6 @@ namespace NJFairground.Web.DTO.RequestDto
     public class UserImageRequestDto : RequestBase
     {
         public UserInfoModel UserInfo { get; set; }
+        public int UserImageId { get; set; }
     }
 }
