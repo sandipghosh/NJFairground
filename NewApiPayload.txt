@@ -1,4 +1,4 @@
-﻿Url: http://localhost:5764/api/PageApi/AddPageToFevorite
+Url: http://localhost:5764/api/PageApi/AddPageToFevorite
 Content-Type: application/json
 {
 	"AuthToken":"",

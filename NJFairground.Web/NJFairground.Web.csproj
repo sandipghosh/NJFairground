@@ -105,7 +105,6 @@
     <Reference Include="MultipartDataMediaFormatter, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MultipartDataMediaFormatter_bin\MultipartDataMediaFormatter.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -174,9 +173,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.OData, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Http.OData, Version=5.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.4.0\lib\net45\System.Web.Http.OData.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.5.1\lib\net45\System.Web.Http.OData.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -709,7 +708,6 @@
     <Content Include="Areas\Admin\Styles\Images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Areas\Admin\Styles\jquery-ui-1.10.4.custom.min.css" />
     <Content Include="DBScript\ImageUpload.html" />
-    <Content Include="DBScript\NewApiPayload.txt" />
     <Content Include="DBScript\NJFairground13_07_2014_0138.sql" />
     <Content Include="DBScript\NJFairgroundDB_Scriptwithdata_06_07_2014_1138pm.sql" />
     <Content Include="ErrorLogs\TextFile.txt" />
@@ -796,7 +794,6 @@
     <Content Include="Styles\Images\presentedby-details.png" />
     <Content Include="Styles\Images\presentedby.png" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
-    <Content Include="Styles\Images\watermark.png" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
     <Content Include="Styles\Images\zoomIn.png" />
     <Content Include="Styles\Images\ZoomOut.png" />

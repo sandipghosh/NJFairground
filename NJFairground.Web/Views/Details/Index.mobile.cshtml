@@ -3,13 +3,11 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Home | Sussex County Fairgrounds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     @{Html.RenderPartial("_CommonStyleSection");}
     @{Html.RenderPartial("_CommonScriptSection");}
 </head>
@@ -17,12 +15,11 @@
     <div data-role="page" id="details" data-title="Details | Sussex County Fairgrounds">
         @{Html.RenderPartial("_DetailHeader.mobile");}
         <!-- /header -->
-
         <div id="body-main" role="main" class="ui-content" style="overflow-y: auto; overflow-x: hidden;">
             <h2 class="title">@Model.PageHeaderText</h2>
             <div class="ui-grid-solo inner-page">
                 @if (!string.IsNullOrEmpty(Model.PageItemImage))
-                { 
+                {
                     <img class="inner-banner" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), Model.PageItemImage))' alt="" />
                 }
                 <div class="ui-block-a scroller">
