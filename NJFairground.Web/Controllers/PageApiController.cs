@@ -457,6 +457,7 @@ namespace NJFairground.Web.Controllers
                             this._userImageDataRepository.Insert(userImage);
                             if (userImage.UserImageId > 0)
                             {
+                                
                                 userResponse.UserInfo.UserImages.Add(userImage);
                                 response.UserInfo = userResponse.UserInfo;
                                 response.ResponseStatus = RespStatus.Success.ToString();
@@ -734,7 +735,7 @@ namespace NJFairground.Web.Controllers
 
                     string imagePath = CommonUtility.SetWatermarkTextWithImage
                         (image, watermarkText, HostingEnvironment.MapPath(string.Format("~/Styles/Images/{0}", watermarkImage)),
-                        filePath, 30, fileName, fullPath);
+                        filePath, 80, fileName, fullPath);
 
                     if (!string.IsNullOrEmpty(imagePath))
                     {

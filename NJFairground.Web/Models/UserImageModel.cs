@@ -11,7 +11,7 @@ namespace NJFairground.Web.Models
         public int UserImageId { get; set; }
         public int UserKey { get; set; }
         public string UserImageUrl { get; set; }
-        public string ImageUrl { get { return CommonUtility.ResolveServerUrl(this.UserImageUrl, false); } }
+        public string ImageUrl { get { return CommonUtility.ResolveServerUrl(this.UserImageUrl, false); } set { } }
         public int StatusId { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }

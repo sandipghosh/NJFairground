@@ -52,7 +52,7 @@ namespace NJFairground.Web.MapperConfig
 
                 Mapper.CreateMap<UserImage, UserImageModel>()
                     .ForMember(dest => dest.IsFavorite, opt => opt.MapFrom(src => (src.FavoriteImages.Count > 0)))
-                    .ForMember(dest => dest.UserImageUrl, opt => opt.MapFrom(src => CommonUtility.ResolveServerUrl(src.UserImageUrl, false)))
+                    //.ForMember(dest => dest.UserImageUrl, opt => opt.MapFrom(src => CommonUtility.ResolveServerUrl(src.UserImageUrl, false)))
                     .IgnoreAllNonExisting();
                 Mapper.CreateMap<UserImageModel, UserImage>().IgnoreAllNonExisting();
 

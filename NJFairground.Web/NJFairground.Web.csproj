@@ -794,6 +794,7 @@
     <Content Include="Styles\Images\presentedby-details.png" />
     <Content Include="Styles\Images\presentedby.png" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
+    <Content Include="Styles\Images\watermark.png" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
     <Content Include="Styles\Images\zoomIn.png" />
     <Content Include="Styles\Images\ZoomOut.png" />

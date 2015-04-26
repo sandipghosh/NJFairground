@@ -505,14 +505,14 @@ namespace NJFairground.Web.Utilities
 					new float[] {1.0f,  0.0f,  0.0f,  0.0f, 0.0f},       
 					new float[] {0.0f,  1.0f,  0.0f,  0.0f, 0.0f},        
 					new float[] {0.0f,  0.0f,  1.0f,  0.0f, 0.0f},        
-					new float[] {0.0f,  0.0f,  0.0f,  0.6f, 0.0f},        
+					new float[] {0.0f,  0.0f,  0.0f,  0.9f, 0.0f},        
 					new float[] {0.0f,  0.0f,  0.0f,  0.0f, 1.0f}
                 };
                 ColorMatrix wmColorMatrix = new ColorMatrix(colorMatrixElements);
                 imageAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-                int xPosOfWm = ((phWidth - wmWidth) - 20);
-                int yPosOfWm = 20;
+                int xPosOfWm = ((phWidth - wmWidth) - 10);
+                int yPosOfWm = 10;
 
                 grWatermark.DrawImage(imgWatermark,
                     new Rectangle(xPosOfWm, yPosOfWm, wmWidth, wmHeight), 0, 0,
