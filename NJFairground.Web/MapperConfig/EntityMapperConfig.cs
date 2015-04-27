@@ -2,12 +2,11 @@
 namespace NJFairground.Web.MapperConfig
 {
     using System;
-    using AutoMapper;
     using System.Linq;
+    using AutoMapper;
     using NJFairground.Web.Areas.Admin.Models;
     using NJFairground.Web.Data.Context;
     using NJFairground.Web.Models;
-    using NJFairground.Web.Models.Base;
     using NJFairground.Web.Utilities;
 
     public class EntityMapperConfig : Profile
@@ -34,11 +33,24 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
+                Mapper.CreateMap<Banner, BannerModel>()
+                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+
+                Mapper.CreateMap<BannerItem, BannerItemModel>()
+                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+
+                Mapper.CreateMap<PageBanner, PageBannerModel>()
+                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+
                 Mapper.CreateMap<NJFairground.Web.Data.Context.Page, PageModel>()
-                    .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                    .ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageBannerResolver>())
+                    .IgnoreAllNonExisting();
+                Mapper.CreateMap<PageModel, NJFairground.Web.Data.Context.Page>().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<PageItem, PageItemModel>()
-                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                    .ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageItemBannerResolver>())
+                    .IgnoreAllNonExisting();
+                Mapper.CreateMap<PageItem, PageItemModel>().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<UserInfo, UserInfoModel>()
                     .ForMember(dest => dest.FavoritePages, opt => opt.MapFrom(src =>
@@ -47,8 +59,7 @@ namespace NJFairground.Web.MapperConfig
                         src.UserImages.Where(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList()))
                     .IgnoreAllNonExisting();
 
-                Mapper.CreateMap<UserInfoModel, UserInfo>()
-                   .IgnoreAllNonExisting();
+                Mapper.CreateMap<UserInfoModel, UserInfo>().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<UserImage, UserImageModel>()
                     .ForMember(dest => dest.IsFavorite, opt => opt.MapFrom(src => (src.FavoriteImages.Count > 0)))

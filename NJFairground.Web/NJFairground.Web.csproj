@@ -290,6 +290,12 @@
     <Compile Include="Controllers\SocialDetailsController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Controllers\WhatsNewController.cs" />
+    <Compile Include="Data\Context\Banner.cs">
+      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Context\BannerItem.cs">
+      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Context\BaseData.cs" />
     <Compile Include="Data\Context\Event.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
@@ -318,6 +324,9 @@
     <Compile Include="Data\Context\Page.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Context\PageBanner.cs">
+      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Context\PageHeader.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
@@ -333,12 +342,15 @@
     <Compile Include="Data\Context\UserInfo.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Implementation\BannerDataRepository.cs" />
+    <Compile Include="Data\Implementation\BannerItemDataRepository.cs" />
     <Compile Include="Data\Implementation\Base\DataRepository.cs" />
     <Compile Include="Data\Implementation\Base\QueryDataRepository.cs" />
     <Compile Include="Data\Implementation\Base\UnitOfWork.cs" />
     <Compile Include="Data\Implementation\EventDataRepository.cs" />
     <Compile Include="Data\Implementation\FavoriteImageDataRepository.cs" />
     <Compile Include="Data\Implementation\FavoritePageDataRepository.cs" />
+    <Compile Include="Data\Implementation\PageBannerDataRepository.cs" />
     <Compile Include="Data\Implementation\PageItemDataRepository.cs" />
     <Compile Include="Data\Implementation\PageDataRepository.cs" />
     <Compile Include="Data\Implementation\UserImageDataRepository.cs" />
@@ -348,9 +360,12 @@
     <Compile Include="Data\Interface\Base\IRepository.cs" />
     <Compile Include="Data\Interface\Base\ISql.cs" />
     <Compile Include="Data\Interface\Base\IUnitOfWork.cs" />
+    <Compile Include="Data\Interface\IBannerDataRepository.cs" />
+    <Compile Include="Data\Interface\IBannerItemDataRepository.cs" />
     <Compile Include="Data\Interface\IEventDataRepository.cs" />
     <Compile Include="Data\Interface\IFavoriteImageDataRepository.cs" />
     <Compile Include="Data\Interface\IFavoritePageDataRepository.cs" />
+    <Compile Include="Data\Interface\IPageBannerDataRepository.cs" />
     <Compile Include="Data\Interface\IPageItemDataRepository.cs" />
     <Compile Include="Data\Interface\IPageDataRepository.cs" />
     <Compile Include="Data\Interface\IUserImageDataRepository.cs" />
@@ -358,6 +373,7 @@
     <Compile Include="DTO\Base\CrudAction.cs" />
     <Compile Include="DTO\Base\RequestBase.cs" />
     <Compile Include="DTO\Base\ResponseBase.cs" />
+    <Compile Include="DTO\RequestDto\AppInfoRequestDto.cs" />
     <Compile Include="DTO\RequestDto\FavoritePageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\MapRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageItemRequestDto.cs" />
@@ -365,6 +381,7 @@
     <Compile Include="DTO\RequestDto\RssFeedRequestDto.cs" />
     <Compile Include="DTO\RequestDto\UserAuthenticationRequestDto.cs" />
     <Compile Include="DTO\RequestDto\UserImageRequestDto.cs" />
+    <Compile Include="DTO\ResponseDto\AppInfoResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\FavoritePageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\MapResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageItemResponseDto.cs" />
@@ -377,12 +394,16 @@
     </Compile>
     <Compile Include="MapperConfig\DataServiceLocatorConfig.cs" />
     <Compile Include="MapperConfig\EntityMapperConfig.cs" />
+    <Compile Include="Models\AppInfoModel.cs" />
+    <Compile Include="Models\BannerItemModel.cs" />
+    <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\Base\SafeDisposableBaseClass.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\FavoriteImageModel.cs" />
     <Compile Include="Models\FavoritePageModel.cs" />
     <Compile Include="Models\MapCoordinateModel.cs" />
+    <Compile Include="Models\PageBannerModel.cs" />
     <Compile Include="Models\PageItemModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\RssFeedModel.cs" />

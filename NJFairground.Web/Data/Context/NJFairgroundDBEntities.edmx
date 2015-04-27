@@ -5,6 +5,29 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="NJFairgroundDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="BannerId" />
+          </Key>
+          <Property Name="BannerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BannerItem">
+          <Key>
+            <PropertyRef Name="BannerItemId" />
+          </Key>
+          <Property Name="BannerItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BannerId" Type="int" Nullable="false" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SponsorUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Position" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="EventId" />
@@ -52,7 +75,17 @@
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="PageContent" Type="nvarchar(max)" />
-          <Property Name="PageImage" Type="nvarchar" MaxLength="500" />
+          <Property Name="PageImage" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="PageBanner">
+          <Key>
+            <PropertyRef Name="PageBannerId" />
+          </Key>
+          <Property Name="PageBannerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BannerId" Type="int" Nullable="false" />
+          <Property Name="PageId" Type="int" Nullable="false" />
+          <Property Name="PageItemId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PageHeader">
           <Key>
@@ -121,7 +154,19 @@
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__FavoriteI__UserI__4C6B5938">
+        <Association Name="FK__BannerIte__Banne__30C33EC3">
+          <End Role="Banner" Type="Self.Banner" Multiplicity="1" />
+          <End Role="BannerItem" Type="Self.BannerItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banner">
+              <PropertyRef Name="BannerId" />
+            </Principal>
+            <Dependent Role="BannerItem">
+              <PropertyRef Name="BannerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FavoriteI__UserI__1DB06A4F">
           <End Role="UserImage" Type="Self.UserImage" Multiplicity="1" />
           <End Role="FavoriteImage" Type="Self.FavoriteImage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -133,7 +178,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FavoriteP__PageI__46B27FE2">
+        <Association Name="FK__FavoriteP__PageI__1EA48E88">
           <End Role="Page" Type="Self.Page" Multiplicity="1" />
           <End Role="FavoritePage" Type="Self.FavoritePage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -145,7 +190,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FavoriteP__PageI__47A6A41B">
+        <Association Name="FK__FavoriteP__PageI__1F98B2C1">
           <End Role="PageItem" Type="Self.PageItem" Multiplicity="1" />
           <End Role="FavoritePage" Type="Self.FavoritePage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -157,7 +202,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FavoriteP__UserK__45BE5BA9">
+        <Association Name="FK__FavoriteP__UserK__208CD6FA">
           <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
           <End Role="FavoritePage" Type="Self.FavoritePage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -169,7 +214,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserImage__UserK__40F9A68C">
+        <Association Name="FK__PageBanne__Banne__3864608B">
+          <End Role="Banner" Type="Self.Banner" Multiplicity="1" />
+          <End Role="PageBanner" Type="Self.PageBanner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banner">
+              <PropertyRef Name="BannerId" />
+            </Principal>
+            <Dependent Role="PageBanner">
+              <PropertyRef Name="BannerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PageBanne__PageI__395884C4">
+          <End Role="Page" Type="Self.Page" Multiplicity="1" />
+          <End Role="PageBanner" Type="Self.PageBanner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Page">
+              <PropertyRef Name="PageId" />
+            </Principal>
+            <Dependent Role="PageBanner">
+              <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PageBanne__PageI__3A4CA8FD">
+          <End Role="PageItem" Type="Self.PageItem" Multiplicity="1" />
+          <End Role="PageBanner" Type="Self.PageBanner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PageItem">
+              <PropertyRef Name="PageItemId" />
+            </Principal>
+            <Dependent Role="PageBanner">
+              <PropertyRef Name="PageItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserImage__UserK__2645B050">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="UserImage">
+              <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserImage__UserK__5FB337D6">
           <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
           <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -266,32 +359,55 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="NJFairgroundDBModelStoreContainer">
+          <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BannerItem" EntityType="Self.BannerItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FavoriteImage" EntityType="Self.FavoriteImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FavoritePage" EntityType="Self.FavoritePage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PageBanner" EntityType="Self.PageBanner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageHeader" EntityType="Self.PageHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageItem" EntityType="Self.PageItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageItemDetail" EntityType="Self.PageItemDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserImage" EntityType="Self.UserImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__FavoriteI__UserI__4C6B5938" Association="Self.FK__FavoriteI__UserI__4C6B5938">
+          <AssociationSet Name="FK__BannerIte__Banne__30C33EC3" Association="Self.FK__BannerIte__Banne__30C33EC3">
+            <End Role="Banner" EntitySet="Banner" />
+            <End Role="BannerItem" EntitySet="BannerItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FavoriteI__UserI__1DB06A4F" Association="Self.FK__FavoriteI__UserI__1DB06A4F">
             <End Role="UserImage" EntitySet="UserImage" />
             <End Role="FavoriteImage" EntitySet="FavoriteImage" />
           </AssociationSet>
-          <AssociationSet Name="FK__FavoriteP__PageI__46B27FE2" Association="Self.FK__FavoriteP__PageI__46B27FE2">
+          <AssociationSet Name="FK__FavoriteP__PageI__1EA48E88" Association="Self.FK__FavoriteP__PageI__1EA48E88">
             <End Role="Page" EntitySet="Page" />
             <End Role="FavoritePage" EntitySet="FavoritePage" />
           </AssociationSet>
-          <AssociationSet Name="FK__FavoriteP__PageI__47A6A41B" Association="Self.FK__FavoriteP__PageI__47A6A41B">
+          <AssociationSet Name="FK__FavoriteP__PageI__1F98B2C1" Association="Self.FK__FavoriteP__PageI__1F98B2C1">
             <End Role="PageItem" EntitySet="PageItem" />
             <End Role="FavoritePage" EntitySet="FavoritePage" />
           </AssociationSet>
-          <AssociationSet Name="FK__FavoriteP__UserK__45BE5BA9" Association="Self.FK__FavoriteP__UserK__45BE5BA9">
+          <AssociationSet Name="FK__FavoriteP__UserK__208CD6FA" Association="Self.FK__FavoriteP__UserK__208CD6FA">
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="FavoritePage" EntitySet="FavoritePage" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserImage__UserK__40F9A68C" Association="Self.FK__UserImage__UserK__40F9A68C">
+          <AssociationSet Name="FK__PageBanne__Banne__3864608B" Association="Self.FK__PageBanne__Banne__3864608B">
+            <End Role="Banner" EntitySet="Banner" />
+            <End Role="PageBanner" EntitySet="PageBanner" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PageBanne__PageI__395884C4" Association="Self.FK__PageBanne__PageI__395884C4">
+            <End Role="Page" EntitySet="Page" />
+            <End Role="PageBanner" EntitySet="PageBanner" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PageBanne__PageI__3A4CA8FD" Association="Self.FK__PageBanne__PageI__3A4CA8FD">
+            <End Role="PageItem" EntitySet="PageItem" />
+            <End Role="PageBanner" EntitySet="PageBanner" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserImage__UserK__2645B050" Association="Self.FK__UserImage__UserK__2645B050">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserImage" EntitySet="UserImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserImage__UserK__5FB337D6" Association="Self.FK__UserImage__UserK__5FB337D6">
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="UserImage" EntitySet="UserImage" />
           </AssociationSet>
@@ -386,6 +502,25 @@
             <End Role="UserInfo" EntitySet="UserInfoes" />
             <End Role="UserImage" EntitySet="UserImages" />
           </AssociationSet>
+          <EntitySet Name="Banners" EntityType="NJFairgroundDBModel.Banner" />
+          <EntitySet Name="BannerItems" EntityType="NJFairgroundDBModel.BannerItem" />
+          <EntitySet Name="PageBanners" EntityType="NJFairgroundDBModel.PageBanner" />
+          <AssociationSet Name="FK__BannerIte__Banne__30C33EC3" Association="NJFairgroundDBModel.FK__BannerIte__Banne__30C33EC3">
+            <End Role="Banner" EntitySet="Banners" />
+            <End Role="BannerItem" EntitySet="BannerItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PageBanne__Banne__3864608B" Association="NJFairgroundDBModel.FK__PageBanne__Banne__3864608B">
+            <End Role="Banner" EntitySet="Banners" />
+            <End Role="PageBanner" EntitySet="PageBanners" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PageBanne__PageI__395884C4" Association="NJFairgroundDBModel.FK__PageBanne__PageI__395884C4">
+            <End Role="Page" EntitySet="Pages" />
+            <End Role="PageBanner" EntitySet="PageBanners" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PageBanne__PageI__3A4CA8FD" Association="NJFairgroundDBModel.FK__PageBanne__PageI__3A4CA8FD">
+            <End Role="PageItem" EntitySet="PageItems" />
+            <End Role="PageBanner" EntitySet="PageBanners" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -441,6 +576,7 @@
           <NavigationProperty Name="Events" Relationship="NJFairgroundDBModel.FK_Event_PageItem" FromRole="PageItem" ToRole="Event" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="PageItem" ToRole="Page" />
           <NavigationProperty Name="FavoritePages" Relationship="NJFairgroundDBModel.FK__FavoriteP__PageI__47A6A41B" FromRole="PageItem" ToRole="FavoritePage" />
+          <NavigationProperty Name="PageBanners" Relationship="NJFairgroundDBModel.FK__PageBanne__PageI__3A4CA8FD" FromRole="PageItem" ToRole="PageBanner" />
         </EntityType>
         <EntityType Name="PageItemDetail">
           <Key>
@@ -503,12 +639,13 @@
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" a:StoreGeneratedPattern="Computed" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="PageContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PageImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PageImage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Events" Relationship="NJFairgroundDBModel.FK_Event_Page" FromRole="Page" ToRole="Event" />
           <NavigationProperty Name="PageHeaders" Relationship="NJFairgroundDBModel.FK_PageHeader_Page" FromRole="Page" ToRole="PageHeader" />
           <NavigationProperty Name="PageItems" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="Page" ToRole="PageItem" />
           <NavigationProperty Name="PageItemDetails" Relationship="NJFairgroundDBModel.FK_PageItemDetail_Page" FromRole="Page" ToRole="PageItemDetail" />
           <NavigationProperty Name="FavoritePages" Relationship="NJFairgroundDBModel.FK__FavoriteP__PageI__46B27FE2" FromRole="Page" ToRole="FavoritePage" />
+          <NavigationProperty Name="PageBanners" Relationship="NJFairgroundDBModel.FK__PageBanne__PageI__395884C4" FromRole="Page" ToRole="PageBanner" />
         </EntityType>
         <Association Name="FK_Event_Page">
           <End Type="NJFairgroundDBModel.Page" Role="Page" Multiplicity="1" />
@@ -671,6 +808,93 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="BannerId" />
+          </Key>
+          <Property Name="BannerId" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BannerItems" Relationship="NJFairgroundDBModel.FK__BannerIte__Banne__30C33EC3" FromRole="Banner" ToRole="BannerItem" />
+          <NavigationProperty Name="PageBanners" Relationship="NJFairgroundDBModel.FK__PageBanne__Banne__3864608B" FromRole="Banner" ToRole="PageBanner" />
+        </EntityType>
+        <EntityType Name="BannerItem">
+          <Key>
+            <PropertyRef Name="BannerItemId" />
+          </Key>
+          <Property Name="BannerItemId" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="BannerId" Type="Int32" Nullable="false" />
+          <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SponsorUrl" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Banner" Relationship="NJFairgroundDBModel.FK__BannerIte__Banne__30C33EC3" FromRole="BannerItem" ToRole="Banner" />
+        </EntityType>
+        <EntityType Name="PageBanner">
+          <Key>
+            <PropertyRef Name="PageBannerId" />
+          </Key>
+          <Property Name="PageBannerId" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="BannerId" Type="Int32" Nullable="false" />
+          <Property Name="PageId" Type="Int32" Nullable="false" />
+          <Property Name="PageItemId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Banner" Relationship="NJFairgroundDBModel.FK__PageBanne__Banne__3864608B" FromRole="PageBanner" ToRole="Banner" />
+          <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK__PageBanne__PageI__395884C4" FromRole="PageBanner" ToRole="Page" />
+          <NavigationProperty Name="PageItem" Relationship="NJFairgroundDBModel.FK__PageBanne__PageI__3A4CA8FD" FromRole="PageBanner" ToRole="PageItem" />
+        </EntityType>
+        <Association Name="FK__BannerIte__Banne__30C33EC3">
+          <End Type="NJFairgroundDBModel.Banner" Role="Banner" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.BannerItem" Role="BannerItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banner">
+              <PropertyRef Name="BannerId" />
+            </Principal>
+            <Dependent Role="BannerItem">
+              <PropertyRef Name="BannerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PageBanne__Banne__3864608B">
+          <End Type="NJFairgroundDBModel.Banner" Role="Banner" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.PageBanner" Role="PageBanner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banner">
+              <PropertyRef Name="BannerId" />
+            </Principal>
+            <Dependent Role="PageBanner">
+              <PropertyRef Name="BannerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PageBanne__PageI__395884C4">
+          <End Type="NJFairgroundDBModel.Page" Role="Page" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.PageBanner" Role="PageBanner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Page">
+              <PropertyRef Name="PageId" />
+            </Principal>
+            <Dependent Role="PageBanner">
+              <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PageBanne__PageI__3A4CA8FD">
+          <End Type="NJFairgroundDBModel.PageItem" Role="PageItem" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.PageBanner" Role="PageBanner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PageItem">
+              <PropertyRef Name="PageItemId" />
+            </Principal>
+            <Dependent Role="PageBanner">
+              <PropertyRef Name="PageItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -799,6 +1023,42 @@
                 <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Banners">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.Banner">
+              <MappingFragment StoreEntitySet="Banner">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="BannerId" ColumnName="BannerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BannerItems">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.BannerItem">
+              <MappingFragment StoreEntitySet="BannerItem">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="SponsorUrl" ColumnName="SponsorUrl" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="BannerId" ColumnName="BannerId" />
+                <ScalarProperty Name="BannerItemId" ColumnName="BannerItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PageBanners">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.PageBanner">
+              <MappingFragment StoreEntitySet="PageBanner">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="BannerId" ColumnName="BannerId" />
+                <ScalarProperty Name="PageBannerId" ColumnName="PageBannerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

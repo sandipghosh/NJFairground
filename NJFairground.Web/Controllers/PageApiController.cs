@@ -2,24 +2,23 @@
 
 namespace NJFairground.Web.Controllers
 {
-    using NJFairground.Web.Data.Interface;
-    using NJFairground.Web.DTO.Base;
-    using NJFairground.Web.DTO.RequestDto;
-    using NJFairground.Web.DTO.ResponseDto;
-    using NJFairground.Web.Models;
-    using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Net.Http;
     using System.ServiceModel.Syndication;
+    using System.Web;
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Xml.Linq;
-    using System.Web;
+    using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.DTO.Base;
+    using NJFairground.Web.DTO.RequestDto;
+    using NJFairground.Web.DTO.ResponseDto;
+    using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities;
 
     public class PageApiController : ApiController
     {
@@ -45,6 +44,33 @@ namespace NJFairground.Web.Controllers
             this._userImageDataRepository = userImageDataRepository;
         }
 
+        [HttpPost()]
+        public AppInfoResponseDto GetAppInfo(AppInfoRequestDto request)
+        {
+            AppInfoResponseDto response = InitiateResponse<AppInfoRequestDto, AppInfoResponseDto>(request);
+            try
+            {
+                if (request.Action == CrudAction.Select)
+                {
+                    AppInfoModel appInfo = new AppInfoModel
+                    {
+                        FairName = CommonUtility.GetAppSetting<string>("FairName"),
+                        FairYear = CommonUtility.GetAppSetting<string>("FairYear"),
+                        FairVenue = CommonUtility.GetAppSetting<string>("FairVenue"),
+                        FairCatchline = CommonUtility.GetAppSetting<string>("FairCatchline"),
+                        FairSubname = CommonUtility.GetAppSetting<string>("FairSubname")
+                    };
+                    response.AppInfo = appInfo;
+                    response.ResponseStatus = RespStatus.Success.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
         /// <summary>
         /// Gets the page.
         /// </summary>
@@ -53,10 +79,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public PageResponseDto GetPage(PageRequestDto request)
         {
-            PageResponseDto response = new PageResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            PageResponseDto response = InitiateResponse<PageRequestDto, PageResponseDto>(request);
             try
             {
                 if (request.PageId > 0)
@@ -81,10 +104,11 @@ namespace NJFairground.Web.Controllers
                     {
                         if (request.ItemCount > 0 && request.ItemIndex > 0)
                             response.Pages = this._pageDataRepository
-                                .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+                                .GetList(request.ItemIndex, request.ItemCount, 
+                                x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
                         else
                             response.Pages = this._pageDataRepository
-                                .GetList(request.ItemIndex, request.ItemCount, x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+                                .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
 
                         response.ResponseStatus = RespStatus.Success.ToString();
                     }
@@ -105,10 +129,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public PageItemResponseDto GetPageItem(PageItemRequestDto request)
         {
-            PageItemResponseDto response = new PageItemResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            PageItemResponseDto response = InitiateResponse<PageItemRequestDto, PageItemResponseDto>(request);
             try
             {
                 if (request.PageItemId > 0)
@@ -125,6 +146,7 @@ namespace NJFairground.Web.Controllers
                     else
                         response.PageItems = this._pageItemDataRepository.GetList(x => x.StatusId.Equals((int)StatusEnum.Active)
                             && x.PageId.Equals(request.PageId)).ToList();
+
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
                 else if (request.Action == CrudAction.BulkSelect)
@@ -142,10 +164,10 @@ namespace NJFairground.Web.Controllers
                     {
                         if (request.ItemCount > 0 && request.ItemIndex > 0)
                             response.PageItems = this._pageItemDataRepository
-                                .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+                                .GetList(request.ItemIndex, request.ItemCount, x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
                         else
                             response.PageItems = this._pageItemDataRepository
-                                .GetList(request.ItemIndex, request.ItemCount, x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+                                .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
                     }
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
@@ -178,10 +200,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public RssFeedResponseDto GetMediaFeed(RssFeedRequestDto request)
         {
-            RssFeedResponseDto response = new RssFeedResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            RssFeedResponseDto response = InitiateResponse<RssFeedRequestDto, RssFeedResponseDto>(request);
             try
             {
                 if (request.Action == CrudAction.BulkSelect)
@@ -262,10 +281,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public UserAuthenticationResponseDto AuthenticateUser(UserAuthenticationRequestDto request)
         {
-            UserAuthenticationResponseDto response = new UserAuthenticationResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            UserAuthenticationResponseDto response = InitiateResponse<UserAuthenticationRequestDto, UserAuthenticationResponseDto>(request);
             try
             {
                 if (request.Action == CrudAction.Insert)
@@ -306,10 +322,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public FavoritePageResponseDto AddPageToFevorite(FavoritePageRequestDto request)
         {
-            FavoritePageResponseDto response = new FavoritePageResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            FavoritePageResponseDto response = InitiateResponse<FavoritePageRequestDto, FavoritePageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForPage(request);
@@ -359,10 +372,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public FavoritePageResponseDto RemovePageFromFevorite(FavoritePageRequestDto request)
         {
-            FavoritePageResponseDto response = new FavoritePageResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            FavoritePageResponseDto response = InitiateResponse<FavoritePageRequestDto, FavoritePageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForPage(request);
@@ -400,10 +410,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public FavoritePageResponseDto GetFevoritePagesByUser(FavoritePageRequestDto request)
         {
-            FavoritePageResponseDto response = new FavoritePageResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            FavoritePageResponseDto response = InitiateResponse<FavoritePageRequestDto, FavoritePageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForPage(request);
@@ -429,10 +436,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public UserImageResponseDto AddUserImage(UserImageRequestDto request)
         {
-            UserImageResponseDto response = new UserImageResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForImage(request);
@@ -457,7 +461,7 @@ namespace NJFairground.Web.Controllers
                             this._userImageDataRepository.Insert(userImage);
                             if (userImage.UserImageId > 0)
                             {
-                                
+
                                 userResponse.UserInfo.UserImages.Add(userImage);
                                 response.UserInfo = userResponse.UserInfo;
                                 response.ResponseStatus = RespStatus.Success.ToString();
@@ -477,10 +481,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public UserImageResponseDto DeleteUserImage(UserImageRequestDto request)
         {
-            UserImageResponseDto response = new UserImageResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForImage(request);
@@ -514,10 +515,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public UserImageResponseDto AddImageToFevorite(UserImageRequestDto request)
         {
-            UserImageResponseDto response = new UserImageResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForImage(request);
@@ -566,10 +564,7 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public UserImageResponseDto RemoveImageFromFevorite(UserImageRequestDto request)
         {
-            UserImageResponseDto response = new UserImageResponseDto(request.RequestToken)
-            {
-                ResponseStatus = RespStatus.Failure.ToString()
-            };
+            UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForImage(request);
@@ -750,6 +745,15 @@ namespace NJFairground.Web.Controllers
                 ex.ExceptionValueTracker(userKey);
             }
             return string.Empty;
+        }
+
+        private TOut InitiateResponse<TIn, TOut>(TIn request)
+            where TIn : RequestBase
+            where TOut : ResponseBase, new()
+        {
+            TOut response = (TOut)Activator.CreateInstance(typeof(TOut), new object[] { request.RequestToken });
+            response.ResponseStatus = RespStatus.Failure.ToString();
+            return response;
         }
     }
 }

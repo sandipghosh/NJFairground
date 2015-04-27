@@ -20,6 +20,7 @@ namespace NJFairground.Web.Data.Context
             this.PageItemDetails = new HashSet<PageItemDetail>();
             this.Events = new HashSet<Event>();
             this.FavoritePages = new HashSet<FavoritePage>();
+            this.PageBanners = new HashSet<PageBanner>();
         }
     
         public int PageItemId { get; set; }
@@ -42,5 +43,6 @@ namespace NJFairground.Web.Data.Context
         public virtual ICollection<Event> Events { get; set; }
         public virtual Page Page { get; set; }
         public virtual ICollection<FavoritePage> FavoritePages { get; set; }
+        public virtual ICollection<PageBanner> PageBanners { get; set; }
     }
 }
