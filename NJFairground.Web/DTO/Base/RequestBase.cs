@@ -33,7 +33,7 @@ namespace NJFairground.Web.DTO.Base
         public string Filter
         {
             get { return filter; }
-            set { this.filter = this.ProcessFilter(value); }
+            set { this.filter = value; }
         }
 
         public int ItemIndex { get; set; }
@@ -48,11 +48,8 @@ namespace NJFairground.Web.DTO.Base
         {
             if (!string.IsNullOrEmpty(this.filter))
             {
-                XElement xFilter = XElement.Parse(this.filter);
-                NJFairground.Web.Utilities.Expression.ExpressionSerializer expressionSpecification
-                    = new NJFairground.Web.Utilities.Expression.ExpressionSerializer();
-
-                return expressionSpecification.Deserialize<Func<T, bool>>(xFilter);
+                return NJFairground.Web.Utilities.CommonUtility
+                    .GetLamdaExpressionFromFilter<T>(this.filter);
             }
             return null;
         }
