@@ -50,7 +50,7 @@ namespace NJFairground.Web.MapperConfig
                 Mapper.CreateMap<PageItem, PageItemModel>()
                     .ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageItemBannerResolver>())
                     .IgnoreAllNonExisting();
-                Mapper.CreateMap<PageItem, PageItemModel>().IgnoreAllNonExisting();
+                Mapper.CreateMap<PageItemModel, PageItem>().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<UserInfo, UserInfoModel>()
                     .ForMember(dest => dest.FavoritePages, opt => opt.MapFrom(src =>

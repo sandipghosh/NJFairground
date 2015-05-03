@@ -2,6 +2,12 @@
 
 namespace NJFairground.Web.Controllers
 {
+    using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.DTO.Base;
+    using NJFairground.Web.DTO.RequestDto;
+    using NJFairground.Web.DTO.ResponseDto;
+    using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
@@ -13,12 +19,6 @@ namespace NJFairground.Web.Controllers
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Xml.Linq;
-    using NJFairground.Web.Data.Interface;
-    using NJFairground.Web.DTO.Base;
-    using NJFairground.Web.DTO.RequestDto;
-    using NJFairground.Web.DTO.ResponseDto;
-    using NJFairground.Web.Models;
-    using NJFairground.Web.Utilities;
 
     public class PageApiController : ApiController
     {

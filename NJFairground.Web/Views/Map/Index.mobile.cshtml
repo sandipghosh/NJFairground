@@ -9,16 +9,9 @@
 }
 @section PageStyle{
     @Html.RenderStyles("~/Styles/MapStyle")
-    @*<link href='@Url.Content("~/Styles/litetooltip.min.css")' type="text/css" rel="stylesheet" />
-        <style type="text/css">
-
-        </style>*@
 }
 @section PageScript{
     @Html.RenderScripts("~/Scripts/MapScript")
-    @*<script type="text/javascript" src='@Url.Content("~/Scripts/LiteTooltip.js")'></script>
-        <script type="text/javascript" src='@Url.Content("~/Scripts/e-smart-zoom-jquery.js")'></script>*@
-
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
         $(document).ready(function () {
