@@ -826,6 +826,11 @@
     <Content Include="Styles\litetooltip.min.css" />
     <Content Include="Upload\banner-horseshow.jpg" />
     <Content Include="Upload\banner-promote.jpg" />
+    <Content Include="Upload\Banner\1\87d60272f6ef42d29fd7fcb8c04882ea.jpg" />
+    <Content Include="Upload\Banner\1\9aa6ce54eaf54127837b432489cf5bf9.jpg" />
+    <Content Include="Upload\Banner\1\0d26dcbed51242eb8e10de9687076de1.jpg" />
+    <Content Include="Upload\Banner\1\2e4b7302d898453f82afa0164a763a60.jpg" />
+    <Content Include="Upload\Banner\1\ce538e859bc14edfbd23d58dc601cd05.jpg" />
     <Content Include="Upload\beer_tent.jpg" />
     <Content Include="Upload\Carnival 1.jpg" />
     <Content Include="Upload\chicks.jpg" />

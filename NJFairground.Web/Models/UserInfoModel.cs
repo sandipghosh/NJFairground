@@ -2,9 +2,10 @@
 
 namespace NJFairground.Web.Models
 {
+    using Newtonsoft.Json;
+    using NJFairground.Web.Models.Base;
     using System;
     using System.Collections.Generic;
-    using NJFairground.Web.Models.Base;
 
     public class UserInfoModel : BaseModel
     {
@@ -19,7 +20,9 @@ namespace NJFairground.Web.Models
         public string UserEmail { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [JsonIgnore]
         public int StatusId { get; set; }
+        [JsonIgnore]
         public DateTime CreatedOn { get; set; }
 
         public List<UserImageModel> UserImages { get; set; }

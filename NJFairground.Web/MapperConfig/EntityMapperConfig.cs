@@ -37,7 +37,9 @@ namespace NJFairground.Web.MapperConfig
                    .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<BannerItem, BannerItemModel>()
-                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => CommonUtility.ResolveServerUrl(src.ImageUrl, false)))
+                    .IgnoreAllNonExisting();
+                Mapper.CreateMap<BannerItemModel, BannerItem>().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<PageBanner, PageBannerModel>()
                    .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
