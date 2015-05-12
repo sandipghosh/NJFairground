@@ -1,0 +1,15 @@
+1. PageApiController.cs
+2. Web.config
+3. CommonUtility.cs
+4. UserImageRequestDto.cs
+5. UserImageModel.cs
+
+
+D:\PROJECTS\Inplay-20\NJFairground-master\NJFairground.Web\Views\Details\Index.mobile.cshtml(35):            <span class="presented-by">
+D:\PROJECTS\Inplay-20\NJFairground-master\NJFairground.Web\Views\EventDetails\Index.mobile.cshtml(33):            <span class="presented-by">
+D:\PROJECTS\Inplay-20\NJFairground-master\NJFairground.Web\Views\Fair\Index.mobile.cshtml(102):            <span class="presented-by">
+D:\PROJECTS\Inplay-20\NJFairground-master\NJFairground.Web\Views\Shared\_LayoutPage.mobile.cshtml(27):            <span class="presented-by">
+D:\PROJECTS\Inplay-20\NJFairground-master\NJFairground.Web\Views\SocialDetails\Index.mobile.cshtml(37):            <span class="presented-by">
+
+
+

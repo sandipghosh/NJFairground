@@ -59,3 +59,49 @@ Content-Type: application/json
 	},
 	"Action":1
 }
+
+
+For Facebook
+Url: http://104.238.116.228/api/PageApi/GetMediaFeed
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":8,
+	"FeedRequestFor":1
+}
+
+For Twitter
+Url: http://104.238.116.228/api/PageApi/GetMediaFeed
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":8,
+	"FeedRequestFor":2
+}
+
+For Pinterest
+Url: http://104.238.116.228/api/PageApi/GetMediaFeed
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":8,
+	"FeedRequestFor":3
+}
+
+For Instagram
+Url: http://104.238.116.228/api/PageApi/GetMediaFeed
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":8,
+	"FeedRequestFor":4
+}
+
+
+
+
+
