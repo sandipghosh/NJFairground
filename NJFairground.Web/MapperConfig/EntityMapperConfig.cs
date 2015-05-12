@@ -45,12 +45,12 @@ namespace NJFairground.Web.MapperConfig
                    .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<NJFairground.Web.Data.Context.Page, PageModel>()
-                    .ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageBannerResolver>())
+                    //.ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageBannerResolver>())
                     .IgnoreAllNonExisting();
                 Mapper.CreateMap<PageModel, NJFairground.Web.Data.Context.Page>().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<PageItem, PageItemModel>()
-                    .ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageItemBannerResolver>())
+                    //.ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageItemBannerResolver>())
                     .IgnoreAllNonExisting();
                 Mapper.CreateMap<PageItemModel, PageItem>().IgnoreAllNonExisting();
 

@@ -12,5 +12,8 @@ namespace NJFairground.Web.DTO.RequestDto
         }
 
         public int PageId { get; set; }
+
+        private bool _RespondWithBanner = false;
+        public bool RespondWithBanner { get { return _RespondWithBanner; } set { _RespondWithBanner = value; } }
     }
 }

@@ -2,10 +2,9 @@
 
 namespace NJFairground.Web.Models
 {
-    using System;
-    using NJFairground.Web.Models.Base;
-    using NJFairground.Web.Utilities;
     using Newtonsoft.Json;
+    using NJFairground.Web.Models.Base;
+    using System;
 
     public class BannerItemModel : BaseModel
     {

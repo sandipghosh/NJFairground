@@ -22,7 +22,10 @@ namespace NJFairground.Web.Models
         {
             get
             {
-                return string.IsNullOrEmpty(this.PageItemImage) ? "" : CommonUtility.ResolveServerUrl(string.Format("{0}{1}",
+                return string.IsNullOrEmpty(this.PageItemImage) ?
+                    CommonUtility.ResolveServerUrl("~/Styles/Images/logo_nj.png", false)
+                    : 
+                    CommonUtility.ResolveServerUrl(string.Format("{0}{1}",
                     CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), this.PageItemImage), false);
             }
         }
