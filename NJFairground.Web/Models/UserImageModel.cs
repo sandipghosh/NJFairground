@@ -13,6 +13,7 @@ namespace NJFairground.Web.Models
         public int UserImageId { get; set; }
         [JsonIgnore]
         public int UserKey { get; set; }
+        [JsonIgnore]
         public string UserImageUrl { get; set; }
         public string ImageUrl { get { return CommonUtility.ResolveServerUrl(this.UserImageUrl, false); } set { } }
         [JsonIgnore]

@@ -19,6 +19,7 @@ namespace NJFairground.Web.Models
         public string PageContent { get; set; }
         public string PageImage { get; set; }
 
+        [JsonIgnore]
         public BannerModel PageBanner { get; set; }
 
         public string PageImageUrl

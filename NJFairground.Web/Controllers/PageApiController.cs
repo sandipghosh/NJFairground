@@ -88,7 +88,6 @@ namespace NJFairground.Web.Controllers
             PageResponseDto response = InitiateResponse<PageRequestDto, PageResponseDto>(request);
             try
             {
-                //IncludeBannerForPage(request.RespondWithBanner);
                 if (request.PageId > 0)
                 {
                     response.Page = this._pageDataRepository.Get(request.PageId);
@@ -139,7 +138,6 @@ namespace NJFairground.Web.Controllers
             PageItemResponseDto response = InitiateResponse<PageItemRequestDto, PageItemResponseDto>(request);
             try
             {
-                //IncludeBannerForPage(request.RespondWithBanner);
                 if (request.PageItemId > 0)
                 {
                     response.PageItem = this._pageItemDataRepository.Get(request.PageItemId);
@@ -149,11 +147,10 @@ namespace NJFairground.Web.Controllers
                 {
                     if (request.ItemCount > 0 && request.ItemIndex > 0)
                         response.PageItems = this._pageItemDataRepository.GetList(request.ItemIndex, request.ItemCount,
-                            x => x.StatusId.Equals((int)StatusEnum.Active)
-                            && x.PageId.Equals(request.PageId)).ToList();
+                            x => x.StatusId.Equals((int)StatusEnum.Active) && x.PageId.Equals(request.PageId), x => x.ItemOrder, true).ToList();
                     else
                         response.PageItems = this._pageItemDataRepository.GetList(x => x.StatusId.Equals((int)StatusEnum.Active)
-                            && x.PageId.Equals(request.PageId)).ToList();
+                            && x.PageId.Equals(request.PageId), x => x.ItemOrder, true).ToList();
 
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
@@ -162,20 +159,20 @@ namespace NJFairground.Web.Controllers
                     if (!string.IsNullOrEmpty(request.Filter))
                     {
                         if (request.ItemCount > 0 && request.ItemIndex > 0)
-                            response.PageItems = this._pageItemDataRepository
-                                .GetList(request.ItemIndex, request.ItemCount, request.GetExpression<PageItemModel>()).ToList();
+                            response.PageItems = this._pageItemDataRepository.GetList(request.ItemIndex,
+                                request.ItemCount, request.GetExpression<PageItemModel>(), x => x.ItemOrder, true).ToList();
                         else
                             response.PageItems = this._pageItemDataRepository
-                                .GetList(request.GetExpression<PageItemModel>()).ToList();
+                                .GetList(request.GetExpression<PageItemModel>(), x => x.ItemOrder, true).ToList();
                     }
                     else
                     {
                         if (request.ItemCount > 0 && request.ItemIndex > 0)
-                            response.PageItems = this._pageItemDataRepository
-                                .GetList(request.ItemIndex, request.ItemCount, x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+                            response.PageItems = this._pageItemDataRepository.GetList(request.ItemIndex, request.ItemCount,
+                                x => x.StatusId.Equals((int)StatusEnum.Active), x => x.ItemOrder, true).ToList();
                         else
-                            response.PageItems = this._pageItemDataRepository
-                                .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+                            response.PageItems = this._pageItemDataRepository.GetList(x => x.StatusId.Equals((int)StatusEnum.Active),
+                                x => x.ItemOrder, true).ToList();
                     }
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
@@ -634,7 +631,7 @@ namespace NJFairground.Web.Controllers
                             && x.IsDefault == true).FirstOrDefault();
                         response.Banner = banner;
                     }
-                    response.ResponseStatus = RespStatus.Success.ToString(); 
+                    response.ResponseStatus = RespStatus.Success.ToString();
                 }
             }
             catch (Exception ex)
@@ -796,19 +793,6 @@ namespace NJFairground.Web.Controllers
             TOut response = (TOut)Activator.CreateInstance(typeof(TOut), new object[] { request.RequestToken });
             response.ResponseStatus = RespStatus.Failure.ToString();
             return response;
-        }
-
-        private void IncludeBannerForPage(bool include)
-        {
-            if (include)
-            {
-                AutoMapper.Mapper.CreateMap<NJFairground.Web.Data.Context.Page, PageModel>()
-                    .ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageBannerResolver>());
-
-                AutoMapper.Mapper.CreateMap<NJFairground.Web.Data.Context.PageItem, PageItemModel>()
-                    .ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageItemBannerResolver>());
-            }
-
         }
     }
 }

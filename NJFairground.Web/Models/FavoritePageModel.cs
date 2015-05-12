@@ -12,7 +12,9 @@ namespace NJFairground.Web.Models
         public int FavoritePageId { get; set; }
         [JsonIgnore]
         public int UserKey { get; set; }
+        [JsonIgnore]
         public int PageId { get; set; }
+        [JsonIgnore]
         public int PageItemId { get; set; }
         [JsonIgnore]
         public int StatusId { get; set; }
