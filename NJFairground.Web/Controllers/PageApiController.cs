@@ -2,6 +2,12 @@
 
 namespace NJFairground.Web.Controllers
 {
+    using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.DTO.Base;
+    using NJFairground.Web.DTO.RequestDto;
+    using NJFairground.Web.DTO.ResponseDto;
+    using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
@@ -13,12 +19,6 @@ namespace NJFairground.Web.Controllers
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Xml.Linq;
-    using NJFairground.Web.Data.Interface;
-    using NJFairground.Web.DTO.Base;
-    using NJFairground.Web.DTO.RequestDto;
-    using NJFairground.Web.DTO.ResponseDto;
-    using NJFairground.Web.Models;
-    using NJFairground.Web.Utilities;
 
     public class PageApiController : ApiController
     {
@@ -31,6 +31,17 @@ namespace NJFairground.Web.Controllers
         private readonly IBannerDataRepository _bannerDataRepository;
         private readonly IPageBannerDataRepository _pageBannerDataRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageApiController"/> class.
+        /// </summary>
+        /// <param name="pageDataRepository">The page data repository.</param>
+        /// <param name="pageItemDataRepository">The page item data repository.</param>
+        /// <param name="userInfoDataRepository">The user information data repository.</param>
+        /// <param name="favoritePageDataRepository">The favorite page data repository.</param>
+        /// <param name="favoriteImageDataRepository">The favorite image data repository.</param>
+        /// <param name="userImageDataRepository">The user image data repository.</param>
+        /// <param name="bannerDataRepository">The banner data repository.</param>
+        /// <param name="pageBannerDataRepository">The page banner data repository.</param>
         public PageApiController(IPageDataRepository pageDataRepository,
             IPageItemDataRepository pageItemDataRepository,
             IUserInfoDataRepository userInfoDataRepository,
@@ -50,6 +61,11 @@ namespace NJFairground.Web.Controllers
             this._pageBannerDataRepository = pageBannerDataRepository;
         }
 
+        /// <summary>
+        /// Gets the application information.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         [HttpPost()]
         public AppInfoResponseDto GetAppInfo(AppInfoRequestDto request)
         {
@@ -483,6 +499,11 @@ namespace NJFairground.Web.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Deletes the user image.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         [HttpPost()]
         public UserImageResponseDto DeleteUserImage(UserImageRequestDto request)
         {
@@ -517,6 +538,11 @@ namespace NJFairground.Web.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Adds the image to fevorite.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         [HttpPost()]
         public UserImageResponseDto AddImageToFevorite(UserImageRequestDto request)
         {
@@ -566,6 +592,11 @@ namespace NJFairground.Web.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Removes the image from fevorite.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         [HttpPost()]
         public UserImageResponseDto RemoveImageFromFevorite(UserImageRequestDto request)
         {
@@ -606,6 +637,11 @@ namespace NJFairground.Web.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Gets the page banner.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         [HttpPost()]
         public PageBannerResponseDto GetPageBanner(PageBannerRequestDto request)
         {
@@ -786,6 +822,13 @@ namespace NJFairground.Web.Controllers
             return string.Empty;
         }
 
+        /// <summary>
+        /// Initiates the response.
+        /// </summary>
+        /// <typeparam name="TIn">The type of the in.</typeparam>
+        /// <typeparam name="TOut">The type of the out.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         private TOut InitiateResponse<TIn, TOut>(TIn request)
             where TIn : RequestBase
             where TOut : ResponseBase, new()
