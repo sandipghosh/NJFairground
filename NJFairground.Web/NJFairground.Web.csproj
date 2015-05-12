@@ -374,6 +374,7 @@
     <Compile Include="DTO\RequestDto\AppInfoRequestDto.cs" />
     <Compile Include="DTO\RequestDto\FavoritePageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\MapRequestDto.cs" />
+    <Compile Include="DTO\RequestDto\PageBannerRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageItemRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\RssFeedRequestDto.cs" />
@@ -382,6 +383,7 @@
     <Compile Include="DTO\ResponseDto\AppInfoResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\FavoritePageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\MapResponseDto.cs" />
+    <Compile Include="DTO\ResponseDto\PageBannerResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageItemResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\RssFeedResponseDto.cs" />

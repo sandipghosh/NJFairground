@@ -34,7 +34,7 @@ namespace NJFairground.Web.MapperConfig
             try
             {
                 Mapper.CreateMap<Banner, BannerModel>()
-                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                   .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<BannerItem, BannerItemModel>()
                     .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => CommonUtility.ResolveServerUrl(src.ImageUrl, false)))
@@ -42,7 +42,7 @@ namespace NJFairground.Web.MapperConfig
                 Mapper.CreateMap<BannerItemModel, BannerItem>().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<PageBanner, PageBannerModel>()
-                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                   .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<NJFairground.Web.Data.Context.Page, PageModel>()
                     //.ForMember(dest => dest.PageBanner, opt => opt.ResolveUsing<CustomPageBannerResolver>())
@@ -70,13 +70,13 @@ namespace NJFairground.Web.MapperConfig
                 Mapper.CreateMap<UserImageModel, UserImage>().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<FavoriteImage, FavoriteImageModel>()
-                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                   .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<FavoritePage, FavoritePageModel>()
-                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                   .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<Event, EventModel>()
-                   .IgnoreAllNonExisting().MapBothWays().IgnoreAllNonExisting();
+                   .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
 
                 Mapper.CreateMap<SchedularSchema, EventModel>()
                     .ForMember(dest => dest.EventId, opt => opt.MapFrom(src => src.id))

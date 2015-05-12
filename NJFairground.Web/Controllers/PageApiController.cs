@@ -2,12 +2,6 @@
 
 namespace NJFairground.Web.Controllers
 {
-    using NJFairground.Web.Data.Interface;
-    using NJFairground.Web.DTO.Base;
-    using NJFairground.Web.DTO.RequestDto;
-    using NJFairground.Web.DTO.ResponseDto;
-    using NJFairground.Web.Models;
-    using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
@@ -19,6 +13,12 @@ namespace NJFairground.Web.Controllers
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Xml.Linq;
+    using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.DTO.Base;
+    using NJFairground.Web.DTO.RequestDto;
+    using NJFairground.Web.DTO.ResponseDto;
+    using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities;
 
     public class PageApiController : ApiController
     {
@@ -28,13 +28,17 @@ namespace NJFairground.Web.Controllers
         private readonly IFavoritePageDataRepository _favoritePageDataRepository;
         private readonly IFavoriteImageDataRepository _favoriteImageDataRepository;
         private readonly IUserImageDataRepository _userImageDataRepository;
+        private readonly IBannerDataRepository _bannerDataRepository;
+        private readonly IPageBannerDataRepository _pageBannerDataRepository;
 
         public PageApiController(IPageDataRepository pageDataRepository,
             IPageItemDataRepository pageItemDataRepository,
             IUserInfoDataRepository userInfoDataRepository,
             IFavoritePageDataRepository favoritePageDataRepository,
             IFavoriteImageDataRepository favoriteImageDataRepository,
-            IUserImageDataRepository userImageDataRepository)
+            IUserImageDataRepository userImageDataRepository,
+            IBannerDataRepository bannerDataRepository,
+            IPageBannerDataRepository pageBannerDataRepository)
         {
             this._pageDataRepository = pageDataRepository;
             this._pageItemDataRepository = pageItemDataRepository;
@@ -42,6 +46,8 @@ namespace NJFairground.Web.Controllers
             this._favoritePageDataRepository = favoritePageDataRepository;
             this._favoriteImageDataRepository = favoriteImageDataRepository;
             this._userImageDataRepository = userImageDataRepository;
+            this._bannerDataRepository = bannerDataRepository;
+            this._pageBannerDataRepository = pageBannerDataRepository;
         }
 
         [HttpPost()]
@@ -82,7 +88,7 @@ namespace NJFairground.Web.Controllers
             PageResponseDto response = InitiateResponse<PageRequestDto, PageResponseDto>(request);
             try
             {
-                IncludeBannerForPage(request.RespondWithBanner);
+                //IncludeBannerForPage(request.RespondWithBanner);
                 if (request.PageId > 0)
                 {
                     response.Page = this._pageDataRepository.Get(request.PageId);
@@ -133,7 +139,7 @@ namespace NJFairground.Web.Controllers
             PageItemResponseDto response = InitiateResponse<PageItemRequestDto, PageItemResponseDto>(request);
             try
             {
-                IncludeBannerForPage(request.RespondWithBanner);
+                //IncludeBannerForPage(request.RespondWithBanner);
                 if (request.PageItemId > 0)
                 {
                     response.PageItem = this._pageItemDataRepository.Get(request.PageItemId);
@@ -173,12 +179,6 @@ namespace NJFairground.Web.Controllers
                     }
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
-
-                /*if (!request.RespondWithBanner)
-                { 
-                    if(!response.PageItems.IsEmptyCollection())
-                        response.PageItems.
-                }*/
             }
             catch (Exception ex)
             {
@@ -609,6 +609,40 @@ namespace NJFairground.Web.Controllers
             return response;
         }
 
+        [HttpPost()]
+        public PageBannerResponseDto GetPageBanner(PageBannerRequestDto request)
+        {
+            PageBannerResponseDto response = InitiateResponse<PageBannerRequestDto, PageBannerResponseDto>(request);
+            try
+            {
+                BannerModel banner = null;
+                if (request.Action == CrudAction.Select)
+                {
+                    if (request.PageId > 0 || request.PageItemId > 0)
+                    {
+                        var page = this._pageBannerDataRepository.GetList(x => x.StatusId.Equals((int)StatusEnum.Active)
+                            && x.PageItemId == request.PageItemId).FirstOrDefault();
+
+                        if (page != null)
+                        {
+                            banner = page.Banner;
+                        }
+                    }
+                    if (banner == null)
+                    {
+                        banner = this._bannerDataRepository.GetList(x => x.StatusId.Equals((int)StatusEnum.Active)
+                            && x.IsDefault == true).FirstOrDefault();
+                        response.Banner = banner;
+                    }
+                    response.ResponseStatus = RespStatus.Success.ToString(); 
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
 
         /// <summary>
         /// Authentications the user for page.

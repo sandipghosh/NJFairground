@@ -11,5 +11,7 @@ namespace NJFairground.Web.Models
         public int PageId { get; set; }
         public int PageItemId { get; set; }
         public int StatusId { get; set; }
+
+        public BannerModel Banner { get; set; }
     }
 }
