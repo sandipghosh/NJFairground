@@ -36,6 +36,7 @@ namespace NJFairground.Web.Models
         public string PageItemSubDetail { get; set; }
         [JsonIgnore]
         public int StatusId { get; set; }
+        [JsonIgnore]
         public int ItemOrder { get; set; }
         [JsonIgnore]
         public BannerModel PageBanner { get; set; }
