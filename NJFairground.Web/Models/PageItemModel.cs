@@ -1,8 +1,6 @@
 ﻿
 namespace NJFairground.Web.Models
 {
-    using System.Linq;
-    using System.Web.Mvc;
     using AutoMapper;
     using Newtonsoft.Json;
     using NJFairground.Web.Data.Context;
@@ -10,15 +8,17 @@ namespace NJFairground.Web.Models
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models.Base;
     using NJFairground.Web.Utilities;
+    using System.Linq;
+    using System.Web.Mvc;
 
     public class PageItemModel : BaseModel
     {
         public int PageItemId { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public int PageId { get; set; }
         public string PageHeaderText { get; set; }
         public string PageSubHeaderText { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public string PageItemImage { get; set; }
         public string PageItemImageUrl
         {
@@ -32,11 +32,11 @@ namespace NJFairground.Web.Models
             }
         }
         public string PageItemDetailText { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public string PageItemSubDetail { get; set; }
         [JsonIgnore]
         public int StatusId { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public int ItemOrder { get; set; }
         [JsonIgnore]
         public BannerModel PageBanner { get; set; }
