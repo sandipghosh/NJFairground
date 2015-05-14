@@ -180,3 +180,6 @@ img.adp-marker {
 .adp-placemark {
     margin: 0 !important;
 }
+.adp-directions{
+    width:100%;
+}

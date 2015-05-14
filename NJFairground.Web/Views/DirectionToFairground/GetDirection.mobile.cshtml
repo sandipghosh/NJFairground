@@ -2,127 +2,19 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>GetDirection</title>
-    <style type="text/css">
-        /*.autocomplete {
-            background-color: #ffffff;
-            border: 1px solid #808080;
-            height: 50%;
-            overflow-x: hidden;
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-        }
-
-            .autocomplete li {
-                padding: 1%;
-            }
-
-                .autocomplete li.hover {
-                    background-color: #faebd7;
-                }*/
-    </style>
-    <link type="text/css" rel="stylesheet" href='@Url.Content("~/Styles/DirectionStyle.css")' />
+    @Html.RenderStyles("~/Styles/MapStyleForApps")
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery-2.1.3.min.js")'></script>
-    <script type="text/javascript" src='@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")'></script>
-    @Html.RenderScripts("~/Scripts/GoogleMapAPIScript")
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#origin').autocomplete({
-                source: function () {
-                    $("#address-map-area").gmap3({
-                        getaddress: {
-                            address: $(this).val(),
-                            callback: function (results) {
-                                if (!results) return;
-                                $("#origin").autocomplete("display", results, false);
-                            }
-                        }
-                    });
-                },
-                cb: {
-                    cast: function (item) {
-                        //return '<a>' + item.formatted_address + '</a>';
-                        return item.formatted_address;
-                    },
-                    select: function (item) {
-                        search_onclick();
-                    }
-                }
-            });
-            //    .data("autocomplete")._renderItem = function (ul, item) {
-            //    return $("<li></li>")
-            //        .data("item.autocomplete", item)
-            //        .append("<a>" + item.label + "</a>")
-            //        .appendTo(ul);
-            //};
-        });
-
-        search_onclick = function () {
-            $('#map-area').height(($(window).height() / 3) + 'px');
-            $("#map-area").gmap3({
-                action: 'clear',
-                name: 'directionRenderer'
-            });
-            $("#map-area").gmap3({
-                getroute: {
-                    options: {
-                        origin: $('#origin').val(),//"New Jersey State Fair 37 Plains Road Augusta, NJ 07822", //"48 Pirrama Road, Pyrmont NSW",
-                        destination: $('#destination').val(),//"New Jersey State Fair P.O. Box 2456 Branchville, NJ 07826",//"Bondi Beach, NSW",
-                        travelMode: google.maps.DirectionsTravelMode.DRIVING
-                    },
-                    callback: function (results) {
-                        if (!results) return;
-                        if ($('#direction-area').length > 0) {
-                            $("#direction-area").empty();
-                        }
-                        $(this).gmap3({
-                            map: {
-                                options: {
-                                    zoom: 20,
-                                    center: [-33.879, 151.235]
-                                }
-                            },
-                            directionsrenderer: {
-                                container: $('#direction-area'),
-                                options: {
-                                    directions: results
-                                }
-                            },
-                            callback: function (results) {
-                                makeScrollableDirection();
-                            }
-                        });
-                    }
-                }
-            });
-        };
-
-        $(document).on('load', '.adp-directions', function () {
-            makeScrollableDirection();
-        });
-
-        $('.adp-directions').
-        makeScrollableDirection = function () {
-            var directionHeight = ($(window).height() - ($('#map-area').height() + ($('.adp-placemark').height() * 4) + 10));
-            $('.adp-directions').parent('div[jstcache]')
-                .css({ 'height': directionHeight + 'px', 'overflow-y': 'auto', 'overflow-x': 'hidden' });
-        };
-    </script>
-
+    @Html.RenderScripts("~/Scripts/GoogleMapAPIScriptForApps")
 </head>
 <body>
     <div class="ui-grid-solo inner-page">
         <div class="search-container">
             @Html.TextBox("origin", "", new { @class = "search-input", data_role = "none", placeholder = "Enter your location" })
-            @*<input class="btnSearch" type="button" value="Go" data-role="none" onclick="search_onclick()">*@
         </div>
         <div id="map-area"></div>
         <div id="direction-area"></div>

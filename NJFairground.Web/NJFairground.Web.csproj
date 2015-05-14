@@ -762,6 +762,7 @@
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />
     <Content Include="Scripts\common-script.js" />
+    <Content Include="Scripts\DirectionScript.js" />
     <Content Include="Scripts\e-smart-zoom-jquery.js" />
     <Content Include="Scripts\gmap3.min.js" />
     <Content Include="Scripts\gmaps.js" />
@@ -783,21 +784,6 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
     <Content Include="Scripts\jquery.mobile-1.4.5.min.map" />
-    <Content Include="Scripts\jquery.min.js.map">
-      <DependentUpon>jquery.min.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js.map">
-      <DependentUpon>jquery.unobtrusive-ajax.min.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jquery-2.1.3.min.js.map">
-      <DependentUpon>jquery-2.1.3.min.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jquery.mobile-1.4.5.min.js.map">
-      <DependentUpon>jquery.mobile-1.4.5.min.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jquery-ui-1.11.4.min.js.map">
-      <DependentUpon>jquery-ui-1.11.4.min.js</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -811,6 +797,7 @@
     <Content Include="Styles\fonts\cafe_nero_m54-webfont.svg" />
     <Content Include="Styles\fonts\dk_keswick-webfont.svg" />
     <Content Include="Styles\Images\ajax-loader.gif" />
+    <Content Include="Styles\Images\arrow.png" />
     <Content Include="Styles\Images\back_iphone.png" />
     <Content Include="Styles\Images\banner-agriculture.jpg" />
     <Content Include="Styles\Images\banner-complex.jpg" />
@@ -830,6 +817,7 @@
     <Content Include="Styles\Images\position.png" />
     <Content Include="Styles\Images\presentedby-details.png" />
     <Content Include="Styles\Images\presentedby.png" />
+    <Content Include="Styles\Images\search.png" />
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\watermark.png" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
@@ -1023,12 +1011,6 @@
     <Content Include="Views\Vendors\Index.mobile.cshtml" />
     <Content Include="Views\Vendors\VendorDetail.mobile.cshtml" />
     <Content Include="Views\DirectionToFairground\GetDirection.mobile.cshtml" />
-    <Content Include="Scripts\jquery.validate.min.js.map">
-      <DependentUpon>jquery.validate.min.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js.map">
-      <DependentUpon>jquery.validate.unobtrusive.min.js</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

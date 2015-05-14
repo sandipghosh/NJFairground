@@ -66,6 +66,15 @@ namespace NJFairground.Web
                     "~/Scripts/jquery.autocomplete.min.js"
                 );
                 BundleTable.Bundles.Add(scriptBundle);
+
+                scriptBundle = new Bundle("~/Scripts/GoogleMapAPIScriptForApps", new JsMinify());
+                scriptBundle.Include("~/Scripts/jquery-2.1.3.min.js",
+                    "~/Scripts/jquery-migrate-1.2.1.min.js",
+                    "~/Scripts/gmap3.min.js",
+                    "~/Scripts/jquery.autocomplete.min.js",
+                    "~/Scripts/DirectionScript.js"
+                );
+                BundleTable.Bundles.Add(scriptBundle);
             }
             catch (Exception ex)
             {
@@ -81,7 +90,6 @@ namespace NJFairground.Web
         {
             try
             {
-                //var cssTransformer = new CustomCssMinify();
                 Bundle styleBundle = new Bundle("~/Styles/CommonStyle", new CustomCssMinify(), new CssMinify());
                 styleBundle.Include("~/Styles/jquery.mobile-1.4.2.min.css",
                     "~/Styles/style.css");
@@ -96,7 +104,9 @@ namespace NJFairground.Web
                 styleBundle.Include("~/Styles/litetooltip.min.css");
                 BundleTable.Bundles.Add(styleBundle);
 
-
+                styleBundle = new Bundle("~/Styles/MapStyleForApps", new CustomCssMinify(), new CssMinify());
+                styleBundle.Include("~/Styles/DirectionStyle.css");
+                BundleTable.Bundles.Add(styleBundle);
             }
             catch (Exception ex)
             {
