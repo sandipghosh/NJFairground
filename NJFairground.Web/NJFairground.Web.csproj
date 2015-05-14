@@ -783,6 +783,21 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
     <Content Include="Scripts\jquery.mobile-1.4.5.min.map" />
+    <Content Include="Scripts\jquery.min.js.map">
+      <DependentUpon>jquery.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js.map">
+      <DependentUpon>jquery.unobtrusive-ajax.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-2.1.3.min.js.map">
+      <DependentUpon>jquery-2.1.3.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.mobile-1.4.5.min.js.map">
+      <DependentUpon>jquery.mobile-1.4.5.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js.map">
+      <DependentUpon>jquery-ui-1.11.4.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -792,6 +807,7 @@
     <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\LiteTooltip.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Styles\DirectionStyle.css" />
     <Content Include="Styles\fonts\cafe_nero_m54-webfont.svg" />
     <Content Include="Styles\fonts\dk_keswick-webfont.svg" />
     <Content Include="Styles\Images\ajax-loader.gif" />
@@ -1006,6 +1022,13 @@
     <Content Include="Views\Shared\_DetailHeader.mobile.cshtml" />
     <Content Include="Views\Vendors\Index.mobile.cshtml" />
     <Content Include="Views\Vendors\VendorDetail.mobile.cshtml" />
+    <Content Include="Views\DirectionToFairground\GetDirection.mobile.cshtml" />
+    <Content Include="Scripts\jquery.validate.min.js.map">
+      <DependentUpon>jquery.validate.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js.map">
+      <DependentUpon>jquery.validate.unobtrusive.min.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
