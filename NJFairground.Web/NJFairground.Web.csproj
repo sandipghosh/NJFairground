@@ -434,6 +434,7 @@
     <Compile Include="Utilities\SessionVariable.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\NJ_Fairground_guide_map.txt" />
     <Content Include="Areas\Admin\Scripts\common-admin-ui-script.js" />
     <Content Include="Areas\Admin\Scripts\content-manager.js" />
     <Content Include="Areas\Admin\Scripts\event-scheduler.js" />
@@ -766,6 +767,7 @@
     <Content Include="Scripts\e-smart-zoom-jquery.js" />
     <Content Include="Scripts\gmap3.min.js" />
     <Content Include="Scripts\gmaps.js" />
+    <Content Include="Scripts\imageMapResizer.min.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
@@ -1013,7 +1015,6 @@
     <Content Include="Views\DirectionToFairground\GetDirection.mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,7 @@
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
         $(document).ready(function () {
+            $('map').imageMapResize();
             $('#imageFullScreen').smartZoom({ 'containerClass': 'imgContainer' });
 
             $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", function (e) {

@@ -55,7 +55,8 @@ namespace NJFairground.Web
                 BundleTable.Bundles.Add(scriptBundle);
 
                 scriptBundle = new Bundle("~/Scripts/MapScript", new JsMinify());
-                scriptBundle.Include("~/Scripts/LiteTooltip.js",
+                scriptBundle.Include("~/Scripts/imageMapResizer.min.js",
+                    "~/Scripts/LiteTooltip.js",
                     "~/Scripts/e-smart-zoom-jquery.js"
                     //TOOD: Add responsive image map
                 );
