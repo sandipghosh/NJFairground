@@ -10,6 +10,7 @@
     @Html.RenderStyles("~/Styles/CommonStyle")
     @Html.RenderStyles("~/Styles/MapStyle")
     <style type="text/css">
+        @(Html.CssMinify(@<text>
         #positionButtonDiv {
             color: #fff;
             text-align: left;
@@ -50,6 +51,7 @@
             top: 60% !important;
             left: 35% !important;
         }
+        </text>))
     </style>
 
     @Html.RenderScripts("~/Scripts/MapScriptForApps")
