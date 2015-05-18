@@ -62,6 +62,15 @@ namespace NJFairground.Web
                 );
                 BundleTable.Bundles.Add(scriptBundle);
 
+                scriptBundle = new Bundle("~/Scripts/MapScriptForApps", new JsMinify());
+                scriptBundle.Include("~/Scripts/jquery-2.1.3.min.js",
+                    "~/Scripts/jquery-migrate-1.2.1.min.js",
+                    "~/Scripts/LiteTooltip.js",
+                    "~/Scripts/e-smart-zoom-jquery.js"
+                    //TOOD: Add responsive image map
+                );
+                BundleTable.Bundles.Add(scriptBundle);
+
                 scriptBundle = new Bundle("~/Scripts/GoogleMapAPIScript", new JsMinify());
                 scriptBundle.Include("~/Scripts/gmap3.min.js",
                     "~/Scripts/jquery.autocomplete.min.js"

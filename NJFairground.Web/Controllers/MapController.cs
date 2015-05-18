@@ -16,5 +16,13 @@ namespace NJFairground.Web.Controllers
         {
             return View("Index.mobile");
         }
+
+        [AcceptVerbs(HttpVerbs.Get),
+        OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
+        public ActionResult GetMap()
+        {
+            return View("GetMap.mobile");
+        }
+
     }
 }

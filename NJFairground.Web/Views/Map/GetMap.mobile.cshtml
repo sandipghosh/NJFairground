@@ -1,44 +1,84 @@
 ﻿@using NJFairground.Web.Utilities;
 @{
-    ViewBag.Title = "Map | Sussex County Fairgrounds";
-    ViewBag.PageId = "map";
+    Layout = null;
 }
-
-@section navbar{
-    @Html.Partial("_NavigationBar.mobile", (List<string>)ViewBag.NavBarItems)
-}
-@section PageStyle{
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetMap</title>
+    @Html.RenderStyles("~/Styles/CommonStyle")
     @Html.RenderStyles("~/Styles/MapStyle")
-}
-@section PageScript{
-    @Html.RenderScripts("~/Scripts/MapScript")
+    <style type="text/css">
+        #positionButtonDiv {
+            color: #fff;
+            text-align: left;
+            width: 86px;
+            height: auto;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            border-top-right-radius: 30px;
+        }
+
+        .positionButtonSpan {
+            float: left;
+        }
+
+        .zoomSpan {
+            float: left;
+            width: 30px;
+            margin-left: 15px;
+        }
+
+        #topPositionMap {
+            left: 33.5% !important;
+            top: 1% !important;
+        }
+
+        #leftPositionMap {
+            top: 32% !important;
+        }
+
+        #rightPositionMap {
+            top: 31% !important;
+            left: 68% !important;
+        }
+
+        #bottomPositionMap {
+            top: 60% !important;
+            left: 35% !important;
+        }
+    </style>
+
+    @Html.RenderScripts("~/Scripts/MapScriptForApps")
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
         $(document).ready(function () {
-            $('map').imageMapResize();
             $('#imageFullScreen').smartZoom({ 'containerClass': 'imgContainer' });
 
-            $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", function (e) {
-                var pixelsToMoveOnX = 0;
-                var pixelsToMoveOnY = 0;
+            $('#topPositionMap, #leftPositionMap, #rightPositionMap, #bottomPositionMap')
+                .bind("click", function (e) {
+                    var pixelsToMoveOnX = 0;
+                    var pixelsToMoveOnY = 0;
 
-                switch (e.target.id) {
-                    case "leftPositionMap":
-                        pixelsToMoveOnX = 50;
-                        break;
-                    case "rightPositionMap":
-                        pixelsToMoveOnX = -50;
-                        break;
-                    case "topPositionMap":
-                        pixelsToMoveOnY = 50;
-                        break;
-                    case "bottomPositionMap":
-                        pixelsToMoveOnY = -50;
-                        break;
-                }
-                $('map').imageMapResize();
-                $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
-            });
+                    switch (e.target.id) {
+                        case "leftPositionMap":
+                            pixelsToMoveOnX = 50;
+                            break;
+                        case "rightPositionMap":
+                            pixelsToMoveOnX = -50;
+                            break;
+                        case "topPositionMap":
+                            pixelsToMoveOnY = 50;
+                            break;
+                        case "bottomPositionMap":
+                            pixelsToMoveOnY = -50;
+                            break;
+                    }
+                    $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
+                });
             $('#zoomInButton,#zoomOutButton').live("click", zoomButtonClickHandler);
 
             function zoomButtonClickHandler(e) {
@@ -61,27 +101,23 @@
         });
         </text>))
     </script>
-}
-
-<div class="ui-grid-solo highlights">
-    <div class="ui-block-a highlight">
+</head>
+<body>
+    <div class="ui-grid-solo highlights">
+        @*<div class="ui-block-a highlight">*@
         <div id="positionButtonDiv">
-            <p>
-                Zoom :
-                <span>
-                    <img id="zoomInButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomIn.png")' title="zoom in" alt="zoom in" />
-                    <img id="zoomOutButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomOut.png")' title="zoom out" alt="zoom out" />
-                </span>
-            </p>
-            <p>
-                <span class="positionButtonSpan">
-                    <img src='@Url.Content("~/Styles/Images/position.png")' />
-                    <span class="commonbutton" id="topPositionMap"></span>
-                    <span class="commonbutton" id="leftPositionMap"></span>
-                    <span class="commonbutton" id="rightPositionMap"></span>
-                    <span class="commonbutton" id="bottomPositionMap"></span>
-                </span>
-            </p>
+            <span class="zoomSpan">
+                <img id="zoomInButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomIn.png")' title="zoom in" alt="zoom in" />
+                <br />
+                <img id="zoomOutButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomOut.png")' title="zoom out" alt="zoom out" />
+            </span>
+            <span class="positionButtonSpan">
+                <img src='@Url.Content("~/Styles/Images/position.png")' />
+                <span class="commonbutton" id="topPositionMap"></span>
+                <span class="commonbutton" id="leftPositionMap"></span>
+                <span class="commonbutton" id="rightPositionMap"></span>
+                <span class="commonbutton" id="bottomPositionMap"></span>
+            </span>
         </div>
         <div id="imgContainer">
             <img id="imageFullScreen" src='@Url.Content("~/Upload/NJ_Fairground_guide_map.jpg")' usemap="#image-maps" />
@@ -157,6 +193,7 @@
                 <area alt="" data-title="Carnival Wheel" href="javascript:void(0)" shape="rect" coords="182,276,229,340" style="outline: none;" target="_self" />
             </map>
         </div>
+        @*</div>*@
     </div>
-</div>
-
+</body>
+</html>
