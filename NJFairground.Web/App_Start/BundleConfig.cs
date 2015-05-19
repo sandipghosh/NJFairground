@@ -34,7 +34,7 @@ namespace NJFairground.Web
             try
             {
                 Bundle scriptBundle = new Bundle("~/Scripts/CommonScript", new JsMinify());
-                scriptBundle.Include("~/Scripts/jquery-2.1.3.min.js",
+                scriptBundle.Include("~/Scripts/jquery-2.1.4.min.js",
                     "~/Scripts/jquery-migrate-1.2.1.min.js",
                     "~/Scripts/jquery.mobile-1.4.5.min.js",
                     "~/Scripts/common-script.js",
@@ -43,7 +43,7 @@ namespace NJFairground.Web
                 BundleTable.Bundles.Add(scriptBundle);
 
                 scriptBundle = new Bundle("~/Scripts/CommonAdminScript", new JsMinify());
-                scriptBundle.Include("~/Scripts/jquery-2.1.3.min.js",
+                scriptBundle.Include("~/Scripts/jquery-2.1.4.min.js",
                     "~/Scripts/jquery-migrate-1.2.1.min.js",
                     "~/Areas/Admin/Scripts/jquery-ui-1.11.4.custom.min.js",
                     "~/Areas/Admin/Scripts/json3.js",
@@ -63,7 +63,7 @@ namespace NJFairground.Web
                 BundleTable.Bundles.Add(scriptBundle);
 
                 scriptBundle = new Bundle("~/Scripts/MapScriptForApps", new JsMinify());
-                scriptBundle.Include("~/Scripts/jquery-2.1.3.min.js",
+                scriptBundle.Include("~/Scripts/jquery-2.1.4.min.js",
                     "~/Scripts/jquery-migrate-1.2.1.min.js",
                     "~/Scripts/LiteTooltip.js",
                     "~/Scripts/e-smart-zoom-jquery.js"
@@ -78,7 +78,7 @@ namespace NJFairground.Web
                 BundleTable.Bundles.Add(scriptBundle);
 
                 scriptBundle = new Bundle("~/Scripts/GoogleMapAPIScriptForApps", new JsMinify());
-                scriptBundle.Include("~/Scripts/jquery-2.1.3.min.js",
+                scriptBundle.Include("~/Scripts/jquery-2.1.4.min.js",
                     "~/Scripts/jquery-migrate-1.2.1.min.js",
                     "~/Scripts/gmap3.min.js",
                     "~/Scripts/jquery.autocomplete.min.js",
