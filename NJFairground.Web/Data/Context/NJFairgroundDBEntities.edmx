@@ -11,6 +11,7 @@
           </Key>
           <Property Name="BannerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="IsSplashImage" Type="bit" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -819,6 +820,7 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="BannerItems" Relationship="NJFairgroundDBModel.FK__BannerIte__Banne__30C33EC3" FromRole="Banner" ToRole="BannerItem" />
           <NavigationProperty Name="PageBanners" Relationship="NJFairgroundDBModel.FK__PageBanne__Banne__3864608B" FromRole="Banner" ToRole="PageBanner" />
+          <Property Name="IsSplashImage" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="BannerItem">
           <Key>
@@ -1029,6 +1031,7 @@
           <EntitySetMapping Name="Banners">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.Banner">
               <MappingFragment StoreEntitySet="Banner">
+                <ScalarProperty Name="IsSplashImage" ColumnName="IsSplashImage" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />

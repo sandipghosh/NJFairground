@@ -25,6 +25,7 @@ namespace NJFairground.Web.Data.Context
         public int StatusId { get; set; }
         public int CreatedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }
+        public bool IsSplashImage { get; set; }
     
         public virtual ICollection<BannerItem> BannerItems { get; set; }
         public virtual ICollection<PageBanner> PageBanners { get; set; }

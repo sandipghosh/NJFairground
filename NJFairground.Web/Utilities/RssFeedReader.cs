@@ -50,8 +50,9 @@ namespace NJFairground.Web.Utilities
             }
             catch (Exception ex)
             {
-                throw;
+                ex.ExceptionValueTracker(feedLink);
             }
+            return new MvcHtmlString(string.Empty);
         }
 
         public static MvcHtmlString ReadInstagramRss(this HtmlHelper htmlHelper, string feedLink)

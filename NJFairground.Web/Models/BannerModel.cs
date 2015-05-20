@@ -2,10 +2,10 @@
 
 namespace NJFairground.Web.Models
 {
-    using Newtonsoft.Json;
-    using NJFairground.Web.Models.Base;
     using System;
     using System.Collections.Generic;
+    using Newtonsoft.Json;
+    using NJFairground.Web.Models.Base;
 
     public class BannerModel:BaseModel
     {
@@ -19,6 +19,8 @@ namespace NJFairground.Web.Models
         public int CreatedBy { get; set; }
         [JsonIgnore]
         public DateTime CreatedOn { get; set; }
+        [JsonIgnore]
+        public bool IsSplashImage { get; set; }
 
         public List<BannerItemModel> BannerItems { get; set; }
     }

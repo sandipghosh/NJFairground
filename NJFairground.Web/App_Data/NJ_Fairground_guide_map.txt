@@ -60,3 +60,8 @@ http://www.inabrains.com/tooltip/image-hotspot-creator.html
 51.	Summer Blossoms Garden
 52.	Sussex County Building
 53.	Wheelchairs/scooters
+
+alter table Banner add IsSplashImage bit not null default(0)
+
+
+http://tech.pro/tutorial/1222/put-the-cloud-to-work-pt-1-create-a-background-worker-using-quartznet
