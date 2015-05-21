@@ -1,8 +1,6 @@
 ﻿
 namespace NJFairground.Web.Utilities
 {
-    using Newtonsoft.Json;
-    using NJFairground.Web.Models;
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
@@ -22,6 +20,8 @@ namespace NJFairground.Web.Utilities
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Newtonsoft.Json;
+    using NJFairground.Web.Models;
 
     public static class CommonUtility
     {
@@ -138,7 +138,6 @@ namespace NJFairground.Web.Utilities
             else
                 return typeof(string);
         }
-
 
         /// <summary>
         /// Gets the lamda expression from filter.
