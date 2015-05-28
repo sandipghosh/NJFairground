@@ -16,40 +16,121 @@
             text-align: left;
             width: 86px;
             height: auto;
-            position: absolute;
+            position: fixed;
             bottom: 0;
             left: 0;
             z-index: 2;
             border-top-right-radius: 30px;
+            background-color: transparent !important;
+            border-color: transparent !important;
         }
-
+        /*.commonbutton{background-color: red;}*/
         .positionButtonSpan {
             float: left;
+            border: 1px #767C82 solid;
+            border-radius: 32px;
+            display: block;
+            height: 62px;
         }
 
         .zoomSpan {
             float: left;
             width: 30px;
-            margin-left: 15px;
+            margin-left: 16px;
+        }
+
+        #centerPositionMap {
+            left: 33% !important;
+            top: 33% !important;
+            border-radius: 20px;
         }
 
         #topPositionMap {
-            left: 33.5% !important;
-            top: 1% !important;
+            left: 32.5% !important;
+            top: -3% !important;
+            border-radius: 8px 8px 0 0;
         }
+
+        /*#topPositionMap {
+            top: -3% !important;
+            left: 2% !important; 
+            -webkit-transform: rotate(180deg) !important;
+            transform: rotate(180deg) !important;
+            border-radius: 27px !important;
+            border-top: 42px solid transparent !important;
+            border-left: 28px solid transparent !important;
+            border-right: 28px solid transparent !important;
+            border-bottom: 27px solid #428BCA !important;
+            background-color: transparent !important;
+        }*/
 
         #leftPositionMap {
-            top: 32% !important;
+            top: 33% !important;
+            border-radius: 8px 0 0 8px;
+            left: -3%;
         }
+
+        /*#leftPositionMap {
+            top: -9% !important;
+            left: 8% !important; 
+            -webkit-transform: rotate(90deg) !important;
+            transform: rotate(90deg) !important;
+            border-radius: 27px !important;
+            border-top: 42px solid transparent !important;
+            border-left: 28px solid transparent !important;
+            border-right: 28px solid transparent !important;
+            border-bottom: 27px solid #428BCA !important;
+            background-color: transparent !important;
+        }*/
 
         #rightPositionMap {
-            top: 31% !important;
-            left: 68% !important;
+            top: 33% !important;
+            left: 69% !important;
+            border-radius: 0 8px 8px 0;
         }
 
+        /*#rightPositionMap {
+            top: -9% !important;
+            left: -5% !important; 
+            -webkit-transform: rotate(270deg) !important;
+            transform: rotate(270deg) !important;
+            border-radius: 27px !important;
+            border-top: 42px solid transparent !important;
+            border-left: 28px solid transparent !important;
+            border-right: 28px solid transparent !important;
+            border-bottom: 27px solid #428BCA !important;
+            background-color: transparent !important;
+        }*/
+
         #bottomPositionMap {
-            top: 60% !important;
-            left: 35% !important;
+            top: 69% !important;
+            left: 32.5% !important;
+            border-radius: 0 0 8px 8px;
+        }
+
+        /*#bottomPositionMap {
+            top: -16% !important;
+            left: 1% !important;
+            -webkit-transform: rotate(360deg) !important;
+            transform: rotate(360deg) !important;
+            border-radius: 27px !important;
+            border-top: 42px solid transparent !important;
+            border-left: 28px solid transparent !important;
+            border-right: 28px solid transparent !important;
+            border-bottom: 27px solid #428BCA !important;
+            background-color: transparent !important;
+        }*/
+        .zoomButton{
+            border: 1px #767C82 solid;
+            height: 32px;
+            width: 29px;
+        }
+        #zoomInButton{
+            border-radius: 20px 20px 0 0;
+        }
+
+        #zoomOutButton{
+            border-radius: 0 0 20px 20px;
         }
         </text>))
     </style>
@@ -60,7 +141,7 @@
         $(document).ready(function () {
             $('#imageFullScreen').smartZoom({ 'containerClass': 'imgContainer' });
 
-            $('#topPositionMap, #leftPositionMap, #rightPositionMap, #bottomPositionMap')
+            $('#topPositionMap, #leftPositionMap, #rightPositionMap, #bottomPositionMap, #centerPositionMap')
                 .bind("click", function (e) {
                     var pixelsToMoveOnX = 0;
                     var pixelsToMoveOnY = 0;
@@ -77,6 +158,8 @@
                             break;
                         case "bottomPositionMap":
                             pixelsToMoveOnY = -50;
+                            break;
+                        case "centerPositionMap":
                             break;
                     }
                     $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
@@ -106,7 +189,6 @@
 </head>
 <body>
     <div class="ui-grid-solo highlights">
-        @*<div class="ui-block-a highlight">*@
         <div id="positionButtonDiv">
             <span class="zoomSpan">
                 <img id="zoomInButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomIn.png")' title="zoom in" alt="zoom in" />
@@ -119,6 +201,7 @@
                 <span class="commonbutton" id="leftPositionMap"></span>
                 <span class="commonbutton" id="rightPositionMap"></span>
                 <span class="commonbutton" id="bottomPositionMap"></span>
+                <span class="commonbutton" id="centerPositionMap"></span>
             </span>
         </div>
         <div id="imgContainer">
@@ -195,7 +278,6 @@
                 <area alt="" data-title="Carnival Wheel" href="javascript:void(0)" shape="rect" coords="182,276,229,340" style="outline: none;" target="_self" />
             </map>
         </div>
-        @*</div>*@
     </div>
 </body>
 </html>

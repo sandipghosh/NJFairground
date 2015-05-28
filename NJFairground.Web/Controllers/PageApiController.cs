@@ -104,7 +104,7 @@ namespace NJFairground.Web.Controllers
             PageResponseDto response = InitiateResponse<PageRequestDto, PageResponseDto>(request);
             try
             {
-                if (request.PageId > 0)
+                if (request.PageId > 0 && request.Action == CrudAction.Select)
                 {
                     response.Page = this._pageDataRepository.Get(request.PageId);
                     response.ResponseStatus = RespStatus.Success.ToString();
