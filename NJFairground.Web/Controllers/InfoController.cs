@@ -4,6 +4,7 @@ namespace NJFairground.Web.Controllers
     using NJFairground.Web.Controllers.Base;
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -12,14 +13,17 @@ namespace NJFairground.Web.Controllers
     public class InfoController : BaseController
     {
         private readonly IPageItemDataRepository _pageItemDataRepository;
+        private readonly IPageDataRepository _pageDataRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InfoController"/> class.
         /// </summary>
         /// <param name="pageItemDataRepository">The page item data repository.</param>
-        public InfoController(IPageItemDataRepository pageItemDataRepository)
+        public InfoController(IPageItemDataRepository pageItemDataRepository,
+            IPageDataRepository pageDataRepository)
         {
             this._pageItemDataRepository = pageItemDataRepository;
+            this._pageDataRepository = pageDataRepository;
         }
 
         /// <summary>
@@ -32,10 +36,18 @@ namespace NJFairground.Web.Controllers
         {
             List<string> NavItems = new List<string>() { "The Fair", "Fun", "Info", "Social", "Map" };
             ViewBag.NavBarItems = NavItems;
-            List<PageItemModel> pageItems = this._pageItemDataRepository
-                .GetList(x => x.PageId == Convert.ToInt32(Page.Info)
-                    && x.StatusId == (int)StatusEnum.Active, y => y.ItemOrder, true).ToList();
-            return View("Index.mobile", pageItems);
+
+            PageModel page = new PageModel();
+            try
+            {
+                page = this._pageDataRepository.GetList(x => x.PageId == (int)Page.Info
+                    && x.StatusId == (int)StatusEnum.Active).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
+            }
+            return View("Index.mobile", page);
         }
     }
 }

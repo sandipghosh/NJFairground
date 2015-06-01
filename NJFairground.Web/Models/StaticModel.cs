@@ -27,7 +27,9 @@ namespace NJFairground.Web.Models
         CircusHollywood = 22,
         CraftTent = 23,
         CommercialInfo = 24,
-        CommercialCraftTent = 25
+        CommercialCraftTent = 25,
+        FoodAndBeverage = 27,
+        NonProfit = 28
     }
 
     public enum FeedFor

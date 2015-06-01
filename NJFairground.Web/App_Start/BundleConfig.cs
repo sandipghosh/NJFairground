@@ -73,7 +73,8 @@ namespace NJFairground.Web
 
                 scriptBundle = new Bundle("~/Scripts/GoogleMapAPIScript", new JsMinify());
                 scriptBundle.Include("~/Scripts/gmap3.min.js",
-                    "~/Scripts/jquery.autocomplete.min.js"
+                    "~/Scripts/jquery.autocomplete.min.js",
+                    "~/Scripts/DirectionScript.js"
                 );
                 BundleTable.Bundles.Add(scriptBundle);
 

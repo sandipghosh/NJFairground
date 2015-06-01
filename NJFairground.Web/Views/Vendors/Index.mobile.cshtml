@@ -1,9 +1,9 @@
-﻿@model List<NJFairground.Web.Models.PageModel>
+﻿@using NJFairground.Web.Models
+@model List<PageModel>
 @{
-    ViewBag.Title = "2014 Vendors | Sussex County Fairgrounds";
+    ViewBag.Title = "2015 Vendors | Sussex County Fairgrounds";
 }
-
-<h2 class="title">2014 Vendors</h2>
+<h2 class="title">2015 Vendors</h2>
 <div class="ui-grid-solo fun-blocks">
     @foreach (var pageData in Model)
     {

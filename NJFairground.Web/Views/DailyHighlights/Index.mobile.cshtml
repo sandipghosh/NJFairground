@@ -14,8 +14,8 @@
                 <p>@pageItemdata.PageSubHeaderText</p>
             </div>
             <div class="action">
-                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.DailyHighlights), PageItemId = pageItemdata.PageItemId }) ">Details</a>
-                <img class="fun-pic"  src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), pageItemdata.PageItemImage))' alt="">
+                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = (int)Page.DailyHighlights, PageItemId = pageItemdata.PageItemId }) ">Details</a>
+                <img class="fun-pic"  src='@pageItemdata.PageItemImageUrl' alt="">
             </div>
         </div>
     }

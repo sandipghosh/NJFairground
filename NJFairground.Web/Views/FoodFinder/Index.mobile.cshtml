@@ -1,12 +1,11 @@
-﻿@model List<NJFairground.Web.Models.PageItemModel>
+﻿@model NJFairground.Web.Models.PageModel
 @{
     ViewBag.Title = "Food Finder | Sussex County Fairgrounds";
     ViewBag.PageId = "food-finder";
 }
-
 <h2 class="title">Food Finder</h2>
 <div class="ui-grid-solo fun-blocks">
-    @foreach (var pageItemdata in Model)
+    @foreach (var pageItemdata in Model.PageItems)
     {
         <div class="ui-block-a fun-block">
             <div class="text">

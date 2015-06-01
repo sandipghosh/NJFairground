@@ -3,7 +3,6 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +21,6 @@
             <h2 class="title">@ViewBag.feedFor</h2>
             <div class="ui-grid-solo inner-page">
                 <div class="ui-block-a social scroller">
-                    @*<div id="scroller" style="height: auto">*@
                     @if (((string)ViewBag.feedFor).Equals(FeedFor.Instagram.ToString()))
                     {
                         @Html.ReadInstagramRss((string)ViewBag.feedLink)
@@ -31,7 +29,6 @@
                     {
                         @Html.ReadRss((string)ViewBag.feedLink)
                     }
-                    @*</div>*@
                 </div>
             </div>
             <span class="presented-by">

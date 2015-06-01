@@ -798,6 +798,7 @@
     <Content Include="Scripts\imageMapResizer.min.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js.map" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -817,6 +818,10 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.mobile-1.4.5.min.map" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Scripts\jquery.min.js.map" />
+    <Content Include="Scripts\jquery.mobile-1.4.5.min.js.map" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js.map" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -1046,6 +1051,8 @@
     <Content Include="Views\Vendors\VendorDetail.mobile.cshtml" />
     <Content Include="Views\DirectionToFairground\GetDirection.mobile.cshtml" />
     <Content Include="Views\Map\GetMap.mobile.cshtml" />
+    <Content Include="Scripts\jquery.validate.min.js.map" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Filters\" />

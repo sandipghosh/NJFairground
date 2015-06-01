@@ -20,7 +20,7 @@
             <div class="ui-grid-solo inner-page">
                 @if (!string.IsNullOrEmpty(Model.PageItemImage))
                 {
-                    <img class="inner-banner" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), Model.PageItemImage))' alt="" />
+                    <img class="inner-banner" src='@Model.PageItemImageUrl' alt="" />
                 }
                 <div class="ui-block-a scroller">
                     <h2>@Model.PageHeaderText</h2>

@@ -20,11 +20,17 @@ namespace NJFairground.Web.Controllers
         }
         public ActionResult Index()
         {
-            List<int> pages = new List<int>() { (int)Page.CraftTent, (int)Page.CommercialInfo, (int)Page.CommercialCraftTent };
+            List<int> pages = new List<int>() { 
+                (int)Page.CraftTent, 
+                (int)Page.CommercialInfo, 
+                (int)Page.CommercialCraftTent,
+                (int)Page.FoodAndBeverage,
+                (int)Page.NonProfit
+            };
             List<PageModel> pageItems = this._pageDataRepository
                 .GetList(x => pages.Contains(x.PageId) && x.StatusId.Equals((int)StatusEnum.Active)).ToList();
 
-            ViewBag.PageHeaderText = "2014 Vendors";
+            ViewBag.PageHeaderText = "2015 Vendors";
             return View("Index.mobile", pageItems);
         }
 

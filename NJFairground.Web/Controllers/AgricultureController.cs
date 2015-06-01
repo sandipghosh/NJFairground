@@ -4,6 +4,7 @@ namespace NJFairground.Web.Controllers
     using NJFairground.Web.Controllers.Base;
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -12,14 +13,18 @@ namespace NJFairground.Web.Controllers
     public class AgricultureController : BaseController
     {
         private readonly IPageItemDataRepository _pageItemDataRepository;
+        private readonly IPageDataRepository _pageDataRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AgricultureController"/> class.
+        /// Initializes a new instance of the <see cref="AgricultureController" /> class.
         /// </summary>
         /// <param name="pageItemDataRepository">The page item data repository.</param>
-        public AgricultureController(IPageItemDataRepository pageItemDataRepository)
+        /// <param name="pageDataRepository">The page data repository.</param>
+        public AgricultureController(IPageItemDataRepository pageItemDataRepository,
+            IPageDataRepository pageDataRepository)
         {
             this._pageItemDataRepository = pageItemDataRepository;
+            this._pageDataRepository = pageDataRepository;
         }
 
 
@@ -31,10 +36,17 @@ namespace NJFairground.Web.Controllers
         OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
-            List<PageItemModel> pageItems = this._pageItemDataRepository
-                .GetList(x => x.PageId == Convert.ToInt32(Page.AGLearningCenter)
-                    && x.StatusId == (int)StatusEnum.Active, y => y.ItemOrder, true).ToList();
-            return View("Index.mobile", pageItems);
+            PageModel page = new PageModel();
+            try
+            {
+                page = this._pageDataRepository.GetList(x => x.PageId == (int)Page.AGLearningCenter
+                    && x.StatusId == (int)StatusEnum.Active).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
+            }
+            return View("Index.mobile", page);
         }
 
     }

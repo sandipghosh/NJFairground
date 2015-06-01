@@ -1,18 +1,18 @@
-﻿@model List<NJFairground.Web.Models.PageItemModel>
+﻿@using NJFairground.Web.Models
 @using NJFairground.Web.Utilities
+@model List<NJFairground.Web.Models.PageItemModel>
 @{
     ViewBag.Title = "Index.mobile";
 }
-
 <h2 class="title">Horse Show</h2>
 <div class="ui-grid-solo inner-page">
-    <img class="inner-banner" src='@Url.Content("~/Styles/images/banner-horseshow.jpg")' alt="">
+    <img class="inner-banner" src='@pageItemdata.PageItemImageUrl' alt="">
     <div class="ui-block-a">
         @foreach (var pageItemdata in Model)
         {
             <div class="info-block">
-                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = Convert.ToInt32(NJFairground.Web.Models.Page.HorseShow), PageItemId = pageItemdata.PageItemId }) ">Details</a>
-                <img class="info-pic" src='@Url.Content(string.Format("{0}{1}", CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), pageItemdata.PageItemImage))' alt="">
+                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = (int)Page.HorseShow, PageItemId = pageItemdata.PageItemId }) ">Details</a>
+                <img class="info-pic" src='@pageItemdata.PageItemImageUrl' alt="">
                 <h4>@pageItemdata.PageHeaderText</h4>
                 <p>@pageItemdata.PageSubHeaderText</p>
             </div>

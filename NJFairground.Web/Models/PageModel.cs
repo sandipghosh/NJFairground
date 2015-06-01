@@ -8,6 +8,7 @@ namespace NJFairground.Web.Models
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models.Base;
     using NJFairground.Web.Utilities;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -33,6 +34,9 @@ namespace NJFairground.Web.Models
 
         [JsonIgnore]
         public int StatusId { get; set; }
+
+        [JsonIgnore]
+        public IEnumerable<PageItemModel> PageItems { get; set; }
     }
 
     public class CustomPageBannerResolver : ValueResolver<NJFairground.Web.Data.Context.Page, Banner>

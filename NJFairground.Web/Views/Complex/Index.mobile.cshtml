@@ -1,39 +1,25 @@
-﻿@using NJFairground.Web.Models
-@using NJFairground.Web.Utilities
-@model List<PageItemModel>
-
+﻿@using NJFairground.Web.Utilities
+@using NJFairground.Web.Models
+@model PageModel
 @{
-    ViewBag.Title = "Fairgrounds Complex | Sussex County Fairgrounds";
-    ViewBag.PageId = "complex";
+    ViewBag.Title = string.Format("{0} | Sussex County Fairgrounds", Model.PageDesc);
+    ViewBag.PageId = Model.PageName;
 }
-<h2 class="title">Fairgrounds Complex All Season/Events/Rentals</h2>
+<h2 class="title">@Model.PageDesc</h2>
 <div class="ui-grid-solo highlights complex inner-page">
-    <img class="inner-banner" src='@Url.Content("~/Styles/images/Fairgrounds 1.jpg")' alt="">
+    <img class="inner-banner" src='@Model.PageImageUrl' alt="">
     <div class="ui-block-a highlight">
         <div class="complextext">
-            <p>
-                The Sussex County Fairgrounds has provided a venue for tourism for almost 70 years! This much sought-after event venue is popular for many for-profit and non-profit groups seeking powerful ways to integrate their brands with a fully engaged consumer. The Fair has generously donated thousands of dollars of in-kind services and/or reduced rates to charitable agencies throughout the county.
-
-            <br />
-                <br />
-                With over 145 acres of outdoor space and an indoor Conservatory with over 5,000 feet of flexible indoor space, The Fairgrounds can accommodate any event. For rental information, please visit www.njstatefair.com.
-
-            <br />
-                <br />
-                Want to visit The Fairgrounds year-round? Check out some of our great all-season events!
-
-            </p>
+            @Html.Raw(Model.PageContent)
         </div>
     </div>
-
-    @foreach (var pageItemdata in Model)
+    @foreach (var pageItemdata in Model.PageItems)
     {
         <div class="ui-block-a highlight">
             <div class="complextext">
                 <h4>@pageItemdata.PageHeaderText</h4>
                 <p>@pageItemdata.PageSubHeaderText</p>
             </div>
-
         </div>
     }
 </div>
