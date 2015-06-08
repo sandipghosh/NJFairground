@@ -51,9 +51,17 @@ namespace NJFairground.Web.MapperConfig
         /// <returns></returns>
         private T GetDataFromFormContext<T>(string str) where T : new()
         {
-            var data = HttpUtility.ParseQueryString(str);
-            return (data == null || data.AllKeys.Any(x => x == null))
-                ? GetFromJsonString<T>(str) : GetFromQueryString<T>(str);
+            try
+            {
+                var data = HttpUtility.ParseQueryString(str);
+                return (data == null || data.AllKeys.Any(x => x == null))
+                    ? GetFromJsonString<T>(str) : GetFromQueryString<T>(str);
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(str);
+            }
+            return new T();
         }
 
         /// <summary>
@@ -64,8 +72,16 @@ namespace NJFairground.Web.MapperConfig
         /// <returns></returns>
         private T GetFromJsonString<T>(string jsonStr) where T : new()
         {
-            return (string.IsNullOrEmpty(jsonStr)) ? new T() :
-            JsonConvert.DeserializeObject<T>(jsonStr);
+            try
+            {
+                return (string.IsNullOrEmpty(jsonStr)) ? new T() :
+                JsonConvert.DeserializeObject<T>(jsonStr);
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(jsonStr);
+            }
+            return new T();
         }
 
         /// <summary>
@@ -76,14 +92,22 @@ namespace NJFairground.Web.MapperConfig
         /// <returns></returns>
         private T GetFromQueryString<T>(string qStr) where T : new()
         {
-            if (string.IsNullOrEmpty(qStr)) return new T();
-            var obj = new T();
-            var dataCollection = HttpUtility.ParseQueryString(qStr);
-            dataCollection.AllKeys.ToList().ForEach(x =>
+            try
             {
-                SetProperty(x, obj, dataCollection[x]);
-            });
-            return obj;
+                if (string.IsNullOrEmpty(qStr)) return new T();
+                var obj = new T();
+                var dataCollection = HttpUtility.ParseQueryString(qStr);
+                dataCollection.AllKeys.ToList().ForEach(x =>
+                {
+                    SetProperty(x, obj, dataCollection[x]);
+                });
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(qStr);
+            }
+            return new T();
         }
 
         /// <summary>
@@ -94,16 +118,23 @@ namespace NJFairground.Web.MapperConfig
         /// <param name="value">The value.</param>
         private void SetProperty(string compoundProperty, object target, object value)
         {
-            string[] bits = compoundProperty.Split('.');
-            for (int i = 0; i < bits.Length - 1; i++)
+            try
             {
-                PropertyInfo propertyToGet = target.GetType().GetProperty(bits[i]);
-                target = propertyToGet.GetValue(target, null);
+                string[] bits = compoundProperty.Split('.');
+                for (int i = 0; i < bits.Length - 1; i++)
+                {
+                    PropertyInfo propertyToGet = target.GetType().GetProperty(bits[i]);
+                    target = propertyToGet.GetValue(target, null);
+                }
+                PropertyInfo propertyToSet = target.GetType().GetProperty(bits.Last());
+                propertyToSet.SetValue(target, propertyToSet.PropertyType.IsEnum ?
+                    Enum.Parse(propertyToSet.PropertyType, value.ToString())
+                    : Convert.ChangeType(value, propertyToSet.PropertyType), null);
             }
-            PropertyInfo propertyToSet = target.GetType().GetProperty(bits.Last());
-            propertyToSet.SetValue(target, propertyToSet.PropertyType.IsEnum ?
-                Enum.Parse(propertyToSet.PropertyType, value.ToString())
-                : Convert.ChangeType(value, propertyToSet.PropertyType), null);
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(compoundProperty, target, value);
+            }
         }
     }
 }
