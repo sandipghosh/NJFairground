@@ -14,7 +14,7 @@
                 <p>@pageItemdata.PageSubHeaderText</p>
             </div>
             <div class="action">
-                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = (int)Page.DailyHighlights, PageItemId = pageItemdata.PageItemId }) ">Details</a>
+                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = (int)NJFairground.Web.Models.Page.DailyHighlights, PageItemId = pageItemdata.PageItemId }) ">Details</a>
                 <img class="fun-pic"  src='@pageItemdata.PageItemImageUrl' alt="">
             </div>
         </div>

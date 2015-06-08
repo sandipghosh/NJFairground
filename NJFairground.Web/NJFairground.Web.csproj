@@ -420,6 +420,7 @@
     </Compile>
     <Compile Include="MapperConfig\DataServiceLocatorConfig.cs" />
     <Compile Include="MapperConfig\EntityMapperConfig.cs" />
+    <Compile Include="MapperConfig\UserImageRequestCustomBinder.cs" />
     <Compile Include="Models\AppInfoModel.cs" />
     <Compile Include="Models\BannerItemModel.cs" />
     <Compile Include="Models\BannerModel.cs" />

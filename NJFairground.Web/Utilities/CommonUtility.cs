@@ -979,9 +979,16 @@ namespace NJFairground.Web.Utilities
                 return serverUrl;
 
             string newUrl = VirtualPathUtility.ToAbsolute(serverUrl);
-            Uri originalUri = System.Web.HttpContext.Current.Request.Url;
-            newUrl = (forceHttps ? "https" : originalUri.Scheme) +
-                "://" + originalUri.Authority + newUrl;
+            if (System.Web.HttpContext.Current != null)
+            {
+                Uri originalUri = System.Web.HttpContext.Current.Request.Url;
+                newUrl = (forceHttps ? "https" : originalUri.Scheme) +
+                    "://" + originalUri.Authority + newUrl;
+            }
+            else
+            {
+                newUrl = GetAppSetting<string>("HostUrl") + newUrl;
+            }
             return newUrl;
         }
 

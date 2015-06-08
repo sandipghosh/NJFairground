@@ -8,6 +8,8 @@ namespace NJFairground.Web.Controllers
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.ServiceModel.Syndication;
     using System.Web;
     using System.Web.Hosting;
@@ -307,9 +309,11 @@ namespace NJFairground.Web.Controllers
             {
                 if (request.Action == CrudAction.Insert)
                 {
+                    string userEmail = request.UserInfo.UserEmail;
+                    int userKey = request.UserInfo.UserKey;
+
                     UserInfoModel user = this._userInfoDataRepository
-                        .GetList(x => x.UserEmail.Equals(request.UserInfo.UserEmail)
-                            || x.UserKey.Equals(request.UserInfo.UserKey)).FirstOrDefault();
+                        .GetList(x => x.UserEmail.Equals(userEmail) || x.UserKey.Equals(userKey)).FirstOrDefault();
 
                     if (user == null)
                     {
@@ -455,8 +459,9 @@ namespace NJFairground.Web.Controllers
         /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpPost()]
-        public UserImageResponseDto AddUserImage(UserImageRequestDto request)
+        public HttpResponseMessage AddUserImage(UserImageRequestDto request)
         {
+            HttpResponseMessage responseMessage = new HttpResponseMessage();
             UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
             try
             {
@@ -486,7 +491,6 @@ namespace NJFairground.Web.Controllers
                                 userResponse.UserInfo.UserImages.Add(userImage);
                                 response.UserInfo = userResponse.UserInfo;
                                 response.ResponseStatus = RespStatus.Success.ToString();
-                                return response;
                             }
                         }
                     }
@@ -496,7 +500,9 @@ namespace NJFairground.Web.Controllers
             {
                 ex.ExceptionValueTracker(request);
             }
-            return response;
+            responseMessage.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(response));
+            responseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return responseMessage;
         }
 
         /// <summary>

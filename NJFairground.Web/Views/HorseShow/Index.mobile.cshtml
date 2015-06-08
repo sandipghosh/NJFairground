@@ -11,7 +11,7 @@
         @foreach (var pageItemdata in Model)
         {
             <div class="info-block">
-                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = (int)Page.HorseShow, PageItemId = pageItemdata.PageItemId }) ">Details</a>
+                <a title="Details" class="details" href="@Url.Action("Index", "Details", new { PageId = (int)NJFairground.Web.Models.Page.HorseShow, PageItemId = pageItemdata.PageItemId }) ">Details</a>
                 <img class="info-pic" src='@pageItemdata.PageItemImageUrl' alt="">
                 <h4>@pageItemdata.PageHeaderText</h4>
                 <p>@pageItemdata.PageSubHeaderText</p>

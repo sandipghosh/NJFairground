@@ -33,7 +33,7 @@ namespace NJFairground.Web.Controllers
                 .GetList(x => x.PageId == Convert.ToInt32(Page.Shopping)
                     && x.StatusId == (int)StatusEnum.Active, y => y.ItemOrder, true).ToList();
 
-            return View("Index.mobile", pageItems);
+            return View("Index.mobile", pageItems.FirstOrDefault());
         }
 
     }

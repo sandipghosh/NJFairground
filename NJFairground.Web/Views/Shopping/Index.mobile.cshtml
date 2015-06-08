@@ -1,10 +1,10 @@
 ﻿@using NJFairground.Web.Models
-@model List<PageItemModel>
+@model PageItemModel
 @{
-    ViewBag.Title = string.Format("{0} | Sussex County Fairgrounds", Model.PageHeaderText);
-    ViewBag.PageId = Model.PageHeaderText;
+    ViewBag.Title = "Shopping | Sussex County Fairgrounds";
+    ViewBag.PageId = "shopping";
 }
-<h2 class="title">Model.PageHeaderText</h2>
+<h2 class="title">Shopping</h2>
 <div class="ui-grid-solo highlights complex inner-page">
     <img class="inner-banner" src='@Model.PageItemImageUrl' alt="">
     <div class="ui-block-a highlight">

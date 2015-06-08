@@ -2,6 +2,7 @@
 
 namespace NJFairground.Web
 {
+    using MultipartDataMediaFormatter;
     using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
@@ -11,7 +12,6 @@ namespace NJFairground.Web
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using MultipartDataMediaFormatter;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -20,15 +20,22 @@ namespace NJFairground.Web
         /// </summary>
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
-            InjectorInitializer.Initialize();
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.RegisterAuth();
+            try
+            {
+                AreaRegistration.RegisterAllAreas();
+                InjectorInitializer.Initialize();
+                WebApiConfig.Register(GlobalConfiguration.Configuration);
+                FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+                RouteConfig.RegisterRoutes(RouteTable.Routes);
+                BundleConfig.RegisterBundles(BundleTable.Bundles);
+                AuthConfig.RegisterAuth();
 
-            GlobalConfiguration.Configuration.Formatters.Add(new FormMultipartEncodedMediaTypeFormatter());    
+                GlobalConfiguration.Configuration.Formatters.Add(new FormMultipartEncodedMediaTypeFormatter());
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
+            }   
         }
 
         /// <summary>
