@@ -36,5 +36,13 @@ namespace NJFairground.Web.DTO.ResponseDto
             }
             set { this._imageUrl = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the redirection URL.
+        /// </summary>
+        /// <value>
+        /// The redirection URL.
+        /// </value>
+        public string RedirectionUrl { get; set; }
     }
 }

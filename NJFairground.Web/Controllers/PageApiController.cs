@@ -356,8 +356,8 @@ namespace NJFairground.Web.Controllers
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString() && userResponse.UserInfo != null
                     && request.Action == CrudAction.Insert)
                 {
-                    if (!userResponse.UserInfo.FavoritePages.IsEmptyCollection() &&
-                        !userResponse.UserInfo.FavoritePages.Any(x => x.UserKey.Equals(userResponse.UserInfo.UserKey)
+                    int userKey = userResponse.UserInfo.UserKey;
+                    if (!userResponse.UserInfo.FavoritePages.Any(x => x.UserKey.Equals(userKey)
                             && x.PageItemId.Equals(request.PageItemId) && x.StatusId.Equals((int)StatusEnum.Active)))
                     {
                         PageItemModel pageItem = this._pageItemDataRepository.Get(request.PageItemId);
@@ -406,16 +406,17 @@ namespace NJFairground.Web.Controllers
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString() && userResponse.UserInfo != null
                     && request.Action == CrudAction.Delete)
                 {
-                    Func<FavoritePageModel, bool> predicate = (x) => x.UserKey.Equals(userResponse.UserInfo.UserKey)
+                    int userKey = userResponse.UserInfo.UserKey;
+                    Func<FavoritePageModel, bool> predicate = (x) => x.UserKey.Equals(userKey)
                         && x.PageItemId.Equals(request.PageItemId) && x.StatusId.Equals((int)StatusEnum.Active);
 
                     if (!userResponse.UserInfo.FavoritePages.IsEmptyCollection() &&
-                        !userResponse.UserInfo.FavoritePages.Any(predicate))
+                        userResponse.UserInfo.FavoritePages.Any(predicate))
                     {
                         FavoritePageModel favoritePage = userResponse.UserInfo.FavoritePages.FirstOrDefault(predicate);
                         favoritePage.StatusId = (int)StatusEnum.Inactive;
-                        this._favoritePageDataRepository.Update(favoritePage);
                         userResponse.UserInfo.FavoritePages.RemoveAll(new Predicate<FavoritePageModel>(predicate));
+                        this._favoritePageDataRepository.Update(favoritePage);
                     }
                     response.UserInfo = userResponse.UserInfo;
                     response.ResponseStatus = RespStatus.Success.ToString();
@@ -474,7 +475,7 @@ namespace NJFairground.Web.Controllers
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.Insert)
                 {
-                    CommonUtility.LogToFileWithStack(string.Format("Step 5, Image Request: {0}", 
+                    CommonUtility.LogToFileWithStack(string.Format("Step 5, Image Request: {0}",
                         Newtonsoft.Json.JsonConvert.SerializeObject(System.Web.HttpContext.Current.Request.Files)));
 
                     if (System.Web.HttpContext.Current.Request.Files != null
@@ -706,11 +707,22 @@ namespace NJFairground.Web.Controllers
             SplashImageResponseDto response = InitiateResponse<SplashImageRequestDto, SplashImageResponseDto>(request);
             try
             {
+                Func<string, string, string> getAttribute = (imagePath, key) =>
+                {
+                    Image im = Image.FromFile(imagePath);
+                    System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+                    var allPoprItem = im.PropertyItems;
+                    const int metTitle = 0x10e;
+                    var title = allPoprItem.FirstOrDefault(x => x.Id == metTitle);
+                    return encoding.GetString(title.Value).Replace("\0","");
+                };
+
                 if (request.Action == CrudAction.Select)
                 {
                     string fileLocation = CommonUtility.GetAppSetting<string>("SplashImagePath");
                     string splashImage = this.getRandomFile(HttpContext.Current.Server.MapPath(fileLocation));
-                    response.ImageUrl = splashImage;
+                    response.ImageUrl = Path.GetFileName(splashImage);
+                    response.RedirectionUrl = getAttribute(splashImage, "Title");
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
             }
@@ -878,7 +890,7 @@ namespace NJFairground.Web.Controllers
                     var di = new DirectoryInfo(path);
                     var rgFiles = di.GetFiles("*.*").Where(f => extensions.Contains(f.Extension.ToLower()));
                     random = new Random();
-                    file = rgFiles.ElementAt(random.Next(0, rgFiles.Count())).Name;
+                    file = rgFiles.ElementAt(random.Next(0, rgFiles.Count())).FullName;
                 }
                 // probably should only catch specific exceptions
                 // throwable by the above methods.
@@ -901,7 +913,7 @@ namespace NJFairground.Web.Controllers
             TOut response = (TOut)Activator.CreateInstance(typeof(TOut), new object[] { request.RequestToken });
             response.ResponseStatus = RespStatus.Failure.ToString();
             return response;
-        } 
+        }
         #endregion
     }
 }
