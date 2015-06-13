@@ -31,9 +31,13 @@ namespace NJFairground.Web.MapperConfig
             try
             {
                 HttpRequestBase request = new HttpRequestWrapper(HttpContext.Current.Request);
-                if (request.Form.AllKeys.Length > 0)
-                    bindingContext.Model = GetDataFromFormContext<UserImageRequestDto>(request.Form[0]);
+                CommonUtility.LogToFileWithStack(string.Format("Step 2, Request: {0}", Newtonsoft.Json.JsonConvert.SerializeObject(request.Form.AllKeys)));
 
+                if (request.Form.AllKeys.Length > 0)
+                {
+                    bindingContext.Model = GetDataFromFormContext<UserImageRequestDto>(request.Form[0]);
+                    CommonUtility.LogToFileWithStack(string.Format("Step 3, Request: {0}", request.Form[0]));
+                }
                 return true;
             }
             catch (Exception ex)

@@ -404,6 +404,7 @@
     <Compile Include="DTO\RequestDto\PageItemRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\RssFeedRequestDto.cs" />
+    <Compile Include="DTO\RequestDto\SplashImageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\UserAuthenticationRequestDto.cs" />
     <Compile Include="DTO\RequestDto\UserImageRequestDto.cs" />
     <Compile Include="DTO\ResponseDto\AppInfoResponseDto.cs" />
@@ -413,6 +414,7 @@
     <Compile Include="DTO\ResponseDto\PageItemResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\RssFeedResponseDto.cs" />
+    <Compile Include="DTO\ResponseDto\SplashImageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\UserAuthenticationResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\UserImageResponseDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -932,6 +934,7 @@
     <Content Include="Upload\schedule-pic1.jpg" />
     <Content Include="Upload\snook.jpg" />
     <Content Include="Upload\special_days.jpg" />
+    <Content Include="Upload\SplashImages\LLB-017-Mobile-Fair-Splash-Ad.jpg" />
     <Content Include="Upload\star.png" />
     <Content Include="Styles\Images\thumb-agriculture.png" />
     <Content Include="Styles\Images\thumb-calendar.png" />

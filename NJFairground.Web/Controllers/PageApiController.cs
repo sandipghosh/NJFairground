@@ -33,6 +33,8 @@ namespace NJFairground.Web.Controllers
         private readonly IBannerDataRepository _bannerDataRepository;
         private readonly IPageBannerDataRepository _pageBannerDataRepository;
 
+        private Random random;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PageApiController"/> class.
         /// </summary>
@@ -461,19 +463,27 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public HttpResponseMessage AddUserImage(UserImageRequestDto request)
         {
+            CommonUtility.LogToFileWithStack(string.Format("Step 1, Request: {0}", Newtonsoft.Json.JsonConvert.SerializeObject(request)));
             HttpResponseMessage responseMessage = new HttpResponseMessage();
             UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForImage(request);
+                CommonUtility.LogToFileWithStack(string.Format("Step 4, User Response: {0}", Newtonsoft.Json.JsonConvert.SerializeObject(userResponse)));
+
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.Insert)
                 {
+                    CommonUtility.LogToFileWithStack(string.Format("Step 5, Image Request: {0}", 
+                        Newtonsoft.Json.JsonConvert.SerializeObject(System.Web.HttpContext.Current.Request.Files)));
+
                     if (System.Web.HttpContext.Current.Request.Files != null
                         && System.Web.HttpContext.Current.Request.Files.Count > 0
                         && userResponse.UserInfo != null)
                     {
                         string imagePath = UploadImage(userResponse.UserInfo.UserKey, System.Web.HttpContext.Current.Request.Files.ToPostedFileBase());
+                        CommonUtility.LogToFileWithStack(string.Format("Step 5, User Response: {0}", imagePath));
+
                         if (!string.IsNullOrEmpty(imagePath))
                         {
                             UserImageModel userImage = new UserImageModel
@@ -487,10 +497,12 @@ namespace NJFairground.Web.Controllers
                             this._userImageDataRepository.Insert(userImage);
                             if (userImage.UserImageId > 0)
                             {
-
                                 userResponse.UserInfo.UserImages.Add(userImage);
                                 response.UserInfo = userResponse.UserInfo;
                                 response.ResponseStatus = RespStatus.Success.ToString();
+
+                                CommonUtility.LogToFileWithStack(string.Format("Step 6, Final Response: {0}",
+                                    Newtonsoft.Json.JsonConvert.SerializeObject(response)));
                             }
                         }
                     }
@@ -684,6 +696,33 @@ namespace NJFairground.Web.Controllers
         }
 
         /// <summary>
+        /// Gets the splash image.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpPost()]
+        public SplashImageResponseDto GetSplashImage(SplashImageRequestDto request)
+        {
+            SplashImageResponseDto response = InitiateResponse<SplashImageRequestDto, SplashImageResponseDto>(request);
+            try
+            {
+                if (request.Action == CrudAction.Select)
+                {
+                    string fileLocation = CommonUtility.GetAppSetting<string>("SplashImagePath");
+                    string splashImage = this.getRandomFile(HttpContext.Current.Server.MapPath(fileLocation));
+                    response.ImageUrl = splashImage;
+                    response.ResponseStatus = RespStatus.Success.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        #region Private Members
+        /// <summary>
         /// Authentications the user for page.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -828,6 +867,26 @@ namespace NJFairground.Web.Controllers
             return string.Empty;
         }
 
+        private string getRandomFile(string path)
+        {
+            string file = null;
+            if (!string.IsNullOrEmpty(path))
+            {
+                var extensions = new string[] { ".png", ".jpg", ".gif" };
+                try
+                {
+                    var di = new DirectoryInfo(path);
+                    var rgFiles = di.GetFiles("*.*").Where(f => extensions.Contains(f.Extension.ToLower()));
+                    random = new Random();
+                    file = rgFiles.ElementAt(random.Next(0, rgFiles.Count())).Name;
+                }
+                // probably should only catch specific exceptions
+                // throwable by the above methods.
+                catch { }
+            }
+            return file;
+        }
+
         /// <summary>
         /// Initiates the response.
         /// </summary>
@@ -842,6 +901,7 @@ namespace NJFairground.Web.Controllers
             TOut response = (TOut)Activator.CreateInstance(typeof(TOut), new object[] { request.RequestToken });
             response.ResponseStatus = RespStatus.Failure.ToString();
             return response;
-        }
+        } 
+        #endregion
     }
 }
