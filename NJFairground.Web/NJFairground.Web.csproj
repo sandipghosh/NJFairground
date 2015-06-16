@@ -483,6 +483,7 @@
     <Compile Include="Utilities\TaskScheduler\NotificationEngine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\NewApiPayload.txt" />
     <Content Include="App_Data\NJ_Fairground_guide_map.txt" />
     <Content Include="Areas\Admin\Scripts\common-admin-ui-script.js" />
     <Content Include="Areas\Admin\Scripts\content-manager.js" />

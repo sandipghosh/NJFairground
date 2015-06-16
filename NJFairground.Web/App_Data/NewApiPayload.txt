@@ -1,0 +1,133 @@
+Url: http://104.238.116.228/api/PageApi/AddPageToFevorite
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"UserInfo":{
+		"UserKey":0,
+		"UserId":"sandipghosh.dev",
+		"UserEmail":"sandipghosh.dev@gmail.com",
+		"FirstName":"Sandip",
+		"LastName":"Ghosh"
+	},
+	"PageItemId":501,
+	"Action":1
+}
+
+Url: http://104.238.116.228/api/PageApi/RemovePageFromFevorite
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"UserInfo":{
+		"UserKey":0,
+		"UserId":"sandipghosh.dev",
+		"UserEmail":"sandipghosh.dev@gmail.com",
+		"FirstName":"Sandip",
+		"LastName":"Ghosh"
+	},
+	"PageItemId":501,
+	"Action":5
+}
+
+Url: http://104.238.116.228/api/PageApi/GetFevoritePagesByUser
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"UserInfo":{
+		"UserKey":0,
+		"UserId":"sandipghosh.dev",
+		"UserEmail":"sandipghosh.dev@gmail.com",
+		"FirstName":"Sandip",
+		"LastName":"Ghosh"
+	},
+	"Action":8
+}
+
+Url: http://localhost:5764/api/PageApi/AddUserImage
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"UserInfo":{
+		"UserKey":0,
+		"UserId":"sandipghosh.dev",
+		"UserEmail":"sandipghosh.dev@gmail.com",
+		"FirstName":"Sandip",
+		"LastName":"Ghosh"
+	},
+	"Action":1
+}
+
+Url: http://localhost:5764/api/PageApi/HitSponsor
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"HitInfo":{
+		"SponsorId":1,
+		"SponsorTypeId":2
+	},
+	"Action":1
+}
+
+Url: http://104.238.116.228/api/PageApi/GetSplashImage
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":7
+}
+Url: http://104.238.116.228/api/PageApi/GetEvents
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":7
+}
+
+For Facebook
+Url: http://104.238.116.228/api/PageApi/GetMediaFeed
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":8,
+	"FeedRequestFor":1
+}
+
+For Twitter
+Url: http://104.238.116.228/api/PageApi/GetMediaFeed
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":8,
+	"FeedRequestFor":2
+}
+
+For Pinterest
+Url: http://104.238.116.228/api/PageApi/GetMediaFeed
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":8,
+	"FeedRequestFor":3
+}
+
+For Instagram
+Url: http://104.238.116.228/api/PageApi/GetMediaFeed
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":8,
+	"FeedRequestFor":4
+}
+
+
+
+
+
