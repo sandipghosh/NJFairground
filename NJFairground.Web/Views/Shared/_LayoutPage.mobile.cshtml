@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
+    @RenderSection("Meta", required: false)
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     @{Html.RenderPartial("_CommonStyleSection");}

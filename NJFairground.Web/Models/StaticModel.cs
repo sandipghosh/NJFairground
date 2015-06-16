@@ -40,7 +40,6 @@ namespace NJFairground.Web.Models
         Instagram = 4
     }
 
-
     public enum StatusEnum
     {
         Active = 1,
@@ -81,5 +80,11 @@ namespace NJFairground.Web.Models
     {
         success,
         failure
+    }
+
+    public enum SponsorType
+    {
+        Splash = 1,
+        Banner = 2
     }
 }

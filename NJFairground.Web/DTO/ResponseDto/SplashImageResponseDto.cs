@@ -25,14 +25,15 @@ namespace NJFairground.Web.DTO.ResponseDto
 
         }
 
+        public int SplashImageId { get; set; }
+
         private string _imageUrl;
         public string ImageUrl
         {
             get
             {
                 return string.IsNullOrEmpty(this._imageUrl) ? string.Empty :
-                   CommonUtility.ResolveServerUrl(string.Format("{0}{1}",
-                   CommonUtility.GetAppSetting<string>("SplashImagePath"), this._imageUrl), false);
+                   CommonUtility.ResolveServerUrl(this._imageUrl, false);
             }
             set { this._imageUrl = value; }
         }

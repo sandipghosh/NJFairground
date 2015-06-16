@@ -12,22 +12,15 @@ namespace NJFairground.Web.Data.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class Banner
+    public partial class SplashImage
     {
-        public Banner()
-        {
-            this.PageBanners = new HashSet<PageBanner>();
-            this.BannerItems = new HashSet<BannerItem>();
-        }
-    
-        public int BannerId { get; set; }
-        public bool IsDefault { get; set; }
+        public int SplashImageId { get; set; }
+        public string SplashName { get; set; }
+        public string ImageUrl { get; set; }
+        public string SponsorUrl { get; set; }
+        public int Position { get; set; }
         public int StatusId { get; set; }
         public int CreatedBy { get; set; }
-        public System.DateTime CreatedOn { get; set; }
-        public bool IsSplashImage { get; set; }
-    
-        public virtual ICollection<PageBanner> PageBanners { get; set; }
-        public virtual ICollection<BannerItem> BannerItems { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
     }
 }

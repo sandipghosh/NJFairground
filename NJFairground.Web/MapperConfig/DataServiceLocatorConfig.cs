@@ -47,6 +47,8 @@ namespace NJFairground.Web.MapperConfig
                 container.Register<IBannerDataRepository, BannerDataRepository>();
                 container.Register<IBannerItemDataRepository, BannerItemDataRepository>();
                 container.Register<IPageBannerDataRepository, PageBannerDataRepository>();
+                container.Register<ISplashImageDataRepository, SplashImageDataRepository>();
+                container.Register<IHitCounterDataRepository, HitCounterDataRepository>();
             }
             catch (Exception ex)
             {

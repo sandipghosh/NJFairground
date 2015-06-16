@@ -7,10 +7,11 @@ namespace NJFairground.Web.Models
     using Newtonsoft.Json;
     using NJFairground.Web.Models.Base;
 
-    public class BannerModel:BaseModel
+    public class BannerModel : BaseModel
     {
-        [JsonIgnore]
         public int BannerId { get; set; }
+
+        public string BannerName { get; set; }
         [JsonIgnore]
         public bool IsDefault { get; set; }
         [JsonIgnore]

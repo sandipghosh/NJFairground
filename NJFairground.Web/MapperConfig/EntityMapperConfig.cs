@@ -1,13 +1,13 @@
 ﻿
 namespace NJFairground.Web.MapperConfig
 {
-    using System;
-    using System.Linq;
     using AutoMapper;
     using NJFairground.Web.Areas.Admin.Models;
     using NJFairground.Web.Data.Context;
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
+    using System;
+    using System.Linq;
 
     public class EntityMapperConfig : Profile
     {
@@ -33,6 +33,12 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
+                Mapper.CreateMap<SplashImage, SplashImageModel>()
+                   .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
+
+                Mapper.CreateMap<HitCounter, HitCounterModel>()
+                   .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
+
                 Mapper.CreateMap<Banner, BannerModel>()
                    .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
 

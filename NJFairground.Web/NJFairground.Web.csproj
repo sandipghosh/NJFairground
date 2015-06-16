@@ -330,6 +330,9 @@
     <Compile Include="Data\Context\FavoritePage.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Context\HitCounter.cs">
+      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Context\NJFairgroundDBEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -360,6 +363,9 @@
     <Compile Include="Data\Context\PageItemDetail.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Context\SplashImage.cs">
+      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Context\UserImage.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
@@ -374,9 +380,11 @@
     <Compile Include="Data\Implementation\EventDataRepository.cs" />
     <Compile Include="Data\Implementation\FavoriteImageDataRepository.cs" />
     <Compile Include="Data\Implementation\FavoritePageDataRepository.cs" />
+    <Compile Include="Data\Implementation\HitCounterDataRepository.cs" />
     <Compile Include="Data\Implementation\PageBannerDataRepository.cs" />
     <Compile Include="Data\Implementation\PageItemDataRepository.cs" />
     <Compile Include="Data\Implementation\PageDataRepository.cs" />
+    <Compile Include="Data\Implementation\SplashImageDataRepository.cs" />
     <Compile Include="Data\Implementation\UserImageDataRepository.cs" />
     <Compile Include="Data\Implementation\UserInfoDataRepository.cs" />
     <Compile Include="Data\Interface\Base\IQueryableUnitOfWork.cs" />
@@ -389,16 +397,20 @@
     <Compile Include="Data\Interface\IEventDataRepository.cs" />
     <Compile Include="Data\Interface\IFavoriteImageDataRepository.cs" />
     <Compile Include="Data\Interface\IFavoritePageDataRepository.cs" />
+    <Compile Include="Data\Interface\IHitCounterDataRepository.cs" />
     <Compile Include="Data\Interface\IPageBannerDataRepository.cs" />
     <Compile Include="Data\Interface\IPageItemDataRepository.cs" />
     <Compile Include="Data\Interface\IPageDataRepository.cs" />
+    <Compile Include="Data\Interface\ISplashImageDataRepository.cs" />
     <Compile Include="Data\Interface\IUserImageDataRepository.cs" />
     <Compile Include="Data\Interface\IUserInfoDataRepository.cs" />
     <Compile Include="DTO\Base\CrudAction.cs" />
     <Compile Include="DTO\Base\RequestBase.cs" />
     <Compile Include="DTO\Base\ResponseBase.cs" />
     <Compile Include="DTO\RequestDto\AppInfoRequestDto.cs" />
+    <Compile Include="DTO\RequestDto\EventRequestDto.cs" />
     <Compile Include="DTO\RequestDto\FavoritePageRequestDto.cs" />
+    <Compile Include="DTO\RequestDto\HitCounterRequestDto.cs" />
     <Compile Include="DTO\RequestDto\MapRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageBannerRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageItemRequestDto.cs" />
@@ -408,7 +420,9 @@
     <Compile Include="DTO\RequestDto\UserAuthenticationRequestDto.cs" />
     <Compile Include="DTO\RequestDto\UserImageRequestDto.cs" />
     <Compile Include="DTO\ResponseDto\AppInfoResponseDto.cs" />
+    <Compile Include="DTO\ResponseDto\EventResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\FavoritePageResponseDto.cs" />
+    <Compile Include="DTO\ResponseDto\HitCounterResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\MapResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageBannerResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageItemResponseDto.cs" />
@@ -417,6 +431,7 @@
     <Compile Include="DTO\ResponseDto\SplashImageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\UserAuthenticationResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\UserImageResponseDto.cs" />
+    <Compile Include="Filters\HtmlHelpers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -431,11 +446,14 @@
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\FavoriteImageModel.cs" />
     <Compile Include="Models\FavoritePageModel.cs" />
+    <Compile Include="Models\HitCounterModel.cs" />
     <Compile Include="Models\MapCoordinateModel.cs" />
+    <Compile Include="Models\MetaInfoViewModel.cs" />
     <Compile Include="Models\PageBannerModel.cs" />
     <Compile Include="Models\PageItemModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\RssFeedModel.cs" />
+    <Compile Include="Models\SplashImageModel.cs" />
     <Compile Include="Models\StaticModel.cs" />
     <Compile Include="Models\UserImageModel.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
@@ -934,7 +952,11 @@
     <Content Include="Upload\schedule-pic1.jpg" />
     <Content Include="Upload\snook.jpg" />
     <Content Include="Upload\special_days.jpg" />
-    <Content Include="Upload\SplashImages\LLB-017-Mobile-Fair-Splash-Ad.jpg" />
+    <Content Include="Upload\SplashImages\0DE2E037EF554796AECE25319FA9D536.jpg" />
+    <Content Include="Upload\SplashImages\CE2F9FBAEA584CE9AF090921B5814FCC.jpg" />
+    <Content Include="Upload\SplashImages\3325A1A254C9439398AE1B339F9942C9.jpg" />
+    <Content Include="Upload\SplashImages\F910D27B6702436DB9580389B205F43A.jpg" />
+    <Content Include="Upload\SplashImages\BC993A71D0AB4F79B79C73EBEB24774A.jpg" />
     <Content Include="Upload\star.png" />
     <Content Include="Styles\Images\thumb-agriculture.png" />
     <Content Include="Styles\Images\thumb-calendar.png" />
@@ -1058,9 +1080,7 @@
     <Content Include="Scripts\jquery.validate.min.js.map" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Filters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>

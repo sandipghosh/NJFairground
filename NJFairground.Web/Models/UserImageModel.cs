@@ -9,7 +9,6 @@ namespace NJFairground.Web.Models
 
     public class UserImageModel : BaseModel
     {
-        [JsonIgnore]
         public int UserImageId { get; set; }
         [JsonIgnore]
         public int UserKey { get; set; }

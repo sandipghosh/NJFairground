@@ -22,6 +22,7 @@ namespace NJFairground.Web.Data.Context
         public int StatusId { get; set; }
         public int CreatedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }
+        public string BannerName { get; set; }
     
         public virtual Banner Banner { get; set; }
     }

@@ -22,6 +22,7 @@ namespace NJFairground.Web.Utilities
     using System.Web.Routing;
     using Newtonsoft.Json;
     using NJFairground.Web.Models;
+    using System.Text.RegularExpressions;
 
     public static class CommonUtility
     {
@@ -1035,6 +1036,18 @@ namespace NJFairground.Web.Utilities
             }
             else
                 return new List<HttpPostedFileBase>();
+        }
+
+        /// <summary>
+        /// Scrubs the HTML.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string ScrubHtml(this string value)
+        {
+            var step1 = Regex.Replace(value, @"<[^>]+>|&nbsp;", "").Trim();
+            var step2 = Regex.Replace(step1, @"\s{2,}", " ");
+            return step2;
         }
 
         #region Private Members

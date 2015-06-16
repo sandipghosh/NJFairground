@@ -32,6 +32,8 @@ namespace NJFairground.Web.Controllers
         private readonly IUserImageDataRepository _userImageDataRepository;
         private readonly IBannerDataRepository _bannerDataRepository;
         private readonly IPageBannerDataRepository _pageBannerDataRepository;
+        private readonly ISplashImageDataRepository _splashImageDataRepository;
+        private readonly IHitCounterDataRepository _hitCounterDataRepository;
 
         private Random random;
 
@@ -53,7 +55,9 @@ namespace NJFairground.Web.Controllers
             IFavoriteImageDataRepository favoriteImageDataRepository,
             IUserImageDataRepository userImageDataRepository,
             IBannerDataRepository bannerDataRepository,
-            IPageBannerDataRepository pageBannerDataRepository)
+            IPageBannerDataRepository pageBannerDataRepository,
+            ISplashImageDataRepository splashImageDataRepository,
+            IHitCounterDataRepository hitCounterDataRepository)
         {
             this._pageDataRepository = pageDataRepository;
             this._pageItemDataRepository = pageItemDataRepository;
@@ -63,6 +67,8 @@ namespace NJFairground.Web.Controllers
             this._userImageDataRepository = userImageDataRepository;
             this._bannerDataRepository = bannerDataRepository;
             this._pageBannerDataRepository = pageBannerDataRepository;
+            this._splashImageDataRepository = splashImageDataRepository;
+            this._hitCounterDataRepository = hitCounterDataRepository;
         }
 
         /// <summary>
@@ -375,6 +381,7 @@ namespace NJFairground.Web.Controllers
                             this._favoritePageDataRepository.Insert(favoritePage);
                             if (favoritePage.FavoritePageId > 0)
                             {
+                                favoritePage.PageItem = this._pageItemDataRepository.Get(favoritePage.PageItemId);
                                 userResponse.UserInfo.FavoritePages.Add(favoritePage);
                             }
                         }
@@ -464,27 +471,19 @@ namespace NJFairground.Web.Controllers
         [HttpPost()]
         public HttpResponseMessage AddUserImage(UserImageRequestDto request)
         {
-            CommonUtility.LogToFileWithStack(string.Format("Step 1, Request: {0}", Newtonsoft.Json.JsonConvert.SerializeObject(request)));
             HttpResponseMessage responseMessage = new HttpResponseMessage();
             UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForImage(request);
-                CommonUtility.LogToFileWithStack(string.Format("Step 4, User Response: {0}", Newtonsoft.Json.JsonConvert.SerializeObject(userResponse)));
-
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.Insert)
                 {
-                    CommonUtility.LogToFileWithStack(string.Format("Step 5, Image Request: {0}",
-                        Newtonsoft.Json.JsonConvert.SerializeObject(System.Web.HttpContext.Current.Request.Files)));
-
                     if (System.Web.HttpContext.Current.Request.Files != null
                         && System.Web.HttpContext.Current.Request.Files.Count > 0
                         && userResponse.UserInfo != null)
                     {
                         string imagePath = UploadImage(userResponse.UserInfo.UserKey, System.Web.HttpContext.Current.Request.Files.ToPostedFileBase());
-                        CommonUtility.LogToFileWithStack(string.Format("Step 5, User Response: {0}", imagePath));
-
                         if (!string.IsNullOrEmpty(imagePath))
                         {
                             UserImageModel userImage = new UserImageModel
@@ -501,9 +500,6 @@ namespace NJFairground.Web.Controllers
                                 userResponse.UserInfo.UserImages.Add(userImage);
                                 response.UserInfo = userResponse.UserInfo;
                                 response.ResponseStatus = RespStatus.Success.ToString();
-
-                                CommonUtility.LogToFileWithStack(string.Format("Step 6, Final Response: {0}",
-                                    Newtonsoft.Json.JsonConvert.SerializeObject(response)));
                             }
                         }
                     }
@@ -714,16 +710,88 @@ namespace NJFairground.Web.Controllers
                     var allPoprItem = im.PropertyItems;
                     const int metTitle = 0x10e;
                     var title = allPoprItem.FirstOrDefault(x => x.Id == metTitle);
-                    return encoding.GetString(title.Value).Replace("\0","");
+                    return encoding.GetString(title.Value).Replace("\0", "");
                 };
 
                 if (request.Action == CrudAction.Select)
                 {
-                    string fileLocation = CommonUtility.GetAppSetting<string>("SplashImagePath");
-                    string splashImage = this.getRandomFile(HttpContext.Current.Server.MapPath(fileLocation));
-                    response.ImageUrl = Path.GetFileName(splashImage);
-                    response.RedirectionUrl = getAttribute(splashImage, "Title");
+                    var splashImages = this._splashImageDataRepository.GetList
+                        (x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+
+                    if (!splashImages.IsEmptyCollection())
+                    {
+                        random = new Random();
+                        SplashImageModel splashImage = splashImages.ElementAt(random.Next(0, splashImages.Count()));
+                        if (splashImage != null)
+                        {
+                            response.SplashImageId = splashImage.SplashImageId;
+                            response.ImageUrl = splashImage.ImageUrl;
+                            response.RedirectionUrl = splashImage.SponsorUrl;
+                            response.ResponseStatus = RespStatus.Success.ToString();
+                        }
+                    }
+
+                    //string fileLocation = CommonUtility.GetAppSetting<string>("SplashImagePath");
+                    //string splashImage = this.getRandomFile(HttpContext.Current.Server.MapPath(fileLocation));
+                    //response.ImageUrl = Path.GetFileName(splashImage);
+                    //response.RedirectionUrl = getAttribute(splashImage, "Title");
+                    //response.ResponseStatus = RespStatus.Success.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Gets the events.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpPost()]
+        public EventResponseDto GetEvents(EventRequestDto request)
+        {
+            EventResponseDto response = InitiateResponse<EventRequestDto, EventResponseDto>(request);
+            try
+            {
+                if (request.Action == CrudAction.Select)
+                {
+                    response.RedirectionUrl = CommonUtility.GetAppSetting<string>("EventUrl");
                     response.ResponseStatus = RespStatus.Success.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Hits the sponsor.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public HitCounterResponseDto HitSponsor(HitCounterRequestDto request)
+        {
+            HitCounterResponseDto response = InitiateResponse<HitCounterRequestDto, HitCounterResponseDto>(request);
+            try
+            {
+                if (request.Action == CrudAction.Insert)
+                {
+                    HitCounterModel hitInfo = request.HitInfo;
+                    hitInfo.StatusId = (int)StatusEnum.Active;
+                    hitInfo.HitOn = DateTime.Now;
+                    hitInfo.ClientIdentiy = GetIPAddress();
+
+                    this._hitCounterDataRepository.Insert(hitInfo);
+                    if (hitInfo.HitCounterId > 0)
+                    {
+                        response.ResponseStatus = RespStatus.Success.ToString();
+                    }
                 }
             }
             catch (Exception ex)
@@ -879,6 +947,11 @@ namespace NJFairground.Web.Controllers
             return string.Empty;
         }
 
+        /// <summary>
+        /// Gets the random file.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         private string getRandomFile(string path)
         {
             string file = null;
@@ -897,6 +970,27 @@ namespace NJFairground.Web.Controllers
                 catch { }
             }
             return file;
+        }
+
+        /// <summary>
+        /// Gets the ip address.
+        /// </summary>
+        /// <returns></returns>
+        private string GetIPAddress()
+        {
+            System.Web.HttpContext context = System.Web.HttpContext.Current;
+            string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+            if (!string.IsNullOrEmpty(ipAddress))
+            {
+                string[] addresses = ipAddress.Split(',');
+                if (addresses.Length != 0)
+                {
+                    return addresses[0];
+                }
+            }
+
+            return context.Request.ServerVariables["REMOTE_ADDR"];
         }
 
         /// <summary>

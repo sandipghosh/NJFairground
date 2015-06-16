@@ -1,4 +1,4 @@
-Url: http://localhost:5764/api/PageApi/AddPageToFevorite
+Url: http://104.238.116.228/api/PageApi/AddPageToFevorite
 Content-Type: application/json
 {
 	"AuthToken":"",
@@ -14,7 +14,7 @@ Content-Type: application/json
 	"Action":1
 }
 
-Url: http://localhost:5764/api/PageApi/RemovePageFromFevorite
+Url: http://104.238.116.228/api/PageApi/RemovePageFromFevorite
 Content-Type: application/json
 {
 	"AuthToken":"",
@@ -30,7 +30,7 @@ Content-Type: application/json
 	"Action":5
 }
 
-Url: http://localhost:5764/api/PageApi/GetFevoritePagesByUser
+Url: http://104.238.116.228/api/PageApi/GetFevoritePagesByUser
 Content-Type: application/json
 {
 	"AuthToken":"",
@@ -60,6 +60,32 @@ Content-Type: application/json
 	"Action":1
 }
 
+Url: http://localhost:5764/api/PageApi/HitSponsor
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"HitInfo":{
+		"SponsorId":1,
+		"SponsorTypeId":2
+	},
+	"Action":1
+}
+
+Url: http://104.238.116.228/api/PageApi/GetSplashImage
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":7
+}
+Url: http://104.238.116.228/api/PageApi/GetEvents
+Content-Type: application/json
+{
+	"AuthToken":"",
+	"RequestToken":"cbbeebb899104a328d3c4fdcde2b52b8",
+	"Action":7
+}
 
 For Facebook
 Url: http://104.238.116.228/api/PageApi/GetMediaFeed
