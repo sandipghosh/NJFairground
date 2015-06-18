@@ -9,9 +9,8 @@ namespace NJFairground.Web.Models
 
     public class BannerModel : BaseModel
     {
+        [JsonIgnore]
         public int BannerId { get; set; }
-
-        public string BannerName { get; set; }
         [JsonIgnore]
         public bool IsDefault { get; set; }
         [JsonIgnore]

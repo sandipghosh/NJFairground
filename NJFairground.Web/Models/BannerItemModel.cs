@@ -8,8 +8,8 @@ namespace NJFairground.Web.Models
 
     public class BannerItemModel : BaseModel
     {
-        [JsonIgnore]
         public int BannerItemId { get; set; }
+        public string BannerName { get; set; }
         [JsonIgnore]
         public int BannerId { get; set; }
         public string ImageUrl { get; set; }
