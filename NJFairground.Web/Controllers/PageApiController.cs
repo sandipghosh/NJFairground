@@ -520,12 +520,12 @@ namespace NJFairground.Web.Controllers
         /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpPost()]
-        public UserImageResponseDto DeleteUserImage(UserImageRequestDto request)
+        public FavoriteImageResponseDto DeleteUserImage(FavoriteImageRequestDto request)
         {
-            UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
+            FavoriteImageResponseDto response = InitiateResponse<FavoriteImageRequestDto, FavoriteImageResponseDto>(request);
             try
             {
-                var userResponse = this.AuthUserForImage(request);
+                var userResponse = this.AuthUserForFevImage(request);
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.Delete)
                 {
@@ -536,11 +536,13 @@ namespace NJFairground.Web.Controllers
                         {
                             userImage.StatusId = (int)StatusEnum.Inactive;
                             this._userImageDataRepository.Update(userImage);
-                            if (File.Exists(userImage.ImageUrl))
+                            string filePath = HttpContext.Current.Server.MapPath(userImage.UserImageUrl);
+                            if (File.Exists(filePath))
                             {
-                                File.Delete(userImage.ImageUrl);
+                                File.Delete(filePath);
                             }
                             userResponse.UserInfo.UserImages.RemoveAll(x => x.UserImageId.Equals(request.UserImageId));
+                            response.UserInfo = userResponse.UserInfo;
                             response.ResponseStatus = RespStatus.Success.ToString();
                         }
                     }
@@ -564,7 +566,7 @@ namespace NJFairground.Web.Controllers
             FavoriteImageResponseDto response = InitiateResponse<FavoriteImageRequestDto, FavoriteImageResponseDto>(request);
             try
             {
-                var userResponse = this.AuthUserForFavImage(request);
+                var userResponse = this.AuthUserForFevImage(request);
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.Insert)
                 {
@@ -618,7 +620,7 @@ namespace NJFairground.Web.Controllers
             FavoriteImageResponseDto response = InitiateResponse<FavoriteImageRequestDto, FavoriteImageResponseDto>(request);
             try
             {
-                var userResponse = this.AuthUserForFavImage(request);
+                var userResponse = this.AuthUserForFevImage(request);
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.Delete)
                 {
@@ -872,7 +874,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        private UserAuthenticationResponseDto AuthUserForFavImage(FavoriteImageRequestDto request)
+        private UserAuthenticationResponseDto AuthUserForFevImage(FavoriteImageRequestDto request)
         {
             UserAuthenticationResponseDto response = new UserAuthenticationResponseDto(request.RequestToken);
             try
