@@ -559,16 +559,17 @@ namespace NJFairground.Web.Controllers
         /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpPost()]
-        public UserImageResponseDto AddImageToFevorite(UserImageRequestDto request)
+        public FavoriteImageResponseDto AddImageToFevorite(FavoriteImageRequestDto request)
         {
-            UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
+            FavoriteImageResponseDto response = InitiateResponse<FavoriteImageRequestDto, FavoriteImageResponseDto>(request);
             try
             {
-                var userResponse = this.AuthUserForImage(request);
+                var userResponse = this.AuthUserForFavImage(request);
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.Insert)
                 {
-                    if (request.UserImageId > 0 && userResponse.UserInfo != null)
+                    if (request.UserImageId > 0 && userResponse.UserInfo != null
+                        && userResponse.UserInfo.UserImages.Any(x => x.UserImageId.Equals(request.UserImageId)))
                     {
                         var data = this._favoriteImageDataRepository.GetList
                             (x => x.UserImageId == request.UserImageId).FirstOrDefault();
@@ -585,17 +586,16 @@ namespace NJFairground.Web.Controllers
 
                             this._favoriteImageDataRepository.Insert(favoriteImage);
                             if (favoriteImage.FavoriteImageId > 0)
-                            {
-                                userResponse.UserInfo.UserImages.ForEach(x =>
-                                {
-                                    if (x.UserImageId == request.UserImageId && x.UserKey == userResponse.UserInfo.UserKey)
-                                    {
-                                        x.IsFavorite = true;
-                                        return;
-                                    }
-                                });
-                            }
+                                MarkFevoriteOnOff(userResponse.UserInfo, userResponse.UserInfo.UserKey, request.UserImageId, true);
                         }
+                        else if (data.StatusId==(int)StatusEnum.Inactive)
+                        {
+                            data.StatusId = (int)StatusEnum.Active;
+                            this._favoriteImageDataRepository.Update(data);
+                            MarkFevoriteOnOff(userResponse.UserInfo, userResponse.UserInfo.UserKey, request.UserImageId, true);
+                        }
+
+                        response.UserInfo = userResponse.UserInfo;
                         response.ResponseStatus = RespStatus.Success.ToString();
                     }
                 }
@@ -613,34 +613,28 @@ namespace NJFairground.Web.Controllers
         /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpPost()]
-        public UserImageResponseDto RemoveImageFromFevorite(UserImageRequestDto request)
+        public FavoriteImageResponseDto RemoveImageFromFevorite(FavoriteImageRequestDto request)
         {
-            UserImageResponseDto response = InitiateResponse<UserImageRequestDto, UserImageResponseDto>(request);
+            FavoriteImageResponseDto response = InitiateResponse<FavoriteImageRequestDto, FavoriteImageResponseDto>(request);
             try
             {
-                var userResponse = this.AuthUserForImage(request);
+                var userResponse = this.AuthUserForFavImage(request);
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.Delete)
                 {
-                    if (request.UserImageId > 0 && userResponse.UserInfo != null)
+                    if (request.UserImageId > 0 && userResponse.UserInfo != null
+                        && userResponse.UserInfo.UserImages.Any(x => x.UserImageId.Equals(request.UserImageId)))
                     {
                         var data = this._favoriteImageDataRepository.GetList
                             (x => x.UserImageId == request.UserImageId).FirstOrDefault();
 
-                        if (data != null)
+                        if (data != null && data.StatusId == (int)StatusEnum.Active)
                         {
                             data.StatusId = (int)StatusEnum.Inactive;
                             this._favoriteImageDataRepository.Update(data);
-
-                            userResponse.UserInfo.UserImages.ForEach(x =>
-                            {
-                                if (x.UserImageId == request.UserImageId && x.UserKey == userResponse.UserInfo.UserKey)
-                                {
-                                    x.IsFavorite = false;
-                                    return;
-                                }
-                            });
+                            MarkFevoriteOnOff(userResponse.UserInfo, userResponse.UserInfo.UserKey, request.UserImageId, false);
                         }
+                        response.UserInfo = userResponse.UserInfo;
                         response.ResponseStatus = RespStatus.Success.ToString();
                     }
                 }
@@ -651,6 +645,19 @@ namespace NJFairground.Web.Controllers
             }
             return response;
         }
+
+        private void MarkFevoriteOnOff(UserInfoModel userInfo, int userKey, int userImageId, bool status)
+        {
+            userInfo.UserImages.ForEach(x =>
+            {
+                if (x.UserImageId == userImageId && x.UserKey == userKey)
+                {
+                    x.IsFavorite = status;
+                    return;
+                }
+            });
+        }
+
 
         /// <summary>
         /// Gets the page banner.
@@ -837,6 +844,35 @@ namespace NJFairground.Web.Controllers
         /// <param name="request">The request.</param>
         /// <returns></returns>
         private UserAuthenticationResponseDto AuthUserForImage(UserImageRequestDto request)
+        {
+            UserAuthenticationResponseDto response = new UserAuthenticationResponseDto(request.RequestToken);
+            try
+            {
+                UserAuthenticationRequestDto userRequest = new UserAuthenticationRequestDto()
+                {
+                    RequestToken = request.RequestToken,
+                    AuthToken = request.AuthToken,
+                    UserInfo = request.UserInfo,
+                    Action = CrudAction.Insert
+                };
+
+                response = this.AuthenticateUser(userRequest);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.ResponseStatus = RespStatus.Failure.ToString();
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Authentications the user for fav image.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        private UserAuthenticationResponseDto AuthUserForFavImage(FavoriteImageRequestDto request)
         {
             UserAuthenticationResponseDto response = new UserAuthenticationResponseDto(request.RequestToken);
             try

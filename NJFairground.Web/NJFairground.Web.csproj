@@ -409,6 +409,7 @@
     <Compile Include="DTO\Base\ResponseBase.cs" />
     <Compile Include="DTO\RequestDto\AppInfoRequestDto.cs" />
     <Compile Include="DTO\RequestDto\EventRequestDto.cs" />
+    <Compile Include="DTO\RequestDto\FavoriteImageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\FavoritePageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\HitCounterRequestDto.cs" />
     <Compile Include="DTO\RequestDto\MapRequestDto.cs" />
@@ -421,6 +422,7 @@
     <Compile Include="DTO\RequestDto\UserImageRequestDto.cs" />
     <Compile Include="DTO\ResponseDto\AppInfoResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\EventResponseDto.cs" />
+    <Compile Include="DTO\ResponseDto\FavoriteImageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\FavoritePageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\HitCounterResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\MapResponseDto.cs" />
