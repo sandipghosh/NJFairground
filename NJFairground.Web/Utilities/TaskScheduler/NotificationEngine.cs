@@ -17,8 +17,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            app.RunSignalR(new HubConfiguration { EnableDetailedErrors = true, EnableJSONP = true });
-            app.MapSignalR();
+            app.MapSignalR(new HubConfiguration { EnableDetailedErrors = true, EnableJSONP = true });
         }
     }
 }

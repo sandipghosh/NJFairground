@@ -180,6 +180,19 @@
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="HitCounterDetail">
+          <Key>
+            <PropertyRef Name="SponsorType" />
+          </Key>
+          <Property Name="SponsorType" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="500" />
+          <Property Name="SponsorUrl" Type="nvarchar" MaxLength="500" />
+          <Property Name="ClientIdentity" Type="varchar" MaxLength="50" />
+          <Property Name="HitOn" Type="datetime" />
+        </EntityType>
         <Association Name="FK__BannerIte__Banne__65C116E7">
           <End Role="Banner" Type="Self.Banner" Multiplicity="1" />
           <End Role="BannerItem" Type="Self.BannerItem" Multiplicity="*" />
@@ -399,6 +412,16 @@
           <EntitySet Name="SplashImage" EntityType="Self.SplashImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserImage" EntityType="Self.UserImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HitCounterDetail" EntityType="Self.HitCounterDetail" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[HitCounterDetail].[SponsorType] AS [SponsorType], 
+[HitCounterDetail].[Name] AS [Name], 
+[HitCounterDetail].[ImageUrl] AS [ImageUrl], 
+[HitCounterDetail].[SponsorUrl] AS [SponsorUrl], 
+[HitCounterDetail].[ClientIdentity] AS [ClientIdentity], 
+[HitCounterDetail].[HitOn] AS [HitOn]
+FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__BannerIte__Banne__65C116E7" Association="Self.FK__BannerIte__Banne__65C116E7">
             <End Role="Banner" EntitySet="Banner" />
             <End Role="BannerItem" EntitySet="BannerItem" />
@@ -551,6 +574,7 @@
             <End Role="Banner" EntitySet="Banners" />
             <End Role="BannerItem" EntitySet="BannerItems" />
           </AssociationSet>
+          <EntitySet Name="HitCounterDetails" EntityType="NJFairgroundDBModel.HitCounterDetail" />
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -951,6 +975,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="HitCounterDetail">
+          <Key>
+            <PropertyRef Name="SponsorType" />
+          </Key>
+          <Property Name="SponsorType" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ImageUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SponsorUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ClientIdentity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HitOn" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1143,6 +1178,18 @@
                 <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
                 <ScalarProperty Name="SplashName" ColumnName="SplashName" />
                 <ScalarProperty Name="SplashImageId" ColumnName="SplashImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HitCounterDetails">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.HitCounterDetail">
+              <MappingFragment StoreEntitySet="HitCounterDetail">
+                <ScalarProperty Name="HitOn" ColumnName="HitOn" />
+                <ScalarProperty Name="ClientIdentity" ColumnName="ClientIdentity" />
+                <ScalarProperty Name="SponsorUrl" ColumnName="SponsorUrl" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SponsorType" ColumnName="SponsorType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

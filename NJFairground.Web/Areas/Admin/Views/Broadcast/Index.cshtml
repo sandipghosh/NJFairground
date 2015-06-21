@@ -1,0 +1,27 @@
+﻿@using NJFairground.Web.Utilities;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    
+    @Html.RenderScripts("~/Areas/Admin/Scripts/CommonAdminScript")
+</head>
+<body>
+    <div>
+        @using (Ajax.BeginForm("BroadcastAnnouncement", "Broadcast", new AjaxOptions { UpdateTargetId = "Productresult" }))
+        {
+            @Html.TextArea("msg")
+            <input type="submit" value="BroadCast" />
+            <div id="Productresult"></div>
+        }
+    </div>
+</body>
+
+
+
+</html>

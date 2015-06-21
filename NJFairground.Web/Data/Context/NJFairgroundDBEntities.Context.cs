@@ -60,6 +60,8 @@ public partial class NJFairgroundDBEntities : DbContext
 
     public DbSet<SplashImage> SplashImages { get; set; }
 
+    public DbSet<HitCounterDetail> HitCounterDetails { get; set; }
+
 }
 
 }
