@@ -276,6 +276,7 @@
     <Compile Include="Areas\Admin\Controllers\EventSchedulerController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MapCreaterController.cs" />
     <Compile Include="Areas\Admin\Models\Base\GridModelSchema.cs" />
     <Compile Include="Areas\Admin\Models\SchedularSchema.cs" />
@@ -493,12 +494,19 @@
   <ItemGroup>
     <Content Include="App_Data\NewApiPayload.txt" />
     <Content Include="App_Data\NJ_Fairground_guide_map.txt" />
+    <Content Include="Areas\Admin\Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Scripts\jquery-2.1.4.js" />
     <Content Include="Areas\Admin\Scripts\jquery-2.1.4.min.js" />
     <Content Include="Areas\Admin\Scripts\jquery-migrate-1.2.1.min.js" />
     <Content Include="Areas\Admin\Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Areas\Admin\Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Areas\Admin\Scripts\metisMenu.min.js" />
+    <Content Include="Areas\Admin\Scripts\sb-admin-2.js" />
     <Content Include="Areas\Admin\Styles\admin-styles.css" />
+    <Content Include="Areas\Admin\Styles\bootstrap.css" />
+    <Content Include="Areas\Admin\Styles\font-awesome.css" />
+    <Content Include="Areas\Admin\Styles\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Areas\Admin\Styles\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Areas\Admin\Styles\fullcalendar.css" />
     <Content Include="Areas\Admin\Styles\fullcalendar.print.css" />
     <Content Include="Areas\Admin\Styles\Images\animated-overlay.gif" />
@@ -519,6 +527,8 @@
     <Content Include="Areas\Admin\Styles\Images\ui-icons_888888_256x240.png" />
     <Content Include="Areas\Admin\Styles\Images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Areas\Admin\Styles\jquery-ui-1.10.4.custom.min.css" />
+    <Content Include="Areas\Admin\Styles\metisMenu.min.css" />
+    <Content Include="Areas\Admin\Styles\sb-admin-2.css" />
     <Content Include="DBScript\ImageUpload.html" />
     <Content Include="DBScript\NJFairground13_07_2014_0138.sql" />
     <Content Include="DBScript\NJFairgroundDB_Scriptwithdata_06_07_2014_1138pm.sql" />
@@ -550,6 +560,15 @@
     <Content Include="Areas\Admin\Views\Shared\_GridGlobalMaster.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AddEvent.cshtml" />
     <Content Include="Areas\Admin\Views\Broadcast\Index.cshtml" />
+    <Content Include="Areas\Admin\Styles\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Admin\Styles\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Areas\Admin\Styles\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Admin\Styles\Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Admin\Styles\Fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\Admin\Styles\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Areas\Admin\Styles\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Areas\Admin\Styles\Fonts\FontAwesome.otf" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />

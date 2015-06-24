@@ -33,10 +33,13 @@ namespace NJFairground.Web
         {
             try
             {
-                Bundle scriptBundle = new Bundle("~/Areas/Admin/Scripts/CommonAdminScript", new JsMinify());
+                Bundle scriptBundle = new Bundle("~/Scripts/CommonAdminScript", new JsMinify());
                 scriptBundle.Include("~/Areas/Admin/Scripts/jquery-2.1.4.min.js",
                     "~/Areas/Admin/Scripts/jquery-migrate-1.2.1.min.js",
-                    "~/Areas/Admin/Scripts/jquery.unobtrusive-ajax.min.js"
+                    "~/Areas/Admin/Scripts/jquery.unobtrusive-ajax.min.js",
+                    "~/Areas/Admin/Scripts/bootstrap.min.js",
+                    "~/Areas/Admin/Scripts/metisMenu.min.js",
+                    "~/Areas/Admin/Scripts/sb-admin-2.js"
                 );
                 BundleTable.Bundles.Add(scriptBundle);
 
@@ -49,17 +52,17 @@ namespace NJFairground.Web
                 );
                 BundleTable.Bundles.Add(scriptBundle);
 
-                scriptBundle = new Bundle("~/Scripts/CommonAdminScript", new JsMinify());
-                scriptBundle.Include("~/Scripts/jquery-2.1.4.min.js",
-                    "~/Scripts/jquery-migrate-1.2.1.min.js",
-                    "~/Areas/Admin/Scripts/jquery-ui-1.11.4.custom.min.js",
-                    "~/Areas/Admin/Scripts/json3.js",
-                    "~/Areas/Admin/Scripts/jquery.formatDateTime.js",
-                    "~/Areas/Admin/Scripts/jquery.blockUI.js",
-                    "~/Scripts/common-script.js",
-                    "~/Areas/Admin/Scripts/common-admin-ui-script.js"
-                );
-                BundleTable.Bundles.Add(scriptBundle);
+                //scriptBundle = new Bundle("~/Scripts/CommonAdminScript", new JsMinify());
+                //scriptBundle.Include("~/Scripts/jquery-2.1.4.min.js",
+                //    "~/Scripts/jquery-migrate-1.2.1.min.js",
+                //    "~/Areas/Admin/Scripts/jquery-ui-1.11.4.custom.min.js",
+                //    "~/Areas/Admin/Scripts/json3.js",
+                //    "~/Areas/Admin/Scripts/jquery.formatDateTime.js",
+                //    "~/Areas/Admin/Scripts/jquery.blockUI.js",
+                //    "~/Scripts/common-script.js",
+                //    "~/Areas/Admin/Scripts/common-admin-ui-script.js"
+                //);
+                //BundleTable.Bundles.Add(scriptBundle);
 
                 scriptBundle = new Bundle("~/Scripts/MapScript", new JsMinify());
                 scriptBundle.Include("~/Scripts/imageMapResizer.min.js",
@@ -114,8 +117,10 @@ namespace NJFairground.Web
                 BundleTable.Bundles.Add(styleBundle);
 
                 styleBundle = new Bundle("~/Styles/CommonAdminStyle", new CustomCssMinify(), new CssMinify());
-                styleBundle.Include("~/Areas/Admin/Styles/jquery-ui-1.10.4.custom.min.css",
-                    "~/Areas/Admin/Styles/admin-styles.css");
+                styleBundle.Include("~/Areas/Admin/Styles/bootstrap.css",
+                    "~/Areas/Admin/Styles/sb-admin-2.css",
+                    "~/Areas/Admin/Styles/metisMenu.min.css",
+                    "~/Areas/Admin/Styles/font-awesome.css");
                 BundleTable.Bundles.Add(styleBundle);
 
                 styleBundle = new Bundle("~/Styles/MapStyle", new CustomCssMinify(), new CssMinify());
