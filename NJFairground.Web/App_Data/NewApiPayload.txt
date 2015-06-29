@@ -131,3 +131,12 @@ Content-Type: application/json
 
 
 
+
+CREATE TABLE DeviceRegistry
+(
+	DeviceRegistryId INT NOT NULL IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+	DeviceId NVARCHAR(100) NOT NULL,
+	DeviceType INT NOT NULL,
+	StatusId INT NOT NULL DEFAULT 1,
+	CreatedOn DATETIME NOT NULL DEFAULT GETDATE()
+)
