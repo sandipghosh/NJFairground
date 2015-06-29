@@ -34,6 +34,7 @@ namespace NJFairground.Web.Controllers
         private readonly IPageBannerDataRepository _pageBannerDataRepository;
         private readonly ISplashImageDataRepository _splashImageDataRepository;
         private readonly IHitCounterDataRepository _hitCounterDataRepository;
+        private readonly IDeviceRegistryDataRepository _deviceRegistryDataRepository;
 
         private Random random;
 
@@ -57,7 +58,8 @@ namespace NJFairground.Web.Controllers
             IBannerDataRepository bannerDataRepository,
             IPageBannerDataRepository pageBannerDataRepository,
             ISplashImageDataRepository splashImageDataRepository,
-            IHitCounterDataRepository hitCounterDataRepository)
+            IHitCounterDataRepository hitCounterDataRepository,
+            IDeviceRegistryDataRepository deviceRegistryDataRepository)
         {
             this._pageDataRepository = pageDataRepository;
             this._pageItemDataRepository = pageItemDataRepository;
@@ -69,6 +71,50 @@ namespace NJFairground.Web.Controllers
             this._pageBannerDataRepository = pageBannerDataRepository;
             this._splashImageDataRepository = splashImageDataRepository;
             this._hitCounterDataRepository = hitCounterDataRepository;
+            this._deviceRegistryDataRepository = deviceRegistryDataRepository;
+        }
+
+        /// <summary>
+        /// Registers the device.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpPost()]
+        public DeviceRegistryResponseDto RegisterDevice(DeviceRegistryRequestDto request)
+        {
+            DeviceRegistryResponseDto response = InitiateResponse<DeviceRegistryRequestDto, DeviceRegistryResponseDto>(request);
+            try
+            {
+                if (request.Action == CrudAction.Insert)
+                {
+                    DeviceRegistryModel registeredDevice = this._deviceRegistryDataRepository
+                        .GetList(x => x.DeviceId.Equals(request.DeviceId) && x.DeviceType.Equals(request.DeciceType)
+                        && x.StatusId.Equals((int)StatusEnum.Active)).FirstOrDefault();
+
+                    if (registeredDevice != null)
+                    {
+                        registeredDevice = new DeviceRegistryModel
+                        {
+                            DeviceId = request.DeviceId,
+                            DeviceType = request.DeciceType,
+                            StatusId = (int)StatusEnum.Active,
+                            CreatedOn = DateTime.Now
+                        };
+
+                        this._deviceRegistryDataRepository.Insert(registeredDevice);
+                        if (registeredDevice.DeviceRegistryId > 0)
+                            response.Device = registeredDevice;
+                    }
+                    else
+                        response.Device = registeredDevice;
+                    response.ResponseStatus = RespStatus.Success.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
         }
 
         /// <summary>
@@ -590,7 +636,7 @@ namespace NJFairground.Web.Controllers
                             if (favoriteImage.FavoriteImageId > 0)
                                 MarkFevoriteOnOff(userResponse.UserInfo, userResponse.UserInfo.UserKey, request.UserImageId, true);
                         }
-                        else if (data.StatusId==(int)StatusEnum.Inactive)
+                        else if (data.StatusId == (int)StatusEnum.Inactive)
                         {
                             data.StatusId = (int)StatusEnum.Active;
                             this._favoriteImageDataRepository.Update(data);
@@ -647,19 +693,6 @@ namespace NJFairground.Web.Controllers
             }
             return response;
         }
-
-        private void MarkFevoriteOnOff(UserInfoModel userInfo, int userKey, int userImageId, bool status)
-        {
-            userInfo.UserImages.ForEach(x =>
-            {
-                if (x.UserImageId == userImageId && x.UserKey == userKey)
-                {
-                    x.IsFavorite = status;
-                    return;
-                }
-            });
-        }
-
 
         /// <summary>
         /// Gets the page banner.
@@ -1029,6 +1062,25 @@ namespace NJFairground.Web.Controllers
             }
 
             return context.Request.ServerVariables["REMOTE_ADDR"];
+        }
+
+        /// <summary>
+        /// Marks the fevorite on off.
+        /// </summary>
+        /// <param name="userInfo">The user information.</param>
+        /// <param name="userKey">The user key.</param>
+        /// <param name="userImageId">The user image identifier.</param>
+        /// <param name="status">if set to <c>true</c> [status].</param>
+        private void MarkFevoriteOnOff(UserInfoModel userInfo, int userKey, int userImageId, bool status)
+        {
+            userInfo.UserImages.ForEach(x =>
+            {
+                if (x.UserImageId == userImageId && x.UserKey == userKey)
+                {
+                    x.IsFavorite = status;
+                    return;
+                }
+            });
         }
 
         /// <summary>

@@ -87,4 +87,10 @@ namespace NJFairground.Web.Models
         Splash = 1,
         Banner = 2
     }
+
+    public enum MobileDeviceType
+    {
+        Android = 1,
+        iOS = 2
+    }
 }

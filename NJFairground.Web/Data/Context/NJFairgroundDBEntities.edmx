@@ -28,7 +28,16 @@
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="BannerName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeviceRegistry">
+          <Key>
+            <PropertyRef Name="DeviceRegistryId" />
+          </Key>
+          <Property Name="DeviceRegistryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DeviceType" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -67,28 +76,17 @@
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="HitCounter">
-          <Key>
-            <PropertyRef Name="HitCounterId" />
-          </Key>
-          <Property Name="HitCounterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SponsorId" Type="int" Nullable="false" />
-          <Property Name="SponsorTypeId" Type="int" Nullable="false" />
-          <Property Name="ClientIdentiy" Type="varchar" MaxLength="50" />
-          <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="HitOn" Type="datetime" />
-        </EntityType>
         <EntityType Name="Page">
           <Key>
             <PropertyRef Name="PageId" />
           </Key>
           <Property Name="PageId" Type="int" Nullable="false" />
           <Property Name="PageName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PageDesc" Type="nvarchar" MaxLength="50" />
+          <Property Name="PageDesc" Type="nvarchar(max)" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="PageContent" Type="nvarchar(max)" />
-          <Property Name="PageImage" Type="nvarchar" MaxLength="500" />
+          <Property Name="PageImage" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="PageBanner">
           <Key>
@@ -144,19 +142,6 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
-        <EntityType Name="SplashImage">
-          <Key>
-            <PropertyRef Name="SplashImageId" />
-          </Key>
-          <Property Name="SplashImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SplashName" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="ImageUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="SponsorUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Position" Type="int" Nullable="false" />
-          <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" />
-        </EntityType>
         <EntityType Name="UserImage">
           <Key>
             <PropertyRef Name="UserImageId" />
@@ -180,20 +165,7 @@
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="HitCounterDetail">
-          <Key>
-            <PropertyRef Name="SponsorType" />
-          </Key>
-          <Property Name="SponsorType" Type="varchar" MaxLength="6" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="500" />
-          <Property Name="ImageUrl" Type="nvarchar" MaxLength="500" />
-          <Property Name="SponsorUrl" Type="nvarchar" MaxLength="500" />
-          <Property Name="ClientIdentity" Type="varchar" MaxLength="50" />
-          <Property Name="HitOn" Type="datetime" />
-        </EntityType>
-        <Association Name="FK__BannerIte__Banne__65C116E7">
+        <Association Name="FK__BannerIte__Banne__5C6CB6D7">
           <End Role="Banner" Type="Self.Banner" Multiplicity="1" />
           <End Role="BannerItem" Type="Self.BannerItem" Multiplicity="*" />
           <ReferentialConstraint>
@@ -205,7 +177,7 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FavoriteI__UserI__689D8392">
+        <Association Name="FK__FavoriteI__UserI__5F492382">
           <End Role="UserImage" Type="Self.UserImage" Multiplicity="1" />
           <End Role="FavoriteImage" Type="Self.FavoriteImage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -217,7 +189,7 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FavoriteP__PageI__6991A7CB">
+        <Association Name="FK__FavoriteP__PageI__603D47BB">
           <End Role="Page" Type="Self.Page" Multiplicity="1" />
           <End Role="FavoritePage" Type="Self.FavoritePage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -229,7 +201,7 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FavoriteP__PageI__6A85CC04">
+        <Association Name="FK__FavoriteP__PageI__61316BF4">
           <End Role="PageItem" Type="Self.PageItem" Multiplicity="1" />
           <End Role="FavoritePage" Type="Self.FavoritePage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -241,7 +213,7 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FavoriteP__UserK__6B79F03D">
+        <Association Name="FK__FavoriteP__UserK__6225902D">
           <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
           <End Role="FavoritePage" Type="Self.FavoritePage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -253,7 +225,7 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PageBanne__Banne__6C6E1476">
+        <Association Name="FK__PageBanne__Banne__6319B466">
           <End Role="Banner" Type="Self.Banner" Multiplicity="1" />
           <End Role="PageBanner" Type="Self.PageBanner" Multiplicity="*" />
           <ReferentialConstraint>
@@ -265,7 +237,7 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PageBanne__PageI__6D6238AF">
+        <Association Name="FK__PageBanne__PageI__640DD89F">
           <End Role="Page" Type="Self.Page" Multiplicity="1" />
           <End Role="PageBanner" Type="Self.PageBanner" Multiplicity="*" />
           <ReferentialConstraint>
@@ -277,7 +249,7 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PageBanne__PageI__6E565CE8">
+        <Association Name="FK__PageBanne__PageI__6501FCD8">
           <End Role="PageItem" Type="Self.PageItem" Multiplicity="1" />
           <End Role="PageBanner" Type="Self.PageBanner" Multiplicity="*" />
           <ReferentialConstraint>
@@ -289,7 +261,7 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserImage__UserK__3CBF0154">
+        <Association Name="FK__UserImage__UserK__2645B050">
           <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
           <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -301,7 +273,67 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserImage__UserK__740F363E">
+        <Association Name="FK__UserImage__UserK__32767D0B">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="UserImage">
+              <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserImage__UserK__336AA144">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="UserImage">
+              <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserImage__UserK__5FB337D6">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="UserImage">
+              <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserImage__UserK__6ABAD62E">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="UserImage">
+              <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserImage__UserK__6BAEFA67">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserKey" />
+            </Principal>
+            <Dependent Role="UserImage">
+              <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserImage__UserK__793DFFAF">
           <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
           <End Role="UserImage" Type="Self.UserImage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -400,65 +432,74 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
         <EntityContainer Name="NJFairgroundDBModelStoreContainer">
           <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BannerItem" EntityType="Self.BannerItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceRegistry" EntityType="Self.DeviceRegistry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FavoriteImage" EntityType="Self.FavoriteImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FavoritePage" EntityType="Self.FavoritePage" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HitCounter" EntityType="Self.HitCounter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageBanner" EntityType="Self.PageBanner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageHeader" EntityType="Self.PageHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageItem" EntityType="Self.PageItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageItemDetail" EntityType="Self.PageItemDetail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SplashImage" EntityType="Self.SplashImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserImage" EntityType="Self.UserImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HitCounterDetail" EntityType="Self.HitCounterDetail" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[HitCounterDetail].[SponsorType] AS [SponsorType], 
-[HitCounterDetail].[Name] AS [Name], 
-[HitCounterDetail].[ImageUrl] AS [ImageUrl], 
-[HitCounterDetail].[SponsorUrl] AS [SponsorUrl], 
-[HitCounterDetail].[ClientIdentity] AS [ClientIdentity], 
-[HitCounterDetail].[HitOn] AS [HitOn]
-FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK__BannerIte__Banne__65C116E7" Association="Self.FK__BannerIte__Banne__65C116E7">
+          <AssociationSet Name="FK__BannerIte__Banne__5C6CB6D7" Association="Self.FK__BannerIte__Banne__5C6CB6D7">
             <End Role="Banner" EntitySet="Banner" />
             <End Role="BannerItem" EntitySet="BannerItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__FavoriteI__UserI__689D8392" Association="Self.FK__FavoriteI__UserI__689D8392">
+          <AssociationSet Name="FK__FavoriteI__UserI__5F492382" Association="Self.FK__FavoriteI__UserI__5F492382">
             <End Role="UserImage" EntitySet="UserImage" />
             <End Role="FavoriteImage" EntitySet="FavoriteImage" />
           </AssociationSet>
-          <AssociationSet Name="FK__FavoriteP__PageI__6991A7CB" Association="Self.FK__FavoriteP__PageI__6991A7CB">
+          <AssociationSet Name="FK__FavoriteP__PageI__603D47BB" Association="Self.FK__FavoriteP__PageI__603D47BB">
             <End Role="Page" EntitySet="Page" />
             <End Role="FavoritePage" EntitySet="FavoritePage" />
           </AssociationSet>
-          <AssociationSet Name="FK__FavoriteP__PageI__6A85CC04" Association="Self.FK__FavoriteP__PageI__6A85CC04">
+          <AssociationSet Name="FK__FavoriteP__PageI__61316BF4" Association="Self.FK__FavoriteP__PageI__61316BF4">
             <End Role="PageItem" EntitySet="PageItem" />
             <End Role="FavoritePage" EntitySet="FavoritePage" />
           </AssociationSet>
-          <AssociationSet Name="FK__FavoriteP__UserK__6B79F03D" Association="Self.FK__FavoriteP__UserK__6B79F03D">
+          <AssociationSet Name="FK__FavoriteP__UserK__6225902D" Association="Self.FK__FavoriteP__UserK__6225902D">
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="FavoritePage" EntitySet="FavoritePage" />
           </AssociationSet>
-          <AssociationSet Name="FK__PageBanne__Banne__6C6E1476" Association="Self.FK__PageBanne__Banne__6C6E1476">
+          <AssociationSet Name="FK__PageBanne__Banne__6319B466" Association="Self.FK__PageBanne__Banne__6319B466">
             <End Role="Banner" EntitySet="Banner" />
             <End Role="PageBanner" EntitySet="PageBanner" />
           </AssociationSet>
-          <AssociationSet Name="FK__PageBanne__PageI__6D6238AF" Association="Self.FK__PageBanne__PageI__6D6238AF">
+          <AssociationSet Name="FK__PageBanne__PageI__640DD89F" Association="Self.FK__PageBanne__PageI__640DD89F">
             <End Role="Page" EntitySet="Page" />
             <End Role="PageBanner" EntitySet="PageBanner" />
           </AssociationSet>
-          <AssociationSet Name="FK__PageBanne__PageI__6E565CE8" Association="Self.FK__PageBanne__PageI__6E565CE8">
+          <AssociationSet Name="FK__PageBanne__PageI__6501FCD8" Association="Self.FK__PageBanne__PageI__6501FCD8">
             <End Role="PageItem" EntitySet="PageItem" />
             <End Role="PageBanner" EntitySet="PageBanner" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserImage__UserK__3CBF0154" Association="Self.FK__UserImage__UserK__3CBF0154">
+          <AssociationSet Name="FK__UserImage__UserK__2645B050" Association="Self.FK__UserImage__UserK__2645B050">
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="UserImage" EntitySet="UserImage" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserImage__UserK__740F363E" Association="Self.FK__UserImage__UserK__740F363E">
+          <AssociationSet Name="FK__UserImage__UserK__32767D0B" Association="Self.FK__UserImage__UserK__32767D0B">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserImage" EntitySet="UserImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserImage__UserK__336AA144" Association="Self.FK__UserImage__UserK__336AA144">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserImage" EntitySet="UserImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserImage__UserK__5FB337D6" Association="Self.FK__UserImage__UserK__5FB337D6">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserImage" EntitySet="UserImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserImage__UserK__6ABAD62E" Association="Self.FK__UserImage__UserK__6ABAD62E">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserImage" EntitySet="UserImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserImage__UserK__6BAEFA67" Association="Self.FK__UserImage__UserK__6BAEFA67">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserImage" EntitySet="UserImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserImage__UserK__793DFFAF" Association="Self.FK__UserImage__UserK__793DFFAF">
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="UserImage" EntitySet="UserImage" />
           </AssociationSet>
@@ -575,6 +616,7 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
             <End Role="BannerItem" EntitySet="BannerItems" />
           </AssociationSet>
           <EntitySet Name="HitCounterDetails" EntityType="NJFairgroundDBModel.HitCounterDetail" />
+          <EntitySet Name="DeviceRegistries" EntityType="NJFairgroundDBModel.DeviceRegistry" />
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -689,11 +731,11 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           </Key>
           <Property Name="PageId" Type="Int32" Nullable="false" />
           <Property Name="PageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PageDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PageDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="Version" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" a:StoreGeneratedPattern="Computed" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="PageContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PageImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PageImage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Events" Relationship="NJFairgroundDBModel.FK_Event_Page" FromRole="Page" ToRole="Event" />
           <NavigationProperty Name="PageHeaders" Relationship="NJFairgroundDBModel.FK_PageHeader_Page" FromRole="Page" ToRole="PageHeader" />
           <NavigationProperty Name="PageItems" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="Page" ToRole="PageItem" />
@@ -986,6 +1028,16 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           <Property Name="ClientIdentity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HitOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="DeviceRegistry">
+          <Key>
+            <PropertyRef Name="DeviceRegistryId" />
+          </Key>
+          <Property Name="DeviceRegistryId" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="DeviceId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceType" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1143,7 +1195,6 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           <EntitySetMapping Name="BannerItems">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.BannerItem">
               <MappingFragment StoreEntitySet="BannerItem">
-                <ScalarProperty Name="BannerName" ColumnName="BannerName" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
@@ -1155,45 +1206,18 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HitCounters">
-            <EntityTypeMapping TypeName="NJFairgroundDBModel.HitCounter">
-              <MappingFragment StoreEntitySet="HitCounter">
-                <ScalarProperty Name="HitOn" ColumnName="HitOn" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="ClientIdentiy" ColumnName="ClientIdentiy" />
-                <ScalarProperty Name="SponsorTypeId" ColumnName="SponsorTypeId" />
-                <ScalarProperty Name="SponsorId" ColumnName="SponsorId" />
-                <ScalarProperty Name="HitCounterId" ColumnName="HitCounterId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SplashImages">
-            <EntityTypeMapping TypeName="NJFairgroundDBModel.SplashImage">
-              <MappingFragment StoreEntitySet="SplashImage">
+          <EntitySetMapping Name="DeviceRegistries">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.DeviceRegistry">
+              <MappingFragment StoreEntitySet="DeviceRegistry">
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="SponsorUrl" ColumnName="SponsorUrl" />
-                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
-                <ScalarProperty Name="SplashName" ColumnName="SplashName" />
-                <ScalarProperty Name="SplashImageId" ColumnName="SplashImageId" />
+                <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="DeviceRegistryId" ColumnName="DeviceRegistryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HitCounterDetails">
-            <EntityTypeMapping TypeName="NJFairgroundDBModel.HitCounterDetail">
-              <MappingFragment StoreEntitySet="HitCounterDetail">
-                <ScalarProperty Name="HitOn" ColumnName="HitOn" />
-                <ScalarProperty Name="ClientIdentity" ColumnName="ClientIdentity" />
-                <ScalarProperty Name="SponsorUrl" ColumnName="SponsorUrl" />
-                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SponsorType" ColumnName="SponsorType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

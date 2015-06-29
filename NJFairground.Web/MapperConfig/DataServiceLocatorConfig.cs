@@ -30,7 +30,7 @@ namespace NJFairground.Web.MapperConfig
         }
 
         /// <summary>
-        /// Registers the service locator.
+        /// Registers the service locater.
         /// </summary>
         /// <param name="container">The container.</param>
         private void RegisterServiceLocator(Container container)
@@ -49,6 +49,7 @@ namespace NJFairground.Web.MapperConfig
                 container.Register<IPageBannerDataRepository, PageBannerDataRepository>();
                 container.Register<ISplashImageDataRepository, SplashImageDataRepository>();
                 container.Register<IHitCounterDataRepository, HitCounterDataRepository>();
+                container.Register<IDeviceRegistryDataRepository, DeviceRegistryDataRepository>();
             }
             catch (Exception ex)
             {

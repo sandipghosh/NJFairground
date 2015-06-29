@@ -62,6 +62,8 @@ public partial class NJFairgroundDBEntities : DbContext
 
     public DbSet<HitCounterDetail> HitCounterDetails { get; set; }
 
+    public DbSet<DeviceRegistry> DeviceRegistries { get; set; }
+
 }
 
 }

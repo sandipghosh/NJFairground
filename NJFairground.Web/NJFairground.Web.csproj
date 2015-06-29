@@ -114,6 +114,7 @@
     <Reference Include="Microsoft.Owin.Security">
       <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Web.Helpers">
       <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.3\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
     </Reference>
@@ -131,6 +132,42 @@
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PushSharp.Amazon.Adm, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.Amazon.Adm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Android, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.Android.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Apple, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.Apple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Blackberry, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.Blackberry.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.FirefoxOS, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.FirefoxOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Google.Chrome, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.Google.Chrome.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Windows, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.Windows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.WindowsPhone, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.WindowsPhone.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SimpleInjector, Version=2.8.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -237,6 +274,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Transactions" />
@@ -323,6 +361,9 @@
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Context\BaseData.cs" />
+    <Compile Include="Data\Context\DeviceRegistry.cs">
+      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Context\Event.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
@@ -382,6 +423,7 @@
     <Compile Include="Data\Implementation\Base\DataRepository.cs" />
     <Compile Include="Data\Implementation\Base\QueryDataRepository.cs" />
     <Compile Include="Data\Implementation\Base\UnitOfWork.cs" />
+    <Compile Include="Data\Implementation\DeviceRegistryDataRepository.cs" />
     <Compile Include="Data\Implementation\EventDataRepository.cs" />
     <Compile Include="Data\Implementation\FavoriteImageDataRepository.cs" />
     <Compile Include="Data\Implementation\FavoritePageDataRepository.cs" />
@@ -399,6 +441,7 @@
     <Compile Include="Data\Interface\Base\IUnitOfWork.cs" />
     <Compile Include="Data\Interface\IBannerDataRepository.cs" />
     <Compile Include="Data\Interface\IBannerItemDataRepository.cs" />
+    <Compile Include="Data\Interface\IDeviceRegistryDataRepository.cs" />
     <Compile Include="Data\Interface\IEventDataRepository.cs" />
     <Compile Include="Data\Interface\IFavoriteImageDataRepository.cs" />
     <Compile Include="Data\Interface\IFavoritePageDataRepository.cs" />
@@ -413,6 +456,7 @@
     <Compile Include="DTO\Base\RequestBase.cs" />
     <Compile Include="DTO\Base\ResponseBase.cs" />
     <Compile Include="DTO\RequestDto\AppInfoRequestDto.cs" />
+    <Compile Include="DTO\RequestDto\DeviceRegistryRequestDto.cs" />
     <Compile Include="DTO\RequestDto\EventRequestDto.cs" />
     <Compile Include="DTO\RequestDto\FavoriteImageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\FavoritePageRequestDto.cs" />
@@ -426,6 +470,7 @@
     <Compile Include="DTO\RequestDto\UserAuthenticationRequestDto.cs" />
     <Compile Include="DTO\RequestDto\UserImageRequestDto.cs" />
     <Compile Include="DTO\ResponseDto\AppInfoResponseDto.cs" />
+    <Compile Include="DTO\ResponseDto\DeviceRegistryResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\EventResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\FavoriteImageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\FavoritePageResponseDto.cs" />
@@ -450,6 +495,7 @@
     <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\Base\SafeDisposableBaseClass.cs" />
+    <Compile Include="Models\DeviceRegistryModel.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\FavoriteImageModel.cs" />
     <Compile Include="Models\FavoritePageModel.cs" />
@@ -490,6 +536,7 @@
     <Compile Include="Utilities\TaskScheduler\Hubs\AdvertisementHub.cs" />
     <Compile Include="Utilities\TaskScheduler\Hubs\AnnouncementHub.cs" />
     <Compile Include="Utilities\TaskScheduler\NotificationEngine.cs" />
+    <Compile Include="Utilities\TaskScheduler\PushNotificationEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NewApiPayload.txt" />
