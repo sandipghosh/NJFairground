@@ -165,7 +165,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="announcement">The announcement.</param>
         private void NotifyToiOS(IList<DeviceRegistryModel> devices, PageItemModel announcement)
         {
-            var appleCert = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
+            var appleCert = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 CommonUtility.GetAppSetting<string>("iOS:CertificateFilePath")));
             _broker.RegisterAppleService(new ApplePushChannelSettings(true, appleCert,
                 CommonUtility.GetAppSetting<string>("iOS:CertificatePassword")));
@@ -175,8 +175,9 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                 _broker.QueueNotification(new AppleNotification()
                     .ForDeviceToken(device.DeviceId)
                     .WithAlert(new AppleNotificationAlert() { LaunchImage = announcement.PageItemImageUrl, Body = announcement.PageHeaderText })
-                    .WithBadge(7);
-                    //.WithSound("sound.caf"));
+                    .WithCustomItem("PageItemId", announcement.PageItemId)
+                    .WithBadge(7)
+                    .WithSound("default"));
             }
         }
 
@@ -194,11 +195,13 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             {
                 _broker.QueueNotification(new GcmNotification()
                     .ForDeviceRegistrationId(device.DeviceId)
-                    .WithJson(Newtonsoft.Json.JsonConvert.SerializeObject(new { 
+                    .WithData(new Dictionary<string, string>() { { "PageItemId", announcement.PageItemId.ToString() } })
+                    .WithJson(Newtonsoft.Json.JsonConvert.SerializeObject(new
+                    {
                         alert = announcement.PageHeaderText,
-                        //sound="sound.caf",
+                        sound = "default",
                         badge = 7
-                    }));
+                    })));
             }
         }
     }

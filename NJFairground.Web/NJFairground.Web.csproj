@@ -376,9 +376,6 @@
     <Compile Include="Data\Context\HitCounter.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\Context\HitCounterDetail.cs">
-      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\Context\NJFairgroundDBEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -407,6 +404,9 @@
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Context\PageItemDetail.cs">
+      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Context\PageItemNew.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Context\SplashImage.cs">
@@ -616,6 +616,7 @@
     <Content Include="Areas\Admin\Styles\Fonts\fontawesome-webfont.woff" />
     <Content Include="Areas\Admin\Styles\Fonts\FontAwesome.otf" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Certificate\Sussex.pem" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />

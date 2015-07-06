@@ -12,17 +12,21 @@ namespace NJFairground.Web.Data.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class PageHeader
+    public partial class PageItemNew
     {
-        public int PageHeaderId { get; set; }
-        public int PageId { get; set; }
         public int PageItemId { get; set; }
+        public int PageId { get; set; }
+        public int PageItemType { get; set; }
         public string PageHeaderText { get; set; }
         public string PageSubHeaderText { get; set; }
+        public string PageItemImage { get; set; }
+        public string PageItemDetailText { get; set; }
+        public string PageItemSubDetail { get; set; }
         public int StatusId { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public System.DateTime ActivatedOn { get; set; }
+        public Nullable<System.DateTime> UpdatedOn { get; set; }
         public byte[] Version { get; set; }
-    
-        public virtual Page Page { get; set; }
-        public virtual PageItem PageItem { get; set; }
+        public Nullable<long> ItemOrder { get; set; }
     }
 }

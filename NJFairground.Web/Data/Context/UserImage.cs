@@ -28,5 +28,6 @@ namespace NJFairground.Web.Data.Context
     
         public virtual ICollection<FavoriteImage> FavoriteImages { get; set; }
         public virtual UserInfo UserInfo { get; set; }
+        public virtual UserInfo UserInfo1 { get; set; }
     }
 }

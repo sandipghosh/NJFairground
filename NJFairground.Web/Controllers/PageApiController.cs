@@ -91,7 +91,7 @@ namespace NJFairground.Web.Controllers
                         .GetList(x => x.DeviceId.Equals(request.DeviceId) && x.DeviceType.Equals(request.DeciceType)
                         && x.StatusId.Equals((int)StatusEnum.Active)).FirstOrDefault();
 
-                    if (registeredDevice != null)
+                    if (registeredDevice == null)
                     {
                         registeredDevice = new DeviceRegistryModel
                         {

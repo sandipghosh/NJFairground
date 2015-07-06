@@ -17,11 +17,11 @@ namespace NJFairground.Web.Data.Context
         public Page()
         {
             this.Events = new HashSet<Event>();
+            this.FavoritePages = new HashSet<FavoritePage>();
+            this.PageBanners = new HashSet<PageBanner>();
             this.PageHeaders = new HashSet<PageHeader>();
             this.PageItems = new HashSet<PageItem>();
             this.PageItemDetails = new HashSet<PageItemDetail>();
-            this.FavoritePages = new HashSet<FavoritePage>();
-            this.PageBanners = new HashSet<PageBanner>();
         }
     
         public int PageId { get; set; }
@@ -33,10 +33,10 @@ namespace NJFairground.Web.Data.Context
         public string PageImage { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<FavoritePage> FavoritePages { get; set; }
+        public virtual ICollection<PageBanner> PageBanners { get; set; }
         public virtual ICollection<PageHeader> PageHeaders { get; set; }
         public virtual ICollection<PageItem> PageItems { get; set; }
         public virtual ICollection<PageItemDetail> PageItemDetails { get; set; }
-        public virtual ICollection<FavoritePage> FavoritePages { get; set; }
-        public virtual ICollection<PageBanner> PageBanners { get; set; }
     }
 }

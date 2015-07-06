@@ -19,9 +19,10 @@ namespace NJFairground.Web
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "LandingPage", action = "Index", id = UrlParameter.Optional }
+                "Default",
+                "{controller}/{action}/{id}",
+                new { controller = "LandingPage", action = "Index", id = UrlParameter.Optional },
+                new[] { "NJFairground.Web.Controllers" }
             );
         }
     }

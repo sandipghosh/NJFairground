@@ -32,7 +32,23 @@ public partial class NJFairgroundDBEntities : DbContext
     }
 
 
+    public DbSet<Banner> Banners { get; set; }
+
+    public DbSet<BannerItem> BannerItems { get; set; }
+
+    public DbSet<DeviceRegistry> DeviceRegistries { get; set; }
+
     public DbSet<Event> Events { get; set; }
+
+    public DbSet<FavoriteImage> FavoriteImages { get; set; }
+
+    public DbSet<FavoritePage> FavoritePages { get; set; }
+
+    public DbSet<HitCounter> HitCounters { get; set; }
+
+    public DbSet<Page> Pages { get; set; }
+
+    public DbSet<PageBanner> PageBanners { get; set; }
 
     public DbSet<PageHeader> PageHeaders { get; set; }
 
@@ -40,29 +56,13 @@ public partial class NJFairgroundDBEntities : DbContext
 
     public DbSet<PageItemDetail> PageItemDetails { get; set; }
 
-    public DbSet<Page> Pages { get; set; }
-
-    public DbSet<FavoriteImage> FavoriteImages { get; set; }
-
-    public DbSet<FavoritePage> FavoritePages { get; set; }
+    public DbSet<SplashImage> SplashImages { get; set; }
 
     public DbSet<UserImage> UserImages { get; set; }
 
     public DbSet<UserInfo> UserInfoes { get; set; }
 
-    public DbSet<Banner> Banners { get; set; }
-
-    public DbSet<PageBanner> PageBanners { get; set; }
-
-    public DbSet<BannerItem> BannerItems { get; set; }
-
-    public DbSet<HitCounter> HitCounters { get; set; }
-
-    public DbSet<SplashImage> SplashImages { get; set; }
-
-    public DbSet<HitCounterDetail> HitCounterDetails { get; set; }
-
-    public DbSet<DeviceRegistry> DeviceRegistries { get; set; }
+    public DbSet<PageItemNew> PageItemNews { get; set; }
 
 }
 

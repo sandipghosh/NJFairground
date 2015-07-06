@@ -16,8 +16,8 @@ namespace NJFairground.Web.Data.Context
     {
         public Banner()
         {
-            this.PageBanners = new HashSet<PageBanner>();
             this.BannerItems = new HashSet<BannerItem>();
+            this.PageBanners = new HashSet<PageBanner>();
         }
     
         public int BannerId { get; set; }
@@ -27,7 +27,7 @@ namespace NJFairground.Web.Data.Context
         public System.DateTime CreatedOn { get; set; }
         public bool IsSplashImage { get; set; }
     
-        public virtual ICollection<PageBanner> PageBanners { get; set; }
         public virtual ICollection<BannerItem> BannerItems { get; set; }
+        public virtual ICollection<PageBanner> PageBanners { get; set; }
     }
 }

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @{Html.RenderPartial("_CommonStyleSection");}
     @{Html.RenderPartial("_CommonScriptSection");}
-
+    
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
         var i = 0;
@@ -19,7 +19,7 @@
             $('#timerdata').text(5 - i + " Seconds");
             i++;
             if (i == 5) {
-                setTimeout("location.href='Home'", 0);
+                setTimeout("location.href='@Url.Action("Index", "Home", new { area=""})'", 0);
             }
             window.setTimeout("ShowCurrentTime()", 1000); // Here 1000(milliseconds) means 1 sec
         }

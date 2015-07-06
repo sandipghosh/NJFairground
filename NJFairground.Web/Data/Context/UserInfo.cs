@@ -18,6 +18,7 @@ namespace NJFairground.Web.Data.Context
         {
             this.FavoritePages = new HashSet<FavoritePage>();
             this.UserImages = new HashSet<UserImage>();
+            this.UserImages1 = new HashSet<UserImage>();
         }
     
         public int UserKey { get; set; }
@@ -30,5 +31,6 @@ namespace NJFairground.Web.Data.Context
     
         public virtual ICollection<FavoritePage> FavoritePages { get; set; }
         public virtual ICollection<UserImage> UserImages { get; set; }
+        public virtual ICollection<UserImage> UserImages1 { get; set; }
     }
 }
