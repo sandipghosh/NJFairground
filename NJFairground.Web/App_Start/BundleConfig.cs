@@ -38,6 +38,8 @@ namespace NJFairground.Web
                     "~/Areas/Admin/Scripts/jquery-migrate-1.2.1.min.js",
                     "~/Areas/Admin/Scripts/jquery.unobtrusive-ajax.min.js",
                     "~/Areas/Admin/Scripts/bootstrap.min.js",
+                    "~/Areas/Admin/Scripts/jquery.dataTables.min.js",
+                    "~/Areas/Admin/Scripts/dataTables.bootstrap.min.js",
                     "~/Areas/Admin/Scripts/metisMenu.min.js",
                     "~/Areas/Admin/Scripts/sb-admin-2.js"
                 );
@@ -51,18 +53,6 @@ namespace NJFairground.Web
                     "~/Scripts/common-events.js"
                 );
                 BundleTable.Bundles.Add(scriptBundle);
-
-                //scriptBundle = new Bundle("~/Scripts/CommonAdminScript", new JsMinify());
-                //scriptBundle.Include("~/Scripts/jquery-2.1.4.min.js",
-                //    "~/Scripts/jquery-migrate-1.2.1.min.js",
-                //    "~/Areas/Admin/Scripts/jquery-ui-1.11.4.custom.min.js",
-                //    "~/Areas/Admin/Scripts/json3.js",
-                //    "~/Areas/Admin/Scripts/jquery.formatDateTime.js",
-                //    "~/Areas/Admin/Scripts/jquery.blockUI.js",
-                //    "~/Scripts/common-script.js",
-                //    "~/Areas/Admin/Scripts/common-admin-ui-script.js"
-                //);
-                //BundleTable.Bundles.Add(scriptBundle);
 
                 scriptBundle = new Bundle("~/Scripts/MapScript", new JsMinify());
                 scriptBundle.Include("~/Scripts/imageMapResizer.min.js",
@@ -118,6 +108,8 @@ namespace NJFairground.Web
 
                 styleBundle = new Bundle("~/Styles/CommonAdminStyle", new CustomCssMinify(), new CssMinify());
                 styleBundle.Include("~/Areas/Admin/Styles/bootstrap.css",
+                    "~/Areas/Admin/Styles/dataTables.bootstrap.css",
+                    "~/Areas/Admin/Styles/dataTables.responsive.css",
                     "~/Areas/Admin/Styles/sb-admin-2.css",
                     "~/Areas/Admin/Styles/metisMenu.min.css",
                     "~/Areas/Admin/Styles/font-awesome.css");

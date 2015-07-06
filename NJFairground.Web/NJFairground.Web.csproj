@@ -310,12 +310,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BroadcastController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ContentManagerController.cs" />
-    <Compile Include="Areas\Admin\Controllers\EventSchedulerController.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\MapCreaterController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PageListController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubPageListController.cs" />
     <Compile Include="Areas\Admin\Models\Base\GridModelSchema.cs" />
     <Compile Include="Areas\Admin\Models\SchedularSchema.cs" />
     <Compile Include="Controllers\AgricultureController.cs" />
@@ -542,15 +539,19 @@
     <Content Include="App_Data\NewApiPayload.txt" />
     <Content Include="App_Data\NJ_Fairground_guide_map.txt" />
     <Content Include="Areas\Admin\Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Areas\Admin\Scripts\jquery-2.1.4.js" />
     <Content Include="Areas\Admin\Scripts\jquery-2.1.4.min.js" />
     <Content Include="Areas\Admin\Scripts\jquery-migrate-1.2.1.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.dataTables.min.js" />
     <Content Include="Areas\Admin\Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Areas\Admin\Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Areas\Admin\Scripts\metisMenu.min.js" />
     <Content Include="Areas\Admin\Scripts\sb-admin-2.js" />
     <Content Include="Areas\Admin\Styles\admin-styles.css" />
     <Content Include="Areas\Admin\Styles\bootstrap.css" />
+    <Content Include="Areas\Admin\Styles\dataTables.bootstrap.css" />
+    <Content Include="Areas\Admin\Styles\dataTables.responsive.css" />
     <Content Include="Areas\Admin\Styles\font-awesome.css" />
     <Content Include="Areas\Admin\Styles\Fonts\fontawesome-webfont.svg" />
     <Content Include="Areas\Admin\Styles\Fonts\glyphicons-halflings-regular.svg" />
@@ -601,9 +602,6 @@
       <LastGenOutput>NJFairgroundDBEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\Admin\Views\Shared\_AdminLayoutPage.cshtml" />
-    <Content Include="Areas\Admin\Views\MapCreater\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ContentManager\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\EventScheduler\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_GridGlobalMaster.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AddEvent.cshtml" />
     <Content Include="Areas\Admin\Views\Broadcast\Index.cshtml" />
@@ -617,6 +615,11 @@
     <Content Include="Areas\Admin\Styles\Fonts\FontAwesome.otf" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Certificate\Sussex.pem" />
+    <Content Include="Areas\Admin\Views\PageList\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SubPageList\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SubPageList\SubItems.cshtml" />
+    <Content Include="Areas\Admin\Views\SubPageList\SubItemDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\PageList\PageDetail.cshtml" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />

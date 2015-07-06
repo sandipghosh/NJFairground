@@ -1,0 +1,89 @@
+﻿@model IList<NJFairground.Web.Models.PageModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
+}
+@section AdimnPageScripts{
+    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#pages').dataTable();
+        });
+
+        GetEditScreen = function (data) {
+            $('.panel-body').html(data);
+            GetEditor('textarea#PageContent');
+        };
+
+        GetEditor = function (selector) {
+            tinymce.init({
+                selector: selector,
+                theme: "modern",
+                menubar: false,
+                statusbar: false,
+                plugins: [
+                     "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                     "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                     "save table contextmenu directionality emoticons template paste textcolor code"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media fullpage | forecolor backcolor emoticons code",
+            });
+        }
+    </script>
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Root Screen</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Screens</div>
+            <div class="panel-body">
+                <table id="pages" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Content</th>
+                            <th>Image</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PageName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PageDesc)
+                                </td>
+                                <td>
+                                    @Html.Raw(item.PageContent)
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.PageImageUrl))
+                                    {
+                                        <img src="@item.PageImageUrl" width="100" />
+                                    }
+                                </td>
+                                <td>
+                                    @Ajax.ActionLink("Edit", "Edit", new { pageId = item.PageId }, new AjaxOptions { OnSuccess = "GetEditScreen" }) |
+                                    @*@Html.ActionLink("Edit", "Edit", new { area = "Admin", id = item.PageId }) |*@
+                                    @Html.ActionLink("Delete", "Delete", new { area = "Admin", id = item.PageId })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+
