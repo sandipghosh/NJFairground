@@ -2,8 +2,6 @@
 
 namespace NJFairground.Web
 {
-    using MultipartDataMediaFormatter;
-    using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -12,6 +10,10 @@ namespace NJFairground.Web
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using FluentValidation.Mvc;
+    using MultipartDataMediaFormatter;
+    using NJFairground.Web.Models.ValidationRules.Factory;
+    using NJFairground.Web.Utilities;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -22,8 +24,15 @@ namespace NJFairground.Web
         {
             try
             {
+                InjectorInitializer.Initialize(ContainerProvider.Instance);
+                var injector = new SimpleDependencyInjector();
+                FluentValidationModelValidatorProvider.Configure(provider =>
+                {
+                    provider.ValidatorFactory = new FluentValidatorFactory(injector);
+                });
+
                 AreaRegistration.RegisterAllAreas();
-                InjectorInitializer.Initialize();
+                //InjectorInitializer.Initialize();
                 WebApiConfig.Register(GlobalConfiguration.Configuration);
                 FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
                 RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -31,11 +40,18 @@ namespace NJFairground.Web
                 AuthConfig.RegisterAuth();
 
                 GlobalConfiguration.Configuration.Formatters.Add(new FormMultipartEncodedMediaTypeFormatter());
+
+                ////Configure FV to use StructureMap
+                //var factory = new FluentValidatorFactory(IocProvider.Instance);
+
+                ////Tell MVC to use FV for validation
+                //ModelValidatorProviders.Providers.Add(new FluentValidationModelValidatorProvider(factory));
+                //DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
             }
             catch (Exception ex)
             {
                 ex.ExceptionValueTracker();
-            }   
+            }
         }
 
         /// <summary>

@@ -3,12 +3,17 @@ namespace NJFairground.Web.MapperConfig
 {
     using System;
     using AutoMapper;
+    using FluentValidation;
     using NJFairground.Web.Data.Implementation;
     using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.Models.ValidationRules.Factory;
     using NJFairground.Web.Utilities;
+    using NJFairground.Web.Models;
     using SimpleInjector;
+    using SimpleInjector.Extensions;
     using SimpleInjector.Advanced;
     using SimpleInjector.Packaging;
+    using NJFairground.Web.Models.ValidationRules;
 
     public class DataServiceLocatorConfig : IPackage
     {
@@ -20,8 +25,28 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
+                this.RegisterValidationService(container);
                 this.RegisterServiceLocator(container);
                 this.AddMapperProfile(container);
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(container);
+            }
+        }
+
+        /// <summary>
+        /// Registers the service locator.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        private void RegisterValidationService(Container container)
+        {
+            try
+            {
+                container.Register<IServiceProvider, SimpleDependencyInjector>(Lifestyle.Singleton);
+                container.Register<IValidatorFactory, FluentValidatorFactory>(Lifestyle.Singleton);
+                container.RegisterManyForOpenGeneric(typeof(IValidator<>), typeof(IValidator<>).Assembly);
+                //container.Register<IValidator<PageItemModel>, PageItemModelValidation>(Lifestyle.Singleton);
             }
             catch (Exception ex)
             {

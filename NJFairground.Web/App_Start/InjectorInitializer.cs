@@ -15,11 +15,11 @@ namespace NJFairground.Web
         /// <summary>
         /// Initializes this instance.
         /// </summary>
-        public static void Initialize()
+        public static void Initialize(Container container)
         {
             try
             {
-                var container = new Container();
+                //var container = SimpleDependencyInjector.Instance;
                 container.RegisterPackages();
 
                 container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
@@ -36,6 +36,51 @@ namespace NJFairground.Web
             catch (Exception ex)
             {
                 ex.ExceptionValueTracker();
+            }
+        }
+    }
+
+    public class SimpleDependencyInjector : IServiceProvider
+    {
+        public readonly Container Container;
+        public SimpleDependencyInjector()
+        {
+            Container = Bootstrap();
+        }
+
+        internal Container Bootstrap()
+        {
+            var container = ContainerProvider.Instance;
+            //InjectorInitializer.Initialize(container);
+            return container;
+        }
+
+        public object GetService(Type serviceType)
+        {
+            return ((IServiceProvider)Container).GetService(serviceType);
+        }
+    }
+
+    public class ContainerProvider
+    {
+        private static volatile Container instance;
+        private static object syncRoot = new Object();
+
+        private ContainerProvider() { }
+
+        public static Container Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (instance == null)
+                            instance = new Container();
+                    }
+                }
+                return instance;
             }
         }
     }
