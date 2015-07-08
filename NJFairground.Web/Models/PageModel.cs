@@ -17,6 +17,8 @@ namespace NJFairground.Web.Models
         public int PageId { get; set; }
         public string PageName { get; set; }
         public string PageDesc { get; set; }
+
+        [AllowHtml]
         public string PageContent { get; set; }
         public string PageImage { get; set; }
 

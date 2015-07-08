@@ -1,0 +1,77 @@
+﻿@model NJFairground.Web.Models.PageItemModel
+
+<div class="row">
+    <div class="col-lg-12">
+        @using (Ajax.BeginForm("Add", "SubPageList", new AjaxOptions { HttpMethod = "POST", OnComplete = "ShowSubPageInsertScreen" },
+            new { role = "form", enctype = "multipart/form-data" }))
+        {
+            <div class="form-horizontal">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @*<div class="form-group">
+                    <label class="control-label col-md-2">Image</label>
+                    <div class="col-md-10">
+                        <img src="@Model.PageItemImageUrl" width="200" />
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PageItemImage, new { htmlAttributes = new { type = "file" } })
+                        @Html.ValidationMessageFor(model => model.PageItemImage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Header</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PageHeaderText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PageHeaderText, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Sub Header</label>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.PageSubHeaderText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PageSubHeaderText, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Content</label>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.PageItemDetailText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PageItemDetailText, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Order Index</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ItemOrder, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ItemOrder, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+
+                @Html.HiddenFor(model => model.PageItemId)
+                @Html.HiddenFor(model => model.PageId)
+                @Html.HiddenFor(model => model.PageItemSubDetail)
+                @Html.HiddenFor(model => model.StatusId)
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</div>
+

@@ -10,12 +10,14 @@ namespace NJFairground.Web.Models
     using NJFairground.Web.Utilities;
     using System.Linq;
     using System.Web.Mvc;
+    using System;
 
     public class PageItemModel : BaseModel
     {
         public int PageItemId { get; set; }
         //[JsonIgnore]
         public int PageId { get; set; }
+        [AllowHtml]
         public string PageHeaderText { get; set; }
         public string PageSubHeaderText { get; set; }
         //[JsonIgnore]
@@ -31,13 +33,20 @@ namespace NJFairground.Web.Models
                     CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath"), this.PageItemImage), false);
             }
         }
+        [AllowHtml]
         public string PageItemDetailText { get; set; }
-        //[JsonIgnore]
         public string PageItemSubDetail { get; set; }
         [JsonIgnore]
         public int StatusId { get; set; }
-        //[JsonIgnore]
         public int ItemOrder { get; set; }
+
+        [JsonIgnore]
+        public DateTime CreatedOn { get; set; }
+        [JsonIgnore]
+        public DateTime ActivatedOn { get; set; }
+        [JsonIgnore]
+        public DateTime? UpdatedOn { get; set; }
+
         [JsonIgnore]
         public BannerModel PageBanner { get; set; }
     }

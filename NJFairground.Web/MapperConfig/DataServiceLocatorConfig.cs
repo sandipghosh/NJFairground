@@ -45,8 +45,11 @@ namespace NJFairground.Web.MapperConfig
             {
                 container.Register<IServiceProvider, SimpleDependencyInjector>(Lifestyle.Singleton);
                 container.Register<IValidatorFactory, FluentValidatorFactory>(Lifestyle.Singleton);
-                container.RegisterManyForOpenGeneric(typeof(IValidator<>), typeof(IValidator<>).Assembly);
-                //container.Register<IValidator<PageItemModel>, PageItemModelValidation>(Lifestyle.Singleton);
+                //container.RegisterManyForOpenGeneric(typeof(IValidator<>), typeof(IValidator<>).Assembly);
+                container.Register<IValidator<PageItemModel>, PageItemModelValidation>(Lifestyle.Singleton);
+
+                //container.RegisterManyForOpenGeneric(typeof(IValidator<>),
+                //    (serviceType, implTypes) => container.RegisterAll(serviceType, implTypes), typeof(IValidator<>).Assembly);
             }
             catch (Exception ex)
             {

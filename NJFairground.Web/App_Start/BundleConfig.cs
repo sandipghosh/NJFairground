@@ -34,9 +34,11 @@ namespace NJFairground.Web
             try
             {
                 Bundle scriptBundle = new Bundle("~/Scripts/CommonAdminScript", new JsMinify());
-                scriptBundle.Include("~/Areas/Admin/Scripts/jquery-2.1.4.min.js",
-                    "~/Areas/Admin/Scripts/jquery-migrate-1.2.1.min.js",
-                    "~/Areas/Admin/Scripts/jquery.unobtrusive-ajax.min.js",
+                scriptBundle.Include("~/Scripts/jquery-2.1.4.min.js",
+                    "~/Scripts/jquery-migrate-1.2.1.min.js",
+                    "~/Scripts/jquery.validate.min.js",
+                    "~/Scripts/jquery.unobtrusive-ajax.min.js",
+                    "~/Scripts/jquery.validate.unobtrusive.min.js",
                     "~/Areas/Admin/Scripts/bootstrap.min.js",
                     "~/Areas/Admin/Scripts/jquery.dataTables.min.js",
                     "~/Areas/Admin/Scripts/dataTables.bootstrap.min.js",

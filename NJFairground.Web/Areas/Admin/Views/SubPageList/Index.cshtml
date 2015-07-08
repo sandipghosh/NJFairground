@@ -31,7 +31,10 @@
 
         GetEditScreen = function (data) {
             $('#grid-selection').hide();
-            $('#data-grid').html(data);
+            if (data.responseText)
+                $('#data-grid').html(data.responseText);
+            else
+                $('#data-grid').html(data);
             GetEditor('textarea#PageItemDetailText, textarea#PageSubHeaderText');
         };
 
@@ -39,10 +42,8 @@
             tinymce.init({
                 selector: selector,
                 theme: "modern",
-                //width: 300,
-                //height: 300,
                 menubar: false,
-                statusbar : false,
+                statusbar: false,
                 plugins: [
                      "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
                      "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
@@ -52,27 +53,63 @@
             });
         }
 
-        $('form').ajaxForm({
-            beforeSend: function () {
-                //status.empty();
-                //var percentVal = '0%';
-                //bar.width(percentVal)
-                //percent.html(percentVal);
-            },
-            uploadProgress: function (event, position, total, percentComplete) {
-                //var percentVal = percentComplete + '%';
-                //bar.width(percentVal)
-                //percent.html(percentVal);
-            },
-            success: function () {
-                //var percentVal = '100%';
-                //bar.width(percentVal)
-                //percent.html(percentVal);
-            },
-            complete: function (xhr) {
-                //status.html(xhr.responseText);
+        ShowSubPageInsertScreen = function (data) {
+            if (data.responseText) {
+                $('#data-grid').html(data.responseText);
+                $.validator.unobtrusive.parse($(data.responseText));
             }
-        });
+            else {
+                $('#data-grid').html(data);
+                $.validator.unobtrusive.parse($(data));
+            }
+
+            if ($('#data-grid:has(table)').length > 0) {
+                $('#grid-selection').show();
+                $('#data-grid table').dataTable();
+            }
+            else {
+                $('#grid-selection').hide();
+                tinymce.EditorManager.execCommand('mceRemoveEditor', true, 'PageItemDetailText');
+                tinymce.EditorManager.execCommand('mceRemoveEditor', true, 'PageSubHeaderText');
+                GetEditor('textarea#PageItemDetailText, textarea#PageSubHeaderText');
+
+                EnableUpload();
+            }
+        };
+
+        AddSelectedPageId = function (data, hdata) {
+            if (hdata.url) {
+                var urlData = hdata.url.split('?');
+                if (urlData.length > 0)
+                    hdata.url = urlData[0] + '?pageId=' + $('#page-selection :selected').val() + '&' + urlData[1];
+            }
+        };
+
+        EnableUpload = function () {
+            window.addEventListener("submit", function (e) {
+                var form = e.target;
+                if (form.getAttribute("enctype") === "multipart/form-data") {
+                    if (form.dataset.ajax) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        var xhr = new XMLHttpRequest();
+                        xhr.open(form.method, form.action);
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                /*if (form.dataset.ajaxUpdate) {
+                                    var updateTarget = document.querySelector(form.dataset.ajaxUpdate);
+                                    if (updateTarget) {
+                                        updateTarget.innerHTML = xhr.responseText;
+                                    }
+                                }*/
+                                ShowSubPageInsertScreen(xhr.responseText)
+                            }
+                        };
+                        xhr.send(new FormData(form));
+                    }
+                }
+            }, true);
+        };
     </script>
 }
 
@@ -90,7 +127,7 @@
                     <div class="col-lg-12">
                         <div id="grid-selection" class="form-group">
                             <label>Select Screen</label>
-                            @Html.DropDownList("Page", (IEnumerable<SelectListItem>)ViewBag.Pages, new { @class="form-control", id = "page-selection" })
+                            @Html.DropDownList("Page", (IEnumerable<SelectListItem>)ViewBag.Pages, new { @class = "form-control", id = "page-selection" })
                         </div>
                         <div class="form-group" id="data-grid"></div>
                     </div>

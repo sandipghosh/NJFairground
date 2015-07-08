@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<NJFairground.Web.Models.PageItemModel>
 
-@*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
+<p>
+    @Ajax.ActionLink("Create New", "Add", "SubPageList", new AjaxOptions
+    {
+        OnBegin = "AddSelectedPageId",
+        OnComplete = "ShowSubPageInsertScreen"
+    })
+</p>
 <table id="subpages" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
         <tr>

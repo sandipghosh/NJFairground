@@ -67,7 +67,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
             return Content(string.Empty);
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]
         public ActionResult Edit(PageModel page)
         {
             try
