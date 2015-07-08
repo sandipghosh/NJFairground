@@ -92,6 +92,8 @@
                     if (form.dataset.ajax) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
+                        tinyMCE.triggerSave(true, true);
+
                         var xhr = new XMLHttpRequest();
                         xhr.open(form.method, form.action);
                         xhr.onreadystatechange = function () {
