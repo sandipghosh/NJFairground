@@ -93,4 +93,12 @@ namespace NJFairground.Web.Models
         Android = 1,
         iOS = 2
     }
+
+    public enum NotificationType
+    {
+        info = 1,
+        worning = 2,
+        error = 3,
+        success = 4
+    }
 }

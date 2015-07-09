@@ -148,8 +148,8 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             if (this.DoLog)
             {
                 string msg = string.Format("Channel Destroyed For: {0}", sender);
-                CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(msg);
+                //CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(NotificationType.info, msg);
             }
         }
 
@@ -163,8 +163,8 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             if (this.DoLog)
             {
                 string msg = string.Format("Channel Created For: {0}", sender);
-                CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(msg);
+                //CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(NotificationType.info, msg);
             }
         }
 
@@ -182,8 +182,8 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             {
                 string msg = string.Format("Device Subscription Changed: {0} -> {1} -> {2} -> {3}",
                     sender, oldSubscriptionId, newSubscriptionId, notification);
-                CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(msg);
+                //CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(NotificationType.info, msg);
             }
         }
 
@@ -201,8 +201,8 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             {
                 string msg = string.Format("Device Subscription Expired: {0} -> {1} -> {2} -> {3}",
                     sender, expiredSubscriptionId, expirationDateUtc, notification);
-                CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(msg);
+                //CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(NotificationType.worning, msg);
             }
         }
 
@@ -217,8 +217,8 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             if (this.DoLog)
             {
                 string msg = string.Format("Failure: {0} -> {1} -> {2}", sender, error.Message, notification);
-                CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(msg);
+                //CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(NotificationType.error, msg);
             }
         }
 
@@ -232,8 +232,8 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             if (this.DoLog)
             {
                 string msg = string.Format("Service Exception: {0} -> {1}", sender, error.Message);
-                CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(msg);
+                //CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(NotificationType.error, msg);
             }
         }
 
@@ -248,8 +248,8 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             if (this.DoLog)
             {
                 string msg = string.Format("Channel Exception: {0} -> {1}", sender, error.Message);
-                CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(msg);
+                //CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(NotificationType.error, msg);
             }
         }
 
@@ -263,8 +263,8 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             if (this.DoLog)
             {
                 string msg = string.Format("Sent: {0} -> {1}", sender, notification);
-                CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(msg);
+                //CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(NotificationType.success, msg);
             }
         }
 
@@ -332,16 +332,16 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             }
         }
 
-        private void LogNotificationToClient(string msg)
+        private void LogNotificationToClient(NotificationType messageType, string message)
         {
             try
             {
                 IHubContext context = GlobalHost.ConnectionManager.GetHubContext<PushNotificationLoggingHub>();
-                context.Clients.All.PushNotificationLog(msg);
+                context.Clients.All.PushNotificationLog(messageType.ToString(), message);
             }
             catch (Exception ex)
             {
-                ex.ExceptionValueTracker(msg);
+                ex.ExceptionValueTracker(messageType, message);
             }
         }
     }

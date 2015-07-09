@@ -4,25 +4,45 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
+@section AdimnPageStyles{
+    <style type="text/css">
+        @(Html.CssMinify(@<text>
+        #logger ul {
+            max-height: 150px;
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: bold;
+            padding-left: 1%;
+            width: 100%;
+            overflow-wrap: break-word;
+        }
+        #logger ul li{
+
+        }
+        </text>))
+    </style>
+}
 @section AdimnPageScripts {
     <script type="text/javascript" src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script type="text/javascript" src='@Url.Content("~/signalr/hubs")'></script>
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
         (function ($, win) {
+            $(document).ready(function () {
+                StartNotificationLog($('#logger'));
+            });
+
             this.StartNotificationLog = function ($container) {
                 try {
                     $.connection.hub.url = '@Url.Content("~/signalr")';
                     var subscriber = $.connection.PushNotificationLoggingHub;
                     var $loggerElement = $container.find('ul');
 
-                    subscriber.client.GetAnnouncements = function (message) {
+                    subscriber.client.PushNotificationLog = function (type, message) {
                         $loggerElement.append('<li>' + htmlEncode(message) + '</li>');
                     };
 
                     $.connection.hub.start().done(function () {
-                        $loggerElement.empty();
-                        $container.show();
                         subscriber.server.SubscribeLog();
                     });
                 } catch (ex) { }
@@ -37,7 +57,8 @@
                 try {
                     var response = (typeof data.responseText == 'undefined') ? data : data.responseText;
                     if (response == "notified") {
-                        StartNotificationLog('#logger');
+                        $('#logger').find('ul').empty();
+                        $('#logger').show();
                     }
                 } catch (ex) { }
             };
@@ -54,6 +75,19 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Announcements</h1>
+    </div>
+</div>
+<div class="row" id="logger" style="display:none;">
+    <div class="col-lg-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Notification Log
+                <a href="javascript:ClearLog($('#logger'))">Clear Log</a>
+            </div>
+            <div class="panel-body">
+                <ul></ul>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -103,13 +137,3 @@
     </div>
 </div>
 
-<div class="row" id="logger" style="display:none;">
-    <div class="col-lg-12">
-        <div class="panel panel-info">
-            <div class="panel-heading">Notification Log</div>
-            <div class="panel-body">
-                <ul></ul>
-            </div>
-        </div>
-    </div>
-</div>
