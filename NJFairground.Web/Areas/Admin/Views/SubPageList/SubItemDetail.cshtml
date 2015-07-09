@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        @using (Ajax.BeginForm("Edit", "SubPageList", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Alert('Hello')" },
+        @using (Ajax.BeginForm("Edit", "SubPageList", new AjaxOptions { HttpMethod = "POST", OnSuccess = "ShowSubPageInsertScreen" },
             new { role = "form", enctype = "multipart/form-data" }))
         {
             <div class="form-horizontal">
@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">Sub Header</label>
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.PageSubHeaderText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.PageSubHeaderText, new { @class = "form-control", rows = "5" })
                         @Html.ValidationMessageFor(model => model.PageSubHeaderText, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">Content</label>
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.PageItemDetailText, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.PageItemDetailText, new { @class = "form-control", rows = "5" })
                         @Html.ValidationMessageFor(model => model.PageItemDetailText, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -58,21 +58,18 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input type="submit" value="Save" class="btn btn-primary btn-sm" />
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default btn-sm" })
                     </div>
                 </div>
 
                 @Html.HiddenFor(model => model.PageItemId)
                 @Html.HiddenFor(model => model.PageId)
-                @*@Html.HiddenFor(model => model.PageItemImage)*@
                 @Html.HiddenFor(model => model.PageItemSubDetail)
                 @Html.HiddenFor(model => model.StatusId)
+                @Html.HiddenFor(model => model.CreatedOn)
+                @Html.HiddenFor(model => model.ActivatedOn)
             </div>
         }
-
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
     </div>
 </div>
-

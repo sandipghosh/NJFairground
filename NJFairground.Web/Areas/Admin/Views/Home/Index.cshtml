@@ -1,8 +1,14 @@
-﻿
+﻿@using NJFairground.Web.Utilities;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
+@section AdimnPageScripts {
+    <script type="text/javascript">
+        @(Html.JsMinify(@<text>
 
+        </text>))
+    </script>
+}
 <h2>Index</h2>
 

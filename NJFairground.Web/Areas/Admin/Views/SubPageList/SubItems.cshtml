@@ -1,12 +1,5 @@
 ﻿@model IEnumerable<NJFairground.Web.Models.PageItemModel>
 
-<p>
-    @Ajax.ActionLink("Create New", "Add", "SubPageList", new AjaxOptions
-    {
-        OnBegin = "AddSelectedPageId",
-        OnComplete = "ShowSubPageInsertScreen"
-    })
-</p>
 <table id="subpages" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
         <tr>
@@ -38,8 +31,7 @@
                     @Html.DisplayFor(modelItem => item.ItemOrder)
                 </td>
                 <td>
-                    @Ajax.ActionLink("Edit", "Edit", new { pageItemId = item.PageItemId }, new AjaxOptions { OnSuccess = "GetEditScreen" }) |
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.PageItemId }) |*@
+                    @Ajax.ActionLink("Edit", "Edit", new { pageItemId = item.PageItemId }, new AjaxOptions { OnSuccess = "ShowSubPageInsertScreen" }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.PageItemId })
                 </td>
             </tr>

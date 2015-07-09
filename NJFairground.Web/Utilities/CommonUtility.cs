@@ -23,6 +23,7 @@ namespace NJFairground.Web.Utilities
     using Newtonsoft.Json;
     using NJFairground.Web.Models;
     using System.Text.RegularExpressions;
+    using System.Web.Hosting;
 
     public static class CommonUtility
     {
@@ -624,7 +625,7 @@ namespace NJFairground.Web.Utilities
         public static void LogToFileWithStack(string logContent)
         {
             //string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string baseDir = HttpContext.Current.Server
+            string baseDir = HostingEnvironment
                 .MapPath(string.Format("~/{0}/", ConfigurationManager.AppSettings["ErrorLogFolder"]));
 
             string logFilePath = string.Format("{0}LogFile-{1}{2}{3}-{4}{5}{6}.txt", baseDir,

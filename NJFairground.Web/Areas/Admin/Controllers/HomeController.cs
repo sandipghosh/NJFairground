@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿
 
 namespace NJFairground.Web.Areas.Admin.Controllers
 {
+    using System.Web.Mvc;
+
     public class HomeController : Controller
     {
         // GET: Admin/Home
+        [OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
             return View();

@@ -74,9 +74,8 @@ namespace NJFairground.Web
 
             if (!HttpContext.Current.Request.IsAjaxRequest())
             {
-
-                HttpContext.Current.Response.Redirect(string.Format("{0}/Error/Index",
-                    ConfigurationManager.AppSettings["VirtualDirectory"].ToString()));
+                HttpContext.Current.Response.Redirect(string.Format("{0}/Error/Index?msg={1}",
+                    ConfigurationManager.AppSettings["VirtualDirectory"].ToString(), ex.Message));
             }
             else
             {

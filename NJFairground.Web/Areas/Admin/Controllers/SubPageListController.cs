@@ -36,6 +36,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
         /// Indexes this instance.
         /// </summary>
         /// <returns></returns>
+        [HttpGet, OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Index()
         {
             try
@@ -55,6 +56,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="pageId">The page identifier.</param>
         /// <returns></returns>
+        [HttpGet, OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult GetPageItems(int pageId)
         {
             try
@@ -79,7 +81,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="pageItemId">The page item identifier.</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Edit(int pageItemId)
         {
             try
@@ -105,14 +107,31 @@ namespace NJFairground.Web.Areas.Admin.Controllers
         /// <param name="pageItem">The page item.</param>
         /// <returns></returns>
         [HttpPost, ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Edit(PageItemModel pageItem)
         {
             try
             {
-                if (pageItem != null)
+                if (ModelState.IsValid)
                 {
+                    pageItem.UpdatedOn = DateTime.Now;
+                    if (ControllerContext.HttpContext.Request.Files != null
+                        && ControllerContext.HttpContext.Request.Files.Count > 0)
+                    {
+                        string imagePath = this.UploadImage(ControllerContext.HttpContext.Request.Files[0]);
+                        pageItem.PageItemImage = imagePath;
+                    }
+                    else
+                    {
+                        pageItem.PageItemImage = string.Empty;
+                    }
+
                     this._pageItemDataRepository.Update(pageItem);
-                    return RedirectToAction("GetPageItems", new { pageId = pageItem.PageId });
+                    return RedirectToAction("GetPageItems", "SubPageList", new RouteValueDictionary(new { pageId = pageItem.PageId }));
+                }
+                else
+                {
+                    return PartialView("SubItemDetail", pageItem);
                 }
             }
             catch (Exception ex)
@@ -126,7 +145,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
         /// Adds this instance.
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Add(int pageId)
         {
             try
@@ -158,6 +177,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
         /// <param name="pageItem">The page item.</param>
         /// <returns></returns>
         [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]
+        [OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
         public ActionResult Add(PageItemModel pageItem)
         {
             try
@@ -169,10 +189,13 @@ namespace NJFairground.Web.Areas.Admin.Controllers
                     {
                         string imagePath = this.UploadImage(ControllerContext.HttpContext.Request.Files[0]);
                         pageItem.PageItemImage = imagePath;
-
-                        this._pageItemDataRepository.Insert(pageItem);
-                        return RedirectToAction("GetPageItems", "SubPageList", new RouteValueDictionary(new { pageId = pageItem.PageId }));
                     }
+                    else
+                    {
+                        pageItem.PageItemImage = string.Empty;
+                    }
+                    var newPageItem = this._pageItemDataRepository.InsertCustom(pageItem);
+                    return RedirectToAction("GetPageItems", "SubPageList", new RouteValueDictionary(new { pageId = pageItem.PageId }));
                 }
                 else
                 {

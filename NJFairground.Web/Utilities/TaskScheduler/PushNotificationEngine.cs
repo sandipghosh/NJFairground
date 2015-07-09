@@ -2,23 +2,60 @@
 
 namespace NJFairground.Web.Utilities.TaskScheduler
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models;
     using PushSharp;
     using PushSharp.Android;
     using PushSharp.Apple;
     using PushSharp.Core;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class PushNotificationEngine
     {
         private readonly IDeviceRegistryDataRepository _deviceRegistryDataRepository;
         private readonly PushBroker _broker;
+        private readonly Random _random;
         IList<DeviceRegistryModel> allDevices = new List<DeviceRegistryModel>();
+
+        /// <summary>
+        /// Gets a value indicating whether [do log].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [do log]; otherwise, <c>false</c>.
+        /// </value>
+        public bool DoLog { get { return CommonUtility.GetAppSetting<bool>("PN:DoLog"); } }
+        /// <summary>
+        /// Gets a value indicating whether [apns use sand box].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [apns use sand box]; otherwise, <c>false</c>.
+        /// </value>
+        public bool APNSUseSandBox { get { return CommonUtility.GetAppSetting<bool>("iOS:UseSandBox"); } }
+        /// <summary>
+        /// Gets a value indicating whether [apns certificate path].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [apns certificate path]; otherwise, <c>false</c>.
+        /// </value>
+        public string APNSCertificatePath { get { return CommonUtility.GetAppSetting<string>("iOS:CertificateFilePath"); } }
+        /// <summary>
+        /// Gets a value indicating whether [apns certificate password].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [apns certificate password]; otherwise, <c>false</c>.
+        /// </value>
+        public string APNSCertificatePassword { get { return CommonUtility.GetAppSetting<string>("iOS:CertificatePassword"); } }
+        /// <summary>
+        /// Gets a value indicating whether [GCM API key].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [GCM API key]; otherwise, <c>false</c>.
+        /// </value>
+        public string GCMApiKey { get { return CommonUtility.GetAppSetting<string>("Android:ApiKey"); } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PushNotificationEngine"/> class.
@@ -28,6 +65,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         {
             this._deviceRegistryDataRepository = deviceRegistryDataRepository;
             this._broker = new PushBroker();
+            this._random = new Random();
             RegisterEvents();
         }
 
@@ -35,10 +73,17 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// Initializes a new instance of the <see cref="PushNotificationEngine"/> class.
         /// </summary>
         public PushNotificationEngine()
-            : this((new SimpleInjector.Container()).GetInstance<IDeviceRegistryDataRepository>())
+            : this(ContainerProvider.Instance.GetInstance<IDeviceRegistryDataRepository>())
         {
-            allDevices = this._deviceRegistryDataRepository
-                .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+            try
+            {
+                allDevices = this._deviceRegistryDataRepository
+                    .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
+            }
         }
 
         /// <summary>
@@ -46,14 +91,26 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// </summary>
         /// <param name="devices">The devices.</param>
         /// <param name="announcement">The announcement.</param>
-        public void Notify(IList<DeviceRegistryModel> devices, PageItemModel announcement)
+        public void Notify(PageItemModel announcement)
         {
-            Task[] notificationProcess = new Task[] { 
-                new Task(()=>NotifyToAndroid(allDevices.Where(x=>x.DeviceType.Equals((int)MobileDeviceType.Android)).ToList(), announcement)),
-                new Task(()=>NotifyToiOS(allDevices.Where(x=>x.DeviceType.Equals((int)MobileDeviceType.iOS)).ToList(),announcement))
-            };
+            try
+            {
+                Func<MobileDeviceType, List<DeviceRegistryModel>> devices = (type) =>
+                    this.allDevices.Where(x => x.DeviceType.Equals((int)type)).ToList();
 
-            Task.WaitAll(notificationProcess);
+                IList<Task> notificationProcess = new List<Task>();
+                notificationProcess.Add(Task.Factory.StartNew(() =>
+                    NotifyToAndroid(devices(MobileDeviceType.Android), announcement)));
+
+                notificationProcess.Add(Task.Factory.StartNew(() =>
+                    NotifyToiOS(devices(MobileDeviceType.iOS), announcement)));
+
+                Task.WaitAll(notificationProcess.ToArray());
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(announcement);
+            }
         }
 
         /// <summary>
@@ -77,7 +134,10 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="sender">The sender.</param>
         private void ChannelDestroyed(object sender)
         {
-            //throw new System.NotImplementedException();
+            if (this.DoLog)
+            {
+                CommonUtility.LogToFileWithStack(string.Format("Channel Destroyed For: {0}", sender));
+            }
         }
 
         /// <summary>
@@ -87,7 +147,10 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="pushChannel">The push channel.</param>
         private void ChannelCreated(object sender, IPushChannel pushChannel)
         {
-            //throw new System.NotImplementedException();
+            if (this.DoLog)
+            {
+                CommonUtility.LogToFileWithStack(string.Format("Channel Created For: {0}", sender));
+            }
         }
 
         /// <summary>
@@ -100,7 +163,11 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         private void DeviceSubscriptionChanged(object sender, string oldSubscriptionId,
             string newSubscriptionId, INotification notification)
         {
-            //throw new System.NotImplementedException();
+            if (this.DoLog)
+            {
+                CommonUtility.LogToFileWithStack(string.Format("Device Subscription Changed: {0} -> {1} -> {2} -> {3}",
+                        sender, oldSubscriptionId, newSubscriptionId, notification));
+            }
         }
 
         /// <summary>
@@ -113,7 +180,11 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         private void DeviceSubscriptionExpired(object sender, string expiredSubscriptionId,
             System.DateTime expirationDateUtc, INotification notification)
         {
-            //throw new System.NotImplementedException();
+            if (this.DoLog)
+            {
+                CommonUtility.LogToFileWithStack(string.Format("Device Subscription Expired: {0} -> {1} -> {2} -> {3}",
+                        sender, expiredSubscriptionId, expirationDateUtc, notification));
+            }
         }
 
         /// <summary>
@@ -124,7 +195,10 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="error">The error.</param>
         private void NotificationFailed(object sender, INotification notification, System.Exception error)
         {
-            //throw new System.NotImplementedException();
+            if (this.DoLog)
+            {
+                CommonUtility.LogToFileWithStack(string.Format("Failure: {0} -> {1} -> {2}", sender, error.Message, notification));
+            }
         }
 
         /// <summary>
@@ -134,7 +208,10 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="error">The error.</param>
         private void ServiceException(object sender, System.Exception error)
         {
-            //throw new System.NotImplementedException();
+            if (this.DoLog)
+            {
+                CommonUtility.LogToFileWithStack(string.Format("Service Exception: {0} -> {1}", sender, error.Message));
+            }
         }
 
         /// <summary>
@@ -145,7 +222,10 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="error">The error.</param>
         private void ChannelException(object sender, IPushChannel pushChannel, System.Exception error)
         {
-            //throw new System.NotImplementedException();
+            if (this.DoLog)
+            {
+                CommonUtility.LogToFileWithStack(string.Format("Channel Exception: {0} -> {1}", sender, error.Message));
+            }
         }
 
         /// <summary>
@@ -155,7 +235,10 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="notification">The notification.</param>
         private void NotificationSent(object sender, INotification notification)
         {
-            //throw new System.NotImplementedException();
+            if (this.DoLog)
+            {
+                CommonUtility.LogToFileWithStack(string.Format("Sent: {0} -> {1}", sender, notification));
+            }
         }
 
         /// <summary>
@@ -165,19 +248,27 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="announcement">The announcement.</param>
         private void NotifyToiOS(IList<DeviceRegistryModel> devices, PageItemModel announcement)
         {
-            var appleCert = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                CommonUtility.GetAppSetting<string>("iOS:CertificateFilePath")));
-            _broker.RegisterAppleService(new ApplePushChannelSettings(true, appleCert,
-                CommonUtility.GetAppSetting<string>("iOS:CertificatePassword")));
-
-            foreach (var device in devices)
+            try
             {
-                _broker.QueueNotification(new AppleNotification()
-                    .ForDeviceToken(device.DeviceId)
-                    .WithAlert(new AppleNotificationAlert() { LaunchImage = announcement.PageItemImageUrl, Body = announcement.PageHeaderText })
-                    .WithCustomItem("PageItemId", announcement.PageItemId)
-                    .WithBadge(7)
-                    .WithSound("default"));
+                var appleCert = File.ReadAllBytes(Path.Combine
+                        (AppDomain.CurrentDomain.BaseDirectory, this.APNSCertificatePath));
+
+                this._broker.RegisterAppleService(new ApplePushChannelSettings
+                    (!this.APNSUseSandBox, appleCert, this.APNSCertificatePassword, true));
+
+                foreach (var device in devices)
+                {
+                    _broker.QueueNotification(new AppleNotification()
+                        .ForDeviceToken(device.DeviceId)
+                        .WithAlert(new AppleNotificationAlert() { LaunchImage = announcement.PageItemImageUrl, Body = announcement.PageHeaderText })
+                        .WithCustomItem("PageItemId", announcement.PageItemId)
+                        .WithBadge(7)
+                        .WithSound("default"));
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(devices, announcement);
             }
         }
 
@@ -188,20 +279,29 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="announcement">The announcement.</param>
         private void NotifyToAndroid(IList<DeviceRegistryModel> devices, PageItemModel announcement)
         {
-            _broker.RegisterGcmService(new GcmPushChannelSettings
-                (CommonUtility.GetAppSetting<string>("Android:ApiKey")));
-
-            foreach (var device in devices)
+            try
             {
-                _broker.QueueNotification(new GcmNotification()
-                    .ForDeviceRegistrationId(device.DeviceId)
-                    .WithData(new Dictionary<string, string>() { { "PageItemId", announcement.PageItemId.ToString() } })
-                    .WithJson(Newtonsoft.Json.JsonConvert.SerializeObject(new
+                if (!string.IsNullOrEmpty(this.GCMApiKey))
+                {
+                    _broker.RegisterGcmService(new GcmPushChannelSettings(this.GCMApiKey));
+
+                    foreach (var device in devices)
                     {
-                        alert = announcement.PageHeaderText,
-                        sound = "default",
-                        badge = 7
-                    })));
+                        _broker.QueueNotification(new GcmNotification()
+                            .ForDeviceRegistrationId(device.DeviceId)
+                            .WithData(new Dictionary<string, string>() { { "PageItemId", announcement.PageItemId.ToString() } })
+                            .WithJson(Newtonsoft.Json.JsonConvert.SerializeObject(new
+                            {
+                                alert = announcement.PageHeaderText,
+                                sound = "default",
+                                badge = 7
+                            })));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(devices, announcement);
             }
         }
     }

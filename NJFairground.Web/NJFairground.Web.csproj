@@ -317,6 +317,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AnnouncementController.cs" />
     <Compile Include="Areas\Admin\Controllers\BroadcastController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PageListController.cs" />
@@ -548,6 +549,7 @@
   <ItemGroup>
     <Content Include="App_Data\NewApiPayload.txt" />
     <Content Include="App_Data\NJ_Fairground_guide_map.txt" />
+    <Content Include="Areas\Admin\Scripts\admin-common.js" />
     <Content Include="Areas\Admin\Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Areas\Admin\Scripts\jquery-2.1.4.js" />
@@ -612,8 +614,6 @@
       <LastGenOutput>NJFairgroundDBEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\Admin\Views\Shared\_AdminLayoutPage.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_GridGlobalMaster.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_AddEvent.cshtml" />
     <Content Include="Areas\Admin\Views\Broadcast\Index.cshtml" />
     <Content Include="Areas\Admin\Styles\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Areas\Admin\Styles\Fonts\glyphicons-halflings-regular.ttf" />
@@ -631,6 +631,8 @@
     <Content Include="Areas\Admin\Views\SubPageList\SubItemDetail.cshtml" />
     <Content Include="Areas\Admin\Views\PageList\PageDetail.cshtml" />
     <Content Include="Areas\Admin\Views\SubPageList\SubItemInsert.cshtml" />
+    <Content Include="Certificate\Sussex.p12" />
+    <Content Include="Areas\Admin\Views\Announcement\Index.cshtml" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />

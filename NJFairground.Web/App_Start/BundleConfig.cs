@@ -43,7 +43,9 @@ namespace NJFairground.Web
                     "~/Areas/Admin/Scripts/jquery.dataTables.min.js",
                     "~/Areas/Admin/Scripts/dataTables.bootstrap.min.js",
                     "~/Areas/Admin/Scripts/metisMenu.min.js",
-                    "~/Areas/Admin/Scripts/sb-admin-2.js"
+                    "~/Areas/Admin/Scripts/sb-admin-2.js",
+                    "~/Scripts/common-script.js",
+                    "~/Areas/Admin/Scripts/admin-common.js"
                 );
                 BundleTable.Bundles.Add(scriptBundle);
 
