@@ -640,7 +640,7 @@ namespace NJFairground.Web.Utilities
             string lineNumber = frame.GetFileLineNumber().ToString();
 
             FileLogger log = new FileLogger(logFilePath, true, FileLogger.LogType.TXT, FileLogger.LogLevel.All);
-            log.LogRaw(string.Format("{0} :{1}-{2}; {3}.{4} ==> {5}", DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss tt"),
+            log.LogRaw(string.Format("{0} :{1}-{2}; {3}.{4} ==>\r\n{5}", DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss tt"),
                 fileName, lineNumber, callingModule, lastCallingFunction, logContent));
         }
 
@@ -671,6 +671,7 @@ namespace NJFairground.Web.Utilities
                             currentParameter.ToString() : JsonConvert.SerializeObject(currentParameter,
                                 new JsonSerializerSettings
                                 {
+                                    Formatting = Newtonsoft.Json.Formatting.Indented,
                                     ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                                 });
                     }
@@ -685,7 +686,8 @@ namespace NJFairground.Web.Utilities
 
             if (ConfigurationManager.AppSettings["EnableErrorLog"].ToString().ToLower() == "true")
             {
-                LogToFileWithStack(string.Format("{0}\r\n{1}", ex.Message, sb.ToString()));
+                StackLogger.LogMessage(ex.ToString());
+                LogToFileWithStack(string.Format("{0}\r\n{1}", StackLogger.GetCurrentLog(), sb.ToString()));
             }
         }
 
@@ -704,6 +706,7 @@ namespace NJFairground.Web.Utilities
                 string paramValue = (item.Value.GetType().Namespace.StartsWith("System")) ?
                     item.Value.ToString() : JsonConvert.SerializeObject(item.Value, new JsonSerializerSettings
                     {
+                        Formatting = Newtonsoft.Json.Formatting.Indented,
                         ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     });
 
@@ -716,7 +719,8 @@ namespace NJFairground.Web.Utilities
 
             if (ConfigurationManager.AppSettings["EnableErrorLog"].ToString().ToLower() == "true")
             {
-                LogToFileWithStack(string.Format("{0}\r\n{1}", ex.Message, sb.ToString()));
+                StackLogger.LogMessage(ex.ToString());
+                LogToFileWithStack(string.Format("{0}\r\n{1}", StackLogger.GetCurrentLog(), sb.ToString()));
             }
         }
 

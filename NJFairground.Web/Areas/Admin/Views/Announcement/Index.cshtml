@@ -5,9 +5,48 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 @section AdimnPageScripts {
+    <script type="text/javascript" src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script type="text/javascript" src='@Url.Content("~/signalr/hubs")'></script>
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
+        (function ($, win) {
+            this.StartNotificationLog = function ($container) {
+                try {
+                    $.connection.hub.url = '@Url.Content("~/signalr")';
+                    var subscriber = $.connection.PushNotificationLoggingHub;
+                    var $loggerElement = $container.find('ul');
 
+                    subscriber.client.GetAnnouncements = function (message) {
+                        $loggerElement.append('<li>' + htmlEncode(message) + '</li>');
+                    };
+
+                    $.connection.hub.start().done(function () {
+                        $loggerElement.empty();
+                        $container.show();
+                        subscriber.server.SubscribeLog();
+                    });
+                } catch (ex) { }
+            };
+
+            this.htmlEncode = function (value) {
+                var encodedValue = $('<div />').text(value).html();
+                return encodedValue;
+            };
+
+            this.GetNotified = function (data) {
+                try {
+                    var response = (typeof data.responseText == 'undefined') ? data : data.responseText;
+                    if (response == "notified") {
+                        StartNotificationLog('#logger');
+                    }
+                } catch (ex) { }
+            };
+
+            this.ClearLog = function ($container) {
+                var $loggerElement = $container.find('ul');
+                $loggerElement.empty();
+            };
+        }(jQuery, window));
         </text>))
     </script>
 }
@@ -64,3 +103,13 @@
     </div>
 </div>
 
+<div class="row" id="logger" style="display:none;">
+    <div class="col-lg-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">Notification Log</div>
+            <div class="panel-body">
+                <ul></ul>
+            </div>
+        </div>
+    </div>
+</div>

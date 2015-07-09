@@ -519,6 +519,7 @@
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Models\ValidationRules\Factory\FluentValidatorFactory.cs" />
     <Compile Include="Models\ValidationRules\PageItemModelValidation.cs" />
+    <Compile Include="Models\ValidationRules\PageModelValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\CommonUtility.cs" />
     <Compile Include="Utilities\CryptLib.cs" />
@@ -541,8 +542,10 @@
     <Compile Include="Utilities\ReadWriteCsv.cs" />
     <Compile Include="Utilities\RssFeedReader.cs" />
     <Compile Include="Utilities\SessionVariable.cs" />
+    <Compile Include="Utilities\StackLogger.cs" />
     <Compile Include="Utilities\TaskScheduler\Hubs\AdvertisementHub.cs" />
     <Compile Include="Utilities\TaskScheduler\Hubs\AnnouncementHub.cs" />
+    <Compile Include="Utilities\TaskScheduler\Hubs\PushNotificationLoggingHub.cs" />
     <Compile Include="Utilities\TaskScheduler\NotificationEngine.cs" />
     <Compile Include="Utilities\TaskScheduler\PushNotificationEngine.cs" />
   </ItemGroup>
@@ -624,15 +627,15 @@
     <Content Include="Areas\Admin\Styles\Fonts\fontawesome-webfont.woff" />
     <Content Include="Areas\Admin\Styles\Fonts\FontAwesome.otf" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Certificate\Sussex.pem" />
     <Content Include="Areas\Admin\Views\PageList\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SubPageList\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SubPageList\SubItems.cshtml" />
     <Content Include="Areas\Admin\Views\SubPageList\SubItemDetail.cshtml" />
     <Content Include="Areas\Admin\Views\PageList\PageDetail.cshtml" />
     <Content Include="Areas\Admin\Views\SubPageList\SubItemInsert.cshtml" />
-    <Content Include="Certificate\Sussex.p12" />
     <Content Include="Areas\Admin\Views\Announcement\Index.cshtml" />
+    <Content Include="Certificate\SussexCert.p12" />
+    <Content Include="Certificate\SussexKey.p12" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />

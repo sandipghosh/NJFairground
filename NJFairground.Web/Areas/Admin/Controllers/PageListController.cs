@@ -7,7 +7,10 @@ namespace NJFairground.Web.Areas.Admin.Controllers
     using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
 
     public class PageListController : Controller
@@ -60,6 +63,27 @@ namespace NJFairground.Web.Areas.Admin.Controllers
             return pages;
         }
 
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
+        public ActionResult Delete(int pageId)
+        {
+            try
+            {
+                var page = this._pageDataRepository.GetList(x => x.StatusId.Equals((int)StatusEnum.Active)
+                    && x.PageId.Equals(pageId)).FirstOrDefaultCustom();
+
+                if (page != null)
+                {
+                    return PartialView("PageDetail", page);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
+            }
+            return Content(string.Empty);
+        }
+
         /// <summary>
         /// Edits the specified page identifier.
         /// </summary>
@@ -97,10 +121,24 @@ namespace NJFairground.Web.Areas.Admin.Controllers
         {
             try
             {
-                if (page != null)
+                if (ModelState.IsValid)
                 {
+                    if (ControllerContext.HttpContext.Request.Files != null
+                        && ControllerContext.HttpContext.Request.Files.Count > 0)
+                    {
+                        string imagePath = this.UploadImage(ControllerContext.HttpContext.Request.Files[0]);
+                        page.PageImage = imagePath;
+                    }
+                    else
+                    {
+                        page.PageImage = string.Empty;
+                    }
                     this._pageDataRepository.Update(page);
-                    return RedirectToAction("GetPages");
+                    return JavaScript(string.Format("window.location.assign('{0}');", Url.Action("Index", "PageList")));
+                }
+                else
+                {
+                    return PartialView("PageDetail", page);
                 }
             }
             catch (Exception ex)
@@ -108,6 +146,35 @@ namespace NJFairground.Web.Areas.Admin.Controllers
                 ex.ExceptionValueTracker();
             }
             return Content(string.Empty);
+        }
+
+        /// <summary>
+        /// Uploads the image.
+        /// </summary>
+        /// <param name="uploadedFile">The uploaded file.</param>
+        /// <returns></returns>
+        private string UploadImage(HttpPostedFileBase uploadedFile)
+        {
+            try
+            {
+                uploadedFile.InputStream.Seek(0, SeekOrigin.Begin);
+                using (Image image = Image.FromStream(uploadedFile.InputStream))
+                {
+                    string virtualPath = CommonUtility.GetAppSetting<string>("UploadFolderItemImagePath");
+                    string filePath = Server.MapPath(virtualPath);
+
+                    string fileName = string.Format("{0:N}.jpg", Guid.NewGuid());
+                    string fullPath = Path.Combine(filePath, fileName);
+
+                    image.Save(fullPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    return fileName;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(uploadedFile);
+            }
+            return string.Empty;
         }
     }
 }

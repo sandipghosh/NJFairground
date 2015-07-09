@@ -7,6 +7,9 @@ namespace NJFairground.Web.Models.ValidationRules
 
     public class PageItemModelValidation : AbstractValidator<PageItemModel>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageItemModelValidation"/> class.
+        /// </summary>
         public PageItemModelValidation()
         {
             RuleFor(x => x.PageId).NotNull();

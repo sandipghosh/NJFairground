@@ -4,8 +4,18 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
+@section AdimnPageStyles{
+    <style type="text/css">
+        @(Html.CssMinify(@<text>
+        #dvPreview {
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);
+            min-height: 200px;
+            min-width: 200px;
+        }
+        </text>))
+    </style>
+}
 @section AdimnPageScripts{
-    @*<script src="http://malsup.github.com/jquery.form.js"></script>*@
     <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
@@ -31,6 +41,35 @@
                     });
                 });
             });
+
+            $(document).on('change', '#PageItemImage', function () {
+                $("#dvPreview").html("");
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                if (regex.test($(this).val().toLowerCase())) {
+                    if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
+                        $("#dvPreview").show();
+                        $("#dvPreview")[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
+                    }
+                    else {
+                        if (typeof (FileReader) != "undefined") {
+                            $("#dvPreview").show();
+                            $("#dvPreview").append("<img />");
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $("#dvPreview img").attr({ 'src': e.target.result, 'width': '200px' });
+                            }
+                            reader.readAsDataURL($(this)[0].files[0]);
+                            $("#dvPreview").closest('.form-group').show();
+                        } else {
+                            alert("This browser does not support FileReader.");
+                        }
+                    }
+                } else {
+                    $("#dvPreview").hide();
+                    alert("Please upload a valid image file.");
+                }
+            });
+
 
             this.GetEditScreen = function (data) {
                 try {

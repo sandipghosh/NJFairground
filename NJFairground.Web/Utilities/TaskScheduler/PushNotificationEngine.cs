@@ -2,8 +2,10 @@
 
 namespace NJFairground.Web.Utilities.TaskScheduler
 {
+    using Microsoft.AspNet.SignalR;
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities.TaskScheduler.Hubs;
     using PushSharp;
     using PushSharp.Android;
     using PushSharp.Apple;
@@ -41,7 +43,16 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <value>
         ///   <c>true</c> if [apns certificate path]; otherwise, <c>false</c>.
         /// </value>
-        public string APNSCertificatePath { get { return CommonUtility.GetAppSetting<string>("iOS:CertificateFilePath"); } }
+        public string APNSCertificatePath
+        {
+            get
+            {
+                if (APNSUseSandBox)
+                    return CommonUtility.GetAppSetting<string>("iOS:CertificateSandbox");
+                else
+                    return CommonUtility.GetAppSetting<string>("iOS:CertificateProduction");
+            }
+        }
         /// <summary>
         /// Gets a value indicating whether [apns certificate password].
         /// </summary>
@@ -136,7 +147,9 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         {
             if (this.DoLog)
             {
-                CommonUtility.LogToFileWithStack(string.Format("Channel Destroyed For: {0}", sender));
+                string msg = string.Format("Channel Destroyed For: {0}", sender);
+                CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(msg);
             }
         }
 
@@ -149,7 +162,9 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         {
             if (this.DoLog)
             {
-                CommonUtility.LogToFileWithStack(string.Format("Channel Created For: {0}", sender));
+                string msg = string.Format("Channel Created For: {0}", sender);
+                CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(msg);
             }
         }
 
@@ -165,8 +180,10 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         {
             if (this.DoLog)
             {
-                CommonUtility.LogToFileWithStack(string.Format("Device Subscription Changed: {0} -> {1} -> {2} -> {3}",
-                        sender, oldSubscriptionId, newSubscriptionId, notification));
+                string msg = string.Format("Device Subscription Changed: {0} -> {1} -> {2} -> {3}",
+                    sender, oldSubscriptionId, newSubscriptionId, notification);
+                CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(msg);
             }
         }
 
@@ -182,8 +199,10 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         {
             if (this.DoLog)
             {
-                CommonUtility.LogToFileWithStack(string.Format("Device Subscription Expired: {0} -> {1} -> {2} -> {3}",
-                        sender, expiredSubscriptionId, expirationDateUtc, notification));
+                string msg = string.Format("Device Subscription Expired: {0} -> {1} -> {2} -> {3}",
+                    sender, expiredSubscriptionId, expirationDateUtc, notification);
+                CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(msg);
             }
         }
 
@@ -197,7 +216,9 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         {
             if (this.DoLog)
             {
-                CommonUtility.LogToFileWithStack(string.Format("Failure: {0} -> {1} -> {2}", sender, error.Message, notification));
+                string msg = string.Format("Failure: {0} -> {1} -> {2}", sender, error.Message, notification);
+                CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(msg);
             }
         }
 
@@ -210,7 +231,9 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         {
             if (this.DoLog)
             {
-                CommonUtility.LogToFileWithStack(string.Format("Service Exception: {0} -> {1}", sender, error.Message));
+                string msg = string.Format("Service Exception: {0} -> {1}", sender, error.Message);
+                CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(msg);
             }
         }
 
@@ -224,7 +247,9 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         {
             if (this.DoLog)
             {
-                CommonUtility.LogToFileWithStack(string.Format("Channel Exception: {0} -> {1}", sender, error.Message));
+                string msg = string.Format("Channel Exception: {0} -> {1}", sender, error.Message);
+                CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(msg);
             }
         }
 
@@ -237,7 +262,9 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         {
             if (this.DoLog)
             {
-                CommonUtility.LogToFileWithStack(string.Format("Sent: {0} -> {1}", sender, notification));
+                string msg = string.Format("Sent: {0} -> {1}", sender, notification);
+                CommonUtility.LogToFileWithStack(msg);
+                LogNotificationToClient(msg);
             }
         }
 
@@ -302,6 +329,19 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             catch (Exception ex)
             {
                 ex.ExceptionValueTracker(devices, announcement);
+            }
+        }
+
+        private void LogNotificationToClient(string msg)
+        {
+            try
+            {
+                IHubContext context = GlobalHost.ConnectionManager.GetHubContext<PushNotificationLoggingHub>();
+                context.Clients.All.PushNotificationLog(msg);
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(msg);
             }
         }
     }

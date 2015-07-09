@@ -110,7 +110,7 @@ namespace NJFairground.Web
                     "~/Styles/style.css");
                 BundleTable.Bundles.Add(styleBundle);
 
-                styleBundle = new Bundle("~/Styles/CommonAdminStyle", new CustomCssMinify(), new CssMinify());
+                styleBundle = new Bundle("~/Areas/Admin/Styles/CommonAdminStyle", new CustomCssMinify(), new CssMinify());
                 styleBundle.Include("~/Areas/Admin/Styles/bootstrap.css",
                     "~/Areas/Admin/Styles/dataTables.bootstrap.css",
                     "~/Areas/Admin/Styles/dataTables.responsive.css",

@@ -209,6 +209,11 @@ namespace NJFairground.Web.Areas.Admin.Controllers
             return Content("");
         }
 
+        /// <summary>
+        /// Uploads the image.
+        /// </summary>
+        /// <param name="uploadedFile">The uploaded file.</param>
+        /// <returns></returns>
         private string UploadImage(HttpPostedFileBase uploadedFile)
         {
             try

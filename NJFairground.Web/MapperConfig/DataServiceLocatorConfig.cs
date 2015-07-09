@@ -1,19 +1,18 @@
 ﻿
 namespace NJFairground.Web.MapperConfig
 {
-    using System;
     using AutoMapper;
     using FluentValidation;
     using NJFairground.Web.Data.Implementation;
     using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.Models;
+    using NJFairground.Web.Models.ValidationRules;
     using NJFairground.Web.Models.ValidationRules.Factory;
     using NJFairground.Web.Utilities;
-    using NJFairground.Web.Models;
     using SimpleInjector;
-    using SimpleInjector.Extensions;
     using SimpleInjector.Advanced;
     using SimpleInjector.Packaging;
-    using NJFairground.Web.Models.ValidationRules;
+    using System;
 
     public class DataServiceLocatorConfig : IPackage
     {
@@ -45,11 +44,9 @@ namespace NJFairground.Web.MapperConfig
             {
                 container.Register<IServiceProvider, SimpleDependencyInjector>(Lifestyle.Singleton);
                 container.Register<IValidatorFactory, FluentValidatorFactory>(Lifestyle.Singleton);
-                //container.RegisterManyForOpenGeneric(typeof(IValidator<>), typeof(IValidator<>).Assembly);
-                container.Register<IValidator<PageItemModel>, PageItemModelValidation>(Lifestyle.Singleton);
 
-                //container.RegisterManyForOpenGeneric(typeof(IValidator<>),
-                //    (serviceType, implTypes) => container.RegisterAll(serviceType, implTypes), typeof(IValidator<>).Assembly);
+                container.Register<IValidator<PageItemModel>, PageItemModelValidation>(Lifestyle.Singleton);
+                container.Register<IValidator<PageModel>, PageModelValidation>(Lifestyle.Singleton);
             }
             catch (Exception ex)
             {
@@ -65,19 +62,19 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
-                container.Register<IPageDataRepository, PageDataRepository>();
-                container.Register<IPageItemDataRepository, PageItemDataRepository>();
-                container.Register<IEventDataRepository, EventDataRepository>();
-                container.Register<IUserInfoDataRepository, UserInfoDataRepository>();
-                container.Register<IFavoriteImageDataRepository, FavoriteImageDataRepository>();
-                container.Register<IFavoritePageDataRepository, FavoritePageDataRepository>();
-                container.Register<IUserImageDataRepository, UserImageDataRepository>();
-                container.Register<IBannerDataRepository, BannerDataRepository>();
-                container.Register<IBannerItemDataRepository, BannerItemDataRepository>();
-                container.Register<IPageBannerDataRepository, PageBannerDataRepository>();
-                container.Register<ISplashImageDataRepository, SplashImageDataRepository>();
-                container.Register<IHitCounterDataRepository, HitCounterDataRepository>();
-                container.Register<IDeviceRegistryDataRepository, DeviceRegistryDataRepository>();
+                container.Register<IPageDataRepository, PageDataRepository>(Lifestyle.Singleton);
+                container.Register<IPageItemDataRepository, PageItemDataRepository>(Lifestyle.Singleton);
+                container.Register<IEventDataRepository, EventDataRepository>(Lifestyle.Singleton);
+                container.Register<IUserInfoDataRepository, UserInfoDataRepository>(Lifestyle.Singleton);
+                container.Register<IFavoriteImageDataRepository, FavoriteImageDataRepository>(Lifestyle.Singleton);
+                container.Register<IFavoritePageDataRepository, FavoritePageDataRepository>(Lifestyle.Singleton);
+                container.Register<IUserImageDataRepository, UserImageDataRepository>(Lifestyle.Singleton);
+                container.Register<IBannerDataRepository, BannerDataRepository>(Lifestyle.Singleton);
+                container.Register<IBannerItemDataRepository, BannerItemDataRepository>(Lifestyle.Singleton);
+                container.Register<IPageBannerDataRepository, PageBannerDataRepository>(Lifestyle.Singleton);
+                container.Register<ISplashImageDataRepository, SplashImageDataRepository>(Lifestyle.Singleton);
+                container.Register<IHitCounterDataRepository, HitCounterDataRepository>(Lifestyle.Singleton);
+                container.Register<IDeviceRegistryDataRepository, DeviceRegistryDataRepository>(Lifestyle.Singleton);
             }
             catch (Exception ex)
             {
