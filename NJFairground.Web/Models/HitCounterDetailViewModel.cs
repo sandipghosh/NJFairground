@@ -1,8 +1,11 @@
-﻿using System;
+﻿
 
 namespace NJFairground.Web.Models
 {
-    public class HitCounterDetailViewModel
+    using System;
+    using NJFairground.Web.Models.Base;
+
+    public class HitCounterDetailViewModel : BaseModel
     {
         public string SponsorType { get; set; }
         public string Name { get; set; }

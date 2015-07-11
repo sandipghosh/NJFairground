@@ -202,7 +202,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                 string msg = string.Format("Device Subscription Expired: {0} -> {1} -> {2} -> {3}",
                     sender, expiredSubscriptionId, expirationDateUtc, notification);
                 //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.worning, msg);
+                LogNotificationToClient(NotificationType.warning, msg);
             }
         }
 
@@ -218,7 +218,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             {
                 string msg = string.Format("Failure: {0} -> {1} -> {2}", sender, error.Message, notification);
                 //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.error, msg);
+                LogNotificationToClient(NotificationType.danger, msg);
             }
         }
 
@@ -233,7 +233,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             {
                 string msg = string.Format("Service Exception: {0} -> {1}", sender, error.Message);
                 //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.error, msg);
+                LogNotificationToClient(NotificationType.danger, msg);
             }
         }
 
@@ -249,7 +249,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             {
                 string msg = string.Format("Channel Exception: {0} -> {1}", sender, error.Message);
                 //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.error, msg);
+                LogNotificationToClient(NotificationType.danger, msg);
             }
         }
 

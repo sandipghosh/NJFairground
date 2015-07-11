@@ -42,6 +42,9 @@ namespace NJFairground.Web.MapperConfig
                 Mapper.CreateMap<HitCounter, HitCounterModel>()
                    .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
 
+                Mapper.CreateMap<HitCounterDetail, HitCounterDetailViewModel>()
+                    .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
+
                 Mapper.CreateMap<Banner, BannerModel>()
                    .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
 

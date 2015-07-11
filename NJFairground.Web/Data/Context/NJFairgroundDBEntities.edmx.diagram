@@ -38,6 +38,7 @@
         <AssociationConnector Association="NJFairgroundDBModel.FK_PageItemDetail_PageItem" />
         <AssociationConnector Association="NJFairgroundDBModel.FK__UserImage__UserK__3CBF0154" />
         <AssociationConnector Association="NJFairgroundDBModel.FK__UserImage__UserK__740F363E" />
+        <EntityTypeShape EntityType="NJFairgroundDBModel.HitCounterDetail" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

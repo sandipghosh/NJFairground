@@ -74,6 +74,7 @@ namespace NJFairground.Web.MapperConfig
                 container.Register<IPageBannerDataRepository, PageBannerDataRepository>(Lifestyle.Singleton);
                 container.Register<ISplashImageDataRepository, SplashImageDataRepository>(Lifestyle.Singleton);
                 container.Register<IHitCounterDataRepository, HitCounterDataRepository>(Lifestyle.Singleton);
+                container.Register<IHitCounterDetailDataRepository, HitCounterDetailDataRepository>();
                 container.Register<IDeviceRegistryDataRepository, DeviceRegistryDataRepository>(Lifestyle.Singleton);
             }
             catch (Exception ex)

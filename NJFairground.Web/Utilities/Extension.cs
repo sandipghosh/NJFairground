@@ -63,6 +63,42 @@ namespace NJFairground.Web.Utilities
             DateTime date;
             return DateTime.TryParse(text, out date) ? date : (DateTime?)null;
         }
+
+        /// <summary>
+        /// Pivots the specified source.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <typeparam name="TKey1">The type of the key1.</typeparam>
+        /// <typeparam name="TKey2">The type of the key2.</typeparam>
+        /// <typeparam name="TValue">The type of the value.</typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="key1Selector">The key1 selector.</param>
+        /// <param name="key2Selector">The key2 selector.</param>
+        /// <param name="aggregate">The aggregate.</param>
+        /// <returns></returns>
+        public static Dictionary<TKey1, Dictionary<TKey2, TValue>> Pivot<TSource, TKey1, TKey2, TValue>
+            (this IEnumerable<TSource> source, Func<TSource, TKey1> key1Selector,
+             Func<TSource, TKey2> key2Selector, Func<IEnumerable<TSource>, TValue> aggregate)
+        {
+            return source.GroupBy(key1Selector).Select(
+                x => new
+                {
+                    X = x.Key,
+                    Y = source.GroupBy(key2Selector).Select(
+                        z => new
+                        {
+                            Z = z.Key,
+                            V = aggregate(from item in source
+                                          where key1Selector(item).Equals(x.Key)
+                                          && key2Selector(item).Equals(z.Key)
+                                          select item
+                            )
+
+                        }
+                    ).ToDictionary(e => e.Z, o => o.V)
+                }
+            ).ToDictionary(e => e.X, o => o.Y);
+        }
         #endregion
 
         #region Extension Functions Section

@@ -7,16 +7,19 @@
 @section AdimnPageStyles{
     <style type="text/css">
         @(Html.CssMinify(@<text>
-        #logger ul {
+        #logger ol {
             max-height: 150px;
             font-family: monospace;
-            font-size: 10px;
-            font-weight: bold;
+            font-size: 11px;
+            /*font-weight: bold;*/
             padding-left: 1%;
             width: 100%;
+            margin-left: 1%;
             overflow-wrap: break-word;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
-        #logger ul li{
+        #logger ol li{
 
         }
         </text>))
@@ -36,10 +39,10 @@
                 try {
                     $.connection.hub.url = '@Url.Content("~/signalr")';
                     var subscriber = $.connection.PushNotificationLoggingHub;
-                    var $loggerElement = $container.find('ul');
+                    var $loggerElement = $container.find('ol');
 
                     subscriber.client.PushNotificationLog = function (type, message) {
-                        $loggerElement.append('<li>' + htmlEncode(message) + '</li>');
+                        $loggerElement.append('<li><i class="fa fa-bullhorn fa-fw"></i><p class="text-{0}">{1}</li>'.format(type, htmlEncode(message)));
                     };
 
                     $.connection.hub.start().done(function () {
@@ -57,14 +60,14 @@
                 try {
                     var response = (typeof data.responseText == 'undefined') ? data : data.responseText;
                     if (response == "notified") {
-                        $('#logger').find('ul').empty();
+                        $('#logger').find('ol').empty();
                         $('#logger').show();
                     }
                 } catch (ex) { }
             };
 
             this.ClearLog = function ($container) {
-                var $loggerElement = $container.find('ul');
+                var $loggerElement = $container.find('ol');
                 $loggerElement.empty();
             };
         }(jQuery, window));
@@ -81,11 +84,13 @@
     <div class="col-lg-12">
         <div class="panel panel-info">
             <div class="panel-heading">
-                Notification Log
-                <a href="javascript:ClearLog($('#logger'))">Clear Log</a>
+                <i class="fa fa-bullhorn fa-fw"></i><span id="AreaChartHearderText"> Notification Log</span>
+                <div class="pull-right">
+                    <a class="btn btn-primary btn-xs" href="javascript:ClearLog($('#logger'))">Clear Log</a>
+                </div>
             </div>
             <div class="panel-body">
-                <ul></ul>
+                <ol></ol>
             </div>
         </div>
     </div>

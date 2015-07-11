@@ -64,6 +64,8 @@ public partial class NJFairgroundDBEntities : DbContext
 
     public DbSet<PageItemNew> PageItemNews { get; set; }
 
+    public DbSet<HitCounterDetail> HitCounterDetails { get; set; }
+
 }
 
 }

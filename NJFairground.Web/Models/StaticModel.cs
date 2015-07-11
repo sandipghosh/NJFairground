@@ -97,8 +97,8 @@ namespace NJFairground.Web.Models
     public enum NotificationType
     {
         info = 1,
-        worning = 2,
-        error = 3,
+        warning = 2,
+        danger = 3,
         success = 4
     }
 }

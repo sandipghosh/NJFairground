@@ -1,14 +1,230 @@
-﻿@using NJFairground.Web.Utilities;
+﻿@using NJFairground.Web.Models
+@using NJFairground.Web.Utilities
+@model DashboardViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
-@section AdimnPageScripts {
-    <script type="text/javascript">
-        @(Html.JsMinify(@<text>
+@section AdimnPageStyles{
+    <link href="~/Areas/Admin/Styles/morris.css" rel="stylesheet" type="text/css" />
+}
 
-        </text>))
+@section AdimnPageScripts{
+    <script type="text/javascript" src="~/Areas/Admin/Scripts/raphael-min.js"></script>
+    <script type="text/javascript" src="~/Areas/Admin/Scripts/morris.min.js"></script>
+    <script type="text/javascript">
+        (function ($, win) {
+            var areaChart;
+            var pieChart;
+
+            $(document).ready(function () {
+                try {
+                    GetAreaChart({ "effectedDays": 30, "type": "Banner" }, 'morris-area-chart');
+                    GetPieChart('device-pie-chart');
+
+                } catch (ex) { }
+            });
+
+            this.GenerateAreaChart = function (data, selector, type) {
+                try {
+                    $('#AreaChartHearderText').text(' Area Chart For {0} Adds'.format(type));
+                    $('.report-option').attr({
+                        'href': $('.report-option').attr('href').replace('Splash', type).replace('Banner', type),
+                        'data-ajax-success': $('.report-option').attr('data-ajax-success').replace('Splash', type).replace('Banner', type)
+                    });
+
+                    if (data != undefined) {
+                        if (areaChart != null || areaChart != undefined) {
+                            areaChart.options.ykeys = data.ykeys;
+                            areaChart.options.labels = data.labels;
+                            areaChart.setData(data.data);
+                            areaChart.redraw();
+                        }
+                        else {
+                            areaChart = Morris.Area({
+                                element: selector,
+                                data: data.data,
+                                xkey: data.xkey,
+                                ykeys: data.ykeys,
+                                labels: data.labels,
+                                pointSize: 2,
+                                hideHover: 'auto',
+                                resize: true
+                            });
+                        }
+                    }
+                } catch (ex) { console.log(ex.message); }
+            }
+
+            this.GeneratePieChart = function (data, selector) {
+                try {
+                    if (data != undefined) {
+                        if (pieChart != null || pieChart != undefined) {
+                            pieChart.options.ykeys = data.ykeys;
+                            pieChart.options.labels = data.labels;
+                            pieChart.setData(data);
+                            pieChart.redraw();
+                        }
+                        else {
+                            pieChart = Morris.Donut({
+                                element: selector,
+                                data: data,
+                                resize: true
+                            });
+                        }
+                    }
+                } catch (ex) { console.log(ex.message); }
+            };
+
+            this.GetPieChart = function (selector) {
+                try {
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Content("~/")' + 'Admin/Home/GetDevicePie',
+                        //data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        success: function (data, textStatus, jqXHR) {
+                            try {
+                                GeneratePieChart(data, selector);
+                            } catch (ex) { }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert(textStatus);
+                        }
+                    });
+                } catch (ex) { }
+            };
+
+            this.GetAreaChart = function (data, selector) {
+                try {
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Content("~/")' + 'Admin/Home/GetAddsAreaChart',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        success: function (response, textStatus, jqXHR) {
+                            try {
+                                GenerateAreaChart(response, selector, data.type);
+                            } catch (ex) { }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert(textStatus);
+                        }
+                    });
+                } catch (ex) { }
+            };
+        }(jQuery, window));
     </script>
 }
-<h2>Index</h2>
+@helper Widget(string result, string caption, string displayIcon, string panelTheam,
+string actionName, string controllerName, RouteValueDictionary route, AjaxOptions ajaxOption)
+{
+    <div class="panel panel-@panelTheam">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-@displayIcon fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="huge">@result</div>
+                    <div>@caption</div>
+                </div>
+            </div>
+        </div>
+        @if (string.IsNullOrEmpty(actionName) || string.IsNullOrEmpty(controllerName))
+        {
+            <div class="panel-footer">
+                <span class="pull-left">&nbsp;</span>
+                <span class="pull-right">&nbsp;</span>
+                <div class="clearfix"></div>
+            </div>
+        }
+        else
+        {
+            @Ajax.MyActionLink(
+            @"<div class=""panel-footer"">
+                <span class=""pull-left"">View Details</span>
+                <span class=""pull-right""><i class=""fa fa-arrow-circle-right""></i></span>
+                <div class=""clearfix""></div>
+            </div>", actionName, controllerName, route, ajaxOption)
+        }
+    </div>
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Dashboard</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        @Widget(Model.TotalBannerHits.ToString(), "Total Banner Hits", "flag", "primary", "GetAddsAreaChart", "Home",
+            new RouteValueDictionary(new { effectedDays = 15, type = "Banner" }),
+            new AjaxOptions() { HttpMethod = HttpVerbs.Post.ToString(), OnSuccess = "GenerateAreaChart(data, 'morris-area-chart', 'Banner')" })
+    </div>
+    <div class="col-lg-3 col-md-6">
+        @Widget(Model.TotalSplashHits.ToString(), "Total Splash Hits", "list-alt", "green", "GetAddsAreaChart", "Home",
+            new RouteValueDictionary(new { effectedDays = 15, type = "Splash" }),
+            new AjaxOptions() { HttpMethod = HttpVerbs.Post.ToString(), OnSuccess = "GenerateAreaChart(data, 'morris-area-chart', 'Splash')" })
+    </div>
+    <div class="col-lg-3 col-md-6">
+        @Widget(Model.TotalActiveiOSUsers.ToString(), "Total iOS Users", "apple", "yellow", "", "", null, new AjaxOptions())
+    </div>
+    <div class="col-lg-3 col-md-6">
+        @Widget(Model.TotalActiveAndroidUsers.ToString(), "Total Android Users", "android", "red", "", "", null, new AjaxOptions())
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i><span id="AreaChartHearderText"> Area Chart For Banner Adds</span>
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                @Ajax.ActionLink("Get 15 days report", "GetAddsAreaChart", "Home", new { effectedDays = 15, type = "Banner" },
+                                    new AjaxOptions() { HttpMethod = HttpVerbs.Post.ToString(), OnSuccess = "GenerateAreaChart(data, 'morris-area-chart', 'Banner')" },
+                                    new {@class = "report-option" })
+                            </li>
+                            <li>
+                                @Ajax.ActionLink("Get 30 days report", "GetAddsAreaChart", "Home", new { effectedDays = 30, type = "Banner" },
+                                    new AjaxOptions() { HttpMethod = HttpVerbs.Post.ToString(), OnSuccess = "GenerateAreaChart(data, 'morris-area-chart', 'Banner')" },
+                                    new { @class = "report-option" })
+                            </li>
+                            <li>
+                                @Ajax.ActionLink("Get all report", "GetAddsAreaChart", "Home", new { effectedDays = 0, type = "Banner" },
+                                    new AjaxOptions() { HttpMethod = HttpVerbs.Post.ToString(), OnSuccess = "GenerateAreaChart(data, 'morris-area-chart', 'Banner')" },
+                                    new { @class = "report-option" })
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div id="morris-area-chart"></div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-tablet fa-fw"></i> Active Device Specific Users
+            </div>
+            <div class="panel-body">
+                <div id="device-pie-chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 

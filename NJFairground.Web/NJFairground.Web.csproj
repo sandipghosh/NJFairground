@@ -382,6 +382,9 @@
     <Compile Include="Data\Context\HitCounter.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Context\HitCounterDetail.cs">
+      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Context\NJFairgroundDBEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -434,6 +437,7 @@
     <Compile Include="Data\Implementation\FavoriteImageDataRepository.cs" />
     <Compile Include="Data\Implementation\FavoritePageDataRepository.cs" />
     <Compile Include="Data\Implementation\HitCounterDataRepository.cs" />
+    <Compile Include="Data\Implementation\HitCounterDetailDataRepository.cs" />
     <Compile Include="Data\Implementation\PageBannerDataRepository.cs" />
     <Compile Include="Data\Implementation\PageItemDataRepository.cs" />
     <Compile Include="Data\Implementation\PageDataRepository.cs" />
@@ -452,6 +456,7 @@
     <Compile Include="Data\Interface\IFavoriteImageDataRepository.cs" />
     <Compile Include="Data\Interface\IFavoritePageDataRepository.cs" />
     <Compile Include="Data\Interface\IHitCounterDataRepository.cs" />
+    <Compile Include="Data\Interface\IHitCounterDetailDataRepository.cs" />
     <Compile Include="Data\Interface\IPageBannerDataRepository.cs" />
     <Compile Include="Data\Interface\IPageItemDataRepository.cs" />
     <Compile Include="Data\Interface\IPageDataRepository.cs" />
@@ -501,6 +506,7 @@
     <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\Base\SafeDisposableBaseClass.cs" />
+    <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\DeviceRegistryModel.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\FavoriteImageModel.cs" />
@@ -521,6 +527,7 @@
     <Compile Include="Models\ValidationRules\PageItemModelValidation.cs" />
     <Compile Include="Models\ValidationRules\PageModelValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\AjaxExtensions.cs" />
     <Compile Include="Utilities\CommonUtility.cs" />
     <Compile Include="Utilities\CryptLib.cs" />
     <Compile Include="Utilities\EmailSender.cs" />
@@ -562,6 +569,8 @@
     <Content Include="Areas\Admin\Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Areas\Admin\Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Areas\Admin\Scripts\metisMenu.min.js" />
+    <Content Include="Areas\Admin\Scripts\morris.min.js" />
+    <Content Include="Areas\Admin\Scripts\raphael-min.js" />
     <Content Include="Areas\Admin\Scripts\sb-admin-2.js" />
     <Content Include="Areas\Admin\Styles\admin-styles.css" />
     <Content Include="Areas\Admin\Styles\bootstrap.css" />
@@ -591,6 +600,7 @@
     <Content Include="Areas\Admin\Styles\Images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Areas\Admin\Styles\jquery-ui-1.10.4.custom.min.css" />
     <Content Include="Areas\Admin\Styles\metisMenu.min.css" />
+    <Content Include="Areas\Admin\Styles\morris.css" />
     <Content Include="Areas\Admin\Styles\sb-admin-2.css" />
     <Content Include="DBScript\ImageUpload.html" />
     <Content Include="DBScript\NJFairground13_07_2014_0138.sql" />
@@ -708,6 +718,7 @@
     <Content Include="Styles\Images\Social Main Picture.jpg" />
     <Content Include="Styles\Images\watermark.png" />
     <Content Include="Styles\Images\What%27s New 7.JPG" />
+    <Content Include="Styles\Images\widget-big.png" />
     <Content Include="Styles\Images\zoomIn.png" />
     <Content Include="Styles\Images\ZoomOut.png" />
     <Content Include="Upload\banner-agriculture.jpg" />
