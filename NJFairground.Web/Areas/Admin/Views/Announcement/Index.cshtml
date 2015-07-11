@@ -1,26 +1,34 @@
 ﻿@using NJFairground.Web.Utilities;
 @model IEnumerable<NJFairground.Web.Models.PageItemModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Announcement";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 @section AdimnPageStyles{
     <style type="text/css">
         @(Html.CssMinify(@<text>
-        #logger ol {
+        #logger ul {
             max-height: 150px;
             font-family: monospace;
             font-size: 11px;
             /*font-weight: bold;*/
-            padding-left: 1%;
+            padding-left: 3%;
             width: 100%;
             margin-left: 1%;
             overflow-wrap: break-word;
             overflow-y: auto;
             overflow-x: hidden;
         }
-        #logger ol li{
-
+        #logger ul li{list-style-type: none;}
+        #logger ul li p{
+            display:inline-block;
+            width: 99%;
+        }
+        #logger ul li:before {
+            font: normal normal normal 14px/1 FontAwesome;
+            content: "\f0a1";
+            margin: 0 5px 0 -15px;
+            float: left;
         }
         </text>))
     </style>
@@ -39,10 +47,10 @@
                 try {
                     $.connection.hub.url = '@Url.Content("~/signalr")';
                     var subscriber = $.connection.PushNotificationLoggingHub;
-                    var $loggerElement = $container.find('ol');
+                    var $loggerElement = $container.find('ul');
 
                     subscriber.client.PushNotificationLog = function (type, message) {
-                        $loggerElement.append('<li><i class="fa fa-bullhorn fa-fw"></i><p class="text-{0}">{1}</li>'.format(type, htmlEncode(message)));
+                        $loggerElement.append('<li><p class="text-{0}">{1}</li>'.format(type, htmlEncode(message)));
                     };
 
                     $.connection.hub.start().done(function () {
@@ -60,14 +68,14 @@
                 try {
                     var response = (typeof data.responseText == 'undefined') ? data : data.responseText;
                     if (response == "notified") {
-                        $('#logger').find('ol').empty();
+                        $('#logger').find('ul').empty();
                         $('#logger').show();
                     }
                 } catch (ex) { }
             };
 
             this.ClearLog = function ($container) {
-                var $loggerElement = $container.find('ol');
+                var $loggerElement = $container.find('ul');
                 $loggerElement.empty();
             };
         }(jQuery, window));
@@ -90,7 +98,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <ol></ol>
+                <ul></ul>
             </div>
         </div>
     </div>
