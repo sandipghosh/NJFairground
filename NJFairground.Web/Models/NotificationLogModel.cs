@@ -3,6 +3,7 @@ namespace NJFairground.Web.Models
 {
     using NJFairground.Web.Models.Base;
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class NotificationLogModel : BaseModel
     {
@@ -18,5 +19,14 @@ namespace NJFairground.Web.Models
 
         public DeviceRegistryModel DeviceRegistry { get; set; }
         public PageItemModel PageItem { get; set; }
+    }
+
+    public class NotificationLogViewModel : BaseModel
+    {
+        public string Announcement { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime NotifiedOn { get; set; }
+        public string DeviceType { get; set; }
+        public int NotificationCount { get; set; }
     }
 }

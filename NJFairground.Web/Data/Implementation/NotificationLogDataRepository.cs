@@ -2,6 +2,7 @@
 namespace NJFairground.Web.Data.Implementation
 {
     using System;
+    using System.Linq;
     using NJFairground.Web.Data.Context;
     using NJFairground.Web.Data.Implementation.Base;
     using NJFairground.Web.Data.Interface;
@@ -9,6 +10,7 @@ namespace NJFairground.Web.Data.Implementation
     using NJFairground.Web.Utilities;
     using NJFairground.Web.Data.Interface.Base;
     using System.Data.SqlClient;
+    using System.Collections.Generic;
 
     public class NotificationLogDataRepository
         : DataRepository<NotificationLog, NotificationLogModel>, INotificationLogDataRepository
@@ -73,7 +75,7 @@ namespace NJFairground.Web.Data.Implementation
         /// </summary>
         /// <param name="notificationLog">The notification log.</param>
         /// <returns></returns>
-        public int MarkReadNotificationLog(NotificationLogModel notificationLog) 
+        public int MarkReadNotificationLog(NotificationLogModel notificationLog)
         {
             int result = 0;
             try
@@ -90,6 +92,27 @@ namespace NJFairground.Web.Data.Implementation
             catch (Exception ex)
             {
                 ex.ExceptionValueTracker(notificationLog);
+            }
+            return result;
+        }
+
+
+        /// <summary>
+        /// Marks the read notification log.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public IList<NotificationLogViewModel> GetNotificationLog()
+        {
+            IList<NotificationLogViewModel> result = new List<NotificationLogViewModel>();
+            try
+            {
+                IQueryDataRepository query = new QueryDataRepository<NJFairgroundDBEntities>();
+                result = query.ExecuteQuery<NotificationLogViewModel>("EXEC GetNotificationDetail").ToList();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
             }
             return result;
         }

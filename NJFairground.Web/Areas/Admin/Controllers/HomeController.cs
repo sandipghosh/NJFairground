@@ -15,6 +15,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
     {
         private readonly IHitCounterDetailDataRepository _hitCounterDetailDataRepository;
         private readonly IDeviceRegistryDataRepository _deviceRegistryDataRepository;
+        private readonly INotificationLogDataRepository _notificationLogDataRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController" /> class.
@@ -22,10 +23,12 @@ namespace NJFairground.Web.Areas.Admin.Controllers
         /// <param name="hitCounterDetailDataRepository">The hit counter detail data repository.</param>
         /// <param name="deviceRegistryDataRepository">The device registry data repository.</param>
         public HomeController(IHitCounterDetailDataRepository hitCounterDetailDataRepository,
-            IDeviceRegistryDataRepository deviceRegistryDataRepository)
+            IDeviceRegistryDataRepository deviceRegistryDataRepository,
+            INotificationLogDataRepository notificationLogDataRepository)
         {
             this._hitCounterDetailDataRepository = hitCounterDetailDataRepository;
             this._deviceRegistryDataRepository = deviceRegistryDataRepository;
+            this._notificationLogDataRepository = notificationLogDataRepository;
         }
 
         /// <summary>
@@ -52,6 +55,12 @@ namespace NJFairground.Web.Areas.Admin.Controllers
                         .Count(x => x.DeviceType.Equals((int)MobileDeviceType.iOS));
                     dashboard.TotalActiveAndroidUsers = registeredDevices
                         .Count(x => x.DeviceType.Equals((int)MobileDeviceType.Android));
+                }
+
+                var notoificationLog = this._notificationLogDataRepository.GetNotificationLog();
+                if (!notoificationLog.IsEmptyCollection())
+                {
+                    dashboard.NotificationLogDetail = notoificationLog;
                 }
             }
             catch (Exception ex)
