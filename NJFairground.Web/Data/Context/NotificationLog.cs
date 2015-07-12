@@ -12,20 +12,18 @@ namespace NJFairground.Web.Data.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class DeviceRegistry
+    public partial class NotificationLog
     {
-        public DeviceRegistry()
-        {
-            this.NotificationLogs = new HashSet<NotificationLog>();
-        }
-    
+        public int NotificationLogId { get; set; }
+        public string NotifiactionToken { get; set; }
         public int DeviceRegistryId { get; set; }
-        public string DeviceId { get; set; }
-        public int DeviceType { get; set; }
+        public int PageItemId { get; set; }
         public int StatusId { get; set; }
-        public System.DateTime CreatedOn { get; set; }
-        public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public bool IsRead { get; set; }
+        public System.DateTime NotifiedOn { get; set; }
+        public Nullable<System.DateTime> ReadOn { get; set; }
     
-        public virtual ICollection<NotificationLog> NotificationLogs { get; set; }
+        public virtual DeviceRegistry DeviceRegistry { get; set; }
+        public virtual PageItem PageItem { get; set; }
     }
 }

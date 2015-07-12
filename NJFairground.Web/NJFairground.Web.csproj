@@ -400,6 +400,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NJFairgroundDBEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\Context\NotificationLog.cs">
+      <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Context\Page.cs">
       <DependentUpon>NJFairgroundDBEntities.tt</DependentUpon>
     </Compile>
@@ -438,6 +441,7 @@
     <Compile Include="Data\Implementation\FavoritePageDataRepository.cs" />
     <Compile Include="Data\Implementation\HitCounterDataRepository.cs" />
     <Compile Include="Data\Implementation\HitCounterDetailDataRepository.cs" />
+    <Compile Include="Data\Implementation\NotificationLogDataRepository.cs" />
     <Compile Include="Data\Implementation\PageBannerDataRepository.cs" />
     <Compile Include="Data\Implementation\PageItemDataRepository.cs" />
     <Compile Include="Data\Implementation\PageDataRepository.cs" />
@@ -457,6 +461,7 @@
     <Compile Include="Data\Interface\IFavoritePageDataRepository.cs" />
     <Compile Include="Data\Interface\IHitCounterDataRepository.cs" />
     <Compile Include="Data\Interface\IHitCounterDetailDataRepository.cs" />
+    <Compile Include="Data\Interface\INotificationLogDataRepository.cs" />
     <Compile Include="Data\Interface\IPageBannerDataRepository.cs" />
     <Compile Include="Data\Interface\IPageItemDataRepository.cs" />
     <Compile Include="Data\Interface\IPageDataRepository.cs" />
@@ -473,6 +478,7 @@
     <Compile Include="DTO\RequestDto\FavoritePageRequestDto.cs" />
     <Compile Include="DTO\RequestDto\HitCounterRequestDto.cs" />
     <Compile Include="DTO\RequestDto\MapRequestDto.cs" />
+    <Compile Include="DTO\RequestDto\NotificationReadRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageBannerRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageItemRequestDto.cs" />
     <Compile Include="DTO\RequestDto\PageRequestDto.cs" />
@@ -487,6 +493,7 @@
     <Compile Include="DTO\ResponseDto\FavoritePageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\HitCounterResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\MapResponseDto.cs" />
+    <Compile Include="DTO\ResponseDto\NotificationReadResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageBannerResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageItemResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\PageResponseDto.cs" />
@@ -494,13 +501,17 @@
     <Compile Include="DTO\ResponseDto\SplashImageResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\UserAuthenticationResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\UserImageResponseDto.cs" />
-    <Compile Include="Filters\HtmlHelpers.cs" />
+    <Compile Include="Extensions\Html\MetaTagExtenstions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MapperConfig\Converter\DateTimeConverter.cs" />
+    <Compile Include="MapperConfig\Converter\IntConverter.cs" />
+    <Compile Include="MapperConfig\Converter\NullableDateTimeConverter.cs" />
+    <Compile Include="MapperConfig\Converter\NullableIntConverter.cs" />
     <Compile Include="MapperConfig\DataServiceLocatorConfig.cs" />
     <Compile Include="MapperConfig\EntityMapperConfig.cs" />
-    <Compile Include="MapperConfig\UserImageRequestCustomBinder.cs" />
+    <Compile Include="Extensions\Binding\UserImageRequestCustomBinder.cs" />
     <Compile Include="Models\AppInfoModel.cs" />
     <Compile Include="Models\BannerItemModel.cs" />
     <Compile Include="Models\BannerModel.cs" />
@@ -515,6 +526,7 @@
     <Compile Include="Models\HitCounterModel.cs" />
     <Compile Include="Models\MapCoordinateModel.cs" />
     <Compile Include="Models\MetaInfoViewModel.cs" />
+    <Compile Include="Models\NotificationLogModel.cs" />
     <Compile Include="Models\PageBannerModel.cs" />
     <Compile Include="Models\PageItemModel.cs" />
     <Compile Include="Models\PageModel.cs" />
@@ -527,7 +539,7 @@
     <Compile Include="Models\ValidationRules\PageItemModelValidation.cs" />
     <Compile Include="Models\ValidationRules\PageModelValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\AjaxExtensions.cs" />
+    <Compile Include="Extensions\Html\AjaxExtensions.cs" />
     <Compile Include="Utilities\CommonUtility.cs" />
     <Compile Include="Utilities\CryptLib.cs" />
     <Compile Include="Utilities\EmailSender.cs" />
@@ -919,7 +931,9 @@
     <Content Include="Scripts\jquery.validate.min.js.map" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js.map" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>

@@ -15,12 +15,12 @@ namespace NJFairground.Web.Models
     public class PageItemModel : BaseModel
     {
         public int PageItemId { get; set; }
-        //[JsonIgnore]
         public int PageId { get; set; }
+        [JsonIgnore]
+        public int PageItemType { get; set; }
         [AllowHtml]
         public string PageHeaderText { get; set; }
         public string PageSubHeaderText { get; set; }
-        //[JsonIgnore]
         public string PageItemImage { get; set; }
         public string PageItemImageUrl
         {

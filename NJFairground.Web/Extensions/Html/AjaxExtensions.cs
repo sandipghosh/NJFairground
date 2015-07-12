@@ -1,6 +1,6 @@
 ﻿
 
-namespace NJFairground.Web.Utilities
+namespace NJFairground.Web.Extensions.Html
 {
     using System.Collections.Generic;
     using System.Web;

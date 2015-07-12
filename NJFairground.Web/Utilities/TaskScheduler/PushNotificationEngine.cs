@@ -3,6 +3,8 @@
 namespace NJFairground.Web.Utilities.TaskScheduler
 {
     using Microsoft.AspNet.SignalR;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities.TaskScheduler.Hubs;
@@ -18,11 +20,53 @@ namespace NJFairground.Web.Utilities.TaskScheduler
 
     public class PushNotificationEngine
     {
+        private const string PageItemId = "PageItemId";
+        private const string NotificationToken = "NotificationToken";
         private readonly IDeviceRegistryDataRepository _deviceRegistryDataRepository;
+        private readonly INotificationLogDataRepository _notificationLogDataRepository;
+
         private readonly PushBroker _broker;
         private readonly Random _random;
         IList<DeviceRegistryModel> allDevices = new List<DeviceRegistryModel>();
 
+        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PushNotificationEngine"/> class.
+        /// </summary>
+        /// <param name="deviceRegistryDataRepository">The device registry data repository.</param>
+        /// <param name="notificationLogDataRepository">The notification log data repository.</param>
+        public PushNotificationEngine(IDeviceRegistryDataRepository deviceRegistryDataRepository,
+            INotificationLogDataRepository notificationLogDataRepository)
+        {
+            this._deviceRegistryDataRepository = deviceRegistryDataRepository;
+            this._notificationLogDataRepository = notificationLogDataRepository;
+
+            this._broker = new PushBroker();
+            this._random = new Random();
+
+            RegisterEvents();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PushNotificationEngine"/> class.
+        /// </summary>
+        public PushNotificationEngine()
+            : this(ContainerProvider.Instance.GetInstance<IDeviceRegistryDataRepository>(),
+            ContainerProvider.Instance.GetInstance<INotificationLogDataRepository>())
+        {
+            try
+            {
+                allDevices = this._deviceRegistryDataRepository
+                    .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
+            }
+        }
+        #endregion
+
+        #region Public Properties
         /// <summary>
         /// Gets a value indicating whether [do log].
         /// </summary>
@@ -67,63 +111,16 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         ///   <c>true</c> if [GCM API key]; otherwise, <c>false</c>.
         /// </value>
         public string GCMApiKey { get { return CommonUtility.GetAppSetting<string>("Android:ApiKey"); } }
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="PushNotificationEngine"/> class.
+        /// Gets a value indicating whether this instance is technocal log.
         /// </summary>
-        /// <param name="deviceRegistryDataRepository">The device registry data repository.</param>
-        public PushNotificationEngine(IDeviceRegistryDataRepository deviceRegistryDataRepository)
-        {
-            this._deviceRegistryDataRepository = deviceRegistryDataRepository;
-            this._broker = new PushBroker();
-            this._random = new Random();
-            RegisterEvents();
-        }
+        /// <value>
+        /// <c>true</c> if this instance is technocal log; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsTechnocalLog { get { return CommonUtility.GetAppSetting<bool>("PN:IsTechnocalLog"); } }
+        #endregion
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PushNotificationEngine"/> class.
-        /// </summary>
-        public PushNotificationEngine()
-            : this(ContainerProvider.Instance.GetInstance<IDeviceRegistryDataRepository>())
-        {
-            try
-            {
-                allDevices = this._deviceRegistryDataRepository
-                    .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker();
-            }
-        }
-
-        /// <summary>
-        /// Notifies the specified devices.
-        /// </summary>
-        /// <param name="devices">The devices.</param>
-        /// <param name="announcement">The announcement.</param>
-        public void Notify(PageItemModel announcement)
-        {
-            try
-            {
-                Func<MobileDeviceType, List<DeviceRegistryModel>> devices = (type) =>
-                    this.allDevices.Where(x => x.DeviceType.Equals((int)type)).ToList();
-
-                IList<Task> notificationProcess = new List<Task>();
-                notificationProcess.Add(Task.Factory.StartNew(() =>
-                    NotifyToAndroid(devices(MobileDeviceType.Android), announcement)));
-
-                notificationProcess.Add(Task.Factory.StartNew(() =>
-                    NotifyToiOS(devices(MobileDeviceType.iOS), announcement)));
-
-                Task.WaitAll(notificationProcess.ToArray());
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker(announcement);
-            }
-        }
-
+        #region Notification Events Registration and Implementation
         /// <summary>
         /// Registers the events.
         /// </summary>
@@ -145,11 +142,18 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="sender">The sender.</param>
         private void ChannelDestroyed(object sender)
         {
-            if (this.DoLog)
+            try
             {
-                string msg = string.Format("Channel Destroyed For: {0}", sender);
-                //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.info, msg);
+                if (this.DoLog)
+                {
+                    string msg = string.Format("Channel Destroyed For: {0}", sender);
+                    //CommonUtility.LogToFileWithStack(msg);
+                    LogNotificationToClient(NotificationType.info, msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(sender);
             }
         }
 
@@ -160,11 +164,18 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="pushChannel">The push channel.</param>
         private void ChannelCreated(object sender, IPushChannel pushChannel)
         {
-            if (this.DoLog)
+            try
             {
-                string msg = string.Format("Channel Created For: {0}", sender);
-                //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.info, msg);
+                if (this.DoLog)
+                {
+                    string msg = string.Format("Channel Created For: {0}", sender);
+                    //CommonUtility.LogToFileWithStack(msg);
+                    LogNotificationToClient(NotificationType.info, msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(sender, pushChannel);
             }
         }
 
@@ -178,12 +189,25 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         private void DeviceSubscriptionChanged(object sender, string oldSubscriptionId,
             string newSubscriptionId, INotification notification)
         {
-            if (this.DoLog)
+            try
             {
-                string msg = string.Format("Device Subscription Changed: {0} -> {1} -> {2} -> {3}",
-                    sender, oldSubscriptionId, newSubscriptionId, notification);
-                //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.info, msg);
+                if (this.DoLog)
+                {
+                    string msg = "";
+                    if (this.IsTechnocalLog)
+                        msg = string.Format(@"Device Subscription Changed: {0} <br/> 
+                            OldSubscriptionId: {1} <br/> NewSubscriptionId: {2} <br/>
+                            Payload: {3}", sender, oldSubscriptionId, newSubscriptionId, notification);
+                    else
+                        msg = string.Format("Device Subscription Changed: {0}", sender);
+                    
+                    //CommonUtility.LogToFileWithStack(msg);
+                    LogNotificationToClient(NotificationType.info, msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(sender, oldSubscriptionId, newSubscriptionId, notification);
             }
         }
 
@@ -197,12 +221,26 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         private void DeviceSubscriptionExpired(object sender, string expiredSubscriptionId,
             System.DateTime expirationDateUtc, INotification notification)
         {
-            if (this.DoLog)
+            try
             {
-                string msg = string.Format("Device Subscription Expired: {0} -> {1} -> {2} -> {3}",
-                    sender, expiredSubscriptionId, expirationDateUtc, notification);
-                //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.warning, msg);
+                if (this.DoLog)
+                {
+                    string msg = "";
+                    if (this.IsTechnocalLog)
+                        msg = string.Format(@"Device Subscription Expired: {0} <br/> 
+                            Expired Subscription Id: {1} <br/> Expiration Date Utc: {2:dd/MMM/yyyy} <br/> 
+                            Payload: {3}", sender, expiredSubscriptionId, expirationDateUtc, notification);
+                    else
+                        msg = string.Format("Device Subscription Expired: {0}", sender);
+                    
+                    //CommonUtility.LogToFileWithStack(msg);
+                    RemoveNotificationLog(expiredSubscriptionId);
+                    LogNotificationToClient(NotificationType.warning, msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(sender, expiredSubscriptionId, expirationDateUtc, notification);
             }
         }
 
@@ -214,11 +252,25 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="error">The error.</param>
         private void NotificationFailed(object sender, INotification notification, System.Exception error)
         {
-            if (this.DoLog)
+            try
             {
-                string msg = string.Format("Failure: {0} -> {1} -> {2}", sender, error.Message, notification);
-                //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.danger, msg);
+                if (this.DoLog)
+                {
+                    string msg = "";
+                    if (this.IsTechnocalLog)
+                        msg = string.Format(@"Notification Failed: {0} <br/> 
+                            Device Id: {1} <br/> Exception Message: {2} <br/> 
+                            Payload: {3}", sender, GetDeviceId(notification), error.Message, notification);
+                    else
+                        msg = string.Format("Notification Failed: {0}", sender);
+                    
+                    //CommonUtility.LogToFileWithStack(msg);
+                    LogNotificationToClient(NotificationType.danger, msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(sender, notification, error);
             }
         }
 
@@ -229,11 +281,24 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="error">The error.</param>
         private void ServiceException(object sender, System.Exception error)
         {
-            if (this.DoLog)
+            try
             {
-                string msg = string.Format("Service Exception: {0} -> {1}", sender, error.Message);
-                //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.danger, msg);
+                if (this.DoLog)
+                {
+                    string msg = "";
+                    if (this.IsTechnocalLog)
+                        msg = string.Format(@"Service Exception: {0} <br/> Exception Message: {1}", 
+                            sender, error.Message);
+                    else
+                        msg = string.Format("Service Exception: {0}", sender);
+                    
+                    //CommonUtility.LogToFileWithStack(msg);
+                    LogNotificationToClient(NotificationType.danger, msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(sender, error);
             }
         }
 
@@ -245,11 +310,24 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="error">The error.</param>
         private void ChannelException(object sender, IPushChannel pushChannel, System.Exception error)
         {
-            if (this.DoLog)
+            try
             {
-                string msg = string.Format("Channel Exception: {0} -> {1}", sender, error.Message);
-                //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.danger, msg);
+                if (this.DoLog)
+                {
+                    string msg = "";
+                    if (this.IsTechnocalLog)
+                        msg = string.Format(@"Channel Exception: {0} <br/> Exception Message: {1}",
+                            sender, error.Message);
+                    else
+                        msg = string.Format("Channel Exception: {0}", sender);
+
+                    //CommonUtility.LogToFileWithStack(msg);
+                    LogNotificationToClient(NotificationType.danger, msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(sender, pushChannel, error);
             }
         }
 
@@ -260,11 +338,55 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <param name="notification">The notification.</param>
         private void NotificationSent(object sender, INotification notification)
         {
-            if (this.DoLog)
+            try
             {
-                string msg = string.Format("Sent: {0} -> {1}", sender, notification);
-                //CommonUtility.LogToFileWithStack(msg);
-                LogNotificationToClient(NotificationType.success, msg);
+                if (this.DoLog)
+                {
+                    string msg = "";
+                    if (this.IsTechnocalLog)
+                        msg = string.Format(@"Notification Sent: {0} <br/> 
+                            Device Id: {1} <br/>Payload: {2}", sender, GetDeviceId(notification), notification);
+                    else
+                        msg = string.Format("Notification Sent: {0}", sender);
+                    
+                    //CommonUtility.LogToFileWithStack(msg);
+                    LogNotification(notification);
+                    LogNotificationToClient(NotificationType.success, msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(sender, notification);
+            }
+        }
+        #endregion
+
+        #region Send Notification
+        /// <summary>
+        /// Notifies the specified devices.
+        /// </summary>
+        /// <param name="devices">The devices.</param>
+        /// <param name="announcement">The announcement.</param>
+        public void Notify(PageItemModel announcement)
+        {
+            try
+            {
+                string notificationToken = Guid.NewGuid().ToString("N");
+                Func<MobileDeviceType, List<DeviceRegistryModel>> devices = (type) =>
+                    this.allDevices.Where(x => x.DeviceType.Equals((int)type)).ToList();
+
+                IList<Task> notificationProcess = new List<Task>();
+                notificationProcess.Add(Task.Factory.StartNew(() =>
+                    NotifyToAndroid(devices(MobileDeviceType.Android), notificationToken, announcement)));
+
+                notificationProcess.Add(Task.Factory.StartNew(() =>
+                    NotifyToiOS(devices(MobileDeviceType.iOS), notificationToken, announcement)));
+
+                Task.WaitAll(notificationProcess.ToArray());
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(announcement);
             }
         }
 
@@ -273,7 +395,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// </summary>
         /// <param name="devices">The devices.</param>
         /// <param name="announcement">The announcement.</param>
-        private void NotifyToiOS(IList<DeviceRegistryModel> devices, PageItemModel announcement)
+        private void NotifyToiOS(IList<DeviceRegistryModel> devices, string notificationToken, PageItemModel announcement)
         {
             try
             {
@@ -288,8 +410,9 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                     _broker.QueueNotification(new AppleNotification()
                         .ForDeviceToken(device.DeviceId)
                         .WithAlert(new AppleNotificationAlert() { LaunchImage = announcement.PageItemImageUrl, Body = announcement.PageHeaderText })
-                        .WithCustomItem("PageItemId", announcement.PageItemId)
-                        .WithBadge(7)
+                        .WithCustomItem(PageItemId, announcement.PageItemId)
+                        .WithCustomItem(NotificationToken, notificationToken)
+                        .WithBadge(GetUnreadNotification(device))
                         .WithSound("default"));
                 }
             }
@@ -304,7 +427,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// </summary>
         /// <param name="devices">The devices.</param>
         /// <param name="announcement">The announcement.</param>
-        private void NotifyToAndroid(IList<DeviceRegistryModel> devices, PageItemModel announcement)
+        private void NotifyToAndroid(IList<DeviceRegistryModel> devices, string notificationToken, PageItemModel announcement)
         {
             try
             {
@@ -316,12 +439,15 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                     {
                         _broker.QueueNotification(new GcmNotification()
                             .ForDeviceRegistrationId(device.DeviceId)
-                            .WithData(new Dictionary<string, string>() { { "PageItemId", announcement.PageItemId.ToString() } })
+                            .WithData(new Dictionary<string, string>() { 
+                                { PageItemId, announcement.PageItemId.ToString() } ,
+                                { NotificationToken, notificationToken } 
+                            })
                             .WithJson(Newtonsoft.Json.JsonConvert.SerializeObject(new
                             {
                                 alert = announcement.PageHeaderText,
                                 sound = "default",
-                                badge = 7
+                                badge = GetUnreadNotification(device)
                             })));
                     }
                 }
@@ -331,7 +457,14 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                 ex.ExceptionValueTracker(devices, announcement);
             }
         }
+        #endregion
 
+        #region Notification Utility
+        /// <summary>
+        /// Logs the notification to client.
+        /// </summary>
+        /// <param name="messageType">Type of the message.</param>
+        /// <param name="message">The message.</param>
         private void LogNotificationToClient(NotificationType messageType, string message)
         {
             try
@@ -344,5 +477,135 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                 ex.ExceptionValueTracker(messageType, message);
             }
         }
+
+        /// <summary>
+        /// Logs the notification.
+        /// </summary>
+        /// <param name="notification">The notification.</param>
+        private void LogNotification(INotification notification)
+        {
+            try
+            {
+                Func<AppleNotificationPayload, string, string> parseApplePayload
+                    = (payload, key) => payload.CustomItems[key].FirstOrDefault().ToString();
+
+                Func<string, string, string> parseAndroidPayload = (payload, key) =>
+                {
+                    var data = (JObject)JsonConvert.DeserializeObject(payload);
+                    return data[string.Format("a/b/{0}", key)].Value<string>();
+                };
+
+                NotificationLogModel notificationLog = new NotificationLogModel();
+                if (notification is GcmNotification)
+                {
+                    GcmNotification gcmNotification = (GcmNotification)notification;
+                    notificationLog.DeviceId = gcmNotification.RegistrationIds.FirstOrDefault();
+                    notificationLog.NotifiactionToken = parseAndroidPayload(gcmNotification.JsonData, NotificationToken);
+                    notificationLog.PageItemId = int.Parse(parseAndroidPayload(gcmNotification.JsonData, PageItemId));
+                }
+                else if (notification is AppleNotification)
+                {
+                    AppleNotification appleNotification = (AppleNotification)notification;
+                    notificationLog.DeviceId = appleNotification.DeviceToken;
+                    notificationLog.NotifiactionToken = parseApplePayload(appleNotification.Payload, NotificationToken);
+                    notificationLog.PageItemId = int.Parse(parseApplePayload(appleNotification.Payload, PageItemId));
+                }
+
+                this._notificationLogDataRepository.InsertNotificationLog(notificationLog);
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(notification);
+            }
+        }
+
+        /// <summary>
+        /// Gets the unread notification.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        /// <returns></returns>
+        private int GetUnreadNotification(DeviceRegistryModel device)
+        {
+            int result = 1;
+            try
+            {
+                if (!device.NotificationLogs.IsEmptyCollection())
+                {
+                    result = device.NotificationLogs.Count
+                        (x => !x.IsRead && x.StatusId.Equals((int)StatusEnum.Active));
+
+                    result++;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(device);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Removes the notification log.
+        /// </summary>
+        /// <param name="oldDeviceId">The old device identifier.</param>
+        private void RemoveNotificationLog(string oldDeviceId)
+        {
+            try
+            {
+                DeviceRegistryModel device = this._deviceRegistryDataRepository.GetList
+                    (x => x.DeviceId.Equals(oldDeviceId) && x.StatusId.Equals((int)StatusEnum.Active))
+                    .FirstOrDefaultCustom();
+
+                if (device != null)
+                {
+                    device.StatusId = (int)StatusEnum.Inactive;
+                    device.UpdatedOn = DateTime.Now;
+                    this._deviceRegistryDataRepository.Update(device);
+
+                    int registeredDeviceId = device.DeviceRegistryId;
+                    var notificationLogs = this._notificationLogDataRepository.GetList
+                        (x => x.DeviceRegistryId.Equals(registeredDeviceId) && x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+
+                    notificationLogs.ForEach(x =>
+                    {
+                        x.StatusId = (int)StatusEnum.Inactive;
+                    });
+                    this._notificationLogDataRepository.Update(notificationLogs);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(oldDeviceId);
+            }
+        }
+
+        /// <summary>
+        /// Gets the device identifier.
+        /// </summary>
+        /// <param name="notification">The notification.</param>
+        /// <returns></returns>
+        private string GetDeviceId(INotification notification)
+        {
+            try
+            {
+                if (notification is GcmNotification)
+                {
+                    GcmNotification gcmNotification = (GcmNotification)notification;
+                    return gcmNotification.RegistrationIds.FirstOrDefault();
+                }
+                else if (notification is AppleNotification)
+                {
+                    AppleNotification appleNotification = (AppleNotification)notification;
+                    return appleNotification.DeviceToken;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(notification);
+            }
+            return string.Empty;
+        }
+        #endregion
     }
 }

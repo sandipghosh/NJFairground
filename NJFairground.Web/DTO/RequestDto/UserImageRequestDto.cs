@@ -1,10 +1,10 @@
 ﻿
 namespace NJFairground.Web.DTO.RequestDto
 {
-    using System.Web.Http.ModelBinding;
     using NJFairground.Web.DTO.Base;
-    using NJFairground.Web.MapperConfig;
+    using NJFairground.Web.Extensions.Bindings;
     using NJFairground.Web.Models;
+    using System.Web.Http.ModelBinding;
 
     [ModelBinder(typeof(UserImageRequestCustomBinder))]
     public class UserImageRequestDto : RequestBase

@@ -98,7 +98,7 @@
             beforeSend: function (xhr) {
                 var result;
                 asyncOnBeforeSend(xhr, method);
-                result = getFunction(element.getAttribute("data-ajax-begin"), ["xhr"]).apply(element, arguments);
+                result = getFunction(element.getAttribute("data-ajax-begin"), ["xhr", "data"]).apply(element, arguments);
                 if (result !== false) {
                     loading.show(duration);
                 }

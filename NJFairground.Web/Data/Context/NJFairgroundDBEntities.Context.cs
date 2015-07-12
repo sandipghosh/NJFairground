@@ -46,6 +46,8 @@ public partial class NJFairgroundDBEntities : DbContext
 
     public DbSet<HitCounter> HitCounters { get; set; }
 
+    public DbSet<NotificationLog> NotificationLogs { get; set; }
+
     public DbSet<Page> Pages { get; set; }
 
     public DbSet<PageBanner> PageBanners { get; set; }

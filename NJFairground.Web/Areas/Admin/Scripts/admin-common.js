@@ -8,6 +8,7 @@
                 selector: selector,
                 theme: "modern",
                 menubar: false,
+                height: 300,
                 statusbar: false,
                 plugins: [
                      "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",

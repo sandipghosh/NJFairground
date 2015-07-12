@@ -76,6 +76,7 @@ namespace NJFairground.Web.MapperConfig
                 container.Register<IHitCounterDataRepository, HitCounterDataRepository>(Lifestyle.Singleton);
                 container.Register<IHitCounterDetailDataRepository, HitCounterDetailDataRepository>();
                 container.Register<IDeviceRegistryDataRepository, DeviceRegistryDataRepository>(Lifestyle.Singleton);
+                container.Register<INotificationLogDataRepository, NotificationLogDataRepository>(Lifestyle.Singleton);
             }
             catch (Exception ex)
             {

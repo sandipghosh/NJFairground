@@ -39,6 +39,7 @@
           <Property Name="DeviceType" Type="int" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -87,6 +88,19 @@
           <Property Name="ClientIdentiy" Type="varchar" MaxLength="50" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="HitOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NotificationLog">
+          <Key>
+            <PropertyRef Name="NotificationLogId" />
+          </Key>
+          <Property Name="NotificationLogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotifiactionToken" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="DeviceRegistryId" Type="int" Nullable="false" />
+          <Property Name="PageItemId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="IsRead" Type="bit" Nullable="false" />
+          <Property Name="NotifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="ReadOn" Type="datetime" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
@@ -376,6 +390,30 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NotificationLog_DeviceRegistry">
+          <End Role="DeviceRegistry" Type="Self.DeviceRegistry" Multiplicity="1" />
+          <End Role="NotificationLog" Type="Self.NotificationLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceRegistry">
+              <PropertyRef Name="DeviceRegistryId" />
+            </Principal>
+            <Dependent Role="NotificationLog">
+              <PropertyRef Name="DeviceRegistryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationLog_PageItem">
+          <End Role="PageItem" Type="Self.PageItem" Multiplicity="1" />
+          <End Role="NotificationLog" Type="Self.NotificationLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PageItem">
+              <PropertyRef Name="PageItemId" />
+            </Principal>
+            <Dependent Role="NotificationLog">
+              <PropertyRef Name="PageItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PageHeader_Page">
           <End Role="Page" Type="Self.Page" Multiplicity="1" />
           <End Role="PageHeader" Type="Self.PageHeader" Multiplicity="*" />
@@ -444,6 +482,7 @@ warning 6002: The table/view 'NJFairgroundDB.dbo.HitCounterDetail' does not have
           <EntitySet Name="FavoriteImage" EntityType="Self.FavoriteImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FavoritePage" EntityType="Self.FavoritePage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HitCounter" EntityType="Self.HitCounter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationLog" EntityType="Self.NotificationLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageBanner" EntityType="Self.PageBanner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageHeader" EntityType="Self.PageHeader" Schema="dbo" store:Type="Tables" />
@@ -528,6 +567,14 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
             <End Role="PageItem" EntitySet="PageItem" />
             <End Role="Event" EntitySet="Event" />
           </AssociationSet>
+          <AssociationSet Name="FK_NotificationLog_DeviceRegistry" Association="Self.FK_NotificationLog_DeviceRegistry">
+            <End Role="DeviceRegistry" EntitySet="DeviceRegistry" />
+            <End Role="NotificationLog" EntitySet="NotificationLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationLog_PageItem" Association="Self.FK_NotificationLog_PageItem">
+            <End Role="PageItem" EntitySet="PageItem" />
+            <End Role="NotificationLog" EntitySet="NotificationLog" />
+          </AssociationSet>
           <AssociationSet Name="FK_PageHeader_Page" Association="Self.FK_PageHeader_Page">
             <End Role="Page" EntitySet="Page" />
             <End Role="PageHeader" EntitySet="PageHeader" />
@@ -561,6 +608,7 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           <EntitySet Name="FavoriteImages" EntityType="NJFairgroundDBModel.FavoriteImage" />
           <EntitySet Name="FavoritePages" EntityType="NJFairgroundDBModel.FavoritePage" />
           <EntitySet Name="HitCounters" EntityType="NJFairgroundDBModel.HitCounter" />
+          <EntitySet Name="NotificationLogs" EntityType="NJFairgroundDBModel.NotificationLog" />
           <EntitySet Name="Pages" EntityType="NJFairgroundDBModel.Page" />
           <EntitySet Name="PageBanners" EntityType="NJFairgroundDBModel.PageBanner" />
           <EntitySet Name="PageHeaders" EntityType="NJFairgroundDBModel.PageHeader" />
@@ -577,6 +625,10 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           <AssociationSet Name="FK__PageBanne__Banne__6C6E1476" Association="NJFairgroundDBModel.FK__PageBanne__Banne__6C6E1476">
             <End Role="Banner" EntitySet="Banners" />
             <End Role="PageBanner" EntitySet="PageBanners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationLog_DeviceRegistry" Association="NJFairgroundDBModel.FK_NotificationLog_DeviceRegistry">
+            <End Role="DeviceRegistry" EntitySet="DeviceRegistries" />
+            <End Role="NotificationLog" EntitySet="NotificationLogs" />
           </AssociationSet>
           <AssociationSet Name="FK_Event_Page" Association="NJFairgroundDBModel.FK_Event_Page">
             <End Role="Page" EntitySet="Pages" />
@@ -601,6 +653,10 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           <AssociationSet Name="FK__FavoriteP__UserK__6B79F03D" Association="NJFairgroundDBModel.FK__FavoriteP__UserK__6B79F03D">
             <End Role="UserInfo" EntitySet="UserInfoes" />
             <End Role="FavoritePage" EntitySet="FavoritePages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationLog_PageItem" Association="NJFairgroundDBModel.FK_NotificationLog_PageItem">
+            <End Role="PageItem" EntitySet="PageItems" />
+            <End Role="NotificationLog" EntitySet="NotificationLogs" />
           </AssociationSet>
           <AssociationSet Name="FK__PageBanne__PageI__6D6238AF" Association="NJFairgroundDBModel.FK__PageBanne__PageI__6D6238AF">
             <End Role="Page" EntitySet="Pages" />
@@ -677,6 +733,8 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           <Property Name="DeviceType" Type="Int32" Nullable="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="NotificationLogs" Relationship="NJFairgroundDBModel.FK_NotificationLog_DeviceRegistry" FromRole="DeviceRegistry" ToRole="NotificationLog" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -731,6 +789,21 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           <Property Name="ClientIdentiy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="HitOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="NotificationLog">
+          <Key>
+            <PropertyRef Name="NotificationLogId" />
+          </Key>
+          <Property Name="NotificationLogId" Type="Int32" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="NotifiactionToken" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DeviceRegistryId" Type="Int32" Nullable="false" />
+          <Property Name="PageItemId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
+          <Property Name="NotifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReadOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DeviceRegistry" Relationship="NJFairgroundDBModel.FK_NotificationLog_DeviceRegistry" FromRole="NotificationLog" ToRole="DeviceRegistry" />
+          <NavigationProperty Name="PageItem" Relationship="NJFairgroundDBModel.FK_NotificationLog_PageItem" FromRole="NotificationLog" ToRole="PageItem" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
@@ -797,6 +870,7 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           <Property Name="ItemOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="NJFairgroundDBModel.FK_Event_PageItem" FromRole="PageItem" ToRole="Event" />
           <NavigationProperty Name="FavoritePages" Relationship="NJFairgroundDBModel.FK__FavoriteP__PageI__6A85CC04" FromRole="PageItem" ToRole="FavoritePage" />
+          <NavigationProperty Name="NotificationLogs" Relationship="NJFairgroundDBModel.FK_NotificationLog_PageItem" FromRole="PageItem" ToRole="NotificationLog" />
           <NavigationProperty Name="Page" Relationship="NJFairgroundDBModel.FK_PageItem_Page" FromRole="PageItem" ToRole="Page" />
           <NavigationProperty Name="PageBanners" Relationship="NJFairgroundDBModel.FK__PageBanne__PageI__6E565CE8" FromRole="PageItem" ToRole="PageBanner" />
           <NavigationProperty Name="PageHeaders" Relationship="NJFairgroundDBModel.FK_PageHeader_PageItem" FromRole="PageItem" ToRole="PageHeader" />
@@ -909,6 +983,18 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NotificationLog_DeviceRegistry">
+          <End Type="NJFairgroundDBModel.DeviceRegistry" Role="DeviceRegistry" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.NotificationLog" Role="NotificationLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceRegistry">
+              <PropertyRef Name="DeviceRegistryId" />
+            </Principal>
+            <Dependent Role="NotificationLog">
+              <PropertyRef Name="DeviceRegistryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Event_Page">
           <End Type="NJFairgroundDBModel.Page" Role="Page" Multiplicity="1" />
           <End Type="NJFairgroundDBModel.Event" Role="Event" Multiplicity="*" />
@@ -978,6 +1064,18 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
             </Principal>
             <Dependent Role="FavoritePage">
               <PropertyRef Name="UserKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationLog_PageItem">
+          <End Type="NJFairgroundDBModel.PageItem" Role="PageItem" Multiplicity="1" />
+          <End Type="NJFairgroundDBModel.NotificationLog" Role="NotificationLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PageItem">
+              <PropertyRef Name="PageItemId" />
+            </Principal>
+            <Dependent Role="NotificationLog">
+              <PropertyRef Name="PageItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1137,6 +1235,7 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
           <EntitySetMapping Name="DeviceRegistries">
             <EntityTypeMapping TypeName="NJFairgroundDBModel.DeviceRegistry">
               <MappingFragment StoreEntitySet="DeviceRegistry">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
@@ -1194,6 +1293,20 @@ FROM [dbo].[HitCounterDetail] AS [HitCounterDetail]</DefiningQuery>
                 <ScalarProperty Name="SponsorTypeId" ColumnName="SponsorTypeId" />
                 <ScalarProperty Name="SponsorId" ColumnName="SponsorId" />
                 <ScalarProperty Name="HitCounterId" ColumnName="HitCounterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationLogs">
+            <EntityTypeMapping TypeName="NJFairgroundDBModel.NotificationLog">
+              <MappingFragment StoreEntitySet="NotificationLog">
+                <ScalarProperty Name="ReadOn" ColumnName="ReadOn" />
+                <ScalarProperty Name="NotifiedOn" ColumnName="NotifiedOn" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="PageItemId" ColumnName="PageItemId" />
+                <ScalarProperty Name="DeviceRegistryId" ColumnName="DeviceRegistryId" />
+                <ScalarProperty Name="NotifiactionToken" ColumnName="NotifiactionToken" />
+                <ScalarProperty Name="NotificationLogId" ColumnName="NotificationLogId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

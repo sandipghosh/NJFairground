@@ -35,6 +35,7 @@ namespace NJFairground.Web.Controllers
         private readonly ISplashImageDataRepository _splashImageDataRepository;
         private readonly IHitCounterDataRepository _hitCounterDataRepository;
         private readonly IDeviceRegistryDataRepository _deviceRegistryDataRepository;
+        private readonly INotificationLogDataRepository _notificationLogDataRepository;
 
         private Random random;
 
@@ -59,7 +60,8 @@ namespace NJFairground.Web.Controllers
             IPageBannerDataRepository pageBannerDataRepository,
             ISplashImageDataRepository splashImageDataRepository,
             IHitCounterDataRepository hitCounterDataRepository,
-            IDeviceRegistryDataRepository deviceRegistryDataRepository)
+            IDeviceRegistryDataRepository deviceRegistryDataRepository,
+            INotificationLogDataRepository notificationLogDataRepository)
         {
             this._pageDataRepository = pageDataRepository;
             this._pageItemDataRepository = pageItemDataRepository;
@@ -72,6 +74,7 @@ namespace NJFairground.Web.Controllers
             this._splashImageDataRepository = splashImageDataRepository;
             this._hitCounterDataRepository = hitCounterDataRepository;
             this._deviceRegistryDataRepository = deviceRegistryDataRepository;
+            this._notificationLogDataRepository = notificationLogDataRepository;
         }
 
         /// <summary>
@@ -834,6 +837,35 @@ namespace NJFairground.Web.Controllers
                     {
                         response.ResponseStatus = RespStatus.Success.ToString();
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(request);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Marks the read notification.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public NotificationReadResponseDto MarkReadNotification(NotificationReadRequestDto request)
+        {
+            NotificationReadResponseDto response = InitiateResponse<NotificationReadRequestDto, NotificationReadResponseDto>(request);
+            try
+            {
+                if (request.Action == CrudAction.Update)
+                {
+                    NotificationLogModel notificationLog = new NotificationLogModel
+                    {
+                        DeviceId = request.DeviceId,
+                        NotifiactionToken = request.NotifiactionToken
+                    };
+                    var result = this._notificationLogDataRepository.MarkReadNotificationLog(notificationLog);
+                    response.ResponseStatus = RespStatus.Success.ToString();
                 }
             }
             catch (Exception ex)

@@ -1,5 +1,5 @@
 ﻿
-namespace NJFairground.Web.Filters
+namespace NJFairground.Web.Extensions.Html
 {
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
@@ -7,7 +7,7 @@ namespace NJFairground.Web.Filters
     using System.Text;
     using System.Web.Mvc;
 
-    public static class HtmlHelpers
+    public static class MetaTagExtenstions
     {
         private const string description = "description";
         private const string keywords = "keywords";

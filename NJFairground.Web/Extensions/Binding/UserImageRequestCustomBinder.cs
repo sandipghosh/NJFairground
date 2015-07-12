@@ -1,6 +1,5 @@
 ﻿
-
-namespace NJFairground.Web.MapperConfig
+namespace NJFairground.Web.Extensions.Bindings
 {
     using System;
     using System.Linq;

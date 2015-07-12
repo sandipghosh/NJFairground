@@ -63,8 +63,27 @@ namespace NJFairground.Web.Areas.Admin.Controllers
             IList<DeviceViewModel> devices = new List<DeviceViewModel>();
             try
             {
-                devices.Add(new DeviceViewModel { label = "iOS Users", value = 13 });
-                devices.Add(new DeviceViewModel { label = "Android Users", value = 25 });
+                var devices = this._deviceRegistryDataRepository
+                    .GetList(x => x.StatusId((int)StatusEnum.Active)).ToList();
+
+                if (!devices.IsEmptyCollection())
+                {
+                    devices.Add(new DeviceViewModel
+                    {
+                        label = "iOS Users",
+                        value = devices.Count(x => x.DeviceType.Equals((int)MobileDeviceType.iOS))
+                    });
+                    devices.Add(new DeviceViewModel
+                    {
+                        label = "Android Users",
+                        value = devices.Count(x => x.DeviceType.Equals((int)MobileDeviceType.Android))
+                    });
+                }
+                else
+                {
+                    devices.Add(new DeviceViewModel { label = "iOS Users", value = 0 });
+                    devices.Add(new DeviceViewModel { label = "Android Users", value = 0 });
+                }
             }
             catch (Exception ex)
             {

@@ -1,13 +1,14 @@
 ﻿
 namespace NJFairground.Web.MapperConfig
 {
-    using System;
-    using System.Linq;
     using AutoMapper;
     using NJFairground.Web.Areas.Admin.Models;
     using NJFairground.Web.Data.Context;
+    using NJFairground.Web.MapperConfig.Converter;
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
+    using System;
+    using System.Linq;
 
     public class EntityMapperConfig : Profile
     {
@@ -33,6 +34,21 @@ namespace NJFairground.Web.MapperConfig
         {
             try
             {
+                Mapper.CreateMap<DateTime?, DateTime>().ConvertUsing<DateTimeConverter>();
+                Mapper.CreateMap<DateTime?, DateTime?>().ConvertUsing<NullableDateTimeConverter>();
+
+                Mapper.CreateMap<int?, int>().ConvertUsing<IntConverter>();
+                Mapper.CreateMap<int?, int?>().ConvertUsing<NullableIntConverter>();
+
+                Mapper.CreateMap<long?, long>().ConvertUsing<LongConverter>();
+                Mapper.CreateMap<long?, long?>().ConvertUsing<NullableLongConverter>();
+
+                Mapper.CreateMap<decimal?, decimal>().ConvertUsing<DecimalConverter>();
+                Mapper.CreateMap<decimal?, decimal?>().ConvertUsing<NullableDecimalConverter>();
+
+                Mapper.CreateMap<NotificationLog, NotificationLogModel>()
+                   .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
+
                 Mapper.CreateMap<DeviceRegistry, DeviceRegistryModel>()
                    .IgnoreAllNonExisting().ReverseMap().IgnoreAllNonExisting();
 

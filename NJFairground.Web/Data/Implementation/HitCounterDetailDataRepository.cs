@@ -10,7 +10,7 @@ namespace NJFairground.Web.Data.Implementation
         : DataRepository<HitCounterDetail, HitCounterDetailViewModel>, IHitCounterDetailDataRepository
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PageDataRepository"/> class.
+        /// Initializes a new instance of the <see cref="HitCounterDetailDataRepository"/> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
         public HitCounterDetailDataRepository(UnitOfWork<NJFairgroundDBEntities> unitOfWork)

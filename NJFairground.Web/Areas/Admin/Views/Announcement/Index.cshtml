@@ -23,10 +23,11 @@
         #logger ul li p{
             display:inline-block;
             width: 99%;
+            margin-bottom: 5px;
         }
         #logger ul li:before {
             font: normal normal normal 14px/1 FontAwesome;
-            content: "\f0a1";
+            content: "\f120";
             margin: 0 5px 0 -15px;
             float: left;
         }
@@ -43,18 +44,20 @@
                 StartNotificationLog($('#logger'));
             });
 
+            var subscriber;
             this.StartNotificationLog = function ($container) {
                 try {
                     $.connection.hub.url = '@Url.Content("~/signalr")';
-                    var subscriber = $.connection.PushNotificationLoggingHub;
+                    subscriber = $.connection.PushNotificationLoggingHub;
                     var $loggerElement = $container.find('ul');
 
                     subscriber.client.PushNotificationLog = function (type, message) {
-                        $loggerElement.append('<li><p class="text-{0}">{1}</li>'.format(type, htmlEncode(message)));
+                        //$loggerElement.append('<li><p class="text-{0}">{1}</li>'.format(type, htmlEncode(message)));
+                        $loggerElement.append('<li><p class="text-{0}">{1}</li>'.format(type, (message)));
                     };
 
                     $.connection.hub.start().done(function () {
-                        subscriber.server.SubscribeLog();
+                        //subscriber.server.SubscribeLog();
                     });
                 } catch (ex) { }
             };
@@ -70,6 +73,7 @@
                     if (response == "notified") {
                         $('#logger').find('ul').empty();
                         $('#logger').show();
+                        subscriber.server.SubscribeLog();
                     }
                 } catch (ex) { }
             };
@@ -85,14 +89,14 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Announcements</h1>
+        <h1 class="page-header"><i class="fa fa-bullhorn fa-fw"></i>Announcements</h1>
     </div>
 </div>
 <div class="row" id="logger" style="display:none;">
     <div class="col-lg-12">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <i class="fa fa-bullhorn fa-fw"></i><span id="AreaChartHearderText"> Notification Log</span>
+                <span id="AreaChartHearderText"> Notification Log</span>
                 <div class="pull-right">
                     <a class="btn btn-primary btn-xs" href="javascript:ClearLog($('#logger'))">Clear Log</a>
                 </div>

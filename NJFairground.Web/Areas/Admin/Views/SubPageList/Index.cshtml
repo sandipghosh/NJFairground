@@ -113,9 +113,15 @@
             this.AddSelectedPageId = function (data, hdata) {
                 try {
                     if (hdata.url) {
-                        var urlData = hdata.url.split('?');
-                        if (urlData.length > 0)
-                            hdata.url = urlData[0] + '?pageId=' + $('#page-selection :selected').val() + '&' + urlData[1];
+                        if ($('#page-selection :selected').val() != "") {
+                            var urlData = hdata.url.split('?');
+                            if (urlData.length > 0)
+                                hdata.url = urlData[0] + '?pageId=' + $('#page-selection :selected').val() + '&' + urlData[1];
+                        }
+                        else {
+                            alert("Please select a Screen to create Sub-Screen")
+                            return false;
+                        }
                     }
                 } catch (ex) { }
             };
@@ -126,7 +132,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Sub Screen</h1>
+        <h1 class="page-header"><i class="fa fa-th-list fa-fw"></i> Sub Screen</h1>
     </div>
 </div>
 <div class="row">
@@ -138,12 +144,12 @@
                     <div class="col-lg-12">
                         <div id="grid-selection" class="form-group">
                             <label>Select Screen</label>
-                            @Html.DropDownList("Page", (IEnumerable<SelectListItem>)ViewBag.Pages, new { @class = "form-control", id = "page-selection" })
+                            @Html.DropDownList("Page", (IEnumerable<SelectListItem>)ViewBag.Pages,"Select Root Screen", new { @class = "form-control", id = "page-selection" })
                             <br />
                             <p>
                                 @Ajax.ActionLink("Create New", "Add", "SubPageList", new AjaxOptions
                                 {
-                                    OnBegin = "AddSelectedPageId",
+                                    OnBegin = "return AddSelectedPageId(xhr, data)",
                                     OnComplete = "ShowSubPageInsertScreen"
                                 }, new { @class = "btn btn-primary btn-sm" })
                             </p>
