@@ -659,6 +659,8 @@
     <Content Include="Areas\Admin\Views\Announcement\Index.cshtml" />
     <Content Include="Certificate\SussexCert.p12" />
     <Content Include="Certificate\SussexKey.p12" />
+    <Content Include="Certificate\SussexProductionCert.p12" />
+    <Content Include="Certificate\SussexProductionKey.p12" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />
