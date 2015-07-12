@@ -44,8 +44,15 @@ namespace NJFairground.Web.Areas.Admin.Controllers
                     dashboard.TotalSplashHits = totalHits.Count(x => x.SponsorType.Equals("Splash"));
                 }
 
-                dashboard.TotalActiveiOSUsers = 13;
-                dashboard.TotalActiveAndroidUsers = 25;
+                var registeredDevices = this._deviceRegistryDataRepository
+                    .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+                if (!registeredDevices.IsEmptyCollection())
+                {
+                    dashboard.TotalActiveiOSUsers = registeredDevices
+                        .Count(x => x.DeviceType.Equals((int)MobileDeviceType.iOS));
+                    dashboard.TotalActiveAndroidUsers = registeredDevices
+                        .Count(x => x.DeviceType.Equals((int)MobileDeviceType.Android));
+                }
             }
             catch (Exception ex)
             {
