@@ -569,6 +569,7 @@
     <Compile Include="Utilities\TaskScheduler\PushNotificationEngine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DataBackup.txt" />
     <Content Include="App_Data\NewApiPayload.txt" />
     <Content Include="App_Data\NJ_Fairground_guide_map.txt" />
     <Content Include="Areas\Admin\Scripts\admin-common.js" />
