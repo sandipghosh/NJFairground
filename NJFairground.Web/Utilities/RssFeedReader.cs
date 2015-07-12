@@ -13,6 +13,7 @@ namespace NJFairground.Web.Utilities
     using System.Globalization;
     using System.Text.RegularExpressions;
     using System.Collections.Generic;
+    using Newtonsoft.Json.Linq;
 
     internal class RssFeedEntity
     {
@@ -31,22 +32,49 @@ namespace NJFairground.Web.Utilities
         {
             try
             {
-                var rssFeedAsString = CommonUtility.GetRSSFeedasString(feedLink);
+                List<RssFeedEntity> feedItems = new List<RssFeedEntity>();
+                string rssFeedAsString = string.Empty;
 
-                // convert feed to XML using LINQ to XML and finally create new XmlReader object
-                var feed = SyndicationFeed.Load(XDocument.Parse(rssFeedAsString).CreateReader());
+                if (feedLink == "Facebook:RssFeed") {
+                    rssFeedAsString = CommonUtility.GetFacebookJsonFeedAsString();
 
-                List<RssFeedEntity> feeds = feed.Items.Select(x => new RssFeedEntity
+                    if (!string.IsNullOrEmpty(rssFeedAsString))
+                    {
+                        JObject jsonFeed = JObject.Parse(rssFeedAsString);
+                        feedItems = jsonFeed["data"].Select(x => new RssFeedEntity
+                        {
+                            Title =(x["message"].AsString().Length>20)?
+                                x["message"].AsString().Substring(0, 20) + ".." : x["message"].AsString(),
+                            TitleUrl = "",
+                            ImageLink = x["picture"].AsString(),
+                            ImageUrl = x["link"].AsString(),
+                            Content = x["message"].AsString(),
+                            LastUpdate = (x["updated_time"] ?? x["created_time"]).AsString(),
+                            Author = (x["from"] != null) ? x["from"]["name"].AsString() : ""
+                        }).ToList();
+                    }
+                }
+                else
                 {
-                    Title = x.Title.Text,
-                    TitleUrl = (x.Links.FirstOrDefault() == null) ? string.Empty : x.Links.FirstOrDefault().Uri.AbsoluteUri,
-                    Content = ((TextSyndicationContent)(x.Content ?? x.Summary)).Text,
-                    LastUpdate = (x.LastUpdatedTime.Year == 1 ?
-                        x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
-                        x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),
-                    Author = (x.Authors.LastOrDefault() == null) ? string.Empty : x.Authors.LastOrDefault().Name.ToString()
-                }).ToList();
-                return new MvcHtmlString(GetHtmlFromRss(feeds));
+                    rssFeedAsString = CommonUtility.GetRSSFeedAsString(feedLink);
+                    if (!string.IsNullOrEmpty(rssFeedAsString))
+                    {
+                        // convert feed to XML using LINQ to XML and finally create new XmlReader object
+                        var feed = SyndicationFeed.Load(XDocument.Parse(rssFeedAsString).CreateReader());
+                        feedItems = feed.Items.Select(x => new RssFeedEntity
+                        {
+                            Title = x.Title.Text,
+                            TitleUrl = (x.Links.FirstOrDefault() == null) ? string.Empty : x.Links.FirstOrDefault().Uri.AbsoluteUri,
+                            Content = ((TextSyndicationContent)(x.Content ?? x.Summary)).Text,
+                            LastUpdate = (x.LastUpdatedTime.Year == 1 ?
+                                x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
+                                x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),
+                            Author = (x.Authors.LastOrDefault() == null) ? string.Empty : x.Authors.LastOrDefault().Name.ToString()
+                        }).ToList(); 
+                    } 
+                }
+
+                return new MvcHtmlString(GetHtmlFromRss(feedItems));
             }
             catch (Exception ex)
             {
@@ -57,7 +85,7 @@ namespace NJFairground.Web.Utilities
 
         public static MvcHtmlString ReadInstagramRss(this HtmlHelper htmlHelper, string feedLink)
         {
-            var rssFeedAsString = CommonUtility.GetRSSFeedasString(feedLink);
+            var rssFeedAsString = CommonUtility.GetRSSFeedAsString(feedLink);
 
             XDocument doc = XDocument.Parse(rssFeedAsString);
             List<RssFeedEntity> feedItems = doc.Descendants("item").Select(x => new RssFeedEntity

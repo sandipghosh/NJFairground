@@ -1003,7 +1003,7 @@ namespace NJFairground.Web.Utilities
         /// </summary>
         /// <param name="feedLink">The feed link.</param>
         /// <returns></returns>
-        public static string GetRSSFeedasString(string feedLink)
+        public static string GetRSSFeedAsString(string feedLink)
         {
             if (!string.IsNullOrEmpty(feedLink))
             {
@@ -1017,6 +1017,23 @@ namespace NJFairground.Web.Utilities
                 var contentReader = new StreamReader(content);
                 var rssFeedAsString = contentReader.ReadToEnd();
                 return rssFeedAsString;
+            }
+            return string.Empty;
+        }
+
+        public static string GetFacebookJsonFeedAsString()
+        {
+            string authTokenUrl = CommonUtility.GetAppSetting<string>("Facebook:AuthTokenUrl").Replace("&amp;", "&");
+            string jsonFeedUrl = CommonUtility.GetAppSetting<string>("Facebook:JsonFeed").Replace("&amp;", "&");
+
+            var webClient = new WebClient();
+            string access_token = webClient.DownloadString(authTokenUrl);
+
+            if (!string.IsNullOrEmpty(access_token))
+            {
+                webClient = new WebClient();
+                string facebookjson = webClient.DownloadString(string.Format(jsonFeedUrl, access_token));
+                return facebookjson;
             }
             return string.Empty;
         }

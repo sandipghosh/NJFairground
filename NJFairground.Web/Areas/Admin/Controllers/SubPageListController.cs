@@ -76,6 +76,30 @@ namespace NJFairground.Web.Areas.Admin.Controllers
             return Content(string.Empty);
         }
 
+        [HttpGet, OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
+        public ActionResult Delete(int pageId, int pageItemId)
+        {
+            try
+            {
+                var pageItem = this._pageItemDataRepository.GetList(x => x.StatusId.Equals((int)StatusEnum.Active)
+                    && x.PageItemId.Equals(pageItemId), x => x.ItemOrder, true).FirstOrDefaultCustom();
+
+                if (pageItem != null)
+                {
+                    pageItem.StatusId = (int)StatusEnum.Inactive;
+                    pageItem.UpdatedOn = DateTime.Now;
+                    this._pageItemDataRepository.Update(pageItem);
+
+                    return RedirectToAction("GetPageItems", new { pageId = pageId });
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
+            }
+            return Content(string.Empty);
+        }
+
         /// <summary>
         /// Edits the specified page item identifier.
         /// </summary>

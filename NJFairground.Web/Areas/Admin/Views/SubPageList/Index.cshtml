@@ -144,7 +144,7 @@
                     <div class="col-lg-12">
                         <div id="grid-selection" class="form-group">
                             <label>Select Screen</label>
-                            @Html.DropDownList("Page", (IEnumerable<SelectListItem>)ViewBag.Pages,"Select Root Screen", new { @class = "form-control", id = "page-selection" })
+                            @Html.DropDownList("Page", (IEnumerable<SelectListItem>)ViewBag.Pages, "Select Root Screen", new { @class = "form-control", id = "page-selection" })
                             <br />
                             <p>
                                 @Ajax.ActionLink("Create New", "Add", "SubPageList", new AjaxOptions

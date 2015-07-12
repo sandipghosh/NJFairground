@@ -7,28 +7,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" href="http://www.njstatefair.org/fair/wp-content/themes/NJ/images/favicon.ico">
     <title>@ViewBag.Title</title>
+
+    <style type="text/css">
+        @(Html.CssMinify(@<text>
+        .data_loading{
+            position: fixed;
+            width: 200px;
+            height: 35px;
+            padding: 10px;
+            border: 1px solid #737070;
+            border-radius: 0 0 9px 9px;
+            z-index: 9999;
+            top: 0;
+            left: 38%;
+            background-color: #A5A0A0;
+            color: #fff;
+            padding-top: 5px;
+            display:none;
+        }
+        .loading-text{
+            width: 100%;
+            text-align: center;
+            font-size: 15px;
+            margin: 0;
+            padding: 0;
+            letter-spacing: 2px;
+        }
+        </text>))
+    </style>
 
     @Html.RenderStyles("~/Areas/Admin/Styles/CommonAdminStyle")
     @RenderSection("AdimnPageStyles", false)
 
     <script type="text/javascript">
+        @(Html.JsMinify(@<text>
         var loadingCounter = 0;
         var virtualDirectory = '@(CommonUtility.GetAppSetting<string>("VirtualDirectory"))';
+        </text>))
     </script>
 
     @Html.RenderScripts("~/Scripts/CommonAdminScript")
     @RenderSection("AdimnPageScripts", false)
 </head>
 <body>
-    @*<div id="dialog-message" title="Message" style="display: none;">
-            <p></p>
-        </div>
-        <div id="dataloading" class="data_loading">
-            <div class="loading-image"></div>
-            <div class="loading-text"></div>
-        </div>*@
-
+    <div id="dataloading" class="data_loading">
+        <div class="loading-text">Loading...</div>
+    </div>
     <div id="wrapper">
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">

@@ -21,6 +21,7 @@ namespace NJFairground.Web.Controllers
     using NJFairground.Web.DTO.ResponseDto;
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
+    using Newtonsoft.Json.Linq;
 
     public class PageApiController : ApiController
     {
@@ -301,44 +302,71 @@ namespace NJFairground.Web.Controllers
                             feedLink = "Pinterest:RssFeed";
                             break;
                     }
-                    var rssFeedAsString = CommonUtility.GetRSSFeedasString(feedLink);
+                    string rssFeedAsString = string.Empty;
+                    
                     switch (request.FeedRequestFor)
                     {
                         case FeedFor.Facebook:
+                            {
+                                rssFeedAsString = CommonUtility.GetFacebookJsonFeedAsString();
+                                if (!string.IsNullOrEmpty(rssFeedAsString))
+                                {
+                                    JObject jsonFeed = JObject.Parse(rssFeedAsString);
+                                    response.SocialFeeds =  jsonFeed["data"].Select(x => new RssFeedModel
+                                    {
+                                        Title = (x["message"].AsString().Length > 20) ?
+                                            x["message"].AsString().Substring(0, 20) + ".." : x["message"].AsString(),
+                                        TitleUrl = "",
+                                        ImageLink = x["picture"].AsString(),
+                                        ImageUrl = x["link"].AsString(),
+                                        Content = x["message"].AsString(),
+                                        LastUpdate = (x["updated_time"] ?? x["created_time"]).AsString(),
+                                        Author = (x["from"] != null) ? x["from"]["name"].AsString() : ""
+                                    }).ToList(); 
+                                }
+                                break;
+                            }
                         case FeedFor.Twitter:
                         case FeedFor.Pinterest:
                             {
-                                SyndicationFeed feed = SyndicationFeed.Load(XDocument.Parse(rssFeedAsString).CreateReader());
-
-                                response.SocialFeeds = feed.Items.Select(x => new RssFeedModel
+                                rssFeedAsString = CommonUtility.GetRSSFeedAsString(feedLink);
+                                if (!string.IsNullOrEmpty( rssFeedAsString))
                                 {
-                                    Title = x.Title.Text,
-                                    TitleUrl = (x.Links.FirstOrDefault() == null) ? string.Empty : x.Links.FirstOrDefault().Uri.AbsoluteUri,
-                                    Content = ((TextSyndicationContent)(x.Content ?? x.Summary)).Text,
-                                    LastUpdate = (x.LastUpdatedTime.Year == 1 ?
-                                        x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
-                                        x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),
-                                    Author = (x.Authors.LastOrDefault() == null) ? string.Empty : x.Authors.LastOrDefault().Name.ToString()
-                                }).ToList();
+                                    SyndicationFeed feed = SyndicationFeed.Load(XDocument.Parse(rssFeedAsString).CreateReader());
+                                    response.SocialFeeds = feed.Items.Select(x => new RssFeedModel
+                                    {
+                                        Title = x.Title.Text,
+                                        TitleUrl = (x.Links.FirstOrDefault() == null) ? string.Empty : x.Links.FirstOrDefault().Uri.AbsoluteUri,
+                                        Content = ((TextSyndicationContent)(x.Content ?? x.Summary)).Text,
+                                        LastUpdate = (x.LastUpdatedTime.Year == 1 ?
+                                            x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
+                                            x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),
+                                        Author = (x.Authors.LastOrDefault() == null) ? string.Empty : x.Authors.LastOrDefault().Name.ToString()
+                                    }).ToList(); 
+                                }
 
                                 break;
                             }
                         case FeedFor.Instagram:
                             {
-                                XDocument doc = XDocument.Parse(rssFeedAsString);
-                                response.SocialFeeds = doc.Descendants("item").Select(x => new RssFeedModel
+                                rssFeedAsString = CommonUtility.GetRSSFeedAsString(feedLink);
+                                if (!string.IsNullOrEmpty( rssFeedAsString))
                                 {
-                                    Title = x.Element("title").Value.ToString(),
-                                    TitleUrl = x.Element("link").Value.ToString(),
-                                    ImageLink = x.Element("image").Element("link").Value.ToString(),
-                                    ImageUrl = x.Element("image").Element("link").Value.ToString(),
-                                    Content = x.Element("description").Value.ToString(),
-                                    LastUpdate = string.IsNullOrEmpty(x.Element("pubDate").Value.ToString()) ? "" :
-                                        DateTime.Parse(x.Element("pubDate").Value.ToString())
-                                        .ToString("f", CultureInfo.CreateSpecificCulture("en-US")),
-                                    Author = x.Element("author").Value.ToString()
-                                }).ToList();
-
+                                    XDocument doc = XDocument.Parse(rssFeedAsString);
+                                    response.SocialFeeds = doc.Descendants("item").Select(x => new RssFeedModel
+                                    {
+                                        Title = x.Element("title").Value.ToString(),
+                                        TitleUrl = x.Element("link").Value.ToString(),
+                                        ImageLink = x.Element("image").Element("link").Value.ToString(),
+                                        ImageUrl = x.Element("image").Element("link").Value.ToString(),
+                                        Content = x.Element("description").Value.ToString(),
+                                        LastUpdate = string.IsNullOrEmpty(x.Element("pubDate").Value.ToString()) ? "" :
+                                            DateTime.Parse(x.Element("pubDate").Value.ToString())
+                                            .ToString("f", CultureInfo.CreateSpecificCulture("en-US")),
+                                        Author = x.Element("author").Value.ToString()
+                                    }).ToList();
+                                    
+                                }
                                 break;
                             }
                     }

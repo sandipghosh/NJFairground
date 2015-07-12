@@ -97,73 +97,73 @@ ALTER TABLE [Banner] DROP CONSTRAINT [DF__Banner__CreatedO__619B8048]
 GO
 ALTER TABLE [Banner] DROP CONSTRAINT [DF__Banner__StatusId__60A75C0F]
 GO
-/****** Object:  View [HitCounterDetail]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  View [HitCounterDetail]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP VIEW [HitCounterDetail]
 GO
-/****** Object:  Table [UserInfo]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [UserInfo]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [UserInfo]
 GO
-/****** Object:  Table [UserImage]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [UserImage]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [UserImage]
 GO
-/****** Object:  Table [SplashImage]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [SplashImage]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [SplashImage]
 GO
-/****** Object:  Table [PageItemNew]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageItemNew]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [PageItemNew]
 GO
-/****** Object:  Table [PageItemDetail]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageItemDetail]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [PageItemDetail]
 GO
-/****** Object:  Table [PageItem]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageItem]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [PageItem]
 GO
-/****** Object:  Table [PageHeader]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageHeader]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [PageHeader]
 GO
-/****** Object:  Table [PageBanner]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageBanner]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [PageBanner]
 GO
-/****** Object:  Table [Page]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [Page]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [Page]
 GO
-/****** Object:  Table [NotificationLog]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [NotificationLog]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [NotificationLog]
 GO
-/****** Object:  Table [HitCounter]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [HitCounter]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [HitCounter]
 GO
-/****** Object:  Table [FavoritePage]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [FavoritePage]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [FavoritePage]
 GO
-/****** Object:  Table [FavoriteImage]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [FavoriteImage]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [FavoriteImage]
 GO
-/****** Object:  Table [Event]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [Event]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [Event]
 GO
-/****** Object:  Table [DeviceRegistry]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [DeviceRegistry]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [DeviceRegistry]
 GO
-/****** Object:  Table [BannerItem]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [BannerItem]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [BannerItem]
 GO
-/****** Object:  Table [Banner]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [Banner]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP TABLE [Banner]
 GO
-/****** Object:  StoredProcedure [MarkReadNotificationLog]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  StoredProcedure [MarkReadNotificationLog]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP PROCEDURE [MarkReadNotificationLog]
 GO
-/****** Object:  StoredProcedure [InsertPageItem]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  StoredProcedure [InsertPageItem]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP PROCEDURE [InsertPageItem]
 GO
-/****** Object:  StoredProcedure [InsertNotificationLog]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  StoredProcedure [InsertNotificationLog]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP PROCEDURE [InsertNotificationLog]
 GO
-/****** Object:  StoredProcedure [GetNotificationDetail]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  StoredProcedure [GetNotificationDetail]    Script Date: 7/12/2015 11:14:00 AM ******/
 DROP PROCEDURE [GetNotificationDetail]
 GO
-/****** Object:  StoredProcedure [GetNotificationDetail]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  StoredProcedure [GetNotificationDetail]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -183,7 +183,7 @@ BEGIN
 	GROUP BY Announcement, NotifiedOn, DeviceType
 END
 GO
-/****** Object:  StoredProcedure [InsertNotificationLog]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  StoredProcedure [InsertNotificationLog]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -234,7 +234,7 @@ BEGIN
 	END CATCH
 END
 GO
-/****** Object:  StoredProcedure [InsertPageItem]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  StoredProcedure [InsertPageItem]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -302,7 +302,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [MarkReadNotificationLog]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  StoredProcedure [MarkReadNotificationLog]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -358,7 +358,7 @@ BEGIN
 END
 
 GO
-/****** Object:  Table [Banner]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [Banner]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -377,7 +377,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [BannerItem]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [BannerItem]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -403,7 +403,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [DeviceRegistry]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [DeviceRegistry]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -422,7 +422,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [Event]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [Event]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -449,7 +449,7 @@ CREATE TABLE [Event](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [FavoriteImage]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [FavoriteImage]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -467,7 +467,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [FavoritePage]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [FavoritePage]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -487,7 +487,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [HitCounter]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [HitCounter]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -510,7 +510,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [NotificationLog]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [NotificationLog]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -535,7 +535,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [Page]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [Page]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -559,7 +559,7 @@ CREATE TABLE [Page](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [PageBanner]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageBanner]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -577,7 +577,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [PageHeader]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageHeader]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -601,7 +601,7 @@ CREATE TABLE [PageHeader](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [PageItem]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageItem]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -632,7 +632,7 @@ CREATE TABLE [PageItem](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [PageItemDetail]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageItemDetail]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -653,7 +653,7 @@ CREATE TABLE [PageItemDetail](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [PageItemNew]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [PageItemNew]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -680,7 +680,7 @@ CREATE TABLE [PageItemNew](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [SplashImage]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [SplashImage]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -701,7 +701,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [UserImage]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [UserImage]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -720,7 +720,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [UserInfo]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  Table [UserInfo]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -740,7 +740,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  View [HitCounterDetail]    Script Date: 7/12/2015 2:23:52 AM ******/
+/****** Object:  View [HitCounterDetail]    Script Date: 7/12/2015 11:14:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1258,6 +1258,18 @@ INSERT [HitCounter] ([HitCounterId], [SponsorId], [SponsorTypeId], [ClientIdenti
 GO
 INSERT [HitCounter] ([HitCounterId], [SponsorId], [SponsorTypeId], [ClientIdentiy], [StatusId], [HitOn]) VALUES (134, 2, 2, N'14.96.3.200', 1, CAST(0x0000A4D20173682D AS DateTime))
 GO
+INSERT [HitCounter] ([HitCounterId], [SponsorId], [SponsorTypeId], [ClientIdentiy], [StatusId], [HitOn]) VALUES (135, 1, 1, N'43.251.171.51', 1, CAST(0x0000A4D3002A9287 AS DateTime))
+GO
+INSERT [HitCounter] ([HitCounterId], [SponsorId], [SponsorTypeId], [ClientIdentiy], [StatusId], [HitOn]) VALUES (136, 1, 1, N'43.251.171.51', 1, CAST(0x0000A4D3002B4332 AS DateTime))
+GO
+INSERT [HitCounter] ([HitCounterId], [SponsorId], [SponsorTypeId], [ClientIdentiy], [StatusId], [HitOn]) VALUES (137, 1, 1, N'43.251.171.51', 1, CAST(0x0000A4D3002B7946 AS DateTime))
+GO
+INSERT [HitCounter] ([HitCounterId], [SponsorId], [SponsorTypeId], [ClientIdentiy], [StatusId], [HitOn]) VALUES (138, 1, 1, N'43.251.171.51', 1, CAST(0x0000A4D3002BC917 AS DateTime))
+GO
+INSERT [HitCounter] ([HitCounterId], [SponsorId], [SponsorTypeId], [ClientIdentiy], [StatusId], [HitOn]) VALUES (139, 1, 1, N'43.251.171.51', 1, CAST(0x0000A4D30034C5E5 AS DateTime))
+GO
+INSERT [HitCounter] ([HitCounterId], [SponsorId], [SponsorTypeId], [ClientIdentiy], [StatusId], [HitOn]) VALUES (140, 1, 1, N'43.251.171.231', 1, CAST(0x0000A4D3009C112D AS DateTime))
+GO
 SET IDENTITY_INSERT [HitCounter] OFF
 GO
 SET IDENTITY_INSERT [NotificationLog] ON 
@@ -1266,6 +1278,22 @@ GO
 INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (1, N'aaf372680839415e831a2d075846924b', 1, 29001, 1, 0, CAST(0x0000A4D30019C12B AS DateTime), NULL)
 GO
 INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (2, N'aaf372680839415e831a2d075846924b', 2, 29001, 1, 0, CAST(0x0000A4D30019C137 AS DateTime), NULL)
+GO
+INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (3, N'b05bedb0ad70488b8565e8e6562a601a', 1, 29001, 1, 0, CAST(0x0000A4D300284AB8 AS DateTime), NULL)
+GO
+INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (4, N'b05bedb0ad70488b8565e8e6562a601a', 2, 29001, 1, 0, CAST(0x0000A4D300284ABB AS DateTime), NULL)
+GO
+INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (5, N'3f3953c2142d48e79e18a635e68a9c0b', 1, 29001, 1, 0, CAST(0x0000A4D300B0F3B2 AS DateTime), NULL)
+GO
+INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (6, N'3f3953c2142d48e79e18a635e68a9c0b', 2, 29001, 1, 0, CAST(0x0000A4D300B0F3B4 AS DateTime), NULL)
+GO
+INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (7, N'89e9c8f11842488fbd2a3ff56840833c', 1, 29001, 1, 0, CAST(0x0000A4D300B1E673 AS DateTime), NULL)
+GO
+INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (8, N'89e9c8f11842488fbd2a3ff56840833c', 2, 29001, 1, 1, CAST(0x0000A4D300B1E673 AS DateTime), CAST(0x0000A4D300B76CB3 AS DateTime))
+GO
+INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (9, N'8845c5f3cb684687bf9fed75901abbd5', 1, 29001, 1, 0, CAST(0x0000A4D300B8C498 AS DateTime), NULL)
+GO
+INSERT [NotificationLog] ([NotificationLogId], [NotifiactionToken], [DeviceRegistryId], [PageItemId], [StatusId], [IsRead], [NotifiedOn], [ReadOn]) VALUES (10, N'8845c5f3cb684687bf9fed75901abbd5', 2, 29001, 1, 0, CAST(0x0000A4D300B8C499 AS DateTime), NULL)
 GO
 SET IDENTITY_INSERT [NotificationLog] OFF
 GO
@@ -1332,7 +1360,7 @@ INSERT [PageHeader] ([PageHeaderId], [PageId], [PageItemId], [PageHeaderText], [
 GO
 INSERT [PageHeader] ([PageHeaderId], [PageId], [PageItemId], [PageHeaderText], [PageSubHeaderText], [StatusId]) VALUES (4, 12, 1204, N'Lorem Ipsum Text', N'Lorem ipsum dumy text Lorem', 1)
 GO
-INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (501, 5, 100, N'Horse Show', N'Horse Show', N'horseshow-pic.jpg', N'<p>Horses have been a big part of the Sussex County Farm& Horse Show since 1923! The Sussex County Horse Show demonstrates the excellence and commitment of the community to these wonderful animals and the traditional event.</p><br/><p>There are four rings of competitions, beginning with $30K Grand Prix, AQHA Show, Local Day, 4-H, Hunter Jumper, and more, through July 31 to August 9, 2015.</p><br/><p>Click here to view the prize list for 2015, and make sure to check out their official website at <a href="http://sussexcountyhorseshow.org/files/2015%20SCBHS%20PRIZE%20LIST%20FINAL.pdf">www.sussexcountyhorseshow.org</a></p>', NULL, 1, CAST(0x0000A3400061848D AS DateTime), CAST(0x0000A3400061848D AS DateTime), NULL, 1)
+INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (501, 5, 100, N'Horse Show', N'Horse Show', N'horseshow-pic.jpg', N'<p>Horses have been a big part of the Sussex County Farm& Horse Show since 1923! The Sussex County Horse Show demonstrates the excellence and commitment of the community to these wonderful animals and the traditional event.</p><br/><p>There are four rings of competitions, beginning with $30K Grand Prix, AQHA Show, Local Day, 4-H, Hunter Jumper, and more, through July 31 to August 9, 2015.</p><br/><p>Click here to view the prize list for 2015, and make sure to check out their official website at www.sussexcountyhorseshow.org</p>', NULL, 1, CAST(0x0000A3400061848D AS DateTime), CAST(0x0000A3400061848D AS DateTime), NULL, 1)
 GO
 INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (601, 6, 100, N'Richards Educational Building', N'Enjoy an art show, photography show, creative arts for home and hobby demonstration, The Fair history exhibit, Grange exhibit & honey show.', N'schedule-pic1.jpg', N'Richards Educational Building: Enjoy an art show, photography show, creative arts for home and hobby demonstration, The Fair history exhibit, Grange exhibit & honey show.', NULL, 1, CAST(0x0000A3400061848D AS DateTime), CAST(0x0000A3400061848D AS DateTime), NULL, 1)
 GO
@@ -1429,6 +1457,117 @@ GO
 INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (1204, 12, 100, N'What to do:', N'The Fair hosts activities for all ages and interests. Enjoy educational activities, thrilling rides, food vendors, and more!', N'Info 4.jpg', N'What to do: The Fair hosts activities for all ages and interests. Enjoy educational activities, thrilling rides, food vendors, and more!', NULL, 1, CAST(0x0000A3400061848D AS DateTime), CAST(0x0000A3400061848D AS DateTime), NULL, 4)
 GO
 INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (1205, 12, 100, N'Ticket Prices:', N'2015 Tickets/Admission & Promotions', N'Info 5.jpg', N'<p><p>2015 Tickets/Admission & Promotions</p><br/><p>2015 Ticket Pricing:<br/>•Adults - $13.00<br/>•Child - $6.00<br/>•Seniors(60+) - $9.00<br/>•Children camp groups $4.00, including chaperones and driver</p><br/><p>2015 Advance Admission Tickets:<br/>•Adult - $9.00<br/>•Child - $5.00</p><br/><p>2015 Group Pricing (Advance Sale Only):<br/>• Senior Group 20 or more out of county - $6.00<br/>Other groups:<br/>• Adult - $8.00<br/>• Child - $5.00<br/>• Corporate - $8.00<br/>• Corporate with sponsorship - $6.00</p><br/><p>2015 Promotions:<br/>•Early Bird Special: 10 am to noon, M, T, W, Th. August 3 – 6<br/>Adult - $9.00<br/>Child - $5.00<br/>Senior - $5.00</p><br/><p>•Children’s Day: Tuesday, August 4. (6-12 years): $5.00</p><br/><p>•Senior Day: Thursday, August 6. (60+): $4.00</p><br/><p>•Sussex County Residents’ Deal: Any day with applicable ID.<br/>Adult - $9.00<br/>Child - $5.00<br/>Senior - $5.00</p><br/><p>•Military Veterans: Free entire duration of the Fair</p><br/><p>•Last Blast: Sunday, August 9<br/>Adults - $8.00<br/>Children and Seniors – Free<br/>Evenings after 8:30 pm: Adult price reduced to $9.00</p><br/><p>Additional Tickets:<br/>•Demo Derby, August 2 and August 3<br/>Reserved Seating - $13.00<br/>General Admission - $11.00</p><br/><p>•Mega Pass<br/>Adult - $28<br/>Child - $25</p><br/><br/>•Monday, August 3: POP ($23) carnival open to close<br/>•Tuesday, August 4, Wednesday, August 5, Thursday August 6: POP ($23) Noon to 6 PM<br/>•Sunday, August 9: POP ($23): 11 AM to 5 PM<br/>•Group POP wristband: $18, M, T, W, Th. Noon to 6 PM.', NULL, 1, CAST(0x0000A3400061848D AS DateTime), CAST(0x0000A3400061848D AS DateTime), NULL, 5)
+GO
+INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (1206, 12, 100, N'Sponsor', N'Thank you to our Sponsors!', N'ef74065801f34a59938adeffd46369ac.jpg', N'<table>
+<tbody>
+<tr>
+<td style="text-align: center;" colspan="4">
+<h1><span style="text-decoration: underline; color: #993300;"><strong><span style="font-size: 11px;">PLATINUM SPONSORS</span></strong></span></h1>
+</td>
+</tr>
+<tr>
+<td style="text-align: right;"><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/sundance.jpg" alt="Sponsor_logo_1" width="58" height="39" /></td>
+<td><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/pepsico.jpg" alt="Sponsor_logo_1" width="150" height="36" /></td>
+<td><img style="display: block; margin-left: auto; margin-right: auto;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/usarmy.jpg" alt="Sponsor_logo_1" width="36" height="42" /></td>
+<td><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/lite.jpg" alt="Sponsor_logo_2" width="57" height="38" /></td>
+</tr>
+<tr>
+<td><br /><br /><br /></td>
+<td><img style="display: block; margin-left: auto; margin-right: auto;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/lakeland.jpg" alt="Sponsor_logo_10" width="110" height="43" /></td>
+<td><img style="float: left;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/otter.jpg" alt="Sponsor_logo_11" width="73" height="43" /></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td style="text-align: center;" colspan="4">
+<h2><span style="text-decoration: underline;"><span style="color: #993300;"><strong><span style="font-size: 11px;">GOLD SPONSORS</span></strong></span></span></h2>
+</td>
+</tr>
+<tr>
+<td style="text-align: right;"><img src="http://www.njstatefair.org/fair/wp-content/uploads/2014/05/solar.jpg" alt="gold_1" width="93" height="35" /></td>
+<td><img style="display: block; margin-left: auto; margin-right: auto;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/ford.jpg" alt="gold_2" width="126" height="37" /></td>
+<td><img style="display: block; margin-left: auto; margin-right: auto;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/wm.jpg" alt="gold_3" width="93" height="39" /></td>
+<td><img style="float: left;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/shoprite.jpg" alt="gold_4" width="49" height="38" /></td>
+</tr>
+<tr>
+<td><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/power.jpg" alt="gold_4" width="91" height="34" /></td>
+<td style="text-align: center;"><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/mines.jpg" alt="gold_4" width="50" height="32" /></td>
+<td><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/propane.jpg" alt="gold_4" width="84" height="31" /></td>
+<td><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/fmi.jpg" alt="gold_4" width="88" height="37" /></td>
+</tr>
+<tr>
+<td style="text-align: right;">&nbsp;<img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/paw.jpg" alt="gold_4" width="43" height="37" /></td>
+<td style="text-align: center;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/pseg.jpg" alt="gold_4" width="105" height="27" /></td>
+<td>&nbsp;<img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/pnc.jpg" alt="gold_4" width="93" height="37" /></td>
+<td>&nbsp;<img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/kitchenmagic.jpg" alt="gold_4" width="56" height="35" /></td>
+</tr>
+<tr>
+<td style="text-align: right;" colspan="2"><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/wells.jpg" alt="gold_4" width="77" height="31" /></td>
+<td><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/berkley.jpg" alt="gold_4" width="117" height="20" /></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td style="text-align: right;"><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/sbank.jpg" alt="gold_4" width="105" height="45" /></td>
+<td colspan="2"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/newtown-mc.jpg" alt="gold_4" width="107" height="33" /></td>
+<td><img style="float: right;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/reit.jpg" alt="gold_4" width="51" height="43" /></td>
+</tr>
+<tr>
+<td colspan="2"><img style="float: right;" src="http://njstatefair.org/fair/wp-content/themes/NJ/images/vacation-resort.jpg" alt="gold_4" width="147" height="41" /></td>
+<td colspan="2"><img src="http://njstatefair.org/fair/wp-content/themes/NJ/images/royal.jpg" alt="gold_4" width="129" height="33" /></td>
+</tr>
+<tr>
+<td colspan="4">
+<h2 style="text-align: center;"><span style="text-decoration: underline; color: #993300;"><strong><span style="font-size: 11px;">SILVER&nbsp;SPONSORS</span></strong></span></h2>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<ul>
+<li style="padding-left: 30px;">GEICO</li>
+<li style="padding-left: 30px;">Yankee Propane</li>
+<li style="padding-left: 30px;">Lustre Craft</li>
+<li style="padding-left: 30px;">CenturyLink</li>
+<li style="padding-left: 30px;">Cutco Cutlery</li>
+</ul>
+</td>
+<td colspan="2">
+<ul style="list-style-type: disc;">
+<li>Service Electric Broadband Cable</li>
+<li>D&amp;D Financial</li>
+<li>C &amp; W Aero Services, Inc.</li>
+<li>Holiday Inn Express, Newton</li>
+<li>Newton Sparta Pediatric Dentistry</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td colspan="4">
+<h2 style="text-align: center;"><span style="text-decoration: underline; color: #993300;"><strong><span style="font-size: 11px;">BRONZE SPONSORS</span></strong></span></h2>
+</td>
+</tr>
+<tr>
+<td colspan="2">&nbsp;&nbsp;<br />
+<ul>
+<li>Butterfly Encounter &ndash; come experience feeding live butterflies</li>
+<li>Thor Labs</li>
+<li>Ames Rubber Corp.</li>
+<li>J. Battista Plumbing &amp; Heating LLC</li>
+<li>Comcast Spotlight</li>
+<li>Bristol Glen Retirement Community&nbsp;</li>
+</ul>
+</td>
+<td colspan="2">
+<ul>
+<li>Iliff-Ruggiero Funeral Homes</li>
+<li>Elenora L. Benz, Esq</li>
+<li>Cailey Jewelers</li>
+<li>Homestead Rehabilitation &amp; Healthcare Center</li>
+<li>SC 4-H Advisory Board</li>
+<li>Ultimate Caterer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>', NULL, 2, CAST(0x0000A4D30135657F AS DateTime), CAST(0x0000A4D30135657F AS DateTime), CAST(0x0000A4D300B8B2A4 AS DateTime), 6)
 GO
 INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (1401, 14, 100, N'July 31 5 p.m. Opening ceremonies in the Horse Show main ring.', N'Tribute to our Troops', N'Daily Highlights 1.jpg', N'July 31: Opening ceremonies in the Horse Show main ring. Tribute to our Troops.', NULL, 1, CAST(0x0000A33F017A1D8B AS DateTime), CAST(0x0000A33F017A1D8B AS DateTime), NULL, 1)
 GO
@@ -2155,7 +2294,7 @@ INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [Pa
 GO
 INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (28006, 28, 100, N'Sussex County 4-H Teen Council', N'Sussex County 4-H Teen Council<br/><span>WW 1</span>', NULL, N'<b>Business Name :</b> Sussex County 4-H Teen Council<br/><b>Location :</b> WW 1<br/><b>Wonner Name :</b> Kathy Kula<br/><b>Product :</b> Ice cream, milkshakes, soda floats', NULL, 1, CAST(0x0000A4A1003DEB55 AS DateTime), CAST(0x0000A4A1003DEB55 AS DateTime), NULL, 6)
 GO
-INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (29001, 29, 0, N'Test', N'Announcement Testing ', N'0fd5a1bdc26a47c3a3430e6d5b2bee9f.jpg', N'<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', NULL, 1, CAST(0x0000A4D0002FA60C AS DateTime), CAST(0x0000A4D0002FA60C AS DateTime), CAST(0x0000A4D0002FDCBE AS DateTime), 1)
+INSERT [PageItem] ([PageItemId], [PageId], [PageItemType], [PageHeaderText], [PageSubHeaderText], [PageItemImage], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn], [ActivatedOn], [UpdatedOn], [ItemOrder]) VALUES (29001, 29, 100, N'Test', N'Announcement Testing ', N'0fd5a1bdc26a47c3a3430e6d5b2bee9f.jpg', N'<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', NULL, 1, CAST(0x0000A4D0002FA60C AS DateTime), CAST(0x0000A4D0002FA60C AS DateTime), CAST(0x0000A4D0002FDCBE AS DateTime), 1)
 GO
 INSERT [PageItemDetail] ([PageItemDetailId], [PageId], [PageItemId], [PageItemDetailText], [PageItemSubDetail], [StatusId], [CreatedOn]) VALUES (12001, 12, 1201, N'Lorem Ipsum Text', N'Lorem ipsum dumy text Lorem', 1, CAST(0x0000A30500000000 AS DateTime))
 GO
@@ -2694,7 +2833,7 @@ GO
 SET IDENTITY_INSERT [SplashImage] ON 
 
 GO
-INSERT [SplashImage] ([SplashImageId], [SplashName], [ImageUrl], [SponsorUrl], [Position], [StatusId], [CreatedBy], [CreatedOn]) VALUES (1, N'Home equity line of credit', N'~/Upload/SplashImages/530D5B30B4BA43F8B82C4393997E91E0.jpg', N'https://www.lakelandbank.com/mortgages/', 1, 1, 1, CAST(0x0000A4B900BB893F AS DateTime))
+INSERT [SplashImage] ([SplashImageId], [SplashName], [ImageUrl], [SponsorUrl], [Position], [StatusId], [CreatedBy], [CreatedOn]) VALUES (1, N'Home equity line of credit', N'~/Upload/SplashImages/530D5B30B4BA43F8B82C4393997E91E0.jpg', N'https://www.lakelandbank.com/017/', 1, 1, 1, CAST(0x0000A4B900BB893F AS DateTime))
 GO
 INSERT [SplashImage] ([SplashImageId], [SplashName], [ImageUrl], [SponsorUrl], [Position], [StatusId], [CreatedBy], [CreatedOn]) VALUES (2, N'Splash - 2', N'~/Upload/SplashImages/5F932F16F1AA45B8BB0A54FB136B647D.jpg', N'https://www.lakelandbank.com', 2, 2, 1, CAST(0x0000A4B900BB893F AS DateTime))
 GO
@@ -2942,6 +3081,8 @@ GO
 INSERT [UserImage] ([UserImageId], [UserKey], [UserImageUrl], [StatusId], [CreatedBy], [CreatedOn]) VALUES (116, 45, N'~/Upload/Capture/45/051a7905db62436d837976a7b9b4c3fa_635721647033408000.jpg', 1, 45, CAST(0x0000A4D101751C4C AS DateTime))
 GO
 INSERT [UserImage] ([UserImageId], [UserKey], [UserImageUrl], [StatusId], [CreatedBy], [CreatedOn]) VALUES (117, 45, N'~/Upload/Capture/45/5babb5c8391d4c6daecd4d33cf052c5c_635721938046904000.jpg', 1, 45, CAST(0x0000A4D2006ECD09 AS DateTime))
+GO
+INSERT [UserImage] ([UserImageId], [UserKey], [UserImageUrl], [StatusId], [CreatedBy], [CreatedOn]) VALUES (118, 17, N'~/Upload/Capture/17/dd4a29ae9f2f4243b7609860fbff649a_635722961641632000.jpg', 1, 17, CAST(0x0000A4D300B7DE6E AS DateTime))
 GO
 SET IDENTITY_INSERT [UserImage] OFF
 GO

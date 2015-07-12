@@ -21,6 +21,7 @@
 /*global window: false, jQuery: false */
 
 (function ($) {
+    var loadingCounter = 0;
     var data_click = "unobtrusiveAjaxClick",
         data_target = "unobtrusiveAjaxClickTarget",
         data_validation = "unobtrusiveValidation";
@@ -96,6 +97,10 @@
             url: element.getAttribute("data-ajax-url") || undefined,
             cache: !!element.getAttribute("data-ajax-cache"),
             beforeSend: function (xhr) {
+                loadingCounter += 1;
+                $(document).css('cursor', 'wait !important');
+                $('#dataloading').slideToggle();
+
                 var result;
                 asyncOnBeforeSend(xhr, method);
                 result = getFunction(element.getAttribute("data-ajax-begin"), ["xhr", "data"]).apply(element, arguments);
@@ -107,6 +112,14 @@
             complete: function () {
                 loading.hide(duration);
                 getFunction(element.getAttribute("data-ajax-complete"), ["xhr", "status"]).apply(element, arguments);
+
+                if (loadingCounter > 1)
+                { loadingCounter -= 1 }
+                else {
+                    loadingCounter = 0;
+                    $('#dataloading').slideToggle();
+                }
+                $(document).css('cursor', 'default !important');
             },
             success: function (data, status, xhr) {
                 asyncOnSuccess(element, data, xhr.getResponseHeader("Content-Type") || "text/html");
