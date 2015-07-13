@@ -83,7 +83,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public DeviceRegistryResponseDto RegisterDevice(DeviceRegistryRequestDto request)
         {
             DeviceRegistryResponseDto response = InitiateResponse<DeviceRegistryRequestDto, DeviceRegistryResponseDto>(request);
@@ -126,7 +126,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public AppInfoResponseDto GetAppInfo(AppInfoRequestDto request)
         {
             AppInfoResponseDto response = InitiateResponse<AppInfoRequestDto, AppInfoResponseDto>(request);
@@ -158,7 +158,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public PageResponseDto GetPage(PageRequestDto request)
         {
             PageResponseDto response = InitiateResponse<PageRequestDto, PageResponseDto>(request);
@@ -208,7 +208,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public PageItemResponseDto GetPageItem(PageItemRequestDto request)
         {
             PageItemResponseDto response = InitiateResponse<PageItemRequestDto, PageItemResponseDto>(request);
@@ -265,7 +265,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public MapResponseDto GetMap(MapRequestDto request)
         {
             MapResponseDto response = new MapResponseDto(request.RequestToken);
@@ -278,7 +278,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public RssFeedResponseDto GetMediaFeed(RssFeedRequestDto request)
         {
             RssFeedResponseDto response = InitiateResponse<RssFeedRequestDto, RssFeedResponseDto>(request);
@@ -303,7 +303,7 @@ namespace NJFairground.Web.Controllers
                             break;
                     }
                     string rssFeedAsString = string.Empty;
-                    
+
                     switch (request.FeedRequestFor)
                     {
                         case FeedFor.Facebook:
@@ -312,7 +312,7 @@ namespace NJFairground.Web.Controllers
                                 if (!string.IsNullOrEmpty(rssFeedAsString))
                                 {
                                     JObject jsonFeed = JObject.Parse(rssFeedAsString);
-                                    response.SocialFeeds =  jsonFeed["data"].Select(x => new RssFeedModel
+                                    response.SocialFeeds = jsonFeed["data"].Select(x => new RssFeedModel
                                     {
                                         Title = (x["message"].AsString().Length > 20) ?
                                             x["message"].AsString().Substring(0, 20) + ".." : x["message"].AsString(),
@@ -322,7 +322,7 @@ namespace NJFairground.Web.Controllers
                                         Content = x["message"].AsString(),
                                         LastUpdate = (x["updated_time"] ?? x["created_time"]).AsString(),
                                         Author = (x["from"] != null) ? x["from"]["name"].AsString() : ""
-                                    }).ToList(); 
+                                    }).ToList();
                                 }
                                 break;
                             }
@@ -330,7 +330,7 @@ namespace NJFairground.Web.Controllers
                         case FeedFor.Pinterest:
                             {
                                 rssFeedAsString = CommonUtility.GetRSSFeedAsString(feedLink);
-                                if (!string.IsNullOrEmpty( rssFeedAsString))
+                                if (!string.IsNullOrEmpty(rssFeedAsString))
                                 {
                                     SyndicationFeed feed = SyndicationFeed.Load(XDocument.Parse(rssFeedAsString).CreateReader());
                                     response.SocialFeeds = feed.Items.Select(x => new RssFeedModel
@@ -342,7 +342,7 @@ namespace NJFairground.Web.Controllers
                                             x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
                                             x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),
                                         Author = (x.Authors.LastOrDefault() == null) ? string.Empty : x.Authors.LastOrDefault().Name.ToString()
-                                    }).ToList(); 
+                                    }).ToList();
                                 }
 
                                 break;
@@ -350,7 +350,7 @@ namespace NJFairground.Web.Controllers
                         case FeedFor.Instagram:
                             {
                                 rssFeedAsString = CommonUtility.GetRSSFeedAsString(feedLink);
-                                if (!string.IsNullOrEmpty( rssFeedAsString))
+                                if (!string.IsNullOrEmpty(rssFeedAsString))
                                 {
                                     XDocument doc = XDocument.Parse(rssFeedAsString);
                                     response.SocialFeeds = doc.Descendants("item").Select(x => new RssFeedModel
@@ -365,7 +365,7 @@ namespace NJFairground.Web.Controllers
                                             .ToString("f", CultureInfo.CreateSpecificCulture("en-US")),
                                         Author = x.Element("author").Value.ToString()
                                     }).ToList();
-                                    
+
                                 }
                                 break;
                             }
@@ -386,7 +386,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The user info.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public UserAuthenticationResponseDto AuthenticateUser(UserAuthenticationRequestDto request)
         {
             UserAuthenticationResponseDto response = InitiateResponse<UserAuthenticationRequestDto, UserAuthenticationResponseDto>(request);
@@ -399,9 +399,10 @@ namespace NJFairground.Web.Controllers
                     string userId = request.UserInfo.UserId.AsString();
 
                     UserInfoModel user = this._userInfoDataRepository
-                        .GetList(x => x.UserEmail.Equals(userEmail) || 
+                        .GetList(x => (x.UserEmail.Equals(userEmail) ||
                             x.UserKey.Equals(userKey) ||
-                            x.UserId.Equals(userId)).FirstOrDefault();
+                            x.UserId.Equals(userId)) &&
+                            x.StatusId.Equals((int)StatusEnum.Active)).FirstOrDefault();
 
                     if (user == null)
                     {
@@ -432,7 +433,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The page.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public FavoritePageResponseDto AddPageToFevorite(FavoritePageRequestDto request)
         {
             FavoritePageResponseDto response = InitiateResponse<FavoritePageRequestDto, FavoritePageResponseDto>(request);
@@ -483,13 +484,15 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The page.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public FavoritePageResponseDto RemovePageFromFevorite(FavoritePageRequestDto request)
         {
             FavoritePageResponseDto response = InitiateResponse<FavoritePageRequestDto, FavoritePageResponseDto>(request);
             try
             {
                 var userResponse = this.AuthUserForPage(request);
+                userResponse.UserInfo.FavoritePages = GetFavoritePagesByUser(userResponse.UserInfo.UserKey);
+
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString() && userResponse.UserInfo != null
                     && request.Action == CrudAction.Delete)
                 {
@@ -522,7 +525,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The page.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public FavoritePageResponseDto GetFevoritePagesByUser(FavoritePageRequestDto request)
         {
             FavoritePageResponseDto response = InitiateResponse<FavoritePageRequestDto, FavoritePageResponseDto>(request);
@@ -532,6 +535,7 @@ namespace NJFairground.Web.Controllers
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.BulkSelect)
                 {
+                    userResponse.UserInfo.FavoritePages = GetFavoritePagesByUser(userResponse.UserInfo.UserKey);
                     response.UserInfo = userResponse.UserInfo;
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
@@ -548,7 +552,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public HttpResponseMessage AddUserImage(UserImageRequestDto request)
         {
             HttpResponseMessage responseMessage = new HttpResponseMessage();
@@ -599,7 +603,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public FavoriteImageResponseDto DeleteUserImage(FavoriteImageRequestDto request)
         {
             FavoriteImageResponseDto response = InitiateResponse<FavoriteImageRequestDto, FavoriteImageResponseDto>(request);
@@ -640,7 +644,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public FavoriteImageResponseDto AddImageToFevorite(FavoriteImageRequestDto request)
         {
             FavoriteImageResponseDto response = InitiateResponse<FavoriteImageRequestDto, FavoriteImageResponseDto>(request);
@@ -694,7 +698,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public FavoriteImageResponseDto RemoveImageFromFevorite(FavoriteImageRequestDto request)
         {
             FavoriteImageResponseDto response = InitiateResponse<FavoriteImageRequestDto, FavoriteImageResponseDto>(request);
@@ -733,7 +737,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public PageBannerResponseDto GetPageBanner(PageBannerRequestDto request)
         {
             PageBannerResponseDto response = InitiateResponse<PageBannerRequestDto, PageBannerResponseDto>(request);
@@ -773,7 +777,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public SplashImageResponseDto GetSplashImage(SplashImageRequestDto request)
         {
             SplashImageResponseDto response = InitiateResponse<SplashImageRequestDto, SplashImageResponseDto>(request);
@@ -826,7 +830,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost()]
+        [System.Web.Http.HttpPost()]
         public EventResponseDto GetEvents(EventRequestDto request)
         {
             EventResponseDto response = InitiateResponse<EventRequestDto, EventResponseDto>(request);
@@ -850,7 +854,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public HitCounterResponseDto HitSponsor(HitCounterRequestDto request)
         {
             HitCounterResponseDto response = InitiateResponse<HitCounterRequestDto, HitCounterResponseDto>(request);
@@ -882,7 +886,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public NotificationReadResponseDto MarkReadNotification(NotificationReadRequestDto request)
         {
             NotificationReadResponseDto response = InitiateResponse<NotificationReadRequestDto, NotificationReadResponseDto>(request);
@@ -999,7 +1003,7 @@ namespace NJFairground.Web.Controllers
         /// </summary>
         /// <param name="userKey">The user key.</param>
         /// <returns></returns>
-        private List<PageItemModel> GetFavoritePagesByUser(int userKey)
+        private List<FavoritePageModel> GetFavoritePagesByUser(int userKey)
         {
             try
             {
@@ -1007,13 +1011,14 @@ namespace NJFairground.Web.Controllers
                     .GetList(x => x.UserKey.Equals(userKey)
                     && x.StatusId.Equals((int)StatusEnum.Active)).ToList();
 
-                return favoritePages.Select(x => x.PageItem).ToList();
+                if (!favoritePages.IsEmptyCollection())
+                    return favoritePages;
             }
             catch (Exception ex)
             {
                 ex.ExceptionValueTracker(userKey);
             }
-            return new List<PageItemModel>();
+            return new List<FavoritePageModel>();
         }
 
         /// <summary>
