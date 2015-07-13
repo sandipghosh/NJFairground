@@ -42,16 +42,18 @@
                             areaChart.redraw();
                         }
                         else {
-                            areaChart = Morris.Area({
-                                element: selector,
-                                data: data.data,
-                                xkey: data.xkey,
-                                ykeys: data.ykeys,
-                                labels: data.labels,
-                                pointSize: 2,
-                                hideHover: 'auto',
-                                resize: true
-                            });
+                            if (data.data.length > 0) {
+                                areaChart = Morris.Area({
+                                    element: selector,
+                                    data: data.data,
+                                    xkey: data.xkey,
+                                    ykeys: data.ykeys,
+                                    labels: data.labels,
+                                    pointSize: 2,
+                                    hideHover: 'auto',
+                                    resize: true
+                                });
+                            }
                         }
                     }
                 } catch (ex) { console.log(ex.message); }
@@ -67,11 +69,13 @@
                             pieChart.redraw();
                         }
                         else {
-                            pieChart = Morris.Donut({
-                                element: selector,
-                                data: data,
-                                resize: true
-                            });
+                            if (data.length > 0) {
+                                pieChart = Morris.Donut({
+                                    element: selector,
+                                    data: data,
+                                    resize: true
+                                });
+                            }
                         }
                     }
                 } catch (ex) { console.log(ex.message); }

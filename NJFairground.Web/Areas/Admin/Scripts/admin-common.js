@@ -18,7 +18,7 @@
                 toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media fullpage | forecolor backcolor emoticons code",
             });
         } catch (ex) { }
-    }
+    };
 
     this.RemoveEditor = function (selector) {
         try {
@@ -27,7 +27,7 @@
                 tinymce.EditorManager.execCommand('mceRemoveEditor', true, element);
             });
         } catch (ex) { }
-    }
+    };
 
     this.AjaxFileUpload = function (callback) {
         window.addEventListener("submit", function (e) {
@@ -50,5 +50,28 @@
                 }
             }
         }, true);
-    }
+    };
+
+    $.ajaxSetup({
+        beforeSend: function (jqXHR, settings) {
+            loadingCounter += 1;
+            if (!$('#dataloading').is(':visible')) {
+                $(document).css('cursor', 'wait !important');
+                $('#dataloading').show();
+            }
+        },
+        complete: function (jqXHR, textStatus) {
+            if (loadingCounter > 1)
+            { loadingCounter -= 1 }
+            else {
+                if ($('#dataloading').is(':visible')) {
+                    loadingCounter = 0;
+                    $('#dataloading').hide();
+                    $(document).css('cursor', 'default !important');
+                }
+            }
+        }
+    });
+
+    
 }(jQuery, window));

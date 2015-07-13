@@ -125,8 +125,8 @@
                                     }
                                 </td>
                                 <td>
-                                    @Ajax.ActionLink("Edit", "Edit", new { pageId = item.PageId }, new AjaxOptions { OnSuccess = "ShowPageScreen" }) |
-                                    @Html.ActionLink("Delete", "Delete", new { area = "Admin", id = item.PageId }, new AjaxOptions { OnSuccess = "ShowPageScreen" })
+                                    @Ajax.ActionLink("Edit", "Edit", new { pageId = item.PageId }, new AjaxOptions { OnSuccess = "ShowPageScreen" }) 
+                                    @*@Html.ActionLink("Delete", "Delete", new { area = "Admin", id = item.PageId }, new AjaxOptions { OnSuccess = "ShowPageScreen" })*@
                                 </td>
                             </tr>
                         }

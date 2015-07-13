@@ -394,11 +394,14 @@ namespace NJFairground.Web.Controllers
             {
                 if (request.Action == CrudAction.Insert)
                 {
-                    string userEmail = request.UserInfo.UserEmail;
-                    int userKey = request.UserInfo.UserKey;
+                    string userEmail = request.UserInfo.UserEmail.AsString();
+                    int userKey = request.UserInfo.UserKey.AsInt();
+                    string userId = request.UserInfo.UserId.AsString();
 
                     UserInfoModel user = this._userInfoDataRepository
-                        .GetList(x => x.UserEmail.Equals(userEmail) || x.UserKey.Equals(userKey)).FirstOrDefault();
+                        .GetList(x => x.UserEmail.Equals(userEmail) || 
+                            x.UserKey.Equals(userKey) ||
+                            x.UserId.Equals(userId)).FirstOrDefault();
 
                     if (user == null)
                     {
@@ -498,8 +501,8 @@ namespace NJFairground.Web.Controllers
                         userResponse.UserInfo.FavoritePages.Any(predicate))
                     {
                         FavoritePageModel favoritePage = userResponse.UserInfo.FavoritePages.FirstOrDefault(predicate);
-                        favoritePage.StatusId = (int)StatusEnum.Inactive;
                         userResponse.UserInfo.FavoritePages.RemoveAll(new Predicate<FavoritePageModel>(predicate));
+                        favoritePage.StatusId = (int)StatusEnum.Inactive;
                         this._favoritePageDataRepository.Update(favoritePage);
                     }
                     response.UserInfo = userResponse.UserInfo;
