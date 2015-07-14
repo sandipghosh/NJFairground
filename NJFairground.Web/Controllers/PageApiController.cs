@@ -1017,6 +1017,7 @@ namespace NJFairground.Web.Controllers
                         x.PageItem = this._pageItemDataRepository.Get(x.PageItemId);
                 });
 
+
                 if (!favoritePages.IsEmptyCollection())
                     return favoritePages;
             }
