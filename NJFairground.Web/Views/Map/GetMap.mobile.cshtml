@@ -24,113 +24,66 @@
             background-color: transparent !important;
             border-color: transparent !important;
         }
-        /*.commonbutton{background-color: red;}*/
+
         .positionButtonSpan {
             float: left;
-            border: 1px #767C82 solid;
-            border-radius: 32px;
+            border: 2px #767C82 solid;
+            border-radius: 42px;
             display: block;
-            height: 62px;
+            height: 84px;
         }
 
         .zoomSpan {
             float: left;
-            width: 30px;
-            margin-left: 16px;
+            margin-left: 28px;
+            margin-bottom: 10px;
         }
 
         #centerPositionMap {
-            left: 33% !important;
-            top: 33% !important;
+            left: 30% !important;
+            top: 34% !important;
             border-radius: 20px;
         }
 
         #topPositionMap {
-            left: 32.5% !important;
-            top: -3% !important;
+            left: 29.5% !important;
+            top: 0% !important;
             border-radius: 8px 8px 0 0;
         }
-
-        /*#topPositionMap {
-            top: -3% !important;
-            left: 2% !important; 
-            -webkit-transform: rotate(180deg) !important;
-            transform: rotate(180deg) !important;
-            border-radius: 27px !important;
-            border-top: 42px solid transparent !important;
-            border-left: 28px solid transparent !important;
-            border-right: 28px solid transparent !important;
-            border-bottom: 27px solid #428BCA !important;
-            background-color: transparent !important;
-        }*/
 
         #leftPositionMap {
             top: 33% !important;
             border-radius: 8px 0 0 8px;
-            left: -3%;
+            left: -2%;
+            height: 30px;
+            width: 26px;
         }
-
-        /*#leftPositionMap {
-            top: -9% !important;
-            left: 8% !important; 
-            -webkit-transform: rotate(90deg) !important;
-            transform: rotate(90deg) !important;
-            border-radius: 27px !important;
-            border-top: 42px solid transparent !important;
-            border-left: 28px solid transparent !important;
-            border-right: 28px solid transparent !important;
-            border-bottom: 27px solid #428BCA !important;
-            background-color: transparent !important;
-        }*/
 
         #rightPositionMap {
             top: 33% !important;
             left: 69% !important;
             border-radius: 0 8px 8px 0;
+            height: 30px;
+            width: 26px;
         }
 
-        /*#rightPositionMap {
-            top: -9% !important;
-            left: -5% !important; 
-            -webkit-transform: rotate(270deg) !important;
-            transform: rotate(270deg) !important;
-            border-radius: 27px !important;
-            border-top: 42px solid transparent !important;
-            border-left: 28px solid transparent !important;
-            border-right: 28px solid transparent !important;
-            border-bottom: 27px solid #428BCA !important;
-            background-color: transparent !important;
-        }*/
-
         #bottomPositionMap {
-            top: 69% !important;
-            left: 32.5% !important;
+            top: 68% !important;
+            left: 29.5% !important;
             border-radius: 0 0 8px 8px;
         }
 
-        /*#bottomPositionMap {
-            top: -16% !important;
-            left: 1% !important;
-            -webkit-transform: rotate(360deg) !important;
-            transform: rotate(360deg) !important;
-            border-radius: 27px !important;
-            border-top: 42px solid transparent !important;
-            border-left: 28px solid transparent !important;
-            border-right: 28px solid transparent !important;
-            border-bottom: 27px solid #428BCA !important;
-            background-color: transparent !important;
-        }*/
         .zoomButton{
-            border: 1px #767C82 solid;
-            height: 32px;
-            width: 29px;
+            border: 2px #767C82 solid;
+            height: 40px;
+            width: 34px;
         }
         #zoomInButton{
-            border-radius: 20px 20px 0 0;
+            border-radius: 28px 28px 0 0;
         }
 
         #zoomOutButton{
-            border-radius: 0 0 20px 20px;
+            border-radius: 0 0 28px 28px;
         }
         </text>))
     </style>
@@ -139,7 +92,10 @@
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
         $(document).ready(function () {
-            $('#imageFullScreen').smartZoom({ 'containerClass': 'imgContainer' });
+            $('#imageFullScreen').smartZoom({
+                'containerClass': 'imgContainer',
+                'height': '60%'
+            });
 
             $('#topPositionMap, #leftPositionMap, #rightPositionMap, #bottomPositionMap, #centerPositionMap')
                 .bind("click", function (e) {
@@ -148,16 +104,16 @@
 
                     switch (e.target.id) {
                         case "leftPositionMap":
-                            pixelsToMoveOnX = 50;
+                            pixelsToMoveOnX = 200;
                             break;
                         case "rightPositionMap":
-                            pixelsToMoveOnX = -50;
+                            pixelsToMoveOnX = -200;
                             break;
                         case "topPositionMap":
-                            pixelsToMoveOnY = 50;
+                            pixelsToMoveOnY = 200;
                             break;
                         case "bottomPositionMap":
-                            pixelsToMoveOnY = -50;
+                            pixelsToMoveOnY = -200;
                             break;
                         case "centerPositionMap":
                             break;
@@ -167,22 +123,22 @@
             $('#zoomInButton,#zoomOutButton').live("click", zoomButtonClickHandler);
 
             function zoomButtonClickHandler(e) {
-                var scaleToAdd = 0.8;
+                var scaleToAdd = 1;
                 if (e.target.id == 'zoomOutButton')
                     scaleToAdd = -scaleToAdd;
                 $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
             }
 
-            $('area').LiteTooltip({
-                location: 'top',
-                trigger: 'click',
-                textalign: 'left',
-                templatename: 'Limeade',
-                padding: 5,
-                issticky: true,
-                opacity: 1,
-                backcolor: '#df3030'
-            });
+            //$('area').LiteTooltip({
+            //    location: 'top',
+            //    trigger: 'click',
+            //    textalign: 'left',
+            //    templatename: 'Limeade',
+            //    padding: 5,
+            //    issticky: true,
+            //    opacity: 1,
+            //    backcolor: '#df3030'
+            //});
         });
         </text>))
     </script>
@@ -196,7 +152,7 @@
                 <img id="zoomOutButton" class="zoomButton" src='@Url.Content("~/Styles/Images/zoomOut.png")' title="zoom out" alt="zoom out" />
             </span>
             <span class="positionButtonSpan">
-                <img src='@Url.Content("~/Styles/Images/position.png")' />
+                <img src='@Url.Content("~/Styles/Images/position.png")' width="80" />
                 <span class="commonbutton" id="topPositionMap"></span>
                 <span class="commonbutton" id="leftPositionMap"></span>
                 <span class="commonbutton" id="rightPositionMap"></span>
@@ -205,78 +161,79 @@
             </span>
         </div>
         <div id="imgContainer">
-            <img id="imageFullScreen" src='@Url.Content("~/Upload/NJ_Fairground_guide_map.jpg")' usemap="#image-maps" />
-            <map name="image-maps" id="ImageMapsCom-image-maps">
-                <area alt="" data-title="Blood Mobile" href="javascript:void(0)" shape="rect" coords="271,531,297,554" style="outline: none;" target="_self" />
-                <area alt="" data-title="Performing Arts tent" href="javascript:void(0)" shape="rect" coords="498,532,524,555" style="outline: none;" target="_self" />
-                <area alt="" data-title="FIRST AID (in Admin. Bldg.)" href="javascript:void(0)" shape="rect" coords="446,588,472,611" style="outline: none;" target="_self" />
-                <area alt="" data-title="Family Entertainment Area [Circus Hollywood, racing pigs, petting zoo]" href="javascript:void(0)" shape="rect" coords="534,549,560,572" style="outline: none;" target="_self" />
-                <area alt="" data-title="INFORMATION BOOTHS" href="javascript:void(0)" shape="rect" coords="682,483,708,506" style="outline: none;" target="_self" />
-                <area alt="" data-title="Wheelchairs/scooters" href="javascript:void(0)" shape="rect" coords="670,461,696,484" style="outline: none;" target="_self" />
-                <area alt="" data-title="Christmas Tree Exhibit" href="javascript:void(0)" shape="rect" coords="628,470,654,493" style="outline: none;" target="_self" />
-                <area alt="" data-title="Newton Rotary Food Booth" href="javascript:void(0)" shape="rect" coords="627,450,653,473" style="outline: none;" target="_self" />
-                <area alt="" data-title="Oxen Display" href="javascript:void(0)" shape="rect" coords="574,457,600,480" style="outline: none;" target="_self" />
-                <area alt="" data-title="Winegarden" href="javascript:void(0)" shape="rect" coords="524,458,550,481" style="outline: none;" target="_self" />
-                <area alt="" data-title="RESTROOMS" href="javascript:void(0)" shape="rect" coords="488,463,514,486" style="outline: none;" target="_self" />
-                <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="489,440,515,463" style="outline: none;" target="_self" />
-                <area alt="" data-title="Rare Heritage Breeds Education Center" href="javascript:void(0)" shape="rect" coords="461,456,487,479" style="outline: none;" target="_self" />
-                <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="370,466,396,489" style="outline: none;" target="_self" />
-                <area alt="" data-title="Admissions/Ticket Office" href="javascript:void(0)" shape="rect" coords="344,465,370,488" style="outline: none;" target="_self" />
-                <area alt="" data-title="STEAM Robotics" href="javascript:void(0)" shape="rect" coords="350,446,376,469" style="outline: none;" target="_self" />
-                <area alt="" data-title="INFORMATION BOOTHS" href="javascript:void(0)" shape="rect" coords="266,468,292,491" style="outline: none;" target="_self" />
-                <area alt="" data-title="New Jersey Hall of Fame Exhibit" href="javascript:void(0)" shape="rect" coords="245,456,271,479" style="outline: none;" target="_self" />
-                <area alt="" data-title="Community Service Tent" href="javascript:void(0)" shape="rect" coords="311,420,337,443" style="outline: none;" target="_self" />
-                <area alt="" data-title="Craft Tent" href="javascript:void(0)" shape="rect" coords="347,423,394,446" style="outline: none;" target="_self" />
-                <area alt="" data-title="Sussex County Building" href="javascript:void(0)" shape="rect" coords="347,399,394,422" style="outline: none;" target="_self" />
-                <area alt="" data-title="Commercial Tent" href="javascript:void(0)" shape="rect" coords="351,292,398,315" style="outline: none;" target="_self" />
-                <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="634,399,681,422" style="outline: none;" target="_self" />
-                <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="635,373,682,396" style="outline: none;" target="_self" />
-                <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="635,348,682,371" style="outline: none;" target="_self" />
-                <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="635,322,682,345" style="outline: none;" target="_self" />
-                <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="635,298,682,321" style="outline: none;" target="_self" />
-                <area alt="" data-title="Milking Parlor" href="javascript:void(0)" shape="rect" coords="635,274,676,297" style="outline: none;" target="_self" />
-                <area alt="" data-title="Snook Agricultural Museum &amp; Antique Engines" href="javascript:void(0)" shape="rect" coords="541,269,585,290" style="outline: none;" target="_self" />
-                <area alt="" data-title="Agriculture Honor Garden" href="javascript:void(0)" shape="rect" coords="541,295,585,316" style="outline: none;" target="_self" />
-                <area alt="" data-title="Livestock Pavilion" href="javascript:void(0)" shape="rect" coords="540,338,584,356" style="outline: none;" target="_self" />
-                <area alt="" data-title="Agriculture Division Food Booth" href="javascript:void(0)" shape="rect" coords="541,363,567,399" style="outline: none;" target="_self" />
-                <area alt="" data-title="Richards Exhibit Building" href="javascript:void(0)" shape="rect" coords="445,350,500,391" style="outline: none;" target="_self" />
-                <area alt="" data-title="Newton Rotary Food Booth" href="javascript:void(0)" shape="rect" coords="452,260,492,281" style="outline: none;" target="_self" />
-                <area alt="" data-title="4-H Shotwell Exhibit Building" href="javascript:void(0)" shape="rect" coords="458,283,488,304" style="outline: none;" target="_self" />
-                <area alt="" data-title="Board of Agriculture BBQ Pavilion" href="javascript:void(0)" shape="rect" coords="473,306,503,327" style="outline: none;" target="_self" />
-                <area alt="" data-title="Carnival" href="javascript:void(0)" shape="rect" coords="215,334,239,352" style="outline: none;" target="_self" />
-                <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="678,273,702,291" style="outline: none;" target="_self" />
-                <area alt="" data-title="Bicycle Stunt Show" href="javascript:void(0)" shape="rect" coords="437,392,461,410" style="outline: none;" target="_self" />
-                <area alt="" data-title="Winegarden" href="javascript:void(0)" shape="rect" coords="443,325,467,343" style="outline: none;" target="_self" />
-                <area alt="" data-title="4-H Dairy Barn [ice cream]" href="javascript:void(0)" shape="rect" coords="479,329,503,347" style="outline: none;" target="_self" />
-                <area alt="" data-title="Horse Show Rings" href="javascript:void(0)" shape="rect" coords="362,75,386,93" style="outline: none;" target="_self" />
-                <area alt="" data-title="Horse Show Rings" href="javascript:void(0)" shape="rect" coords="365,160,389,178" style="outline: none;" target="_self" />
-                <area alt="" data-title="RESTROOMS" href="javascript:void(0)" shape="rect" coords="229,209,253,227" style="outline: none;" target="_self" />
-                <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="252,205,276,223" style="outline: none;" target="_self" />
-                <area alt="" data-title="Branchville Rotary Food Booth" href="javascript:void(0)" shape="rect" coords="307,200,331,218" style="outline: none;" target="_self" />
-                <area alt="" data-title="INFORMATION BOOTHS" href="javascript:void(0)" shape="rect" coords="401,211,425,229" style="outline: none;" target="_self" />
-                <area alt="" data-title="SECURITY" href="javascript:void(0)" shape="rect" coords="423,203,447,221" style="outline: none;" target="_self" />
-                <area alt="" data-title="Horse Show Sponsor Pavilion" href="javascript:void(0)" shape="rect" coords="400,83,424,101" style="outline: none;" target="_self" />
-                <area alt="" data-title="Horse Show Office" href="javascript:void(0)" shape="rect" coords="426,81,450,99" style="outline: none;" target="_self" />
-                <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="447,97,471,115" style="outline: none;" target="_self" />
-                <area alt="" data-title="Handicapped Seating for Horse Show" href="javascript:void(0)" shape="rect" coords="448,142,472,160" style="outline: none;" target="_self" />
-                <area alt="" data-title="Horse Show Rings" href="javascript:void(0)" shape="rect" coords="541,88,565,106" style="outline: none;" target="_self" />
-                <area alt="" data-title="Horse Show Rings" href="javascript:void(0)" shape="rect" coords="540,140,564,158" style="outline: none;" target="_self" />
-                <area alt="" data-title="Founders’ Park" href="javascript:void(0)" shape="rect" coords="546,195,575,213" style="outline: none;" target="_self" />
-                <area alt="" data-title="Boy Scout Food Booth" href="javascript:void(0)" shape="rect" coords="585,202,608,223" style="outline: none;" target="_self" />
-                <area alt="" data-title="Knights of Columbus Food Booth" href="javascript:void(0)" shape="rect" coords="638,202,661,223" style="outline: none;" target="_self" />
-                <area alt="" data-title="Beer Tent" href="javascript:void(0)" shape="rect" coords="653,182,676,203" style="outline: none;" target="_self" />
-                <area alt="" data-title="Miller Lite Outdoor Entertainment Area" href="javascript:void(0)" shape="rect" coords="729,135,752,156" style="outline: none;" target="_self" />
-                <area alt="" data-title="Sussex County Farmers’ Market" href="javascript:void(0)" shape="rect" coords="724,329,756,351" style="outline: none;" target="_self" />
-                <area alt="" data-title="20/33" href="javascript:void(0)" shape="rect" coords="738,294,788,315" style="outline: none;" target="_self" />
-                <area alt="" data-title="Summer Blossoms Garden" data-location="left" href="javascript:void(0)" shape="rect" coords="792,292,824,315" style="outline: none;" target="_self" />
-                <area alt="" data-title="Conservatory-Flower &amp; Garden Expo" href="javascript:void(0)" shape="rect" coords="760,316,776,359" style="outline: none;" target="_self" />
-                <area alt="" data-title="Conservatory Courtyard &amp; Tent" href="javascript:void(0)" shape="rect" coords="777,314,793,357" style="outline: none;" target="_self" />
-                <area alt="" data-title="Craft Beer Tent" data-location="left" href="javascript:void(0)" shape="rect" coords="792,364,824,386" style="outline: none;" target="_self" />
-                <area alt="" data-title="Greenhouse- Forage &amp; Vegetable Show" href="javascript:void(0)" shape="rect" coords="746,358,796,393" style="outline: none;" target="_self" />
-                <area alt="" data-title="INFORMATION BOOTHS" href="javascript:void(0)" shape="rect" coords="126,227,141,241" style="outline: none;" target="_self" />
-                <area alt="" data-title="Parking" href="javascript:void(0)" shape="rect" coords="62,259,85,379" style="outline: none;" target="_self" />
-                <area alt="" data-title="Carnival Wheel" href="javascript:void(0)" shape="rect" coords="182,276,229,340" style="outline: none;" target="_self" />
-            </map>
+            <img id="imageFullScreen" src='@Url.Content("~/Upload/NJ_Fairground_guide_map.jpg")' />
+            @*<img id="imageFullScreen" src='@Url.Content("~/Upload/NJ_Fairground_guide_map.jpg")' usemap="#image-maps" />
+        <map name="image-maps" id="ImageMapsCom-image-maps">
+        <area alt="" data-title="Blood Mobile" href="javascript:void(0)" shape="rect" coords="271,531,297,554" style="outline: none;" target="_self" />
+        <area alt="" data-title="Performing Arts tent" href="javascript:void(0)" shape="rect" coords="498,532,524,555" style="outline: none;" target="_self" />
+        <area alt="" data-title="FIRST AID (in Admin. Bldg.)" href="javascript:void(0)" shape="rect" coords="446,588,472,611" style="outline: none;" target="_self" />
+        <area alt="" data-title="Family Entertainment Area [Circus Hollywood, racing pigs, petting zoo]" href="javascript:void(0)" shape="rect" coords="534,549,560,572" style="outline: none;" target="_self" />
+        <area alt="" data-title="INFORMATION BOOTHS" href="javascript:void(0)" shape="rect" coords="682,483,708,506" style="outline: none;" target="_self" />
+        <area alt="" data-title="Wheelchairs/scooters" href="javascript:void(0)" shape="rect" coords="670,461,696,484" style="outline: none;" target="_self" />
+        <area alt="" data-title="Christmas Tree Exhibit" href="javascript:void(0)" shape="rect" coords="628,470,654,493" style="outline: none;" target="_self" />
+        <area alt="" data-title="Newton Rotary Food Booth" href="javascript:void(0)" shape="rect" coords="627,450,653,473" style="outline: none;" target="_self" />
+        <area alt="" data-title="Oxen Display" href="javascript:void(0)" shape="rect" coords="574,457,600,480" style="outline: none;" target="_self" />
+        <area alt="" data-title="Winegarden" href="javascript:void(0)" shape="rect" coords="524,458,550,481" style="outline: none;" target="_self" />
+        <area alt="" data-title="RESTROOMS" href="javascript:void(0)" shape="rect" coords="488,463,514,486" style="outline: none;" target="_self" />
+        <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="489,440,515,463" style="outline: none;" target="_self" />
+        <area alt="" data-title="Rare Heritage Breeds Education Center" href="javascript:void(0)" shape="rect" coords="461,456,487,479" style="outline: none;" target="_self" />
+        <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="370,466,396,489" style="outline: none;" target="_self" />
+        <area alt="" data-title="Admissions/Ticket Office" href="javascript:void(0)" shape="rect" coords="344,465,370,488" style="outline: none;" target="_self" />
+        <area alt="" data-title="STEAM Robotics" href="javascript:void(0)" shape="rect" coords="350,446,376,469" style="outline: none;" target="_self" />
+        <area alt="" data-title="INFORMATION BOOTHS" href="javascript:void(0)" shape="rect" coords="266,468,292,491" style="outline: none;" target="_self" />
+        <area alt="" data-title="New Jersey Hall of Fame Exhibit" href="javascript:void(0)" shape="rect" coords="245,456,271,479" style="outline: none;" target="_self" />
+        <area alt="" data-title="Community Service Tent" href="javascript:void(0)" shape="rect" coords="311,420,337,443" style="outline: none;" target="_self" />
+        <area alt="" data-title="Craft Tent" href="javascript:void(0)" shape="rect" coords="347,423,394,446" style="outline: none;" target="_self" />
+        <area alt="" data-title="Sussex County Building" href="javascript:void(0)" shape="rect" coords="347,399,394,422" style="outline: none;" target="_self" />
+        <area alt="" data-title="Commercial Tent" href="javascript:void(0)" shape="rect" coords="351,292,398,315" style="outline: none;" target="_self" />
+        <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="634,399,681,422" style="outline: none;" target="_self" />
+        <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="635,373,682,396" style="outline: none;" target="_self" />
+        <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="635,348,682,371" style="outline: none;" target="_self" />
+        <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="635,322,682,345" style="outline: none;" target="_self" />
+        <area alt="" data-title="Livestock Barns" href="javascript:void(0)" shape="rect" coords="635,298,682,321" style="outline: none;" target="_self" />
+        <area alt="" data-title="Milking Parlor" href="javascript:void(0)" shape="rect" coords="635,274,676,297" style="outline: none;" target="_self" />
+        <area alt="" data-title="Snook Agricultural Museum &amp; Antique Engines" href="javascript:void(0)" shape="rect" coords="541,269,585,290" style="outline: none;" target="_self" />
+        <area alt="" data-title="Agriculture Honor Garden" href="javascript:void(0)" shape="rect" coords="541,295,585,316" style="outline: none;" target="_self" />
+        <area alt="" data-title="Livestock Pavilion" href="javascript:void(0)" shape="rect" coords="540,338,584,356" style="outline: none;" target="_self" />
+        <area alt="" data-title="Agriculture Division Food Booth" href="javascript:void(0)" shape="rect" coords="541,363,567,399" style="outline: none;" target="_self" />
+        <area alt="" data-title="Richards Exhibit Building" href="javascript:void(0)" shape="rect" coords="445,350,500,391" style="outline: none;" target="_self" />
+        <area alt="" data-title="Newton Rotary Food Booth" href="javascript:void(0)" shape="rect" coords="452,260,492,281" style="outline: none;" target="_self" />
+        <area alt="" data-title="4-H Shotwell Exhibit Building" href="javascript:void(0)" shape="rect" coords="458,283,488,304" style="outline: none;" target="_self" />
+        <area alt="" data-title="Board of Agriculture BBQ Pavilion" href="javascript:void(0)" shape="rect" coords="473,306,503,327" style="outline: none;" target="_self" />
+        <area alt="" data-title="Carnival" href="javascript:void(0)" shape="rect" coords="215,334,239,352" style="outline: none;" target="_self" />
+        <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="678,273,702,291" style="outline: none;" target="_self" />
+        <area alt="" data-title="Bicycle Stunt Show" href="javascript:void(0)" shape="rect" coords="437,392,461,410" style="outline: none;" target="_self" />
+        <area alt="" data-title="Winegarden" href="javascript:void(0)" shape="rect" coords="443,325,467,343" style="outline: none;" target="_self" />
+        <area alt="" data-title="4-H Dairy Barn [ice cream]" href="javascript:void(0)" shape="rect" coords="479,329,503,347" style="outline: none;" target="_self" />
+        <area alt="" data-title="Horse Show Rings" href="javascript:void(0)" shape="rect" coords="362,75,386,93" style="outline: none;" target="_self" />
+        <area alt="" data-title="Horse Show Rings" href="javascript:void(0)" shape="rect" coords="365,160,389,178" style="outline: none;" target="_self" />
+        <area alt="" data-title="RESTROOMS" href="javascript:void(0)" shape="rect" coords="229,209,253,227" style="outline: none;" target="_self" />
+        <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="252,205,276,223" style="outline: none;" target="_self" />
+        <area alt="" data-title="Branchville Rotary Food Booth" href="javascript:void(0)" shape="rect" coords="307,200,331,218" style="outline: none;" target="_self" />
+        <area alt="" data-title="INFORMATION BOOTHS" href="javascript:void(0)" shape="rect" coords="401,211,425,229" style="outline: none;" target="_self" />
+        <area alt="" data-title="SECURITY" href="javascript:void(0)" shape="rect" coords="423,203,447,221" style="outline: none;" target="_self" />
+        <area alt="" data-title="Horse Show Sponsor Pavilion" href="javascript:void(0)" shape="rect" coords="400,83,424,101" style="outline: none;" target="_self" />
+        <area alt="" data-title="Horse Show Office" href="javascript:void(0)" shape="rect" coords="426,81,450,99" style="outline: none;" target="_self" />
+        <area alt="" data-title="ATM" href="javascript:void(0)" shape="rect" coords="447,97,471,115" style="outline: none;" target="_self" />
+        <area alt="" data-title="Handicapped Seating for Horse Show" href="javascript:void(0)" shape="rect" coords="448,142,472,160" style="outline: none;" target="_self" />
+        <area alt="" data-title="Horse Show Rings" href="javascript:void(0)" shape="rect" coords="541,88,565,106" style="outline: none;" target="_self" />
+        <area alt="" data-title="Horse Show Rings" href="javascript:void(0)" shape="rect" coords="540,140,564,158" style="outline: none;" target="_self" />
+        <area alt="" data-title="Founders’ Park" href="javascript:void(0)" shape="rect" coords="546,195,575,213" style="outline: none;" target="_self" />
+        <area alt="" data-title="Boy Scout Food Booth" href="javascript:void(0)" shape="rect" coords="585,202,608,223" style="outline: none;" target="_self" />
+        <area alt="" data-title="Knights of Columbus Food Booth" href="javascript:void(0)" shape="rect" coords="638,202,661,223" style="outline: none;" target="_self" />
+        <area alt="" data-title="Beer Tent" href="javascript:void(0)" shape="rect" coords="653,182,676,203" style="outline: none;" target="_self" />
+        <area alt="" data-title="Miller Lite Outdoor Entertainment Area" href="javascript:void(0)" shape="rect" coords="729,135,752,156" style="outline: none;" target="_self" />
+        <area alt="" data-title="Sussex County Farmers’ Market" href="javascript:void(0)" shape="rect" coords="724,329,756,351" style="outline: none;" target="_self" />
+        <area alt="" data-title="20/33" href="javascript:void(0)" shape="rect" coords="738,294,788,315" style="outline: none;" target="_self" />
+        <area alt="" data-title="Summer Blossoms Garden" data-location="left" href="javascript:void(0)" shape="rect" coords="792,292,824,315" style="outline: none;" target="_self" />
+        <area alt="" data-title="Conservatory-Flower &amp; Garden Expo" href="javascript:void(0)" shape="rect" coords="760,316,776,359" style="outline: none;" target="_self" />
+        <area alt="" data-title="Conservatory Courtyard &amp; Tent" href="javascript:void(0)" shape="rect" coords="777,314,793,357" style="outline: none;" target="_self" />
+        <area alt="" data-title="Craft Beer Tent" data-location="left" href="javascript:void(0)" shape="rect" coords="792,364,824,386" style="outline: none;" target="_self" />
+        <area alt="" data-title="Greenhouse- Forage &amp; Vegetable Show" href="javascript:void(0)" shape="rect" coords="746,358,796,393" style="outline: none;" target="_self" />
+        <area alt="" data-title="INFORMATION BOOTHS" href="javascript:void(0)" shape="rect" coords="126,227,141,241" style="outline: none;" target="_self" />
+        <area alt="" data-title="Parking" href="javascript:void(0)" shape="rect" coords="62,259,85,379" style="outline: none;" target="_self" />
+        <area alt="" data-title="Carnival Wheel" href="javascript:void(0)" shape="rect" coords="182,276,229,340" style="outline: none;" target="_self" />
+    </map>*@
         </div>
     </div>
 </body>
