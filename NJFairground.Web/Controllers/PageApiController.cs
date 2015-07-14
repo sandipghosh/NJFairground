@@ -22,6 +22,7 @@ namespace NJFairground.Web.Controllers
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
     using Newtonsoft.Json.Linq;
+    using System.Threading.Tasks;
 
     public class PageApiController : ApiController
     {
@@ -416,7 +417,20 @@ namespace NJFairground.Web.Controllers
                         }
                     }
                     else
+                    {
                         response.UserInfo = user;
+                        var getFavoritePages = Task.Factory.StartNew<List<FavoritePageModel>>
+                            (() => GetFavoritePagesByUser(response.UserInfo.UserKey));
+                        var getFavoriteImages = Task.Factory.StartNew<List<UserImageModel>>
+                            (() => GetFavoriteImageByUser(response.UserInfo.UserKey));
+
+                        Task.WaitAll(getFavoritePages, getFavoriteImages);
+                        response.UserInfo.FavoritePages = getFavoritePages.Result;
+                        response.UserInfo.UserImages = getFavoriteImages.Result;
+
+                        //response.UserInfo.FavoritePages = GetFavoritePagesByUser(response.UserInfo.UserKey);
+                        //response.UserInfo.UserImages = GetFavoriteImageByUser(response.UserInfo.UserKey);
+                    }
 
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
@@ -491,8 +505,6 @@ namespace NJFairground.Web.Controllers
             try
             {
                 var userResponse = this.AuthUserForPage(request);
-                userResponse.UserInfo.FavoritePages = GetFavoritePagesByUser(userResponse.UserInfo.UserKey);
-
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString() && userResponse.UserInfo != null
                     && request.Action == CrudAction.Delete)
                 {
@@ -504,9 +516,9 @@ namespace NJFairground.Web.Controllers
                         userResponse.UserInfo.FavoritePages.Any(predicate))
                     {
                         FavoritePageModel favoritePage = userResponse.UserInfo.FavoritePages.FirstOrDefault(predicate);
-                        userResponse.UserInfo.FavoritePages.RemoveAll(new Predicate<FavoritePageModel>(predicate));
                         favoritePage.StatusId = (int)StatusEnum.Inactive;
                         this._favoritePageDataRepository.Update(favoritePage);
+                        userResponse.UserInfo.FavoritePages.RemoveAll(x => x.FavoritePageId.Equals(favoritePage.FavoritePageId));
                     }
                     response.UserInfo = userResponse.UserInfo;
                     response.ResponseStatus = RespStatus.Success.ToString();
@@ -535,8 +547,6 @@ namespace NJFairground.Web.Controllers
                 if (userResponse.ResponseStatus == RespStatus.Success.ToString()
                     && request.Action == CrudAction.BulkSelect)
                 {
-                    userResponse.UserInfo.FavoritePages = GetFavoritePagesByUser(userResponse.UserInfo.UserKey);
-                    userResponse.UserInfo.UserImages = GetFavoriteImageByUser(userResponse.UserInfo.UserKey);
                     response.UserInfo = userResponse.UserInfo;
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
