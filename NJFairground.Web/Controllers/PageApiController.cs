@@ -1011,6 +1011,12 @@ namespace NJFairground.Web.Controllers
                     .GetList(x => x.UserKey.Equals(userKey)
                     && x.StatusId.Equals((int)StatusEnum.Active)).ToList();
 
+                favoritePages.ForEach(x =>
+                {
+                    if (x.PageItem == null)
+                        x.PageItem = this._pageItemDataRepository.Get(x.PageItemId);
+                });
+
                 if (!favoritePages.IsEmptyCollection())
                     return favoritePages;
             }
