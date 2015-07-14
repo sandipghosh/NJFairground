@@ -622,15 +622,16 @@ namespace NJFairground.Web.Utilities
         /// Logs to file.
         /// </summary>
         /// <param name="logContent">Content of the log.</param>
-        public static void LogToFileWithStack(string logContent)
+        public static void LogToFileWithStack(string logContent, string fileNameInput = "")
         {
             //string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             string baseDir = HostingEnvironment
                 .MapPath(string.Format("~/{0}/", ConfigurationManager.AppSettings["ErrorLogFolder"]));
 
-            string logFilePath = string.Format("{0}LogFile-{1}{2}{3}-{4}{5}{6}.txt", baseDir,
+            string filePatter = string.IsNullOrEmpty(fileNameInput) ? "{0}LogFile-{1}{2}{3}-{4}{5}{6}.txt" : "{0}LogFile-{7}.txt";
+            string logFilePath = string.Format(filePatter, baseDir,
                 DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year,
-                DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, fileNameInput);
 
             StackFrame frame = new StackFrame(1, true);
             MethodBase lastCalling = frame.GetMethod();
