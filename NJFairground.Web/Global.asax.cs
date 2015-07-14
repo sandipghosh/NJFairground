@@ -14,6 +14,7 @@ namespace NJFairground.Web
     using MultipartDataMediaFormatter;
     using NJFairground.Web.Models.ValidationRules.Factory;
     using NJFairground.Web.Utilities;
+    using NJFairground.Web.Filters;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -40,13 +41,7 @@ namespace NJFairground.Web
                 AuthConfig.RegisterAuth();
 
                 GlobalConfiguration.Configuration.Formatters.Add(new FormMultipartEncodedMediaTypeFormatter());
-
-                ////Configure FV to use StructureMap
-                //var factory = new FluentValidatorFactory(IocProvider.Instance);
-
-                ////Tell MVC to use FV for validation
-                //ModelValidatorProviders.Providers.Add(new FluentValidationModelValidatorProvider(factory));
-                //DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
+                GlobalConfiguration.Configuration.MessageHandlers.Add(new MessageLoggingHandler());
             }
             catch (Exception ex)
             {

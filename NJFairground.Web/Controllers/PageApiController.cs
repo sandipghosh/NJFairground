@@ -1041,7 +1041,7 @@ namespace NJFairground.Web.Controllers
                 userImages.ForEach(x =>
                 {
                     x.IsFavorite = this._favoriteImageDataRepository.GetCount
-                        (x => x.UserImageId.Equals(x.UserImageId) && x.StatusId.Equals((int)StatusEnum.Active)) > 0;
+                        (y => y.UserImageId.Equals(x.UserImageId) && y.StatusId.Equals((int)StatusEnum.Active)) > 0;
                 });
 
                 if (!userImages.IsEmptyCollection())
