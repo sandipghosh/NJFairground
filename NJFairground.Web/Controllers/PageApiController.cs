@@ -536,6 +536,7 @@ namespace NJFairground.Web.Controllers
                     && request.Action == CrudAction.BulkSelect)
                 {
                     userResponse.UserInfo.FavoritePages = GetFavoritePagesByUser(userResponse.UserInfo.UserKey);
+                    userResponse.UserInfo.UserImages = GetFavoriteImageByUser(userResponse.UserInfo.UserKey);
                     response.UserInfo = userResponse.UserInfo;
                     response.ResponseStatus = RespStatus.Success.ToString();
                 }
@@ -1026,6 +1027,31 @@ namespace NJFairground.Web.Controllers
                 ex.ExceptionValueTracker(userKey);
             }
             return new List<FavoritePageModel>();
+        }
+
+        private List<UserImageModel> GetFavoriteImageByUser(int userKey)
+        {
+            try
+            {
+                List<UserImageModel> userImages = this._userImageDataRepository
+                    .GetList(x => x.UserKey.Equals(userKey)
+                    && x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+
+
+                userImages.ForEach(x =>
+                {
+                    x.IsFavorite = this._favoriteImageDataRepository.GetCount
+                        (x => x.UserImageId.Equals(x.UserImageId) && x.StatusId.Equals((int)StatusEnum.Active)) > 0;
+                });
+
+                if (!userImages.IsEmptyCollection())
+                    return userImages;
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(userKey);
+            }
+            return new List<UserImageModel>();
         }
 
         /// <summary>
