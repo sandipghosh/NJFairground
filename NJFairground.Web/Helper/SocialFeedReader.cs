@@ -303,9 +303,7 @@ namespace NJFairground.Web.Helper
         {
             try
             {
-                StringBuilder sb = new StringBuilder();
                 TagBuilder pImg = null;
-
                 if (!string.IsNullOrEmpty(feed.ImageUrl))
                 {
                     pImg = new TagBuilder("p");
