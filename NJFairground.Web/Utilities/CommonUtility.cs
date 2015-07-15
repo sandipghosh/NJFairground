@@ -1024,8 +1024,10 @@ namespace NJFairground.Web.Utilities
 
         public static string GetFacebookJsonFeedAsString()
         {
-            string authTokenUrl = CommonUtility.GetAppSetting<string>("Facebook:AuthTokenUrl").Replace("&amp;", "&");
-            string jsonFeedUrl = CommonUtility.GetAppSetting<string>("Facebook:JsonFeed").Replace("&amp;", "&");
+            Func<string, string> replaceAmp = (input) => input.Replace("&amp;", "&");
+            string selectedFields = "fields=id,from,name,caption,description,message,picture,link,created_time,updated_time";
+            string authTokenUrl = replaceAmp(CommonUtility.GetAppSetting<string>("Facebook:AuthTokenUrl"));
+            string jsonFeedUrl = replaceAmp(CommonUtility.GetAppSetting<string>("Facebook:JsonFeed"));
 
             var webClient = new WebClient();
             string access_token = webClient.DownloadString(authTokenUrl);
@@ -1033,7 +1035,7 @@ namespace NJFairground.Web.Utilities
             if (!string.IsNullOrEmpty(access_token))
             {
                 webClient = new WebClient();
-                string facebookjson = webClient.DownloadString(string.Format(jsonFeedUrl, access_token));
+                string facebookjson = webClient.DownloadString(replaceAmp(string.Format(jsonFeedUrl, selectedFields, access_token)));
                 return facebookjson;
             }
             return string.Empty;

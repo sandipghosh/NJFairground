@@ -315,9 +315,9 @@ namespace NJFairground.Web.Controllers
                                     JObject jsonFeed = JObject.Parse(rssFeedAsString);
                                     response.SocialFeeds = jsonFeed["data"].Select(x => new RssFeedModel
                                     {
-                                        Title = (x["message"].AsString().Length > 20) ?
-                                            x["message"].AsString().Substring(0, 20) + ".." : x["message"].AsString(),
-                                        TitleUrl = "",
+                                        Title = (x["message"].AsString().Length > 30) ?
+                                            x["message"].AsString().Substring(0, 30) + ".." : x["message"].AsString(),
+                                        TitleUrl = x["link"].AsString(),
                                         ImageLink = x["picture"].AsString(),
                                         ImageUrl = x["link"].AsString(),
                                         Content = x["message"].AsString(),
@@ -1039,6 +1039,11 @@ namespace NJFairground.Web.Controllers
             return new List<FavoritePageModel>();
         }
 
+        /// <summary>
+        /// Gets the favorite image by user.
+        /// </summary>
+        /// <param name="userKey">The user key.</param>
+        /// <returns></returns>
         private List<UserImageModel> GetFavoriteImageByUser(int userKey)
         {
             try

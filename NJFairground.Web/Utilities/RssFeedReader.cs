@@ -43,9 +43,9 @@ namespace NJFairground.Web.Utilities
                         JObject jsonFeed = JObject.Parse(rssFeedAsString);
                         feedItems = jsonFeed["data"].Select(x => new RssFeedEntity
                         {
-                            Title =(x["message"].AsString().Length>20)?
-                                x["message"].AsString().Substring(0, 20) + ".." : x["message"].AsString(),
-                            TitleUrl = "",
+                            Title = (x["message"].AsString().Length > 30) ?
+                                x["message"].AsString().Substring(0, 30) + ".." : x["message"].AsString(),
+                            TitleUrl = x["link"].AsString(),
                             ImageLink = x["picture"].AsString(),
                             ImageUrl = x["link"].AsString(),
                             Content = x["message"].AsString(),

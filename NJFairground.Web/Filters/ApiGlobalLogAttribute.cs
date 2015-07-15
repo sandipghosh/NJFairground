@@ -84,8 +84,10 @@ namespace NJFairground.Web.Filters
             if (CommonUtility.GetAppSetting<bool>("LogRequestResponse"))
             {
                 await Task.Run(() =>
-                    CommonUtility.LogToFileWithStack(string.Format("{0} - Request: {1}\r\n{2}",
-                    correlationId, requestInfo, Newtonsoft.Json.Linq.JObject.Parse(Encoding.UTF8.GetString(message)).ToString()), logFileName)
+                    ThreadPool.QueueUserWorkItem((state) =>
+                        CommonUtility.LogToFileWithStack(string.Format("{0} - Request: {1}\r\n{2}",
+                        correlationId, requestInfo, Newtonsoft.Json.Linq.JObject.Parse(Encoding.UTF8.GetString(message)).ToString()), logFileName)
+                    )
                 ); 
             }
         }
@@ -102,9 +104,11 @@ namespace NJFairground.Web.Filters
             if (CommonUtility.GetAppSetting<bool>("LogRequestResponse"))
             {
                 await Task.Run(() =>
-                    CommonUtility.LogToFileWithStack(string.Format("{0} - Response: {1}\r\n{2}",
-                    correlationId, requestInfo, Newtonsoft.Json.Linq.JObject.Parse(Encoding.UTF8.GetString(message)).ToString()), logFileName)
-                ); 
+                    ThreadPool.QueueUserWorkItem((state) =>
+                        CommonUtility.LogToFileWithStack(string.Format("{0} - Response: {1}\r\n{2}",
+                        correlationId, requestInfo, Newtonsoft.Json.Linq.JObject.Parse(Encoding.UTF8.GetString(message)).ToString()), logFileName)
+                    )
+                );
             }
         }
     }
