@@ -318,8 +318,8 @@ namespace NJFairground.Web.Controllers
                                         Title = (x["message"].AsString().Length > 30) ?
                                             x["message"].AsString().Substring(0, 30) + ".." : x["message"].AsString(),
                                         TitleUrl = x["link"].AsString(),
-                                        ImageLink = x["picture"].AsString(),
-                                        ImageUrl = x["link"].AsString(),
+                                        ImageLink = x["link"].AsString(),
+                                        ImageUrl = x["picture"].AsString(),
                                         Content = x["message"].AsString(),
                                         LastUpdate = (x["updated_time"] ?? x["created_time"]).AsString(),
                                         Author = (x["from"] != null) ? x["from"]["name"].AsString() : ""
