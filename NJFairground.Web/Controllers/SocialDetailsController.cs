@@ -14,7 +14,7 @@ namespace NJFairground.Web.Controllers
         /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Get),
         OutputCache(NoStore = true, Duration = 0, VaryByHeader = "*")]
-        public ActionResult Index(string feedLink,string feedFor)
+        public ActionResult Index(string feedLink, string feedFor)
         {
             ViewBag.feedLink = feedLink;
             ViewBag.feedFor = feedFor;

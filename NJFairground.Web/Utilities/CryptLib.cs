@@ -182,7 +182,7 @@ namespace NJFairground.Web.Utilities
             MD5 md5 = new MD5CryptoServiceProvider();
 
             //compute hash from the bytes of text
-            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+            md5.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(text));
 
             //get hash result after compute it
             byte[] result = md5.Hash;
