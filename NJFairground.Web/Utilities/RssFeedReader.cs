@@ -3,16 +3,12 @@
 namespace NJFairground.Web.Utilities
 {
     using System;
-    using System.IO;
-    using System.Net;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using System.ServiceModel.Syndication;
     using System.Web.Mvc;
-    using System.Xml;
     using System.Xml.Linq;
-    using System.Linq;
-    using System.Globalization;
-    using System.Text.RegularExpressions;
-    using System.Collections.Generic;
     using Newtonsoft.Json.Linq;
 
     internal class RssFeedEntity
@@ -28,6 +24,12 @@ namespace NJFairground.Web.Utilities
 
     public static class RssFeedReader
     {
+        /// <summary>
+        /// Reads the RSS.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="feedLink">The feed link.</param>
+        /// <returns></returns>
         public static MvcHtmlString ReadRss(this HtmlHelper htmlHelper, string feedLink)
         {
             try
@@ -83,6 +85,12 @@ namespace NJFairground.Web.Utilities
             return new MvcHtmlString(string.Empty);
         }
 
+        /// <summary>
+        /// Reads the instagram RSS.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="feedLink">The feed link.</param>
+        /// <returns></returns>
         public static MvcHtmlString ReadInstagramRss(this HtmlHelper htmlHelper, string feedLink)
         {
             var rssFeedAsString = CommonUtility.GetRSSFeedAsString(feedLink);
@@ -104,8 +112,11 @@ namespace NJFairground.Web.Utilities
             return new MvcHtmlString(GetHtmlFromRss(feedItems));
         }
 
-        
-
+        /// <summary>
+        /// Gets the HTML from RSS.
+        /// </summary>
+        /// <param name="feeds">The feeds.</param>
+        /// <returns></returns>
         private static string GetHtmlFromRss(List<RssFeedEntity> feeds)
         {
             TagBuilder feedItemWrapper = new TagBuilder("div");

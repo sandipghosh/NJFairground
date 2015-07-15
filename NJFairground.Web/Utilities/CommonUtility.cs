@@ -17,13 +17,13 @@ namespace NJFairground.Web.Utilities
     using System.Net;
     using System.Reflection;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Web;
+    using System.Web.Hosting;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Newtonsoft.Json;
     using NJFairground.Web.Models;
-    using System.Text.RegularExpressions;
-    using System.Web.Hosting;
 
     public static class CommonUtility
     {
@@ -1022,6 +1022,10 @@ namespace NJFairground.Web.Utilities
             return string.Empty;
         }
 
+        /// <summary>
+        /// Gets the facebook json feed as string.
+        /// </summary>
+        /// <returns></returns>
         public static string GetFacebookJsonFeedAsString()
         {
             Func<string, string> replaceAmp = (input) => input.Replace("&amp;", "&");
