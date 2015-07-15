@@ -312,6 +312,7 @@ namespace NJFairground.Web.Helper
 
                     TagBuilder img = new TagBuilder("img");
                     img.Attributes.Add("src", string.IsNullOrEmpty(feed.ImageUrl) ? "#" : feed.ImageUrl);
+                    img.Attributes.Add("width", "100%");
                     a.InnerHtml = img.ToString();
                     pImg.InnerHtml += a.ToString();
                 }
