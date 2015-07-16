@@ -18,6 +18,9 @@ namespace NJFairground.Web
             routes.IgnoreRoute("{*robotstxt}", new { robotstxt = @"(.*/)?robots.txt(/.*)?" });
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
+            routes.MapRoute("FuckYou", "Base/FuckYou/{status}",
+                new { controller = "Base", action = "FuckYou" });
+
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",

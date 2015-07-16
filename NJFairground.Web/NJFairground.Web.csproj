@@ -505,6 +505,7 @@
     <Compile Include="DTO\ResponseDto\UserImageResponseDto.cs" />
     <Compile Include="Extensions\Html\MetaTagExtenstions.cs" />
     <Compile Include="Filters\ApiGlobalLogAttribute.cs" />
+    <Compile Include="Filters\SaveMeFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
