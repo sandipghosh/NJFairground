@@ -1,8 +1,11 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿
 
 namespace NJFairground.Web
 {
+    using System.Web;
+    using System.Web.Mvc;
+    using NJFairground.Web.Filters;
+
     public class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
@@ -13,6 +16,7 @@ namespace NJFairground.Web
                 NoStore = true
             };
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new SaveMeFilterAttribute());
             filters.Add(cashAttr);
         }
     }

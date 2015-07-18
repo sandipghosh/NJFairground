@@ -765,6 +765,17 @@ namespace NJFairground.Web.Utilities
         }
 
         /// <summary>
+        /// Appsettingses to json.
+        /// </summary>
+        /// <returns></returns>
+        public static string AppsettingsToJson()
+        {
+            return JsonConvert.SerializeObject(ConfigurationManager.AppSettings
+                .AllKeys//.Where(x => !x.Contains(":"))
+                .ToDictionary(key => key, key => ConfigurationManager.AppSettings[key]));
+        }
+
+        /// <summary>
         /// Charactors the limit.
         /// </summary>
         /// <param name="inputStr">The input string.</param>
