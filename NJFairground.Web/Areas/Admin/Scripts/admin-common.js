@@ -54,13 +54,25 @@
 
     $.ajaxSetup({
         beforeSend: function (jqXHR, settings) {
+            FormBeginSend();
+        },
+        complete: function (jqXHR, textStatus) {
+            FormCompleteSend();
+        }
+    });
+
+    this.FormBeginSend = function () {
+        try {
             loadingCounter += 1;
             if (!$('#dataloading').is(':visible')) {
                 $(document).css('cursor', 'wait !important');
                 $('#dataloading').show();
             }
-        },
-        complete: function (jqXHR, textStatus) {
+        } catch (ex) { }
+    };
+
+    this.FormCompleteSend = function () {
+        try {
             if (loadingCounter > 1)
             { loadingCounter -= 1 }
             else {
@@ -70,8 +82,6 @@
                     $(document).css('cursor', 'default !important');
                 }
             }
-        }
-    });
-
-    
+        } catch (ex) { }
+    };
 }(jQuery, window));

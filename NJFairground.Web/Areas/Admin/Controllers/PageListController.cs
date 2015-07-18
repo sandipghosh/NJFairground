@@ -126,8 +126,15 @@ namespace NJFairground.Web.Areas.Admin.Controllers
                     if (ControllerContext.HttpContext.Request.Files != null
                         && ControllerContext.HttpContext.Request.Files.Count > 0)
                     {
-                        string imagePath = this.UploadImage(ControllerContext.HttpContext.Request.Files[0]);
-                        page.PageImage = imagePath;
+                        if (string.IsNullOrEmpty(page.PageImage))
+                        {
+                            page.PageImage = HandleImage(page.PageId);
+                        }
+                        else
+                        {
+                            string imagePath = this.UploadImage(ControllerContext.HttpContext.Request.Files[0]);
+                            page.PageImage = imagePath;
+                        }
                     }
                     else
                     {
@@ -173,6 +180,28 @@ namespace NJFairground.Web.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 ex.ExceptionValueTracker(uploadedFile);
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Handles the image.
+        /// </summary>
+        /// <param name="pageId">The page identifier.</param>
+        /// <returns></returns>
+        private string HandleImage(int pageId)
+        {
+            try
+            {
+                var page = this._pageDataRepository.Get(pageId);
+                if (page != null)
+                {
+                    return page.PageImage;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(pageId);
             }
             return string.Empty;
         }

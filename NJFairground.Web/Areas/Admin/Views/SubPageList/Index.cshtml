@@ -109,6 +109,7 @@
                             ShowSubPageInsertScreen(data);
                         });
                     }
+                    FormCompleteSend();
                 } catch (ex) { }
             };
 
@@ -121,11 +122,14 @@
                                 hdata.url = urlData[0] + '?pageId=' + $('#page-selection :selected').val() + '&' + urlData[1];
                         }
                         else {
-                            alert("Please select a Screen to create Sub-Screen")
+                            alert("Please select a Screen to create Sub-Screen");
+                            FormCompleteSend();
                             return false;
                         }
                     }
-                } catch (ex) { }
+                } catch (ex) {
+                    window.console.log(ex.message);
+                }
             };
         }(jQuery, window));
         </text>))

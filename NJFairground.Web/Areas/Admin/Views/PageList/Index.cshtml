@@ -22,7 +22,10 @@
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
         $(document).ready(function () {
-            $('#pages').DataTable({ responsive: true });
+            $('#pages').DataTable({
+                responsive: true,
+                "order": [[4, "asc"]]
+            });
         });
 
         this.ShowPageScreen = function (data) {
@@ -128,7 +131,6 @@
                                 </td>
                                 <td>
                                     @Ajax.ActionLink("Edit", "Edit", new { pageId = item.PageId }, new AjaxOptions { OnSuccess = "ShowPageScreen" })
-                                    @*@Html.ActionLink("Delete", "Delete", new { area = "Admin", id = item.PageId }, new AjaxOptions { OnSuccess = "ShowPageScreen" })*@
                                 </td>
                             </tr>
                         }
@@ -138,7 +140,3 @@
         </div>
     </div>
 </div>
-@*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
-

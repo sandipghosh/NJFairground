@@ -5,6 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 @section AdimnPageStyles{
+    <link href="https://cdn.datatables.net/responsive/1.0.6/css/dataTables.responsive.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         @(Html.CssMinify(@<text>
         #logger ul {
@@ -35,12 +36,14 @@
     </style>
 }
 @section AdimnPageScripts {
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script type="text/javascript" src='@Url.Content("~/signalr/hubs")'></script>
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
         (function ($, win) {
             $(document).ready(function () {
+                $('#announcements').DataTable({ responsive: true });
                 StartNotificationLog($('#logger'));
             });
 
@@ -52,7 +55,6 @@
                     var $loggerElement = $container.find('ul');
 
                     subscriber.client.PushNotificationLog = function (type, message) {
-                        //$loggerElement.append('<li><p class="text-{0}">{1}</li>'.format(type, htmlEncode(message)));
                         $loggerElement.append('<li><p class="text-{0}">{1}</li>'.format(type, (message)));
                     };
 
