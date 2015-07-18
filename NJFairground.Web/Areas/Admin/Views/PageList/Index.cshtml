@@ -5,6 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 @section AdimnPageStyles{
+    <link href="https://cdn.datatables.net/responsive/1.0.6/css/dataTables.responsive.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         @(Html.CssMinify(@<text>
         #dvPreview {
@@ -16,72 +17,73 @@
     </style>
 }
 @section AdimnPageScripts{
-    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
     <script type="text/javascript">
         @(Html.JsMinify(@<text>
-            $(document).ready(function () {
-                $('#pages').dataTable();
-            });
+        $(document).ready(function () {
+            $('#pages').DataTable({ responsive: true });
+        });
 
-            this.ShowPageScreen = function (data) {
-                try {
-                    if (data.responseText) {
-                        if (data.responseText.startsWith('window')) {
-                            var F = new Function(data.responseText);
-                            F();
-                            return;
-                        }
-                        $('.panel-body').html(data.responseText);
-                        $.validator.unobtrusive.parse($(data.responseText));
+        this.ShowPageScreen = function (data) {
+            try {
+                if (data.responseText) {
+                    if (data.responseText.startsWith('window')) {
+                        var F = new Function(data.responseText);
+                        F();
+                        return;
                     }
-                    else {
-                        if (data.startsWith('window')) {
-                            var F = new Function(data);
-                            F();
-                            return;
-                        }
-                        $('.panel-body').html(data);
-                        $.validator.unobtrusive.parse($(data));
-                    }
-
-                    if ($('.panel-body:has(table)').length == 0) {
-                        InitiateEditor('#PageContent');
-                        AjaxFileUpload(function (data) {
-                            ShowPageScreen(data);
-                        });
-                        if ($('#dvPreview img').attr('src') == '')
-                            $('#dvPreview').hide();
-                    }
-                } catch (ex) { }
-            };
-
-            $(document).on('change', '#PageImage', function () {
-                $("#dvPreview").html("");
-                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
-                if (regex.test($(this).val().toLowerCase())) {
-                    if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
-                        $("#dvPreview").show();
-                        $("#dvPreview")[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
-                    }
-                    else {
-                        if (typeof (FileReader) != "undefined") {
-                            $("#dvPreview").show();
-                            $("#dvPreview").append("<img />");
-                            var reader = new FileReader();
-                            reader.onload = function (e) {
-                                $("#dvPreview img").attr({'src': e.target.result, 'width':'200px'});
-                            }
-                            reader.readAsDataURL($(this)[0].files[0]);
-                            $("#dvPreview").closest('.form-group').show();
-                        } else {
-                            alert("This browser does not support FileReader.");
-                        }
-                    }
-                } else {
-                    $("#dvPreview").hide();
-                    alert("Please upload a valid image file.");
+                    $('.panel-body').html(data.responseText);
+                    $.validator.unobtrusive.parse($(data.responseText));
                 }
-            });
+                else {
+                    if (data.startsWith('window')) {
+                        var F = new Function(data);
+                        F();
+                        return;
+                    }
+                    $('.panel-body').html(data);
+                    $.validator.unobtrusive.parse($(data));
+                }
+
+                if ($('.panel-body:has(table)').length == 0) {
+                    InitiateEditor('#PageContent');
+                    AjaxFileUpload(function (data) {
+                        ShowPageScreen(data);
+                    });
+                    if ($('#dvPreview img').attr('src') == '')
+                        $('#dvPreview').hide();
+                }
+            } catch (ex) { }
+        };
+
+        $(document).on('change', '#PageImage', function () {
+            $("#dvPreview").html("");
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+            if (regex.test($(this).val().toLowerCase())) {
+                if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
+                    $("#dvPreview").show();
+                    $("#dvPreview")[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
+                }
+                else {
+                    if (typeof (FileReader) != "undefined") {
+                        $("#dvPreview").show();
+                        $("#dvPreview").append("<img />");
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#dvPreview img").attr({ 'src': e.target.result, 'width': '200px' });
+                        }
+                        reader.readAsDataURL($(this)[0].files[0]);
+                        $("#dvPreview").closest('.form-group').show();
+                    } else {
+                        alert("This browser does not support FileReader.");
+                    }
+                }
+            } else {
+                $("#dvPreview").hide();
+                alert("Please upload a valid image file.");
+            }
+        });
         </text>))
     </script>
 }
@@ -125,7 +127,7 @@
                                     }
                                 </td>
                                 <td>
-                                    @Ajax.ActionLink("Edit", "Edit", new { pageId = item.PageId }, new AjaxOptions { OnSuccess = "ShowPageScreen" }) 
+                                    @Ajax.ActionLink("Edit", "Edit", new { pageId = item.PageId }, new AjaxOptions { OnSuccess = "ShowPageScreen" })
                                     @*@Html.ActionLink("Delete", "Delete", new { area = "Admin", id = item.PageId }, new AjaxOptions { OnSuccess = "ShowPageScreen" })*@
                                 </td>
                             </tr>

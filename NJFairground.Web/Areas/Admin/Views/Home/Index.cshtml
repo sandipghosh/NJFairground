@@ -7,12 +7,14 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 @section AdimnPageStyles{
-    <link href="~/Areas/Admin/Styles/morris.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/responsive/1.0.6/css/dataTables.responsive.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" rel="stylesheet" type="text/css" />
 }
 
 @section AdimnPageScripts{
-    <script type="text/javascript" src="~/Areas/Admin/Scripts/raphael-min.js"></script>
-    <script type="text/javascript" src="~/Areas/Admin/Scripts/morris.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script type="text/javascript">
         (function ($, win) {
             var areaChart;
@@ -22,7 +24,7 @@
                 try {
                     GetAreaChart({ "effectedDays": 30, "type": "Banner" }, 'morris-area-chart');
                     GetPieChart('device-pie-chart');
-                    $('#noification').dataTable();
+                    $('#noification').DataTable({ responsive: true });
                 } catch (ex) { }
             });
 
