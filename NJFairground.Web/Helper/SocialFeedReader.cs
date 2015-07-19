@@ -11,7 +11,6 @@ namespace NJFairground.Web.Helper
     using System.Linq;
     using System.Net;
     using System.ServiceModel.Syndication;
-    using System.Text;
     using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using System.Xml.Linq;
@@ -59,7 +58,98 @@ namespace NJFairground.Web.Helper
         IList<RssFeedModel> Read();
     }
 
-    public class FacebookFeedReader : IFeedReader
+    public abstract class FeedReader
+    {
+        /// <summary>
+        /// Reads the URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
+        protected string ReadUrl(string url)
+        {
+            try
+            {
+                WebClient webClient = new WebClient();
+                Func<string, string> replaceAmp = (input) => input.Replace("&amp;", "&");
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    webClient = new WebClient();
+                    string facebookjson = webClient.DownloadString(replaceAmp(url));
+                    return facebookjson;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(url);
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the string from HTML.
+        /// </summary>
+        /// <param name="html">The HTML.</param>
+        /// <returns></returns>
+        protected string GetStringFromHtml(string html)
+        {
+            return Regex.Replace(System.Web.HttpUtility.HtmlDecode(html),
+                @"[^\u0000-\u007F]", string.Empty);
+        }
+
+        /// <summary>
+        /// Gets the string from HTML without SPC.
+        /// </summary>
+        /// <param name="html">The HTML.</param>
+        /// <param name="maxlength">The maxlength.</param>
+        /// <returns></returns>
+        protected string GetStringFromHtmlWithoutSpc(string html, int maxlength = 0)
+        {
+            string filterData = Regex.Replace(System.Web.HttpUtility.HtmlDecode(html),
+                @"<.*?>|[^\u0000-\u007F]", string.Empty);
+
+            if (maxlength > 0)
+                filterData = filterData.Length > maxlength ? filterData.Substring(0, maxlength) + ".." : filterData;
+
+            return filterData;
+        }
+
+        /// <summary>
+        /// Generates the content HTML.
+        /// </summary>
+        /// <param name="feed">The feed.</param>
+        /// <returns></returns>
+        protected RssFeedModel GenerateContentHtml(RssFeedModel feed)
+        {
+            try
+            {
+                TagBuilder pImg = null;
+                if (!string.IsNullOrEmpty(feed.ImageUrl))
+                {
+                    pImg = new TagBuilder("p");
+                    TagBuilder a = new TagBuilder("a");
+                    a.Attributes.Add("href", string.IsNullOrEmpty(feed.ImageLink) ? "#" : feed.ImageLink);
+
+                    TagBuilder img = new TagBuilder("img");
+                    img.Attributes.Add("src", string.IsNullOrEmpty(feed.ImageUrl) ? "#" : feed.ImageUrl);
+                    img.Attributes.Add("width", "100%");
+                    a.InnerHtml = img.ToString();
+                    pImg.InnerHtml += a.ToString();
+                }
+
+                TagBuilder pContent = new TagBuilder("p");
+                pContent.InnerHtml += GetStringFromHtmlWithoutSpc(feed.Content);
+                feed.Content = (pImg == null ? "" : pImg.ToString()) + pContent.ToString();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(feed);
+            }
+            return feed;
+        }
+    }
+
+    public class FacebookFeedReader :FeedReader, IFeedReader
     {
         /// <summary>
         /// Reads this instance.
@@ -73,16 +163,16 @@ namespace NJFairground.Web.Helper
                 string feedUrl = GetUrlWithAccessToken();
                 if (!string.IsNullOrEmpty(feedUrl))
                 {
-                    string feedData = ReaderUtil.ReadUrl(feedUrl);
+                    string feedData = ReadUrl(feedUrl);
                     if (!string.IsNullOrEmpty(feedData))
                     {
                         JObject jsonFeed = JObject.Parse(feedData);
                         if (jsonFeed != null)
                         {
-                            response = jsonFeed["data"].Select(x => ReaderUtil.GenerateContentHtml
+                            response = jsonFeed["data"].Select(x => GenerateContentHtml
                                 (new RssFeedModel
                                 {
-                                    Title = ReaderUtil.GetStringFromHtmlWithoutSpc(x["message"].AsString(), 30),
+                                    Title = GetStringFromHtmlWithoutSpc(x["message"].AsString(), 30),
                                     TitleUrl = x["link"].AsString(),
                                     ImageLink = x["link"].AsString(),
                                     ImageUrl = x["picture"].AsString(),
@@ -113,7 +203,7 @@ namespace NJFairground.Web.Helper
                 string authTokenUrl = CommonUtility.GetAppSetting<string>("Facebook:AuthTokenUrl");
                 string jsonFeedUrl = CommonUtility.GetAppSetting<string>("Facebook:JsonFeed");
 
-                string accessToken = ReaderUtil.ReadUrl(authTokenUrl);
+                string accessToken = ReadUrl(authTokenUrl);
                 if (!string.IsNullOrEmpty(accessToken))
                 {
                     return string.Format(jsonFeedUrl, selectedFields, accessToken);
@@ -127,7 +217,7 @@ namespace NJFairground.Web.Helper
         }
     }
 
-    public class TwitterFeedReader : IFeedReader
+    public class TwitterFeedReader :FeedReader, IFeedReader
     {
         /// <summary>
         /// Reads this instance.
@@ -139,7 +229,7 @@ namespace NJFairground.Web.Helper
             try
             {
                 string feedLink = CommonUtility.GetAppSetting<string>("Twitter:RssFeed");
-                string feedData = ReaderUtil.ReadUrl(feedLink);
+                string feedData = ReadUrl(feedLink);
                 if (!string.IsNullOrEmpty(feedData))
                 {
                     SyndicationFeed feed = SyndicationFeed.Load(XDocument.Parse(feedData).CreateReader());
@@ -147,7 +237,7 @@ namespace NJFairground.Web.Helper
                     {
                         Title = x.Title.Text.AsString(),
                         TitleUrl = (x.Links.FirstOrDefault() == null) ? string.Empty : x.Links.FirstOrDefault().Uri.AbsoluteUri,
-                        Content = ReaderUtil.GetStringFromHtml(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString()),
+                        Content = GetStringFromHtml(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString()),
                         LastUpdate = (x.LastUpdatedTime.Year == 1 ?
                             x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
                             x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),
@@ -163,7 +253,7 @@ namespace NJFairground.Web.Helper
         }
     }
 
-    public class PinterestFeedReader : IFeedReader
+    public class PinterestFeedReader :FeedReader, IFeedReader
     {
         /// <summary>
         /// Reads this instance.
@@ -175,7 +265,7 @@ namespace NJFairground.Web.Helper
             try
             {
                 string feedLink = CommonUtility.GetAppSetting<string>("Pinterest:RssFeed");
-                string feedData = ReaderUtil.ReadUrl(feedLink);
+                string feedData = ReadUrl(feedLink);
                 if (!string.IsNullOrEmpty(feedData))
                 {
                     SyndicationFeed feed = SyndicationFeed.Load(XDocument.Parse(feedData).CreateReader());
@@ -183,7 +273,7 @@ namespace NJFairground.Web.Helper
                     {
                         Title = x.Title.Text.AsString(),
                         TitleUrl = (x.Links.FirstOrDefault() == null) ? string.Empty : x.Links.FirstOrDefault().Uri.AbsoluteUri,
-                        Content = ReaderUtil.GetStringFromHtml(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString()),
+                        Content = GetStringFromHtml(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString()),
                         LastUpdate = (x.LastUpdatedTime.Year == 1 ?
                             x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
                             x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),
@@ -199,7 +289,7 @@ namespace NJFairground.Web.Helper
         }
     }
 
-    public class InstagramFeedReader : IFeedReader
+    public class InstagramFeedReader :FeedReader, IFeedReader
     {
         /// <summary>
         /// Reads this instance.
@@ -211,13 +301,13 @@ namespace NJFairground.Web.Helper
             try
             {
                 string feedLink = CommonUtility.GetAppSetting<string>("Instagram:RssFeed");
-                string feedData = ReaderUtil.ReadUrl(feedLink);
+                string feedData = ReadUrl(feedLink);
                 if (!string.IsNullOrEmpty(feedData))
                 {
                     XDocument doc = XDocument.Parse(feedData);
-                    response = doc.Descendants("item").Select(x => ReaderUtil.GenerateContentHtml(new RssFeedModel
+                    response = doc.Descendants("item").Select(x => GenerateContentHtml(new RssFeedModel
                     {
-                        Title = ReaderUtil.GetStringFromHtmlWithoutSpc(x.Element("title").Value.AsString(), 30),
+                        Title = GetStringFromHtmlWithoutSpc(x.Element("title").Value.AsString(), 30),
                         TitleUrl = x.Element("link").Value.AsString(),
                         ImageLink = x.Element("image").Element("link").Value.AsString(),
                         ImageUrl = x.Element("image").Element("url").Value.AsString(),
@@ -235,97 +325,6 @@ namespace NJFairground.Web.Helper
                 ex.ExceptionValueTracker();
             }
             return response;
-        }
-    }
-
-    public static class ReaderUtil
-    {
-        /// <summary>
-        /// Reads the URL.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns></returns>
-        public static string ReadUrl(string url)
-        {
-            try
-            {
-                WebClient webClient = new WebClient();
-                Func<string, string> replaceAmp = (input) => input.Replace("&amp;", "&");
-
-                if (!string.IsNullOrEmpty(url))
-                {
-                    webClient = new WebClient();
-                    string facebookjson = webClient.DownloadString(replaceAmp(url));
-                    return facebookjson;
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker(url);
-            }
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// Gets the string from HTML.
-        /// </summary>
-        /// <param name="html">The HTML.</param>
-        /// <returns></returns>
-        public static string GetStringFromHtml(string html)
-        {
-            return Regex.Replace(System.Web.HttpUtility.HtmlDecode(html),
-                @"[^\u0000-\u007F]", string.Empty);
-        }
-
-        /// <summary>
-        /// Gets the string from HTML without SPC.
-        /// </summary>
-        /// <param name="html">The HTML.</param>
-        /// <param name="maxlength">The maxlength.</param>
-        /// <returns></returns>
-        public static string GetStringFromHtmlWithoutSpc(string html, int maxlength = 0)
-        {
-            string filterData = Regex.Replace(System.Web.HttpUtility.HtmlDecode(html),
-                @"<.*?>|[^\u0000-\u007F]", string.Empty);
-
-            if (maxlength > 0)
-                filterData = filterData.Length > maxlength ? filterData.Substring(0, maxlength) + ".." : filterData;
-
-            return filterData;
-        }
-
-        /// <summary>
-        /// Generates the content HTML.
-        /// </summary>
-        /// <param name="feed">The feed.</param>
-        /// <returns></returns>
-        public static RssFeedModel GenerateContentHtml(RssFeedModel feed)
-        {
-            try
-            {
-                TagBuilder pImg = null;
-                if (!string.IsNullOrEmpty(feed.ImageUrl))
-                {
-                    pImg = new TagBuilder("p");
-                    TagBuilder a = new TagBuilder("a");
-                    a.Attributes.Add("href", string.IsNullOrEmpty(feed.ImageLink) ? "#" : feed.ImageLink);
-
-                    TagBuilder img = new TagBuilder("img");
-                    img.Attributes.Add("src", string.IsNullOrEmpty(feed.ImageUrl) ? "#" : feed.ImageUrl);
-                    img.Attributes.Add("width", "100%");
-                    a.InnerHtml = img.ToString();
-                    pImg.InnerHtml += a.ToString();
-                }
-
-                TagBuilder pContent = new TagBuilder("p");
-                pContent.InnerHtml += GetStringFromHtmlWithoutSpc(feed.Content);
-                feed.Content = (pImg == null ? "" : pImg.ToString()) + pContent.ToString();
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker(feed);
-            }
-            return feed;
         }
     }
 }
