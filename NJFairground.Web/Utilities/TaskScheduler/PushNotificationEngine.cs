@@ -200,7 +200,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                             Payload: {3}", sender, oldSubscriptionId, newSubscriptionId, notification);
                     else
                         msg = string.Format("Device Subscription Changed: {0}", sender);
-                    
+
                     //CommonUtility.LogToFileWithStack(msg);
                     LogNotificationToClient(NotificationType.info, msg);
                 }
@@ -232,7 +232,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                             Payload: {3}", sender, expiredSubscriptionId, expirationDateUtc, notification);
                     else
                         msg = string.Format("Device Subscription Expired: {0}", sender);
-                    
+
                     //CommonUtility.LogToFileWithStack(msg);
                     RemoveNotificationLog(expiredSubscriptionId);
                     LogNotificationToClient(NotificationType.warning, msg);
@@ -263,7 +263,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                             Payload: {3}", sender, GetDeviceId(notification), error.Message, notification);
                     else
                         msg = string.Format("Notification Failed: {0}", sender);
-                    
+
                     //CommonUtility.LogToFileWithStack(msg);
                     LogNotificationToClient(NotificationType.danger, msg);
                 }
@@ -287,11 +287,11 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                 {
                     string msg = "";
                     if (this.IsTechnocalLog)
-                        msg = string.Format(@"Service Exception: {0} <br/> Exception Message: {1}", 
+                        msg = string.Format(@"Service Exception: {0} <br/> Exception Message: {1}",
                             sender, error.Message);
                     else
                         msg = string.Format("Service Exception: {0}", sender);
-                    
+
                     //CommonUtility.LogToFileWithStack(msg);
                     LogNotificationToClient(NotificationType.danger, msg);
                 }
@@ -348,7 +348,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                             Device Id: {1} <br/>Payload: {2}", sender, GetDeviceId(notification), notification);
                     else
                         msg = string.Format("Notification Sent: {0}", sender);
-                    
+
                     //CommonUtility.LogToFileWithStack(msg);
                     LogNotification(notification);
                     LogNotificationToClient(NotificationType.success, msg);
@@ -376,6 +376,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                     this.allDevices.Where(x => x.DeviceType.Equals((int)type)).ToList();
 
                 IList<Task> notificationProcess = new List<Task>();
+
                 notificationProcess.Add(Task.Factory.StartNew(() =>
                     NotifyToAndroid(devices(MobileDeviceType.Android), notificationToken, announcement)));
 
@@ -439,15 +440,14 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                     {
                         _broker.QueueNotification(new GcmNotification()
                             .ForDeviceRegistrationId(device.DeviceId)
-                            .WithData(new Dictionary<string, string>() { 
-                                { PageItemId, announcement.PageItemId.ToString() } ,
-                                { NotificationToken, notificationToken } 
-                            })
                             .WithJson(Newtonsoft.Json.JsonConvert.SerializeObject(new
                             {
                                 alert = announcement.PageHeaderText,
                                 sound = "default",
-                                badge = GetUnreadNotification(device)
+                                badge = GetUnreadNotification(device),
+                                LaunchImage = announcement.PageItemImageUrl,
+                                PageItemId = announcement.PageItemId.ToString(),
+                                NotificationToken = notificationToken
                             })));
                     }
                 }
@@ -492,7 +492,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                 Func<string, string, string> parseAndroidPayload = (payload, key) =>
                 {
                     var data = (JObject)JsonConvert.DeserializeObject(payload);
-                    return data[string.Format("a/b/{0}", key)].Value<string>();
+                    return data[key].Value<string>();
                 };
 
                 NotificationLogModel notificationLog = new NotificationLogModel();
