@@ -562,6 +562,11 @@
     <Compile Include="Utilities\JsFunctionConverter.cs" />
     <Compile Include="Utilities\JSONActionResult.cs" />
     <Compile Include="Utilities\MapperExtension.cs" />
+    <Compile Include="Utilities\Notifiaction\AndroidDeviceNotification.cs" />
+    <Compile Include="Utilities\Notifiaction\AppleDeviceNotification.cs" />
+    <Compile Include="Utilities\Notifiaction\DeviceNotification.cs" />
+    <Compile Include="Utilities\Notifiaction\DeviceNotificationService.cs" />
+    <Compile Include="Utilities\Notifiaction\IDeviceNotification.cs" />
     <Compile Include="Utilities\OptimizationExtensions.cs" />
     <Compile Include="Utilities\ReadWriteCsv.cs" />
     <Compile Include="Extensions\Html\RssFeedReader.cs" />

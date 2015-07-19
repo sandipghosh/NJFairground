@@ -52,7 +52,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
                 if (!registeredDevices.IsEmptyCollection())
                 {
                     dashboard.TotalActiveiOSUsers = registeredDevices
-                        .Count(x => x.DeviceType.Equals((int)MobileDeviceType.iOS));
+                        .Count(x => x.DeviceType.Equals((int)MobileDeviceType.Apple));
                     dashboard.TotalActiveAndroidUsers = registeredDevices
                         .Count(x => x.DeviceType.Equals((int)MobileDeviceType.Android));
                 }
@@ -87,7 +87,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
                     devices.Add(new DeviceViewModel
                     {
                         label = "iOS Users",
-                        value = registeredDevices.Count(x => x.DeviceType.Equals((int)MobileDeviceType.iOS))
+                        value = registeredDevices.Count(x => x.DeviceType.Equals((int)MobileDeviceType.Apple))
                     });
                     devices.Add(new DeviceViewModel
                     {

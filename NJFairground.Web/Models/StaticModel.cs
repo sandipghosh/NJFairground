@@ -91,7 +91,7 @@ namespace NJFairground.Web.Models
     public enum MobileDeviceType
     {
         Android = 1,
-        iOS = 2
+        Apple = 2
     }
 
     public enum NotificationType

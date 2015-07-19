@@ -1,11 +1,12 @@
 ﻿
-namespace NJFairground.Web.Utilities.TaskScheduler
+namespace NJFairground.Web.Utilities.Notifiaction
 {
     using Microsoft.AspNet.SignalR;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities;
     using NJFairground.Web.Utilities.TaskScheduler.Hubs;
     using PushSharp;
     using PushSharp.Android;
@@ -13,59 +14,71 @@ namespace NJFairground.Web.Utilities.TaskScheduler
     using PushSharp.Core;
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Threading.Tasks;
 
-    public class PushNotificationEngine
+    public abstract class DeviceNotification
     {
-        private const string PageItemId = "PageItemId";
-        private const string NotificationToken = "NotificationToken";
+        protected const string PageItemId = "PageItemId";
+        protected const string NotificationToken = "NotificationToken";
+
         private readonly IDeviceRegistryDataRepository _deviceRegistryDataRepository;
         private readonly INotificationLogDataRepository _notificationLogDataRepository;
-
+        private readonly IList<DeviceRegistryModel> _allDevices;
         private readonly PushBroker _broker;
-        private readonly Random _random;
-        IList<DeviceRegistryModel> allDevices = new List<DeviceRegistryModel>();
-
-        #region Constructors
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PushNotificationEngine"/> class.
-        /// </summary>
-        /// <param name="deviceRegistryDataRepository">The device registry data repository.</param>
-        /// <param name="notificationLogDataRepository">The notification log data repository.</param>
-        public PushNotificationEngine(IDeviceRegistryDataRepository deviceRegistryDataRepository,
-            INotificationLogDataRepository notificationLogDataRepository)
-        {
-            this._deviceRegistryDataRepository = deviceRegistryDataRepository;
-            this._notificationLogDataRepository = notificationLogDataRepository;
-
-            this._broker = new PushBroker();
-            this._random = new Random();
-
-            RegisterEvents();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PushNotificationEngine"/> class.
-        /// </summary>
-        public PushNotificationEngine()
-            : this(ContainerProvider.Instance.GetInstance<IDeviceRegistryDataRepository>(),
-            ContainerProvider.Instance.GetInstance<INotificationLogDataRepository>())
-        {
-            try
-            {
-                allDevices = this._deviceRegistryDataRepository
-                    .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker();
-            }
-        }
-        #endregion
 
         #region Public Properties
+        /// <summary>
+        /// Gets the broker.
+        /// </summary>
+        /// <value>
+        /// The broker.
+        /// </value>
+        public PushBroker Broker { get { return this._broker; } }
+
+        /// <summary>
+        /// Gets the device registry data repository.
+        /// </summary>
+        /// <value>
+        /// The device registry data repository.
+        /// </value>
+        public IDeviceRegistryDataRepository DeviceRegistryDataRepository
+        {
+            get { return _deviceRegistryDataRepository; }
+        }
+
+        /// <summary>
+        /// Gets the notification log data repository.
+        /// </summary>
+        /// <value>
+        /// The notification log data repository.
+        /// </value>
+        public INotificationLogDataRepository NotificationLogDataRepository
+        {
+            get { return _notificationLogDataRepository; }
+        }
+
+        /// <summary>
+        /// Gets the android devices.
+        /// </summary>
+        /// <value>
+        /// The android devices.
+        /// </value>
+        public IList<DeviceRegistryModel> AndroidDevices
+        {
+            get { return this._allDevices.Where(x => x.DeviceType.Equals((int)MobileDeviceType.Android)).ToList(); }
+        }
+
+        /// <summary>
+        /// Gets the apple devices.
+        /// </summary>
+        /// <value>
+        /// The apple devices.
+        /// </value>
+        public IList<DeviceRegistryModel> AppleDevices
+        {
+            get { return this._allDevices.Where(x => x.DeviceType.Equals((int)MobileDeviceType.Apple)).ToList(); }
+        }
+
         /// <summary>
         /// Gets a value indicating whether [do log].
         /// </summary>
@@ -73,6 +86,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         ///   <c>true</c> if [do log]; otherwise, <c>false</c>.
         /// </value>
         public bool DoLog { get { return CommonUtility.GetAppSetting<bool>("PN:DoLog"); } }
+
         /// <summary>
         /// Gets a value indicating whether [apns use sand box].
         /// </summary>
@@ -80,6 +94,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         ///   <c>true</c> if [apns use sand box]; otherwise, <c>false</c>.
         /// </value>
         public bool APNSUseSandBox { get { return CommonUtility.GetAppSetting<bool>("iOS:UseSandBox"); } }
+
         /// <summary>
         /// Gets a value indicating whether [apns certificate path].
         /// </summary>
@@ -96,6 +111,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                     return CommonUtility.GetAppSetting<string>("iOS:CertificateProduction");
             }
         }
+
         /// <summary>
         /// Gets a value indicating whether [apns certificate password].
         /// </summary>
@@ -103,6 +119,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         /// <c>true</c> if [apns certificate password]; otherwise, <c>false</c>.
         /// </value>
         public string APNSCertificatePassword { get { return CommonUtility.GetAppSetting<string>("iOS:CertificatePassword"); } }
+
         /// <summary>
         /// Gets a value indicating whether [GCM API key].
         /// </summary>
@@ -110,6 +127,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         ///   <c>true</c> if [GCM API key]; otherwise, <c>false</c>.
         /// </value>
         public string GCMApiKey { get { return CommonUtility.GetAppSetting<string>("Android:ApiKey"); } }
+
         /// <summary>
         /// Gets a value indicating whether this instance is technocal log.
         /// </summary>
@@ -119,22 +137,43 @@ namespace NJFairground.Web.Utilities.TaskScheduler
         public bool IsTechnocalLog { get { return CommonUtility.GetAppSetting<bool>("PN:IsTechnocalLog"); } }
         #endregion
 
-        #region Notification Events Registration and Implementation
+        #region Constructors
         /// <summary>
-        /// Registers the events.
+        /// Initializes a new instance of the <see cref="DeviceNotificationBase"/> class.
         /// </summary>
-        private void RegisterEvents()
+        /// <param name="deviceRegistryDataRepository">The device registry data repository.</param>
+        /// <param name="notificationLogDataRepository">The notification log data repository.</param>
+        public DeviceNotification(IDeviceRegistryDataRepository deviceRegistryDataRepository,
+            INotificationLogDataRepository notificationLogDataRepository)
         {
-            _broker.OnNotificationSent += NotificationSent;
-            _broker.OnChannelException += ChannelException;
-            _broker.OnServiceException += ServiceException;
-            _broker.OnNotificationFailed += NotificationFailed;
-            _broker.OnDeviceSubscriptionExpired += DeviceSubscriptionExpired;
-            _broker.OnDeviceSubscriptionChanged += DeviceSubscriptionChanged;
-            _broker.OnChannelCreated += ChannelCreated;
-            _broker.OnChannelDestroyed += ChannelDestroyed;
+            try
+            {
+                this._deviceRegistryDataRepository = deviceRegistryDataRepository;
+                this._notificationLogDataRepository = notificationLogDataRepository;
+
+                this._broker = new PushBroker();
+                RegisterEvents();
+
+                _allDevices = this._deviceRegistryDataRepository
+                    .GetList(x => x.StatusId.Equals((int)StatusEnum.Active)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
+            }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeviceNotificationBase"/> class.
+        /// </summary>
+        public DeviceNotification()
+            : this(ContainerProvider.Instance.GetInstance<IDeviceRegistryDataRepository>(),
+            ContainerProvider.Instance.GetInstance<INotificationLogDataRepository>())
+        {
+        }
+        #endregion
+
+        #region Notification Events
         /// <summary>
         /// Channels the destroyed.
         /// </summary>
@@ -358,107 +397,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                 ex.ExceptionValueTracker(sender, notification);
             }
         }
-        #endregion
 
-        #region Send Notification
-        /// <summary>
-        /// Notifies the specified devices.
-        /// </summary>
-        /// <param name="devices">The devices.</param>
-        /// <param name="announcement">The announcement.</param>
-        public void Notify(PageItemModel announcement)
-        {
-            try
-            {
-                string notificationToken = Guid.NewGuid().ToString("N");
-                Func<MobileDeviceType, List<DeviceRegistryModel>> devices = (type) =>
-                    this.allDevices.Where(x => x.DeviceType.Equals((int)type)).ToList();
-
-                IList<Task> notificationProcess = new List<Task>();
-
-                notificationProcess.Add(Task.Factory.StartNew(() =>
-                    NotifyToAndroid(devices(MobileDeviceType.Android), notificationToken, announcement)));
-
-                notificationProcess.Add(Task.Factory.StartNew(() =>
-                    NotifyToiOS(devices(MobileDeviceType.Apple), notificationToken, announcement)));
-
-                Task.WaitAll(notificationProcess.ToArray());
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker(announcement);
-            }
-        }
-
-        /// <summary>
-        /// Notifies the toi os.
-        /// </summary>
-        /// <param name="devices">The devices.</param>
-        /// <param name="announcement">The announcement.</param>
-        private void NotifyToiOS(IList<DeviceRegistryModel> devices, string notificationToken, PageItemModel announcement)
-        {
-            try
-            {
-                var appleCert = File.ReadAllBytes(Path.Combine
-                        (AppDomain.CurrentDomain.BaseDirectory, this.APNSCertificatePath));
-
-                this._broker.RegisterAppleService(new ApplePushChannelSettings
-                    (!this.APNSUseSandBox, appleCert, this.APNSCertificatePassword, true));
-
-                foreach (var device in devices)
-                {
-                    _broker.QueueNotification(new AppleNotification()
-                        .ForDeviceToken(device.DeviceId)
-                        .WithAlert(new AppleNotificationAlert() { LaunchImage = announcement.PageItemImageUrl, Body = announcement.PageHeaderText })
-                        .WithCustomItem(PageItemId, announcement.PageItemId)
-                        .WithCustomItem(NotificationToken, notificationToken)
-                        .WithBadge(GetUnreadNotification(device))
-                        .WithSound("default"));
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker(devices, announcement);
-            }
-        }
-
-        /// <summary>
-        /// Notifies to android.
-        /// </summary>
-        /// <param name="devices">The devices.</param>
-        /// <param name="announcement">The announcement.</param>
-        private void NotifyToAndroid(IList<DeviceRegistryModel> devices, string notificationToken, PageItemModel announcement)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(this.GCMApiKey))
-                {
-                    _broker.RegisterGcmService(new GcmPushChannelSettings(this.GCMApiKey));
-
-                    foreach (var device in devices)
-                    {
-                        _broker.QueueNotification(new GcmNotification()
-                            .ForDeviceRegistrationId(device.DeviceId)
-                            .WithJson(Newtonsoft.Json.JsonConvert.SerializeObject(new
-                            {
-                                alert = announcement.PageHeaderText,
-                                sound = "default",
-                                badge = GetUnreadNotification(device),
-                                LaunchImage = announcement.PageItemImageUrl,
-                                PageItemId = announcement.PageItemId.ToString(),
-                                NotificationToken = notificationToken
-                            })));
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker(devices, announcement);
-            }
-        }
-        #endregion
-
-        #region Notification Utility
         /// <summary>
         /// Logs the notification to client.
         /// </summary>
@@ -475,6 +414,48 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             {
                 ex.ExceptionValueTracker(messageType, message);
             }
+        }
+        #endregion
+
+        /// <summary>
+        /// Gets the unread notification.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        /// <returns></returns>
+        public int GetUnreadNotification(DeviceRegistryModel device)
+        {
+            int result = 1;
+            try
+            {
+                if (!device.NotificationLogs.IsEmptyCollection())
+                {
+                    result = device.NotificationLogs.Count
+                        (x => !x.IsRead && x.StatusId.Equals((int)StatusEnum.Active));
+
+                    result++;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(device);
+            }
+            return result;
+        }
+
+        #region Private Members
+        /// <summary>
+        /// Registers the events.
+        /// </summary>
+        private void RegisterEvents()
+        {
+            _broker.OnNotificationSent += NotificationSent;
+            _broker.OnChannelException += ChannelException;
+            _broker.OnServiceException += ServiceException;
+            _broker.OnNotificationFailed += NotificationFailed;
+            _broker.OnDeviceSubscriptionExpired += DeviceSubscriptionExpired;
+            _broker.OnDeviceSubscriptionChanged += DeviceSubscriptionChanged;
+            _broker.OnChannelCreated += ChannelCreated;
+            _broker.OnChannelDestroyed += ChannelDestroyed;
         }
 
         /// <summary>
@@ -502,7 +483,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler
                     notificationLog.NotifiactionToken = parseAndroidPayload(gcmNotification.JsonData, NotificationToken);
                     notificationLog.PageItemId = int.Parse(parseAndroidPayload(gcmNotification.JsonData, PageItemId));
                 }
-                else if (notification is AppleNotification)
+                else if (notification is AppleDeviceNotification)
                 {
                     AppleNotification appleNotification = (AppleNotification)notification;
                     notificationLog.DeviceId = appleNotification.DeviceToken;
@@ -516,31 +497,6 @@ namespace NJFairground.Web.Utilities.TaskScheduler
             {
                 ex.ExceptionValueTracker(notification);
             }
-        }
-
-        /// <summary>
-        /// Gets the unread notification.
-        /// </summary>
-        /// <param name="device">The device.</param>
-        /// <returns></returns>
-        private int GetUnreadNotification(DeviceRegistryModel device)
-        {
-            int result = 1;
-            try
-            {
-                if (!device.NotificationLogs.IsEmptyCollection())
-                {
-                    result = device.NotificationLogs.Count
-                        (x => !x.IsRead && x.StatusId.Equals((int)StatusEnum.Active));
-
-                    result++;
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.ExceptionValueTracker(device);
-            }
-            return result;
         }
 
         /// <summary>
