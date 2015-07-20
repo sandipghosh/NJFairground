@@ -21,6 +21,7 @@ namespace NJFairground.Web.Controllers
     using NJFairground.Web.DTO.ResponseDto;
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
+    using NJFairground.Web.Utilities.SocialMedia;
     using Newtonsoft.Json.Linq;
     using System.Threading.Tasks;
 
@@ -287,8 +288,8 @@ namespace NJFairground.Web.Controllers
             {
                 if (request.Action == CrudAction.BulkSelect)
                 {
-                    NJFairground.Web.Helper.IFeedReader feedReader = NJFairground.Web.Helper
-                        .SocialFeedReader.GetSocialMediaFeed(request.FeedRequestFor);
+                    NJFairground.Web.Utilities.SocialMedia.IFeedReader feedReader
+                        = NJFairground.Web.Utilities.SocialMedia.SocialFeedReader.GetSocialMediaFeed(request.FeedRequestFor);
 
                     response.SocialFeeds = feedReader.Read().ToList();
                     response.ResponseStatus = RespStatus.Success.ToString();

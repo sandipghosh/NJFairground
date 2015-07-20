@@ -94,6 +94,10 @@
       <HintPath>..\packages\FluentValidation.MVC5.5.6.2.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -571,6 +575,13 @@
     <Compile Include="Utilities\ReadWriteCsv.cs" />
     <Compile Include="Extensions\Html\RssFeedReader.cs" />
     <Compile Include="Utilities\SessionVariable.cs" />
+    <Compile Include="Utilities\SocialMedia\FacebookFeedReader.cs" />
+    <Compile Include="Utilities\SocialMedia\FeedReader.cs" />
+    <Compile Include="Utilities\SocialMedia\IFeedReader.cs" />
+    <Compile Include="Utilities\SocialMedia\InstagramFeedReader.cs" />
+    <Compile Include="Utilities\SocialMedia\PinterestFeedReader.cs" />
+    <Compile Include="Utilities\SocialMedia\SocialFeedReader.cs" />
+    <Compile Include="Utilities\SocialMedia\TwitterFeedReader.cs" />
     <Compile Include="Utilities\StackLogger.cs" />
     <Compile Include="Utilities\TaskScheduler\Hubs\AdvertisementHub.cs" />
     <Compile Include="Utilities\TaskScheduler\Hubs\AnnouncementHub.cs" />

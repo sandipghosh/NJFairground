@@ -12,17 +12,7 @@ namespace NJFairground.Web.Extensions.Html
     using System.Xml.Linq;
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
-
-    //internal class RssFeedEntity
-    //{
-    //    public string Title { get; set; }
-    //    public string TitleUrl { get; set; }
-    //    public string LastUpdate { get; set; }
-    //    public string Author { get; set; }
-    //    public string ImageLink { get; set; }
-    //    public string ImageUrl { get; set; }
-    //    public string Content { get; set; }
-    //}
+    using NJFairground.Web.Utilities.SocialMedia;
 
     public static class RssFeedReader
     {
@@ -38,7 +28,7 @@ namespace NJFairground.Web.Extensions.Html
             {
                 List<RssFeedModel> feedItems = new List<RssFeedModel>();
                 FeedFor feedfor = FeedFor.Facebook;
-                switch(feedLink)
+                switch (feedLink)
                 {
                     case "Facebook:RssFeed":
                         feedfor = FeedFor.Facebook;
@@ -51,8 +41,8 @@ namespace NJFairground.Web.Extensions.Html
                         break;
                 }
 
-                NJFairground.Web.Helper.IFeedReader feedReader = NJFairground.Web.Helper
-                    .SocialFeedReader.GetSocialMediaFeed(feedfor);
+                NJFairground.Web.Utilities.SocialMedia.IFeedReader feedReader
+                    = NJFairground.Web.Utilities.SocialMedia.SocialFeedReader.GetSocialMediaFeed(feedfor);
 
                 feedItems = feedReader.Read().ToList();
                 return new MvcHtmlString(GetHtmlFromRss(feedItems));
@@ -72,8 +62,8 @@ namespace NJFairground.Web.Extensions.Html
         /// <returns></returns>
         public static MvcHtmlString ReadInstagramRss(this HtmlHelper htmlHelper, string feedLink)
         {
-            NJFairground.Web.Helper.IFeedReader feedReader = NJFairground.Web.Helper
-                .SocialFeedReader.GetSocialMediaFeed(FeedFor.Instagram);
+            NJFairground.Web.Utilities.SocialMedia.IFeedReader feedReader
+                = NJFairground.Web.Utilities.SocialMedia.SocialFeedReader.GetSocialMediaFeed(FeedFor.Instagram);
 
             List<RssFeedModel> feedItems = feedReader.Read().ToList();
             return new MvcHtmlString(GetHtmlFromRss(feedItems));
