@@ -28,7 +28,7 @@ namespace NJFairground.Web.Utilities.SocialMedia
                     {
                         Title = x.Title.Text.AsString(),
                         TitleUrl = (x.Links.FirstOrDefault() == null) ? 
-                            GetUrlLinkFromHtml(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString())
+                            GetImageLinkFromHtml(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString())
                             : x.Links.FirstOrDefault().Uri.AbsoluteUri,
                         Content = GetStringFromHtml(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString()),
                         LastUpdate = (x.LastUpdatedTime.Year == 1 ?

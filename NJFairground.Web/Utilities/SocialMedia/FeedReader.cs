@@ -76,17 +76,20 @@ namespace NJFairground.Web.Utilities.SocialMedia
         /// </summary>
         /// <param name="html">The HTML.</param>
         /// <returns></returns>
-        protected string GetImageLinkFromHtml(string html)
+        protected string GetImageUrlFromHtml(string html)
         {
             try
             {
-                HtmlWeb htmlWeb = new HtmlWeb();
-                HtmlDocument htmlDocument = htmlWeb.Load(html);
-                HtmlNode anchorNode = htmlDocument.DocumentNode.Descendants("img")
-                    .Where(x => x.Attributes.Contains("src") && !string.IsNullOrEmpty(x.Attributes["src"].Value))
-                    .FirstOrDefaultCustom();
+                if (!string.IsNullOrEmpty(html))
+                {
+                    HtmlDocument htmlDocument = new HtmlDocument();
+                    htmlDocument.LoadHtml(html);
+                    HtmlNode anchorNode = htmlDocument.DocumentNode.Descendants("img")
+                        .Where(x => x.Attributes.Contains("src") && !string.IsNullOrEmpty(x.Attributes["src"].Value))
+                        .FirstOrDefaultCustom();
 
-                return anchorNode.Attributes["src"].Value.AsString();
+                    return anchorNode.Attributes["src"].Value.AsString();
+                }
             }
             catch (Exception ex)
             {
@@ -100,17 +103,21 @@ namespace NJFairground.Web.Utilities.SocialMedia
         /// </summary>
         /// <param name="html">The HTML.</param>
         /// <returns></returns>
-        protected string GetUrlLinkFromHtml(string html)
+        protected string GetImageLinkFromHtml(string html)
         {
             try
             {
-                HtmlWeb htmlWeb = new HtmlWeb();
-                HtmlDocument htmlDocument = htmlWeb.Load(html);
-                HtmlNode anchorNode = htmlDocument.DocumentNode.Descendants("a")
-                    .Where(x => x.Attributes.Contains("href") && !string.IsNullOrEmpty(x.Attributes["href"].Value))
-                    .FirstOrDefaultCustom();
+                if (!string.IsNullOrEmpty(html))
+                {
+                    HtmlDocument htmlDocument = new HtmlDocument();
+                    htmlDocument.LoadHtml(html);
+                    HtmlNode anchorNode = htmlDocument.DocumentNode.Descendants("a")
+                        .Where(x => x.Attributes.Contains("href") && !string.IsNullOrEmpty(x.Attributes["href"].Value)
+                            && x.SelectSingleNode("img") != null)
+                        .FirstOrDefaultCustom();
 
-                return anchorNode.Attributes["href"].Value.AsString();
+                    return anchorNode.Attributes["href"].Value.AsString();
+                }
             }
             catch (Exception ex)
             {
