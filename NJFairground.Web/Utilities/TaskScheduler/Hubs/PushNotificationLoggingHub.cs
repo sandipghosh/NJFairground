@@ -19,7 +19,7 @@ namespace NJFairground.Web.Utilities.TaskScheduler.Hubs
         {
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext<PushNotificationLoggingHub>();
             context.Clients.All.PushNotificationLog(NotificationType.info.ToString(), string.Format("{1} Notification Log Starts - {0:dd/MMM/yyyy} {1}",
-                DateTime.Now.ToString("dd/MMM/yyyy"), string.Concat(Enumerable.Repeat("#", 10))));
+                DateTime.Now.ToString("dd/MMM/yyyy hh:mm:ss tt"), string.Concat(Enumerable.Repeat("#", 10))));
         }
     }
 }
