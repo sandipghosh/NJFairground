@@ -326,10 +326,13 @@
     <Compile Include="Areas\Admin\Controllers\AnnouncementController.cs" />
     <Compile Include="Areas\Admin\Controllers\BroadcastController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\PageListController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubPageListController.cs" />
     <Compile Include="Areas\Admin\Models\Base\GridModelSchema.cs" />
     <Compile Include="Areas\Admin\Models\SchedularSchema.cs" />
+    <Compile Include="Areas\Admin\Models\UserCredentialModel.cs" />
+    <Compile Include="Areas\Admin\Models\ValidationRules\UserCredentialModelValidation.cs" />
     <Compile Include="Controllers\AgricultureController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
@@ -508,6 +511,7 @@
     <Compile Include="DTO\ResponseDto\UserAuthenticationResponseDto.cs" />
     <Compile Include="DTO\ResponseDto\UserImageResponseDto.cs" />
     <Compile Include="Extensions\Html\MetaTagExtenstions.cs" />
+    <Compile Include="Filters\AdminAuthenticationAttribute.cs" />
     <Compile Include="Filters\ApiGlobalLogAttribute.cs" />
     <Compile Include="Filters\SaveMeFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -682,6 +686,7 @@
     <Content Include="Certificate\SussexKey.p12" />
     <Content Include="Certificate\SussexProductionCert.p12" />
     <Content Include="Certificate\SussexProductionKey.p12" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <None Include="Properties\PublishProfiles\NJFairground.pubxml" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\common-events.js" />

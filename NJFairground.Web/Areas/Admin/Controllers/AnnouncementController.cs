@@ -12,7 +12,9 @@ namespace NJFairground.Web.Areas.Admin.Controllers
     using System.Web.Mvc;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using NJFairground.Web.Filters;
 
+    [AdminAuthentication]
     public class AnnouncementController : Controller
     {
         private readonly IPageItemDataRepository _pageItemDataRepository;

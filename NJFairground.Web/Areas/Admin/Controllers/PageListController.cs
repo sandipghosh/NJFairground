@@ -3,6 +3,7 @@
 namespace NJFairground.Web.Areas.Admin.Controllers
 {
     using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.Filters;
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
     using System;
@@ -13,6 +14,7 @@ namespace NJFairground.Web.Areas.Admin.Controllers
     using System.Web;
     using System.Web.Mvc;
 
+    [AdminAuthentication]
     public class PageListController : Controller
     {
         private readonly IPageDataRepository _pageDataRepository;

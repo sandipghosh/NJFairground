@@ -3,6 +3,8 @@ namespace NJFairground.Web.MapperConfig
 {
     using AutoMapper;
     using FluentValidation;
+    using NJFairground.Web.Areas.Admin.Models;
+    using NJFairground.Web.Areas.Admin.Models.ValidationRules;
     using NJFairground.Web.Data.Implementation;
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models;
@@ -47,6 +49,7 @@ namespace NJFairground.Web.MapperConfig
 
                 container.Register<IValidator<PageItemModel>, PageItemModelValidation>(Lifestyle.Singleton);
                 container.Register<IValidator<PageModel>, PageModelValidation>(Lifestyle.Singleton);
+                container.Register<IValidator<UserCredentialModel>, UserCredentialModelValidation>(Lifestyle.Singleton);
             }
             catch (Exception ex)
             {

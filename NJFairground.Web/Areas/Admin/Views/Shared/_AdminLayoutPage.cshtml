@@ -65,6 +65,22 @@
                 </button>
                 <a class="navbar-brand" href="index.html" style="background:url('@Url.Content("~/Styles/Images/widget-big.png")'); background-size: 17%; background-repeat: no-repeat; padding-left: 52px; margin-left: 0; ">Nj Fairground Admin Pannel</a>
             </div>
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li style="padding-left: 20px;">
+                            <i class="fa fa-user fa-fw"></i> Admin User
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="@Url.Action("Logout","Login", new {area= "Admin" })"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">

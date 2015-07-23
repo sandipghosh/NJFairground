@@ -14,7 +14,9 @@ namespace NJFairground.Web.Areas.Admin.Controllers
     using NJFairground.Web.Data.Interface;
     using NJFairground.Web.Models;
     using NJFairground.Web.Utilities;
+    using NJFairground.Web.Filters;
 
+    [AdminAuthentication]
     public class SubPageListController : Controller
     {
         private readonly IPageDataRepository _pageDataRepository;

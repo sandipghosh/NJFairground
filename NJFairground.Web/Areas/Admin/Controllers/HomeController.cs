@@ -2,15 +2,17 @@
 
 namespace NJFairground.Web.Areas.Admin.Controllers
 {
+    using NJFairground.Web.Data.Interface;
+    using NJFairground.Web.Filters;
+    using NJFairground.Web.Models;
+    using NJFairground.Web.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Web.Mvc;
-    using NJFairground.Web.Data.Interface;
-    using NJFairground.Web.Models;
-    using NJFairground.Web.Utilities;
 
+    [AdminAuthentication]
     public class HomeController : Controller
     {
         private readonly IHitCounterDetailDataRepository _hitCounterDetailDataRepository;
