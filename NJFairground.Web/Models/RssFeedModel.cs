@@ -3,6 +3,18 @@ namespace NJFairground.Web.Models
 {
     public class RssFeedModel
     {
+        public RssFeedModel()
+        {
+            this.Title = "";
+            this.TitleUrl = "";
+            this.LastUpdate = "";
+            this.Author = "";
+            this.ImageLink = "";
+            this.ImageUrl = "";
+            this.Content = "";
+            this.TextContent = "";
+        }
+
         public string Title { get; set; }
         public string TitleUrl { get; set; }
         public string LastUpdate { get; set; }

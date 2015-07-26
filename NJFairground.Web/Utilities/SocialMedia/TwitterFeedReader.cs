@@ -30,7 +30,7 @@ namespace NJFairground.Web.Utilities.SocialMedia
                         TitleUrl = (x.Links.FirstOrDefault() == null) ? 
                             GetImageLinkFromHtml(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString())
                             : x.Links.FirstOrDefault().Uri.AbsoluteUri,
-                        Content = GetStringFromHtml(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString()),
+                        Content = GetStringFromHtmlWithoutSpc(((TextSyndicationContent)(x.Content ?? x.Summary)).Text.AsString()),
                         LastUpdate = (x.LastUpdatedTime.Year == 1 ?
                             x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
                             x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),

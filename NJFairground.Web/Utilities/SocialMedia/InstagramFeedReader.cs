@@ -24,18 +24,18 @@ namespace NJFairground.Web.Utilities.SocialMedia
                 if (!string.IsNullOrEmpty(feedData))
                 {
                     XDocument doc = XDocument.Parse(feedData);
-                    response = doc.Descendants("item").Select(x => GenerateContentHtml(new RssFeedModel
+                    response = doc.Descendants("item").Select(x => new RssFeedModel
                     {
                         Title = GetStringFromHtmlWithoutSpc(x.Element("title").Value.AsString(), 30),
                         TitleUrl = x.Element("link").Value.AsString(),
                         ImageLink = x.Element("image").Element("link").Value.AsString(),
                         ImageUrl = x.Element("image").Element("url").Value.AsString(),
-                        Content = x.Element("description").Value.AsString(),
+                        Content = GetStringFromHtmlWithoutSpc(x.Element("description").Value.AsString()),
                         LastUpdate = string.IsNullOrEmpty(x.Element("pubDate").Value.AsString()) ? "" :
                             DateTime.Parse(x.Element("pubDate").Value.AsString())
                             .ToString("f", CultureInfo.CreateSpecificCulture("en-US")),
                         Author = x.Element("author").Value.AsString()
-                    })).ToList();
+                    }).ToList();
 
                 }
             }

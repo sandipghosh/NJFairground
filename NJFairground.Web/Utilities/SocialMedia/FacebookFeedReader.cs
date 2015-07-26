@@ -27,17 +27,16 @@ namespace NJFairground.Web.Utilities.SocialMedia
                         JObject jsonFeed = JObject.Parse(feedData);
                         if (jsonFeed != null)
                         {
-                            response = jsonFeed["data"].Select(x => GenerateContentHtml
-                                (new RssFeedModel
+                            response = jsonFeed["data"].Select(x => new RssFeedModel
                                 {
                                     Title = GetStringFromHtmlWithoutSpc(x["message"].AsString(), 30),
                                     TitleUrl = x["link"].AsString(),
                                     ImageLink = x["link"].AsString(),
                                     ImageUrl = x["picture"].AsString(),
-                                    Content = x["message"].AsString(),
+                                    Content = GetStringFromHtmlWithoutSpc(x["message"].AsString()),
                                     LastUpdate = (x["updated_time"] ?? x["created_time"]).AsString(),
                                     Author = (x["from"] != null) ? x["from"]["name"].AsString() : ""
-                                })).ToList();
+                                }).ToList();
                         }
                     }
                 }

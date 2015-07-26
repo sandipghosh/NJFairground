@@ -4,6 +4,7 @@ namespace NJFairground.Web.Models
     using System;
     using System.Collections.Generic;
     using NJFairground.Web.Models.Base;
+    using Newtonsoft.Json;
 
     public class DeviceRegistryModel : BaseModel
     {
@@ -14,6 +15,7 @@ namespace NJFairground.Web.Models
         public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
 
+        [JsonIgnore]
         public virtual IEnumerable<NotificationLogModel> NotificationLogs { get; set; }
     }
 }
