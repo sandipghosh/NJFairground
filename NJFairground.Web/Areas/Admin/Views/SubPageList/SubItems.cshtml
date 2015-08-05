@@ -32,7 +32,7 @@
                 </td>
                 <td>
                     @Ajax.ActionLink("Edit", "Edit", new { pageItemId = item.PageItemId }, new AjaxOptions { OnSuccess = "ShowSubPageInsertScreen" }) |
-                    @Ajax.ActionLink("Delete", "Delete", new { pageId = item.PageId, pageItemId = item.PageItemId }, new AjaxOptions { OnSuccess = "ShowSubPageInsertScreen" })
+                    @Ajax.ActionLink("Delete", "Delete", new { pageId = item.PageId, pageItemId = item.PageItemId }, new AjaxOptions {OnBegin="return DeleteConfirmation()", OnSuccess = "ShowSubPageInsertScreen" })
                 </td>
             </tr>
         }

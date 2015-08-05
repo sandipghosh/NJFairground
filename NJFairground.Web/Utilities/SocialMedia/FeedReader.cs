@@ -63,7 +63,9 @@ namespace NJFairground.Web.Utilities.SocialMedia
         protected string GetStringFromHtmlWithoutSpc(string html, int maxlength = 0)
         {
             string filterData = Regex.Replace(System.Web.HttpUtility.HtmlDecode(html),
-                @"<.*?>|[^\u0000-\u007F]", string.Empty);
+                @"\n|\r\n|<.*?>|[^\u0000-\u007F]", string.Empty);
+
+            filterData = Regex.Replace(filterData, @"\s\s+", string.Empty);
 
             if (maxlength > 0)
                 filterData = filterData.Length > maxlength ? filterData.Substring(0, maxlength) + ".." : filterData;

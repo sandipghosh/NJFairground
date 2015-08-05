@@ -96,12 +96,7 @@
             url: element.getAttribute("data-ajax-url") || undefined,
             cache: !!element.getAttribute("data-ajax-cache"),
             beforeSend: function (xhr) {
-                if (!$('#dataloading').is(':visible')) {
-                    loadingCounter += 1;
-                    $(document).css('cursor', 'wait !important');
-                    $('#dataloading').show();
-                }
-
+                FormBeginSend();
                 var result;
                 asyncOnBeforeSend(xhr, method);
                 result = getFunction(element.getAttribute("data-ajax-begin"), ["xhr", "data"]).apply(element, arguments);
@@ -113,16 +108,7 @@
             complete: function () {
                 loading.hide(duration);
                 getFunction(element.getAttribute("data-ajax-complete"), ["xhr", "status"]).apply(element, arguments);
-
-                if (loadingCounter > 1)
-                { loadingCounter -= 1 }
-                else {
-                    if ($('#dataloading').is(':visible')) {
-                        loadingCounter = 0;
-                        $('#dataloading').hide();
-                        $(document).css('cursor', 'default !important');
-                    }
-                }
+                FormCompleteSend();
             },
             success: function (data, status, xhr) {
                 asyncOnSuccess(element, data, xhr.getResponseHeader("Content-Type") || "text/html");
@@ -181,6 +167,7 @@
 
         form.data(data_click, name ? [{ name: name, value: evt.currentTarget.value }] : []);
         form.data(data_target, target);
+        FormBeginSend();
 
         setTimeout(function () {
             form.removeData(data_click);

@@ -63,10 +63,10 @@
 
     this.FormBeginSend = function () {
         try {
-            loadingCounter += 1;
-            if (!$('#dataloading').is(':visible')) {
+            if (!$('.blocker').is(':visible')) {
+                loadingCounter += 1;
                 $(document).css('cursor', 'wait !important');
-                $('#dataloading').show();
+                $('.blocker').show();
             }
         } catch (ex) { }
     };
@@ -76,9 +76,9 @@
             if (loadingCounter > 1)
             { loadingCounter -= 1 }
             else {
-                if ($('#dataloading').is(':visible')) {
+                if ($('.blocker').is(':visible')) {
                     loadingCounter = 0;
-                    $('#dataloading').hide();
+                    $('.blocker').hide();
                     $(document).css('cursor', 'default !important');
                 }
             }

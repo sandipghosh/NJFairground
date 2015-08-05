@@ -11,6 +11,15 @@
     <title>@ViewBag.Title</title>
     <style type="text/css">
         @(Html.CssMinify(@<text>
+        .blocker{
+            position: fixed;
+            min-height: 100%; 
+            width:100%;
+            z-index: 9998;
+            display:none;
+            background-color: #000;
+            opacity: .6;
+        }
         .data_loading{
             position: fixed;
             width: 200px;
@@ -20,11 +29,10 @@
             border-radius: 0 0 9px 9px;
             z-index: 9999;
             top: 0;
-            left: 38%;
+            left: 42%;
             background-color: #A5A0A0;
-            color: #fff;
+            color: #000;
             padding-top: 5px;
-            display:none;
         }
         .loading-text{
             width: 100%;
@@ -51,8 +59,10 @@
     @RenderSection("AdimnPageScripts", false)
 </head>
 <body>
-    <div id="dataloading" class="data_loading">
-        <div class="loading-text">Loading...</div>
+    <div class="blocker">
+        <div id="dataloading" class="data_loading">
+            <div class="loading-text">Loading...</div>
+        </div>
     </div>
     <div id="wrapper">
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">

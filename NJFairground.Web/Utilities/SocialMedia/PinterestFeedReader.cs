@@ -38,7 +38,7 @@ namespace NJFairground.Web.Utilities.SocialMedia
                             x.PublishDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US")) :
                             x.LastUpdatedTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))),
                         Author = (x.Authors.LastOrDefault() == null) ? string.Empty : x.Authors.LastOrDefault().Name.AsString()
-                    }).ToList();
+                    }).AsParallel().ToList();
 
                     foreach (var item in response)
                     {

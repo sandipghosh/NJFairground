@@ -32,11 +32,11 @@ namespace NJFairground.Web.Utilities.SocialMedia
                                     Title = GetStringFromHtmlWithoutSpc(x["message"].AsString(), 30),
                                     TitleUrl = x["link"].AsString(),
                                     ImageLink = x["link"].AsString(),
-                                    ImageUrl = x["picture"].AsString(),
+                                    ImageUrl = GetImageLinkFromAttachment(x),
                                     Content = GetStringFromHtmlWithoutSpc(x["message"].AsString()),
                                     LastUpdate = (x["updated_time"] ?? x["created_time"]).AsString(),
                                     Author = (x["from"] != null) ? x["from"]["name"].AsString() : ""
-                                }).ToList();
+                                }).AsParallel().ToList();
                         }
                     }
                 }
@@ -49,6 +49,25 @@ namespace NJFairground.Web.Utilities.SocialMedia
         }
 
         /// <summary>
+        /// Gets the image link from attachment.
+        /// </summary>
+        /// <param name="jToken">The j token.</param>
+        /// <returns></returns>
+        public string GetImageLinkFromAttachment(JToken jToken) 
+        {
+            try
+            {
+                string highResImageUrl = jToken.SelectToken("$.attachments.data[0].media.image.src").AsString();
+                return string.IsNullOrEmpty(highResImageUrl) ? jToken["picture"].AsString() : highResImageUrl;
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker();
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
         /// Gets the URL with access token.
         /// </summary>
         /// <returns></returns>
@@ -56,7 +75,7 @@ namespace NJFairground.Web.Utilities.SocialMedia
         {
             try
             {
-                string selectedFields = "fields=id,from,name,caption,description,message,picture,link,created_time,updated_time";
+                string selectedFields = "fields=id,from,name,caption,description,message,picture,link,created_time,updated_time,attachments";
                 string accessToken = ReadUrl(FacebookAuthUrl);
 
                 if (!string.IsNullOrEmpty(accessToken))

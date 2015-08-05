@@ -30,12 +30,12 @@ namespace NJFairground.Web.Utilities.SocialMedia
                         TitleUrl = x.Element("link").Value.AsString(),
                         ImageLink = x.Element("image").Element("link").Value.AsString(),
                         ImageUrl = x.Element("image").Element("url").Value.AsString(),
-                        Content = GetStringFromHtmlWithoutSpc(x.Element("description").Value.AsString()),
+                        Content = ExtractContent(GetStringFromHtmlWithoutSpc(x.Element("description").Value.AsString())),
                         LastUpdate = string.IsNullOrEmpty(x.Element("pubDate").Value.AsString()) ? "" :
                             DateTime.Parse(x.Element("pubDate").Value.AsString())
                             .ToString("f", CultureInfo.CreateSpecificCulture("en-US")),
                         Author = x.Element("author").Value.AsString()
-                    }).ToList();
+                    }).AsParallel().ToList();
 
                 }
             }
@@ -44,6 +44,19 @@ namespace NJFairground.Web.Utilities.SocialMedia
                 ex.ExceptionValueTracker();
             }
             return response;
+        }
+
+        private string ExtractContent(string content)
+        {
+            try
+            {
+                return content.Split('#')[0];
+            }
+            catch (Exception ex)
+            {
+                ex.ExceptionValueTracker(content);
+            }
+            return string.Empty;
         }
     }
 }

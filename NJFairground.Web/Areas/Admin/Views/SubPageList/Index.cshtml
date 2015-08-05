@@ -34,7 +34,7 @@
                             try {
                                 $('#data-grid').html(data);
                                 $('#grid-selection').show();
-                                $('#data-grid table').DataTable({ responsive: true });
+                                $('#data-grid table').DataTable({ responsive: true, order: [ 4, 'asc' ] });
                             } catch (ex) { }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -131,6 +131,16 @@
                     window.console.log(ex.message);
                 }
             };
+
+            this.DeleteConfirmation = function () {
+                try {
+                    var confirmation = window.confirm("Are you sure to delete the screen?");
+                    FormCompleteSend();
+                    return confirmation;
+                } catch (ex) {
+                    window.console.log(ex.message);
+                }
+            }
         }(jQuery, window));
         </text>))
     </script>
