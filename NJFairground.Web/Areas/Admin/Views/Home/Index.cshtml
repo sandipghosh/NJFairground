@@ -24,7 +24,11 @@
                 try {
                     GetAreaChart({ "effectedDays": 30, "type": "Banner" }, 'morris-area-chart');
                     GetPieChart('device-pie-chart');
-                    $('#noification').DataTable({ responsive: true });
+                    $('#noification').DataTable({
+                        responsive: true,
+                        order: [1, 'desc'],
+                        columns: [{ "type": "html" }, null, null, null, null]
+                    });
                 } catch (ex) { }
             });
 

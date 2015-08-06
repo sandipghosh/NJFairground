@@ -272,7 +272,7 @@ namespace NJFairground.Web.Utilities.Notifiaction
                         msg = string.Format("Device Subscription Expired: {0}", sender);
 
                     //CommonUtility.LogToFileWithStack(msg);
-                    RemoveNotificationLog(expiredSubscriptionId);
+                    //RemoveNotificationLog(expiredSubscriptionId);
                     LogNotificationToClient(NotificationType.warning, msg);
                 }
             }
