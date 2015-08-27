@@ -36,6 +36,7 @@ namespace NJFairground.Web
                 //InjectorInitializer.Initialize();
                 WebApiConfig.Register(GlobalConfiguration.Configuration);
                 FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+                FilterConfig.RegisterGlobalApiFilters(GlobalConfiguration.Configuration.Filters);
                 RouteConfig.RegisterRoutes(RouteTable.Routes);
                 BundleConfig.RegisterBundles(BundleTable.Bundles);
                 AuthConfig.RegisterAuth();
